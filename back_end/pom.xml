@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>fr.eco_assistant</groupId>
-    <artifactId>front-end</artifactId>
+    <artifactId>back_end</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>front-end</name>
     <description>front-end</description>
