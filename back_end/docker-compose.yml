@@ -2,6 +2,6 @@ version: '2'
 
 services:
   backend:
-    build: .
+    build: ./target
     ports:
       - 8080:8080
