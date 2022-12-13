@@ -2,11 +2,12 @@ import logo from './logo.svg';
 import './App.css';
 import {Form} from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import {getTest} from "./api_test";
 
 function App() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data);
-
+  getTest().then(value => console.log(value))
   console.log(watch("example")); // watch input value by passing the name of it
   return (
     <div className="App">
@@ -44,7 +45,6 @@ function App() {
           <input type="submit" />
         </form>
         {/*  */}
-
       </header>
     </div>
   );

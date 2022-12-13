@@ -17,5 +17,9 @@ services:
 
   backend:
     build: ./back_end
+  
+  react-ui:
+    build: ./front_end
     ports:
-      - 8001:8001
+      - 3000:3000
+    stdin_open: true

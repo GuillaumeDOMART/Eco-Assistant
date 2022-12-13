@@ -10,8 +10,8 @@ import java.util.List;
 public class TestController {
 
     @GetMapping("/test")
-    List<String> test(){
-        return List.of(new String[]{"toto", "test"});
+    String test(){
+        return "{\"status\": \"ok\"}";
     }
 
 }
