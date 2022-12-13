@@ -11,8 +11,8 @@
     <groupId>fr.eco_assistant</groupId>
     <artifactId>back_end</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>front-end</name>
-    <description>front-end</description>
+    <name>back_end</name>
+    <description>back_end</description>
     <properties>
         <java.version>17</java.version>
     </properties>
