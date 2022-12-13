@@ -11,12 +11,12 @@ public class BackEndApplication {
     @Autowired
     private EmailSenderService senderService;
     public static void main(String[] args) {
-        SpringApplication.run(BackEndApplication.class, args);
+//        SpringApplication.run(BackEndApplication.class, args);
     }
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() {
         senderService.sendEmail("guillaumedomart@gmail.com",
                 "Test",
-                "This is theBody Test");
+                "This is the Body Test");
     }
 }
