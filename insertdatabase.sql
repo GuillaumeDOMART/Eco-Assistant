@@ -194,8 +194,8 @@ INSERT INTO ReponsePossible VALUES
 
 
 
-INSERT INTO Profil ("idprofil","mail","nom","prenom") VALUES
-(0,'javaforever@gmail.com','Forax','Remi');
+INSERT INTO Profil ("idprofil","mail", "password", "nom","prenom") VALUES
+(0,'javaforever@gmail.com','jaimepaspython','Forax','Remi');
 
 
 
