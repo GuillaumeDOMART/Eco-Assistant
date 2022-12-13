@@ -1,4 +1,4 @@
-package fr.eco_assistant.frontend;
+package fr.eco_assistant;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
