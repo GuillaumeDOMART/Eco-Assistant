@@ -11,7 +11,7 @@ public class TestController {
 
     @GetMapping("/test")
     List<String> test(){
-        return List.of(new String[]{"toto", "titi"});
+        return List.of(new String[]{"toto", "test"});
     }
 
 }
