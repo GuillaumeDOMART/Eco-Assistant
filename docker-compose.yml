@@ -16,6 +16,6 @@ services:
         - 8080:8080
 
   backend:
-    build: .
+    build: ./back_end
     ports:
       - 8001:8001
