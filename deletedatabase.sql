@@ -14,5 +14,4 @@ DELETE FROM Calcul;
 
 DELETE FROM Dependance;
 
-DELETE FROM Question
-~                       
+DELETE FROM Question;                   

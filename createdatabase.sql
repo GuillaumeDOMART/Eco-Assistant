@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS Constante (
 CREATE TABLE IF NOT EXISTS Calcul (
     idCalcul serial PRIMARY KEY,
     calcul VARCHAR (255),
-    questionAsso INT NOT NULL,
+    questionAsso INT,
     tracabilite VARCHAR (255),
     FOREIGN KEY (questionAsso)
         REFERENCES Question (idQuestion)
