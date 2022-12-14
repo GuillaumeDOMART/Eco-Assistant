@@ -12,22 +12,22 @@ public class BackEndApplication {
     @Autowired
     private EmailSenderService senderService;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+//    @Autowired
+//    private JdbcTemplate jdbcTemplate;
     public static void main(String[] args) {
         SpringApplication.run(BackEndApplication.class, args);
     }
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() {
-        //senderService.sendEmail("guillaumedomart@gmail.com",
-        //        "Test",
-        //        "This is theBody Test");
+        senderService.sendEmail("guillaumedomart@gmail.com",
+                "Test",
+                "This is theBody Test");
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void connectBDD() {
-        var sql = "CREATE TABLE utilisateur(id INT PRIMARY KEY NOT NULL, nom VARCHAR(100))";
-        jdbcTemplate.execute(sql);
-    }
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void connectBDD() {
+//        var sql = "CREATE TABLE utilisateur(id INT PRIMARY KEY NOT NULL, nom VARCHAR(100))";
+//        jdbcTemplate.execute(sql);
+//    }
 
 }
