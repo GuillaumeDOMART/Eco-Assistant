@@ -1,4 +1,4 @@
-package fr.eco_assistant.frontend;
+package fr.eco_assistant;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
