@@ -1,0 +1,18 @@
+#button {
+    background: none;
+    color: #25995C;
+    border: none;
+    font-weight: bold;
+}
+
+#button:hover {
+    box-shadow: 2px 2px 5px #AEE1C6;
+}
+
+#button:active {
+    color: #AEE1C6;
+}
+
+div {
+    font-family: 'Open Sans', sans-serif;
+}
