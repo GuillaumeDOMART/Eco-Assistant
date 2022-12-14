@@ -3,10 +3,14 @@ import './App.css';
 import {Form} from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import Chart from "chart.js/auto";
-import { Bar } from "react-chartjs-2";
+import { Bar } from "react-ù-2";
+import { jsPDF } from "jspdf";
 
 
 const labels = ["Planification", "Développement", "Test", "Déploiement", "Maintenance"];
+// Default export is a4 paper, portrait, using millimeters for units
+
+
 
 const data = {
   labels: labels,
@@ -16,13 +20,14 @@ const data = {
       backgroundColor: "rgb(255, 99, 132)",
       borderColor: "rgb(255, 99, 132)",
       data: [0, 10, 5, 2, 20, 30, 45],
+      barPercentage:1.0
     },
   ],
 };
 function App() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data);
-  const myChart = new Chart()
+//add event listener to button
 
   console.log(watch("example")); // watch input value by passing the name of it
   return (
@@ -39,12 +44,10 @@ function App() {
         >
           suiiiiiiiiiiii
         </a>
-        <div id="myChart">
-          <Bar data={data} />
+        <div style={{width: 500, height: 500}}>
+          <Bar data={data} id="myChart" />
         </div>
-        <div id="myChartv2">
 
-        </div>
         {/*---------React-BootStrap---------*/}
         <>
           <Form.Label>Range</Form.Label>
@@ -64,36 +67,26 @@ function App() {
 
           <input type="submit" />
         </form>
+        <button type="button" id="download-pdf" onClick={downloadPDF}> Export PDF </button>
         {/*  */}
 
       </header>
     </div>
   );
 }
-function generateChart() {
-  const context = document.getElementById("myChartv2").getContext('2d');
-  const myChart = new Chart(context, {
-    type: 'bar',
-    data: data,
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      },
-      onHover(e) {
-        const activePoints = myChart.getElementsAtEventForMode(e, 'nearest', {
-          intersect: true
-        }, false)
-        const [{
-          index
-        }] = activePoints;
-        console.log(data.datasets[0].data[index]);
-      }
-    }
-  });
-  return myChart;
+
+
+function downloadPDF() {
+  var canvas = document.querySelector('#myChart');
+  var context = canvas.getContext('2d');
+
+  var canvasImg = canvas.toDataURL("image/jpeg", 1.0);
+  var doc = new jsPDF();
+  var width = doc.internal.pageSize.getWidth();
+  var height = doc.internal.pageSize.getHeight();
+  doc.setFontSize(20);
+
+  doc.addImage(canvasImg, 'JPEG', 10, 10, width*0.8, height*0.4 );
+  doc.save('canvas.pdf');
 }
 export default App;
