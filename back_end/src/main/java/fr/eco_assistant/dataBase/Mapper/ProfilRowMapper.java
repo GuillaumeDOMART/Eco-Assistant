@@ -1,9 +1,9 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase.Mapper;
 
 
+import fr.eco_assistant.dataBase.Profil;
 import org.springframework.jdbc.core.RowMapper;
 
-import javax.swing.tree.TreePath;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

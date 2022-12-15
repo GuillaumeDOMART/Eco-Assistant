@@ -1,5 +1,6 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase;
 
+import fr.eco_assistant.dataBase.Mapper.QuestionRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -25,4 +26,5 @@ public class QuestionService {
         var sql ="SELECT * FROM Question WHERE id = ? ";
         return jdbcTemplate.queryForObject(sql,new  Object[]{id}, new QuestionRowMapper());
     }
+
 }

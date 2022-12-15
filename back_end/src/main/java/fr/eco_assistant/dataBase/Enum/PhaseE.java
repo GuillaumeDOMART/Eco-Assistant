@@ -1,4 +1,4 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase.Enum;
 
 public enum PhaseE {
     DEPART,

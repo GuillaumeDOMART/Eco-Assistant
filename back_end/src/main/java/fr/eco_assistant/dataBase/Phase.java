@@ -1,6 +1,6 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase;
 
-import fr.eco_assistant.DataBase.Enum.Categorie;
+import fr.eco_assistant.dataBase.Enum.Categorie;
 
 import java.util.ArrayList;
 import java.util.HashMap;

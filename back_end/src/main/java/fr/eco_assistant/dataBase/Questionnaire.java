@@ -1,4 +1,6 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase;
+
+import fr.eco_assistant.dataBase.Enum.PhaseE;
 
 import java.util.HashMap;
 

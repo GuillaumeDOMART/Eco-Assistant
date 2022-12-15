@@ -1,11 +1,11 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class Database {
     private JdbcTemplate jdbcTemplate;
     private void createProfil(){
-        var sql = "CREATE TABLE IF NOT EXISTS Profil (\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS Profil (\n" +
                 "    idProfil serial PRIMARY KEY,\n" +
                 "    mail VARCHAR (140) NOT NULL,\n" +
                 "    password VARCHAR (140) NOT NULL,\n" +
@@ -19,9 +19,11 @@ public class Database {
     private void createProjet(){
         var sql = "CREATE TABLE IF NOT EXISTS Projet (\n" +
                 "    idProjet serial PRIMARY KEY,\n" +
-                "    idProfil INT NOT NULL,\n" +
+                "    profilId INT NOT NULL,\n" +
                 "    nomProjet VARCHAR (50) NOT NULL,\n" +
-                "    etat VARCHAR (50) NOT NULL\n" +
+                "    etat VARCHAR (50) NOT NULL\n," +
+                "    FOREIGN KEY (ProfilId)\n" +
+                "        REFERENCES Profil (idProfil)\n" +
                 ");";
         jdbcTemplate.execute(sql);
     }
