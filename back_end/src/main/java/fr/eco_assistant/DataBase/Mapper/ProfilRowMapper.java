@@ -1,6 +1,7 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.DataBase.Mapper;
 
 
+import fr.eco_assistant.DataBase.Profil;
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.swing.tree.TreePath;
