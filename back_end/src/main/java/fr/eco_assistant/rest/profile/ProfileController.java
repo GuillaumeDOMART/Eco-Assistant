@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
     @PostMapping("/add")
-    public ResponseEntity<String> add(@RequestBody Profile profile){
-        return new ResponseEntity<>("yo yo yo", HttpStatus.NOT_FOUND);
+    public ResponseEntity<Profile> add(@RequestBody Profile profile){
+        return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 }
