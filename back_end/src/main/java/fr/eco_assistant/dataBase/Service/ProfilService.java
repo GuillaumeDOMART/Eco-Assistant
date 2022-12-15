@@ -18,8 +18,8 @@ public class ProfilService {
                 "(?, ?, ?, ?, 0);";
         jdbcTemplate.update(sql, profil.getMail(), profil.getPassword(), profil.getNom(), profil.getPrenom());
     }
-    public Profil getProfil(Integer id){
-        var sql = "SELECT * FROM Profil WHERE idProfil = ? ";
-        return jdbcTemplate.queryForObject(sql,new  Object[]{id}, new ProfilRowMapper());
+    public Profil getProfil(Profil profil){
+        var sql = "SELECT * FROM Profil WHERE mail = ? AND password = ?";
+        return jdbcTemplate.queryForObject(sql,new Object[]{profil.getMail(), profil.getPassword()}, new ProfilRowMapper());
     }
 }

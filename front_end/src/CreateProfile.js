@@ -50,6 +50,28 @@ function CreateProfile() {
             .then(response => console.log(response.status))
     }
 
+    const handleGet = () => {
+        const infosCopy = []
+        infosCopy.push({element : "name", value : mailOnChange})
+        infosCopy.push({element : "name", value : mdpOnChange})
+
+        setInfos(infosCopy)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(
+                {
+                    "email": mailOnChange,
+                    "password": mdpOnChange,
+                    "nom": "",
+                    "prenom": ""
+                })
+        };
+        fetch('/profile/get', requestOptions)
+            .then(response => console.log(response.json()))
+    }
+
     const handleChangeName = (event) => {
         setName(event.target.value)
     }
@@ -127,7 +149,6 @@ function CreateProfile() {
                                     placeholder="Identifiant (adresse e-mail)"
                                     aria-label="Username"
                                     aria-describedby="basic-addon1"
-                                    value={infos[2].value}
                                     onChange={handleChangeMail}
                                 />
                             </InputGroup>
@@ -136,11 +157,10 @@ function CreateProfile() {
                                     placeholder="Mot de passe"
                                     aria-label="Username"
                                     aria-describedby="basic-addon1"
-                                    value={infos[3].value}
                                     onChange={handleChangeMdp}
                                 />
                             </InputGroup>
-                            <Button id="button">Se connecter</Button>
+                            <Button id="button" onClick={handleGet}>Se connecter</Button>
                         </form>
                     </Col>
                 </Row>

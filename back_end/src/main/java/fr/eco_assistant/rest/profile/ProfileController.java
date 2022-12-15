@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("profile")
 public class ProfileController {
@@ -21,8 +23,18 @@ public class ProfileController {
     @PostMapping("/add")
     public ResponseEntity<Profile> add(@RequestBody Profile profile){
         ProfilService profilService = new ProfilService(jdbcTemplate);
-        Profil profilToCreate = new Profil(profile.getEmail(), profile.getPassword(), profile.getNom(), profile.getPrenom(), false);
-        profilService.createProfil(profilToCreate);
+        Profil profileToCreate = new Profil(profile.getEmail(), profile.getPassword(), profile.getNom(), profile.getPrenom(), false);
+        profilService.createProfil(profileToCreate);
         return new ResponseEntity<>(profile, HttpStatus.OK);
+    }
+
+    @PostMapping("/get")
+    public ResponseEntity<Profil> get(@RequestBody Profile profile) {
+        ProfilService profilService = new ProfilService(jdbcTemplate);
+        Profil profileToGet = new Profil(profile.getEmail(), profile.getPassword(), profile.getNom(), profile.getPrenom(), false);
+        var profil = profilService.getProfil(profileToGet);
+        if (profil == null)
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(profil, HttpStatus.OK);
     }
 }
