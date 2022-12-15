@@ -12,7 +12,6 @@ public class ProfilRowMapper implements RowMapper<Profil> {
     @Override
     public Profil mapRow(ResultSet rs, int rowNum) throws SQLException {
         Profil profil = new Profil(
-                rs.getInt("idProfil"),
                 rs.getString("mail"),
                 rs.getString("password"),
                 rs.getString("nom"),

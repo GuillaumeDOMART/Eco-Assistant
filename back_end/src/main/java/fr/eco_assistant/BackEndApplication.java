@@ -1,5 +1,6 @@
 package fr.eco_assistant;
 
+import fr.eco_assistant.dataBase.Database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,9 @@ public class BackEndApplication {
     @Autowired
     private EmailSenderService senderService;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     public static void main(String[] args) {
         SpringApplication.run(BackEndApplication.class, args);
     }
@@ -21,6 +25,12 @@ public class BackEndApplication {
         //        "Test",
         //        "This is theBody Test");
 
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void generateDatabase() {
+        Database database = new Database(jdbcTemplate);
+        database.createDatabase();
     }
 
 

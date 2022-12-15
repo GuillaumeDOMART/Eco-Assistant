@@ -41,7 +41,9 @@ function CreateProfile() {
             body: JSON.stringify(
                 {
                     "email": mailOnChange,
-                    "password": mdpOnChange
+                    "password": mdpOnChange,
+                    "nom" : nameOnChange,
+                    "prenom" : firstNameOnChange
             })
         };
         fetch('/profile/add', requestOptions)

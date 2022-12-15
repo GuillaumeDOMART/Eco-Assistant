@@ -1,9 +1,18 @@
 package fr.eco_assistant.dataBase;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Database {
-    private JdbcTemplate jdbcTemplate;
+
+    private final JdbcTemplate jdbcTemplate;
+
+    public Database(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     private void createProfil(){
         String sql = "CREATE TABLE IF NOT EXISTS Profil (\n" +
                 "    idProfil serial PRIMARY KEY,\n" +

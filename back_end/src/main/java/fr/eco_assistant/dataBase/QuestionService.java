@@ -12,14 +12,14 @@ public class QuestionService {
         var sql = "INSERT INTO Question (idQuestion, intitule, questionPre, typeQ, phase, categorie, calculQid, visibilite) VALUES\n" +
                 "(?, ?, ?, ?, ?, ?, ?, ?);";
         jdbcTemplate.update(sql,
-                question.id(),
-                question.intitule(),
-                question.questionPre(),
-                question.type().toString(),
-                question.phase().toString(),
-                question.categorie().toString(),
-                question.calculQid(),
-                question.visibilite()? 1 : 0);
+                question.getId(),
+                question.getIntitule(),
+                question.getQuestionPre(),
+                question.getType().toString(),
+                question.getPhase().toString(),
+                question.getCategorie().toString(),
+                question.getCalculQid(),
+                question.isVisibilite()? 1 : 0);
     }
 
     public Question getQuestion(Integer id){
