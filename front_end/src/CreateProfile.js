@@ -31,22 +31,21 @@ function CreateProfile() {
         infosCopy.push({element : "name", value : confMdpOnChange})
 
         setInfos(infosCopy)
-        console.log(infos)
 
         // fetch('/test')
-        //     .then(response => response.json())
-        //     .then(data => this.setState({ totalReactPackages: data.total }));
-
+        //     .then(response => console.log(response.status));
+        // console.log("fetch")
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title: 'React POST Request Example' })
+            body: JSON.stringify(
+                {
+                    "email": mailOnChange,
+                    "password": mdpOnChange
+            })
         };
-        fetch('/test', requestOptions)
-            .then(response => response.json())
-            .then(data => setResponse({ postId: data.id }));
-
-        console.log(response)
+        fetch('/profile/add', requestOptions)
+            .then(response => console.log(response.status))
     }
 
     const handleChangeName = (event) => {
