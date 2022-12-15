@@ -15,7 +15,7 @@ public class BackEndApplication {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     public static void main(String[] args) {
-        SpringApplication.run(BackEndApplication.class, args);
+//        SpringApplication.run(BackEndApplication.class, args);
     }
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() {
@@ -24,10 +24,10 @@ public class BackEndApplication {
                 "This is theBody Test");
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void connectBDD() {
-        var sql = "CREATE TABLE utilisateur(id INT PRIMARY KEY NOT NULL, nom VARCHAR(100))";
-        jdbcTemplate.execute(sql);
-    }
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void connectBDD() {
+//        var sql = "CREATE TABLE utilisateur(id INT PRIMARY KEY NOT NULL, nom VARCHAR(100))";
+//        jdbcTemplate.execute(sql);
+//    }
 
 }

@@ -20,6 +20,8 @@ function CreateProfile() {
     const [mailOnChange, setMail]= useState("")
     const [mdpOnChange, setMdp]= useState("")
     const [confMdpOnChange, setConfMdp]= useState("")
+
+    const [response, setResponse] = useState("")
     const handleClick = () => {
         const infosCopy = []
         infosCopy.push({element : "name", value : nameOnChange})
@@ -30,6 +32,21 @@ function CreateProfile() {
 
         setInfos(infosCopy)
         console.log(infos)
+
+        // fetch('/test')
+        //     .then(response => response.json())
+        //     .then(data => this.setState({ totalReactPackages: data.total }));
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: 'React POST Request Example' })
+        };
+        fetch('/test', requestOptions)
+            .then(response => response.json())
+            .then(data => setResponse({ postId: data.id }));
+
+        console.log(response)
     }
 
     const handleChangeName = (event) => {
