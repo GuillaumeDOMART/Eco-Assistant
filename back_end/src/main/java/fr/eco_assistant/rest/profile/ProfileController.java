@@ -10,6 +10,6 @@ public class ProfileController {
 
     @PostMapping("/add")
     public ResponseEntity<Profile> add(@RequestBody Profile profile){
-        return new ResponseEntity<>(profile, HttpStatus.OK);
+        return new ResponseEntity<Profile>(profile, HttpStatus.BAD_GATEWAY);
     }
 }
