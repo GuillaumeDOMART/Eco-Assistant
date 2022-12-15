@@ -1,6 +1,6 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase;
 
-import fr.eco_assistant.DataBase.Enum.Etat;
+import fr.eco_assistant.dataBase.Enum.Etat;
 
 import java.util.List;
 

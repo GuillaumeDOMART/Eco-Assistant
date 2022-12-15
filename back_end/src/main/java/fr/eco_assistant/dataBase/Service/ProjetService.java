@@ -1,9 +1,9 @@
-package fr.eco_assistant.DataBase.Service;
+package fr.eco_assistant.dataBase.Service;
 
-import fr.eco_assistant.DataBase.Mapper.ProjetRowMapper;
-import fr.eco_assistant.DataBase.Projet;
-import fr.eco_assistant.DataBase.Mapper.ResultatRowMapper;
-import fr.eco_assistant.DataBase.Resultat;
+import fr.eco_assistant.dataBase.Mapper.ProjetRowMapper;
+import fr.eco_assistant.dataBase.Projet;
+import fr.eco_assistant.dataBase.Mapper.ResultatRowMapper;
+import fr.eco_assistant.dataBase.Resultat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 

@@ -1,9 +1,9 @@
-package fr.eco_assistant.DataBase.Mapper;
+package fr.eco_assistant.dataBase.Mapper;
 
-import fr.eco_assistant.DataBase.Enum.Categorie;
-import fr.eco_assistant.DataBase.Enum.PhaseE;
-import fr.eco_assistant.DataBase.Question;
-import fr.eco_assistant.DataBase.Enum.TypeQ;
+import fr.eco_assistant.dataBase.Enum.Categorie;
+import fr.eco_assistant.dataBase.Enum.PhaseE;
+import fr.eco_assistant.dataBase.Question;
+import fr.eco_assistant.dataBase.Enum.TypeQ;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

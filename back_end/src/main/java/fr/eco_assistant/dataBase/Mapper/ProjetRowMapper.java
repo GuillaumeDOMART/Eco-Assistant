@@ -1,8 +1,8 @@
-package fr.eco_assistant.DataBase.Mapper;
+package fr.eco_assistant.dataBase.Mapper;
 
-import fr.eco_assistant.DataBase.Enum.Etat;
-import fr.eco_assistant.DataBase.Projet;
-import fr.eco_assistant.DataBase.Service.ProjetService;
+import fr.eco_assistant.dataBase.Enum.Etat;
+import fr.eco_assistant.dataBase.Projet;
+import fr.eco_assistant.dataBase.Service.ProjetService;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

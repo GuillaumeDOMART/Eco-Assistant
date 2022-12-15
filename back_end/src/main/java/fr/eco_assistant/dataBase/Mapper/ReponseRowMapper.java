@@ -1,6 +1,6 @@
-package fr.eco_assistant.DataBase.Mapper;
+package fr.eco_assistant.dataBase.Mapper;
 
-import fr.eco_assistant.DataBase.Reponse;
+import fr.eco_assistant.dataBase.Reponse;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

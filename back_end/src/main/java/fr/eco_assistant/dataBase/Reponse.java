@@ -1,4 +1,4 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase;
 
 public class Reponse {
     private final int id;

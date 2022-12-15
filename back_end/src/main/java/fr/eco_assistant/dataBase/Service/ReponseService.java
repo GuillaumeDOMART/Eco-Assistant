@@ -1,7 +1,7 @@
-package fr.eco_assistant.DataBase.Service;
+package fr.eco_assistant.dataBase.Service;
 
-import fr.eco_assistant.DataBase.Mapper.ReponseRowMapper;
-import fr.eco_assistant.DataBase.Reponse;
+import fr.eco_assistant.dataBase.Mapper.ReponseRowMapper;
+import fr.eco_assistant.dataBase.Reponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 

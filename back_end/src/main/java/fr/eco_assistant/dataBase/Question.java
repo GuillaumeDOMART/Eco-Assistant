@@ -1,8 +1,8 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase;
 
-import fr.eco_assistant.DataBase.Enum.Categorie;
-import fr.eco_assistant.DataBase.Enum.PhaseE;
-import fr.eco_assistant.DataBase.Enum.TypeQ;
+import fr.eco_assistant.dataBase.Enum.Categorie;
+import fr.eco_assistant.dataBase.Enum.PhaseE;
+import fr.eco_assistant.dataBase.Enum.TypeQ;
 
 public class Question {
     private final int id;

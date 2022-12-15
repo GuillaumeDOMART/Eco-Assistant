@@ -1,6 +1,6 @@
-package fr.eco_assistant.DataBase;
+package fr.eco_assistant.dataBase;
 
-import fr.eco_assistant.DataBase.Mapper.QuestionRowMapper;
+import fr.eco_assistant.dataBase.Mapper.QuestionRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
