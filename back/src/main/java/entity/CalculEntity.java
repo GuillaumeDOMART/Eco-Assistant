@@ -25,8 +25,7 @@ public class CalculEntity {
     @OneToOne
     @JoinColumn(name = "reponsePossibleId", nullable = false)
     private ReponsePossibleEntity reponsePossible;
-    
+
     @Column(name = "nbCalcul", nullable = false)
     private int nbCalcul;
-
 }
