@@ -20,7 +20,7 @@ public class ConstanteEntity {
 
     @Column(name = "constante", nullable = false)
     private int constante;
-    
+
     @Column(name = "tracabilite")
     private String tracabilite;
 }
