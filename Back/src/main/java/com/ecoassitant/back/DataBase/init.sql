@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Projet (
                 profilId INT NOT NULL,
                 nomProjet VARCHAR (50) NOT NULL,
                 etat VARCHAR (50) NOT NULL,
-                FOREIGN KEY (ProfilId)
+                FOREIGN KEY (profilId)
                     REFERENCES Profil (idProfil));
 
 CREATE TABLE IF NOT EXISTS Question (
