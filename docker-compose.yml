@@ -15,10 +15,16 @@ services:
       ports:
         - 8080:8080
 
-  app:
-    build: .
+  back:
+    build: ./back
     ports:
       - 8001:8001
+    env_file:
+      - .env
+
+  app:
+    build: ./front
+    ports:
       - 3000:3000
     env_file:
       - .env
