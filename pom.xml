@@ -7,8 +7,8 @@
     <packaging>pom</packaging>
     <name>Eco-Assistant</name>
     <modules>
-        <module>Back</module>
-        <module>Front</module>
+        <module>back</module>
+        <module>front</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
