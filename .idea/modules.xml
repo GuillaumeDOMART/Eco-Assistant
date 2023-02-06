@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Back/Back.iml" filepath="$PROJECT_DIR$/Back/Back.iml" />
+      <module fileurl="file://$PROJECT_DIR$/back/Back.iml" filepath="$PROJECT_DIR$/back/Back.iml" />
       <module fileurl="file://$PROJECT_DIR$/Eco-Assistant.iml" filepath="$PROJECT_DIR$/Eco-Assistant.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Front/Front.iml" filepath="$PROJECT_DIR$/Front/Front.iml" />
+      <module fileurl="file://$PROJECT_DIR$/front/Front.iml" filepath="$PROJECT_DIR$/front/Front.iml" />
     </modules>
   </component>
 </project>
