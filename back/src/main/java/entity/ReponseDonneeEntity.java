@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ReponseDonnee")
 public class ReponseDonneeEntity {
-    
+
     @Id
     @ManyToOne
     @JoinColumn(name = "projetId", nullable = false)
