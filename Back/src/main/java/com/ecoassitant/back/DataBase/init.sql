@@ -24,10 +24,7 @@ CREATE TABLE IF NOT EXISTS Question (
                 typeQ VARCHAR (140) NOT NULL,
                 phase VARCHAR (50) NOT NULL,
                 categorie VARCHAR (50) NOT NULL,
-                calculQid INT,
                 visibilite INT,
-                FOREIGN KEY (calculQid)
-                    REFERENCES Question (idQuestion),
                 FOREIGN KEY (questionPre)
                     REFERENCES Question (idQuestion));
 
