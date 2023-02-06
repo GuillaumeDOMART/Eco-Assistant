@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ReponsePossible")
 public class ReponsePossibleEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idReponsePos", nullable = false)

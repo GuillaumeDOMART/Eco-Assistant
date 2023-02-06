@@ -66,5 +66,5 @@ CREATE TABLE IF NOT EXISTES Calcul (
                     REFERENCES ReponsePossible (idReponsePos));
 
 CREATE TABLE IF NOT EXISTES CalculOperateur(
-                idCalcul SERIEAL PRIMARY KEY,
+                idCalculOp SERIEAL PRIMARY KEY,
                 operateur VARCHAR(5))
