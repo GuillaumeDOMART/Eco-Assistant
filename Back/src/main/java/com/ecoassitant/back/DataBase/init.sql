@@ -1,3 +1,6 @@
+/**
+    Initialisation DataBase
+ */
 CREATE TABLE IF NOT EXISTS Profil (
                 idProfil serial PRIMARY KEY,
                 mail VARCHAR (140) NOT NULL,
