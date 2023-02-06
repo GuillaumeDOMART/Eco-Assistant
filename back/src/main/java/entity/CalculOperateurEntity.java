@@ -13,10 +13,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "CalculOperateur")
 public class CalculOperateurEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCalculOp", nullable = false)
     private Long idCalculOp;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "operateur")
     private Operator operateur;
