@@ -19,7 +19,7 @@ public class QuestionsController {
         this.questionRepository = questionRepository;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<QuestionEntity> testsQuestionnaire(){
         return questionRepository.findAll();
     }

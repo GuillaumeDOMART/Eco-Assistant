@@ -12,12 +12,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "CalculOperateur")
+@Table(name = "Calculoperateur")
 public class CalculOperateurEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCalculOp", nullable = false)
+    @Column(name = "idcalculop", nullable = false)
     private Long idCalculOp;
 
     @Enumerated(EnumType.STRING)

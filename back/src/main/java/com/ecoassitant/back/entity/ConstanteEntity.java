@@ -16,7 +16,7 @@ public class ConstanteEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idConstante", nullable = false)
+    @Column(name = "idconstante", nullable = false)
     private Long idConstante;
 
     @Column(name = "constante", nullable = false)
