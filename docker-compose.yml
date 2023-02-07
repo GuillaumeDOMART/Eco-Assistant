@@ -7,6 +7,8 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: eco_assistant_db
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file:
       - .env
 

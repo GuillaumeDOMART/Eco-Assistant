@@ -28,4 +28,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      env:
+        MAIL_ADDRESS: ${{ secrets.MAIL_ADDRESS }}
+        MAIL_TOKEN: ${{ secrets.MAIL_TOKEN }}
       run: mvn -B package --file pom.xml
