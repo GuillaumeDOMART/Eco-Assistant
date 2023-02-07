@@ -29,6 +29,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       env:
-        MAIL_ADDRESS: ${{variables.MAIL_ADDRESS}}
-        MAIL_TOKEN: ${{variables.MAIL_TOKEN}}
+        MAIL_ADDRESS: ${{ secrets.MAIL_ADDRESS }}
+        MAIL_TOKEN: ${{ secrets.MAIL_TOKEN }}
       run: mvn -B package --file pom.xml
