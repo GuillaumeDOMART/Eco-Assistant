@@ -1,6 +1,6 @@
-package entity;
+package com.ecoassitant.back.entity;
 
-import entity.tools.Etat;
+import com.ecoassitant.back.entity.tools.Etat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

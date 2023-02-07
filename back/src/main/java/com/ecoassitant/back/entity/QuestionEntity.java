@@ -1,8 +1,8 @@
-package entity;
+package com.ecoassitant.back.entity;
 
-import entity.tools.Categorie;
-import entity.tools.Phase;
-import entity.tools.TypeQ;
+import com.ecoassitant.back.entity.tools.Categorie;
+import com.ecoassitant.back.entity.tools.Phase;
+import com.ecoassitant.back.entity.tools.TypeQ;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

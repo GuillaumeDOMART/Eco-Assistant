@@ -1,4 +1,4 @@
-package entity;
+package com.ecoassitant.back.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

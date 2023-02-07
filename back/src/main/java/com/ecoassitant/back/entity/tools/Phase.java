@@ -1,4 +1,4 @@
-package entity.tools;
+package com.ecoassitant.back.entity.tools;
 
 /**
  * Phase of project
