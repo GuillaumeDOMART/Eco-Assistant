@@ -1,17 +1,18 @@
-package entity;
+package com.ecoassitant.back.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "ReponsePossible")
-public class ReponsePossibleEntity {
+public class ReponsePossibleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,7 @@ public class ReponsePossibleEntity {
     private QuestionEntity questionAsso;
 
     @ManyToOne
-    @JoinColumn(name = "questionSuiv", nullable = false)
+    @JoinColumn(name = "questionSuiv")
     private QuestionEntity questionSuiv;
 
     @Column(name = "intitule")

@@ -1,21 +1,23 @@
-package entity;
+package com.ecoassitant.back.entity;
 
-import entity.tools.Categorie;
-import entity.tools.Phase;
-import entity.tools.TypeQ;
+import com.ecoassitant.back.entity.tools.Categorie;
+import com.ecoassitant.back.entity.tools.Phase;
+import com.ecoassitant.back.entity.tools.TypeQ;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "Question")
-public class QuestionEntity {
+public class QuestionEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +46,9 @@ public class QuestionEntity {
     @Column(name = "visibilite")
     @Type(type="boolean")
     private boolean visibilite;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionAsso")
+    private List<ReponsePossibleEntity> reponses;
+
+
 }
