@@ -4,9 +4,9 @@
 CREATE TABLE IF NOT EXISTS Profil (
                 idProfil serial PRIMARY KEY,
                 mail VARCHAR (140) NOT NULL,
-                password VARCHAR (140) NOT NULL,
+                mdp VARCHAR (140) NOT NULL,
                 nom VARCHAR (50) NOT NULL,
-                prenom VARCHAR (50) NOT NULL
+                prenom VARCHAR (50) NOT NULL,
                 isAdmin INT NOT NULL);
 
 CREATE TABLE IF NOT EXISTS Projet (
@@ -61,16 +61,20 @@ CREATE TABLE IF NOT EXISTS ReponseDonnee (
                 FOREIGN KEY (reponsePosId)
                     REFERENCES ReponsePossible (idReponsePos));
 
-CREATE TABLE IF NOT EXISTES Calcul (
+CREATE TABLE IF NOT EXISTS CalculOperateur(
+                idCalculOp serial PRIMARY KEY,
+                operateur VARCHAR(5));
+
+CREATE TABLE IF NOT EXISTS Calcul (
                 calculOpId INT NOT NULL,
                 reponsePossibleId INT NOT NULL,
                 nbCalcul INT NOT NULL,
+                CONSTRAINT calculOpId
                 PRIMARY KEY (calculOpId, reponsePossibleId),
+                CONSTRAINT calculOpId
                 FOREIGN KEY (calculOpId)
                     REFERENCES CalculOperateur (idCalculOp),
+                CONSTRAINT reponsePossibleId
                 FOREIGN KEY (reponsePossibleId)
                     REFERENCES ReponsePossible (idReponsePos));
 
-CREATE TABLE IF NOT EXISTES CalculOperateur(
-                idCalculOp serial PRIMARY KEY,
-                operateur VARCHAR(5))
