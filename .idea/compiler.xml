@@ -10,11 +10,6 @@
         <module name="Front" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Back" target="17" />
-      <module name="Eco-Assistant" target="17" />
-      <module name="Front" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
