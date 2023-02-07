@@ -69,9 +69,11 @@ CREATE TABLE IF NOT EXISTS Calcul (
                 calculOpId INT NOT NULL,
                 reponsePossibleId INT NOT NULL,
                 nbCalcul INT NOT NULL,
+                CONSTRAINT calculOpId
                 PRIMARY KEY (calculOpId, reponsePossibleId),
                 FOREIGN KEY (calculOpId)
                     REFERENCES CalculOperateur (idCalculOp),
+                CONSTRAINT reponsePossibleId
                 FOREIGN KEY (reponsePossibleId)
                     REFERENCES ReponsePossible (idReponsePos));
 
