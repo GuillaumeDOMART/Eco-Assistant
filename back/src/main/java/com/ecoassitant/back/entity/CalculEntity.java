@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Class Entity of table Profil
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "Profil")
-public class CalculEntity {
+public class CalculEntity implements Serializable {
 
     @Id
     @ManyToOne

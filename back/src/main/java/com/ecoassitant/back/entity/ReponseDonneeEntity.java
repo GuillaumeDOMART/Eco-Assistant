@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "ReponseDonnee")
-public class ReponseDonneeEntity {
+public class ReponseDonneeEntity implements Serializable {
 
     @Id
     @ManyToOne
