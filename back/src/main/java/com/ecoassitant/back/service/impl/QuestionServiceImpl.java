@@ -1,12 +1,9 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.QuestionDto;
-import com.ecoassitant.back.dto.ReponsePossibleDto;
 import com.ecoassitant.back.repository.QuestionRepository;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -19,8 +16,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public QuestionDto getQuestionnaire() {
         var questionEntity = questionRepository.findAll().stream().findFirst();
-        if (!questionEntity.isPresent())
-            return null;
-        return new QuestionDto(questionEntity.get());
+        return questionEntity.map(QuestionDto::new).orElse(null);
     }
 }
