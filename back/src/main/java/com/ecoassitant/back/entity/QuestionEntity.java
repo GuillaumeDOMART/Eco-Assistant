@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -44,4 +45,9 @@ public class QuestionEntity {
     @Column(name = "visibilite")
     @Type(type="boolean")
     private boolean visibilite;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionAsso")
+    private List<ReponsePossibleEntity> reponses;
+
+
 }

@@ -23,7 +23,7 @@ public class ReponsePossibleEntity {
     private QuestionEntity questionAsso;
 
     @ManyToOne
-    @JoinColumn(name = "questionSuiv", nullable = false)
+    @JoinColumn(name = "questionSuiv")
     private QuestionEntity questionSuiv;
 
     @Column(name = "intitule")
