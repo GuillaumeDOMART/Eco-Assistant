@@ -1,7 +1,9 @@
 package com.ecoassitant.back.controller;
 
+import com.ecoassitant.back.dto.QuestionDto;
 import com.ecoassitant.back.entity.QuestionEntity;
 import com.ecoassitant.back.repository.QuestionRepository;
+import com.ecoassitant.back.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,15 +14,15 @@ import java.util.List;
 @RequestMapping("api/questions")
 @RestController
 public class QuestionsController {
-    private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
 
     @Autowired
-    public QuestionsController(QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
+    public QuestionsController(QuestionService questionService) {
+        this.questionService = questionService;
     }
 
     @GetMapping("/all")
-    public List<QuestionEntity> testsQuestionnaire(){
-        return questionRepository.findAll();
+    public QuestionDto testsQuestionnaire(){
+        return questionService.getQuestionnaire();
     }
 }
