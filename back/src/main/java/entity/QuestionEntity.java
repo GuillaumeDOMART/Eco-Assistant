@@ -23,7 +23,7 @@ public class QuestionEntity {
     private Long idQuestion;
 
     @Column(name = "intitule", nullable = false)
-    private String initule;
+    private String intitule;
 
     @ManyToOne
     @JoinColumn(name = "questionPre")
