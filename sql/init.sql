@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS Constante (
 CREATE TABLE IF NOT EXISTS ReponsePossible (
                 idReponsePos serial PRIMARY KEY,
                 questionAsso INT NOT NULL,
-                questionSuiv INT NOT NULL,
+                questionSuiv INT,
                 intitule VARCHAR (140) NOT NULL,
                 constanteId INT NOT NULL,
                 CONSTRAINT questionAsso

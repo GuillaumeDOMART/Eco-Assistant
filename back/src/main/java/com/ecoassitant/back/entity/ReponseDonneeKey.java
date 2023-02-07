@@ -9,10 +9,10 @@ import java.io.Serializable;
 public class ReponseDonneeKey implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "projetId", nullable = false)
+    @JoinColumn(name = "projetid", nullable = false)
     private ProjetEntity projet;
 
     @ManyToOne
-    @JoinColumn(name = "reponsePosId", nullable = false)
+    @JoinColumn(name = "reponseposid", nullable = false)
     private ReponsePossibleEntity reponsePos;
 }

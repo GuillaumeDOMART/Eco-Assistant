@@ -14,13 +14,13 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Profil")
+@Table(name = "Calcul")
 public class CalculEntity implements Serializable {
 
     @EmbeddedId
     private CalculKey id;
 
-    @Column(name = "nbCalcul", nullable = false)
+    @Column(name = "nbcalcul", nullable = false)
     private int nbCalcul;
 }
 

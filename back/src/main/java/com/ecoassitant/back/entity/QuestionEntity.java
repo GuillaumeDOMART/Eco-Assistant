@@ -21,18 +21,18 @@ public class QuestionEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idQuestion", nullable = false)
+    @Column(name = "idquestion", nullable = false)
     private Long idQuestion;
 
     @Column(name = "intitule", nullable = false)
     private String intitule;
 
     @ManyToOne
-    @JoinColumn(name = "questionPre")
+    @JoinColumn(name = "questionpre")
     private QuestionEntity questionPre;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "typeQ", nullable = false)
+    @Column(name = "typeq", nullable = false)
     private TypeQ typeQ;
 
     @Enumerated(EnumType.STRING)

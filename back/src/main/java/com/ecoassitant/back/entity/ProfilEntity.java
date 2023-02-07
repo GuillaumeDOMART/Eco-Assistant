@@ -17,7 +17,7 @@ public class ProfilEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idProfil", nullable = false)
+    @Column(name = "idprofil", nullable = false)
     private Long idProfil;
 
     @Column(name = "mail")
@@ -32,7 +32,7 @@ public class ProfilEntity implements Serializable {
     @Column(name = "prenom", nullable = false)
     private String prenom;
 
-    @Column(name = "isAdmin", nullable = false)
+    @Column(name = "isadmin", nullable = false)
     @Type(type="boolean")
     private boolean isAdmin;
 }

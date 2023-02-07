@@ -11,26 +11,26 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ReponsePossible")
+@Table(name = "Reponsepossible")
 public class ReponsePossibleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idReponsePos", nullable = false)
+    @Column(name = "idreponsepos", nullable = false)
     private Long idReponsePos;
 
     @ManyToOne
-    @JoinColumn(name = "questionAsso", nullable = false)
+    @JoinColumn(name = "questionasso", nullable = false)
     private QuestionEntity questionAsso;
 
     @ManyToOne
-    @JoinColumn(name = "questionSuiv")
+    @JoinColumn(name = "questionsuiv")
     private QuestionEntity questionSuiv;
 
     @Column(name = "intitule")
     private String intitule;
 
     @ManyToOne
-    @JoinColumn(name = "constanteId", nullable = false)
+    @JoinColumn(name = "constanteid", nullable = false)
     private ConstanteEntity constante;
 }

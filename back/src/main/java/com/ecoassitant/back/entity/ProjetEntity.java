@@ -17,14 +17,14 @@ public class ProjetEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idProjet", nullable = false)
+    @Column(name = "idprojet", nullable = false)
     private Long idProjet;
 
     @ManyToOne
-    @JoinColumn(name = "profilId", nullable = false)
+    @JoinColumn(name = "profilid", nullable = false)
     private ProjetEntity profil;
 
-    @Column(name = "nomProjet", nullable = false)
+    @Column(name = "nomprojet", nullable = false)
     private String nomProjet;
 
     @Column(name = "etat", nullable = false)
