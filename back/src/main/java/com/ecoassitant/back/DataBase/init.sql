@@ -4,7 +4,7 @@
 CREATE TABLE IF NOT EXISTS Profil (
                 idProfil serial PRIMARY KEY,
                 mail VARCHAR (140) NOT NULL,
-                password VARCHAR (140) NOT NULL,
+                mdp VARCHAR (140) NOT NULL,
                 nom VARCHAR (50) NOT NULL,
                 prenom VARCHAR (50) NOT NULL,
                 isAdmin INT NOT NULL);
@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS Calcul (
                 nbCalcul INT NOT NULL,
                 CONSTRAINT calculOpId
                 PRIMARY KEY (calculOpId, reponsePossibleId),
+                CONSTRAINT calculOpId
                 FOREIGN KEY (calculOpId)
                     REFERENCES CalculOperateur (idCalculOp),
                 CONSTRAINT reponsePossibleId

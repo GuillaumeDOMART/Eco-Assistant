@@ -22,7 +22,7 @@ public class ProfilEntity {
     @Column(name = "mail")
     private String mail;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "mdp", nullable = false)
     private String password;
 
     @Column(name = "nom", nullable = false)
