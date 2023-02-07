@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS Projet (
                 profilId INT NOT NULL,
                 nomProjet VARCHAR (50) NOT NULL,
                 etat VARCHAR (50) NOT NULL,
+                CONSTRAINT profilId
                 FOREIGN KEY (profilId)
                     REFERENCES Profil (idProfil));
 
@@ -25,6 +26,7 @@ CREATE TABLE IF NOT EXISTS Question (
                 phase VARCHAR (50) NOT NULL,
                 categorie VARCHAR (50) NOT NULL,
                 visibilite INT,
+                CONSTRAINT questionPre
                 FOREIGN KEY (questionPre)
                     REFERENCES Question (idQuestion));
 
@@ -40,8 +42,10 @@ CREATE TABLE IF NOT EXISTS ReponsePossible (
                 questionSuiv INT NOT NULL,
                 intitule VARCHAR (140) NOT NULL,
                 constanteId INT NOT NULL,
+                CONSTRAINT questionAsso
                 FOREIGN KEY (questionAsso)
                     REFERENCES Question (idQuestion),
+                CONSTRAINT questionSuiv
                 FOREIGN KEY (questionSuiv)
                     REFERENCES Question (idQuestion));
 
@@ -49,9 +53,11 @@ CREATE TABLE IF NOT EXISTS ReponseDonnee (
                 projetId INT NOT NULL,
                 reponsePosId INT NOT NULL,
                 entry INT NOT NULL,
+                CONSTRAINT projetId
                 PRIMARY KEY (projetId, reponsePosId),
                 FOREIGN KEY (projetId)
                     REFERENCES Projet (idProjet),
+                CONSTRAINT reponsePosId
                 FOREIGN KEY (reponsePosId)
                     REFERENCES ReponsePossible (idReponsePos));
 
@@ -66,5 +72,5 @@ CREATE TABLE IF NOT EXISTES Calcul (
                     REFERENCES ReponsePossible (idReponsePos));
 
 CREATE TABLE IF NOT EXISTES CalculOperateur(
-                idCalcul SERIEAL PRIMARY KEY,
+                idCalculOp serial PRIMARY KEY,
                 operateur VARCHAR(5))
