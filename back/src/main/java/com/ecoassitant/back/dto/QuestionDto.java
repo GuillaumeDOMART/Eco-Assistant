@@ -8,13 +8,20 @@ import com.ecoassitant.back.entity.tools.TypeQ;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Question build with an QuestionEntity without id for use in app
+ */
 public class QuestionDto {
     private String intitule;
     private TypeQ type;
     private Phase phase;
     private Categorie categorie;
-    private List<ReponsePossibleDto> reponses;
+    private  List<ReponsePossibleDto> reponses;
 
+    /**
+     * Constructor of questionDto
+     * @param question question Entity change into questionDto
+     */
     public QuestionDto(QuestionEntity question) {
         if (question == null)
             return;
@@ -65,6 +72,6 @@ public class QuestionDto {
     }
 
     public void setReponses(List<ReponsePossibleDto> reponses) {
-        this.reponses = reponses;
+        this.reponses = List.copyOf(reponses);
     }
 }
