@@ -16,6 +16,8 @@ public class QuestionDto {
     private List<ReponsePossibleDto> reponses;
 
     public QuestionDto(QuestionEntity question) {
+        if (question == null)
+            return;
         this.intitule = question.getIntitule();
         this.type = question.getTypeQ();
         this.phase = question.getPhase();

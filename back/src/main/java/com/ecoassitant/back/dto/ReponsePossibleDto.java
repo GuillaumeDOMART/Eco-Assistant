@@ -8,7 +8,7 @@ public class ReponsePossibleDto {
     private int constante;
 
     public ReponsePossibleDto(ReponsePossibleEntity reponse) {
-        this.questionSuiv = new QuestionDto(reponse.getQuestionSuiv());
+        this.questionSuiv = reponse.getQuestionSuiv() != null? new QuestionDto(reponse.getQuestionSuiv()) : null;
         this.intitule = reponse.getIntitule();
         this.constante = reponse.getConstante().getConstante();
     }
