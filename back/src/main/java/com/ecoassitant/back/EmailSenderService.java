@@ -11,7 +11,7 @@ public class EmailSenderService {
 
     @Autowired
     private JavaMailSender mailSender;
-    @Value("${MAIL_ADDRESS}")
+    @Value("${spring.mail.username}")
     private String sender;
 
     public void sendEmail(String toEmail, String subject, String body) {
