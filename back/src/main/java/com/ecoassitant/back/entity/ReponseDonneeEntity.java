@@ -14,16 +14,10 @@ import java.io.Serializable;
 @Table(name = "ReponseDonnee")
 public class ReponseDonneeEntity implements Serializable {
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "projetId", nullable = false)
-    private ProjetEntity projet;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "reponsePosId", nullable = false)
-    private ReponsePossibleEntity reponsePos;
+    @EmbeddedId
+    private ReponseDonneeKey reponseDonneeKey;
 
     @Column(name = "entry", nullable = false)
     private int entry;
 }
+
