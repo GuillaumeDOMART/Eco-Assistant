@@ -32,7 +32,7 @@ jobs:
     - name: Start PostgreSQL Container
       uses: docker://postgres:15
       with:
-        env: POSTGRES_USER=myuser POSTGRES_PASSWORD=mypassword POSTGRES_DB=mydatabase
+        env: POSTGRES_USER=${{ env.POSTGRES_USER }} POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }} POSTGRES_DB=${{ env.POSTGRES_DB }}
         id: postgres
 
 
