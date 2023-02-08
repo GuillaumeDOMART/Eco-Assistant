@@ -1,12 +1,11 @@
 package com.ecoassitant.back.controller;
 
-import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("api")
 @RestController
@@ -20,13 +19,14 @@ public class ProjetController {
 
     @GetMapping("/projets")
     @ResponseBody
-    public List<ProjetEntity> listerLesProjets(){
-        return projetRepository.findAll();
+    public List<ProjetDto> listerLesProjets(){
+        return projetRepository.findAll().stream().map(ProjetDto::new).toList();
     }
 
     @GetMapping("/projet/{id}")
     @ResponseBody
-    public Optional<ProjetEntity> recupererProjetAvecId(@PathVariable("id") Long id){
-        return projetRepository.findById(id);
+    public ProjetDto recupererProjetAvecId(@PathVariable("id") Long id){
+        var entity = projetRepository.findById(id);
+        return entity.map(ProjetDto::new).orElse(null);
     }
 }

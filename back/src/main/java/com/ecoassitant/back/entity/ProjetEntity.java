@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Profil")
+@Table(name = "Projet")
 public class ProjetEntity implements Serializable {
 
     @Id
@@ -22,7 +22,7 @@ public class ProjetEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "profilid", nullable = false)
-    private ProjetEntity profil;
+    private ProfilEntity profil;
 
     @Column(name = "nomprojet", nullable = false)
     private String nomProjet;
