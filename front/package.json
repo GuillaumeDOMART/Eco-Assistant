@@ -42,5 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://backend:8001"
+  "proxy": "http://nginx:80"
 }
