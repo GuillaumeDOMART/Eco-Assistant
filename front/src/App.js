@@ -1,10 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
-import  './BarreNav/BarreNavCore.js';
+import BarreNavCore from "./BarreNav/BarreNavCore";
 
 function App() {
   return (
-    <div className="App">
+    <div id="app" className="App">
       <BarreNavCore/>
       <div>STUFF</div>
     </div>
