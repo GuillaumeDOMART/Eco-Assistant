@@ -5,6 +5,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import {green} from "@mui/material/colors";
 
 const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
 
@@ -48,7 +49,7 @@ export default function HorizontalLinearStepper() {
     return (
         <div>
             <Box sx={{ width: '100%', pl:'20px', pr:'20px', mt:'20px'}}>
-                <Stepper activeStep={activeStep} alternativeLabel>
+                <Stepper activeStep={activeStep} alternativeLabel color={green["700"]}>
                     {steps.map((label, index) => {
                         const stepProps = {};
                         const labelProps = {};
