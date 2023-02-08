@@ -9,7 +9,7 @@ function BarreNavCore() {
                     <div className="list-group list-group-flush mx-3 mt-4">
                         <img alt="logo react" src={logo} height="100px"></img>
                         {['Accueil', 'Profil', 'Remplir un questionnaire', 'Questions proposées', 'Moderation', 'Se déconnecter'].map(placement => (
-                        <a href="#" className="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+                        <a href="./" className="list-group-item list-group-item-action py-2 ripple" aria-current="true">
                             <i className="fas fa-tachometer-alt fa-fw me-3"></i><span>{placement}</span>
                         </a>
                         ))}
