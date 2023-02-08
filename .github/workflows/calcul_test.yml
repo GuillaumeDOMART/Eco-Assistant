@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       # label used to access the service container
-      ${{ secrets.POSTGRES_HOST }}:
+      db:
         # Docker Hub image
         image: postgres:15
         # service environment variables
