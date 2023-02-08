@@ -18,7 +18,7 @@ env:
   MAIL_ADDRESS: ${{ secrets.MAIL_ADDRESS }}
   MAIL_TOKEN: ${{ secrets.MAIL_TOKEN }}
   POSTGRES_DB_NAME: ${{ secrets.POSTGRES_DB_NAME }}
-  POSTGRES_HOST: localhost
+  POSTGRES_DB: ${{ secrets.POSTGRES_HOST }}
   POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
   POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
   POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -29,11 +29,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: harmon758/postgresql-action@v1
+    - name: Start PostgreSQL Container
+      uses: docker://postgres:15
       with:
-        postgresql db: ${{ env.POSTGRES_DB_NAME }}
-        postgresql user: ${{ env.POSTGRES_USER }}
-        postgresql password: ${{ env.POSTGRES_PASSWORD }}
+        env: POSTGRES_USER=myuser POSTGRES_PASSWORD=mypassword POSTGRES_DB=mydatabase
+        id: postgres
+
 
     - name: Execute SQL
       run : psql -h ${{ env.POSTGRES_HOST }} -U ${{ env.POSTGRES_USER }} -d ${{ env.POSTGRES_DB_NAME }} -a -f sql/init.sql
