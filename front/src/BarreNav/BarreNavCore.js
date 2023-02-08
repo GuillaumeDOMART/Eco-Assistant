@@ -9,7 +9,8 @@ function BarreNavCore() {
         <a href="./" className="list-group-item list-group-item-action py-2 ripple" key={x} aria-current="true">
             <span key="key">{x}</span>
         </a>
-    ))
+    ));
+
     return (
         <nav id="sidebarMenu" className="col-2 order-12 collapse d-lg-block sidebar collapse bg-black">
             <div className="position-sticky list-group list-group-flush mx-3 mt-4">
