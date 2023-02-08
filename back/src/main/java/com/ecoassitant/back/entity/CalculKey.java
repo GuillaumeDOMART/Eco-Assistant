@@ -17,4 +17,11 @@ public class CalculKey implements Serializable {
     @JoinColumn(name = "reponsepossibleid", nullable = false)
     private ReponsePossibleEntity reponsePossible;
 
+    public CalculOperateurEntity getCalculOp() {
+        return calculOp;
+    }
+
+    public ReponsePossibleEntity getReponsePossible() {
+        return reponsePossible;
+    }
 }
