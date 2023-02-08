@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       # label used to access the service container
-      db:
+      ${{ secrets.POSTGRES_HOST }}:
         # Docker Hub image
         image: postgres:15
         # service environment variables
@@ -55,7 +55,7 @@ jobs:
 
     steps:
     - name: Execute SQL
-      run : psql -h ${{ env.POSTGRES_HOST }} -U ${{ env.POSTGRES_USER }} -d ${{ env.POSTGRES_DB_NAME }} -a -f sql/init.sql
+      run : psql -h ${{ secrets.POSTGRES_HOST }} -U ${{ secrets.POSTGRES_USER }} -d ${{ secrets.POSTGRES_DB_NAME }} -a -f sql/init.sql
 
     - uses: actions/checkout@v3
     - name: Set up JDK 17
