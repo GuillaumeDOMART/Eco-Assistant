@@ -22,7 +22,6 @@ public class CalculEntier {
 
 
     }
-
     public Optional<Double> execute(){
         if(!isPossible())
             return Optional.empty();
