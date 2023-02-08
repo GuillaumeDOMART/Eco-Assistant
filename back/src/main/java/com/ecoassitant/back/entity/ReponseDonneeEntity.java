@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ReponseDonnee")
+@Table(name = "Reponsedonnee")
 public class ReponseDonneeEntity implements Serializable {
 
     @EmbeddedId
