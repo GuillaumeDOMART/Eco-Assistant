@@ -28,21 +28,16 @@ function Questionnaire() {
         alert(JSON.stringify(data));
     };
 
-    useEffect(() => {/*{
-        fetch('localhost:8001/api/test')
-            .then((response) => response.text())
-            .then(data => console.log(data))
-    }*/
-
-        const requestOptions = {
+    useEffect(() => {
+        var requestOptions = {
             method: 'GET',
             redirect: 'follow'
         };
 
-        fetch("/api/test", requestOptions)
+        fetch("/api/questions/all", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
-            .catch(error => console.log('error', error))
+            .catch(error => console.log('error', error));
     })
 
 
