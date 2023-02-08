@@ -36,11 +36,7 @@ jobs:
         postgresql password: ${{ env.POSTGRES_PASSWORD }}
 
     - name: Execute SQL
-      uses: actions/exec@v2
-      with:
-        shell: bash
-        working-directory: ${{ env.GITHUB_WORKSPACE }}
-        command: psql -h ${{ env.POSTGRES_HOST }} -U ${{ env.POSTGRES_USER }} -d ${{ env.POSTGRES_DB_NAME }} -a -f sql/init.sql
+      run : psql -h ${{ env.POSTGRES_HOST }} -U ${{ env.POSTGRES_USER }} -d ${{ env.POSTGRES_DB_NAME }} -a -f sql/init.sql
 
     - uses: actions/checkout@v3
     - name: Set up JDK 17
