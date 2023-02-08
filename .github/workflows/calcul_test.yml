@@ -36,7 +36,7 @@ jobs:
         postgresql password: ${{ env.POSTGRES_PASSWORD }}
 
     - name: Execute SQL
-      uses: actions/exec@v1
+      uses: actions/exec
       with:
         shell: bash
         working-directory: ${{ env.GITHUB_WORKSPACE }}
