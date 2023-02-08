@@ -15,4 +15,12 @@ public class ReponseDonneeKey implements Serializable {
     @ManyToOne
     @JoinColumn(name = "reponseposid", nullable = false)
     private ReponsePossibleEntity reponsePos;
+
+    public ProjetEntity getProjet() {
+        return projet;
+    }
+
+    public ReponsePossibleEntity getReponsePos() {
+        return reponsePos;
+    }
 }

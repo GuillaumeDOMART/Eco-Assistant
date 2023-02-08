@@ -21,7 +21,7 @@ public class CalculController {
 
     @GetMapping("run")
     public String test(){
-        var list = entityManager.createQuery("SELECT rd FROM ReponseDonneeEntity rd JOIN ReponsePossibleEntity rp ON rd.reponseDonneeKey.reponsePos = rp JOIN ConstanteEntity c ON rp.constante = c JOIN CalculOperateurEntity co ON rp.WHERE rd.reponseDonneeKey.projet = :id", ReponseDonneeEntity.class)
+        var list = entityManager.createQuery("SELECT rd FROM      rd JOIN ReponsePossibleEntity rp ON rd.reponseDonneeKey.reponsePos = rp JOIN ConstanteEntity c ON rp.constante = c JOIN CalculOperateurEntity co ON rp.WHERE rd.reponseDonneeKey.projet = :id", ReponseDonneeEntity.class)
                 .getResultList();
         return "";
     }
