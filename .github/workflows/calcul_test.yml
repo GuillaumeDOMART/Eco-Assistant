@@ -18,7 +18,7 @@ env:
   MAIL_ADDRESS: ${{ secrets.MAIL_ADDRESS }}
   MAIL_TOKEN: ${{ secrets.MAIL_TOKEN }}
   POSTGRES_DB_NAME: ${{ secrets.POSTGRES_DB_NAME }}
-  POSTGRES_DB: ${{ secrets.POSTGRES_HOST }}
+  POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
   POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
   POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
   POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -32,8 +32,8 @@ jobs:
     - name: Start PostgreSQL Container
       uses: docker://postgres:15
       with:
-        env: POSTGRES_USER=${{ env.POSTGRES_USER }} POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }} POSTGRES_DB=${{ env.POSTGRES_DB }}
-        id: postgres
+        env: POSTGRES_USER=${{ env.POSTGRES_USER }} POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }} POSTGRES_DB=${{ env.POSTGRES_DB_NAME }}
+        id: ${{ env.POSTGRES_HOST }}
 
 
     - name: Execute SQL
