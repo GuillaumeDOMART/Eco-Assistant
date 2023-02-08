@@ -55,7 +55,7 @@ jobs:
 
     steps:
     - name: Execute SQL
-      run : PGPASSWORD=${{ secrets.POSTGRES_PASSWORD }} psql -h localhost -U ${{ secrets.POSTGRES_USER }} -d ${{ secrets.POSTGRES_DB_NAME }} -a -f ${GITHUB_WORKSPACE}/sql/init.sql
+      run : PGPASSWORD=${{ secrets.POSTGRES_PASSWORD }} psql -h localhost -U ${{ secrets.POSTGRES_USER }} -d ${{ secrets.POSTGRES_DB_NAME }} -a -f /sql/init.sql
       shell: bash
 
     - uses: actions/checkout@v3
