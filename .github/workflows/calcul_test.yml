@@ -27,40 +27,33 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-services:
-  # label used to access the service container
-  db:
-    # Docker Hub image
-    image: postgres:15
-    # service environment variables
-    # `POSTGRES_HOST` is `postgres`
-    env:
-      # optional (defaults to `postgres`)
-      POSTGRES_DB: ${{ env.POSTGRES_DB_NAME }}
-      # required
-      POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-      # optional (defaults to `5432`)
-      POSTGRES_PORT: 5432
-      # optional (defaults to `postgres`)
-      POSTGRES_USER: ${{ env.POSTGRES_USER }}
-    ports:
-      # maps tcp port 5432 on service container to the host
-      - 5432:5432
-    # set health checks to wait until postgres has started
-    options: >-
-      --health-cmd pg_isready
-      --health-interval 10s
-      --health-timeout 5s
-      --health-retries 5
+    services:
+      # label used to access the service container
+      db:
+        # Docker Hub image
+        image: postgres:15
+        # service environment variables
+        # `POSTGRES_HOST` is `postgres`
+        env:
+          # optional (defaults to `postgres`)
+          POSTGRES_DB: ${{ env.POSTGRES_DB_NAME }}
+          # required
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          # optional (defaults to `5432`)
+          POSTGRES_PORT: 5432
+          # optional (defaults to `postgres`)
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+        ports:
+          # maps tcp port 5432 on service container to the host
+          - 5432:5432
+        # set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-    - name: Start PostgreSQL Container
-      uses: docker://postgres:15
-      with:
-        env: POSTGRES_USER=${{ env.POSTGRES_USER }} POSTGRES_PASSWORD=${{ env.POSTGRES_PASSWORD }} POSTGRES_DB=${{ env.POSTGRES_DB_NAME }}
-        id: ${{ env.POSTGRES_HOST }}
-
-
     - name: Execute SQL
       run : psql -h ${{ env.POSTGRES_HOST }} -U ${{ env.POSTGRES_USER }} -d ${{ env.POSTGRES_DB_NAME }} -a -f sql/init.sql
 
