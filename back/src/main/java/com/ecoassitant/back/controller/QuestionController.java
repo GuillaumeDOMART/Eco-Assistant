@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controller with api linked to Questions
  */
-@RequestMapping("api/questions")
+@RequestMapping("api/")
 @RestController
 public class QuestionController {
     private final QuestionService questionService;
@@ -19,7 +19,8 @@ public class QuestionController {
     public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
     }
-    @GetMapping("/all")
+
+    @GetMapping("/questions")
     public QuestionDto testsQuestionnaire(){
         return questionService.getQuestionnaire();
     }
