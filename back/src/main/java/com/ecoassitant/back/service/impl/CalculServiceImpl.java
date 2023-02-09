@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+/**
+ * Implementation of calculService
+ */
 @Service
 public class CalculServiceImpl  implements CalculService {
     private final CalculRepository calculRepository;
