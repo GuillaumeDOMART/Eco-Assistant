@@ -12,11 +12,11 @@ export default function StepperComponent() {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
 
-    function isStepSkipped(step) {
+    const isStepSkipped = (step) => {
         return skipped.has(step);
-    }
+    };
 
-    function handleNext() {
+    const handleNext = () => {
         let newSkipped = skipped;
         if (isStepSkipped(activeStep)) {
             newSkipped = new Set(newSkipped.values());
@@ -25,13 +25,13 @@ export default function StepperComponent() {
 
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setSkipped(newSkipped);
-    }
+    };
 
-    function handleBack() {
+    const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    }
+    };
 
-    function handleSkip() {
+    const handleSkip = () => {
 
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setSkipped((prevSkipped) => {
@@ -39,11 +39,11 @@ export default function StepperComponent() {
             newSkipped.add(activeStep);
             return newSkipped;
         });
-    }
+    };
 
-    function handleReset() {
+    const handleReset = () => {
         setActiveStep(0);
-    }
+    };
 
     return (
         <div>
