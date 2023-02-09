@@ -17,6 +17,7 @@ public class QuestionDto {
     private Phase phase;
     private Categorie categorie;
     private  List<ReponsePossibleDto> reponses;
+    private boolean isVisible;
 
     /**
      * Constructor of questionDto
@@ -26,15 +27,32 @@ public class QuestionDto {
         if (question == null)
             return;
         this.intitule = question.getIntitule();
+        this.isVisible = question.isVisibilite();
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
         this.categorie = question.getCategorie();
         this.reponses = new ArrayList<ReponsePossibleDto>();
-                question.getReponses().forEach(reponse -> {
+        question.getReponses().forEach(reponse -> {
             reponses.add(new ReponsePossibleDto(reponse));
         });
+
     }
 
+    /**
+     * getter of visible
+     * @return  visivility of question in quiz
+     */
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    /**
+     * setter of visible
+     * @param visible indicate if question visible in quiz
+     */
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
     public String getIntitule() {
         return intitule;
     }
