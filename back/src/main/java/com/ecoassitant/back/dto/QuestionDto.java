@@ -18,7 +18,7 @@ public class QuestionDto {
     private Categorie categorie;
     private  List<ReponsePossibleDto> reponses;
     private boolean isVisible;
-    
+
     /**
      * Constructor of questionDto
      * @param question question Entity change into questionDto
@@ -38,10 +38,18 @@ public class QuestionDto {
 
     }
 
+    /**
+     * getter of visible
+     * @return  visivility of question in quiz
+     */
     public boolean isVisible() {
         return isVisible;
     }
 
+    /**
+     * setter of visible
+     * @param visible indicate if question visible in quiz
+     */
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
