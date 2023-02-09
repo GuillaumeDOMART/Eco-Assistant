@@ -7,4 +7,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/calcul")
 @RestController
 public class CalculController {
+
 }
