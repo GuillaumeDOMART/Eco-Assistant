@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography';
 const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
 
 export default function StepperComponent() {
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [skipped, setSkipped] = React.useState(new Set());
+    const [activeStep, setActiveStep] = useState(0);
+    const [skipped, setSkipped] = useState(new Set());
 
     const isStepSkipped = (step) => {
         return skipped.has(step);

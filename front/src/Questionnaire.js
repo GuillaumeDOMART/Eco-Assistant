@@ -40,16 +40,6 @@ const test = {"intitule":"Combien d heures codez-vous par semaine ?",
 }
 
 /**
- * Return an array containing informations about the given response
- * @param question
- * @param reponseRequise
- * @returns {(*|string|"beforeRead"|"read"|"afterRead"|"beforeMain"|"main"|"afterMain"|"beforeWrite"|"write"|"afterWrite")[]}
- */
-function parseQuestion(question, reponseRequise) {
-    return [reponseRequise, question.intitule, question.type, question.phase, question.categorie, getResponses(question)]
-}
-
-/**
  * Return the different possible answers to the question
  * @param question
  * @returns {*[]}
@@ -63,18 +53,28 @@ function getResponses(question) {
 }
 
 /**
+ * Return an array containing informations about the given response
+ * @param question
+ * @param reponseRequise
+ * @returns {(*|string|"beforeRead"|"read"|"afterRead"|"beforeMain"|"main"|"afterMain"|"beforeWrite"|"write"|"afterWrite")[]}
+ */
+function parseQuestion(question, reponseRequise) {
+    return [reponseRequise, question.intitule, question.type, question.phase, question.categorie, getResponses(question)]
+}
+
+/**
  * Create an array containing the quiz from a json format
- * @param test
+ * @param question
  * @param arrayReturn
  * @param index
  * @param reponseRequise
  * @returns {*[]|null}
  */
-function buildQuiz(test, arrayReturn = [], index = 0, reponseRequise = null) {
-    if (test === null)
+function buildQuiz(question, arrayReturn = [], index = 0, reponseRequise = null) {
+    if (question === null)
         return null;
-    arrayReturn[index] = parseQuestion(test, reponseRequise)
-    test.reponses.forEach((value) => {
+    arrayReturn[index] = parseQuestion(question, reponseRequise)
+    question.reponses.forEach((value) => {
         buildQuiz(value.questionSuiv, arrayReturn, index + 1, value.intitule)
     })
     return arrayReturn;
