@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Projet")
+@Table(name = "projet")
 public class ProjetEntity implements Serializable {
 
     @Id

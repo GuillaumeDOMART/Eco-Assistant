@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Calculoperateur")
+@Table(name = "calculoperateur")
 public class CalculOperateurEntity implements Serializable {
 
     @Id

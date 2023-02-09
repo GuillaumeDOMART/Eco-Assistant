@@ -6,6 +6,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 
+/**
+ *Primary key of Calcul
+ */
 @Embeddable
 public class CalculKey implements Serializable {
 

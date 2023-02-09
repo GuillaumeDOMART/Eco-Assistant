@@ -10,7 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * Class to manage endpoints regarding profiles
+ */
 @RequestMapping("api")
 @RestController
 public class ProjetController {
@@ -21,6 +25,9 @@ public class ProjetController {
         this.projetService = projetService;
     }
 
+    /**
+     * Endpoint to retrieve all projects
+     */
     @GetMapping("/projets")
     @ResponseBody
     public ResponseEntity<List<ProjetDto>> listerLesProjets(){
@@ -34,6 +41,9 @@ public class ProjetController {
         }
     }
 
+    /**
+     * Endpoint to retrieve a projet by id
+     */
     @GetMapping("/projet/{id}")
     @ResponseBody
     public ResponseEntity<ProjetDto> recupererProjetAvecId(@PathVariable("id") Long id){
@@ -46,6 +56,10 @@ public class ProjetController {
             return new ResponseEntity<>(projet,headers,HttpStatus.OK);
         }
     }
+
+    /**
+     * Endpoint to retrieve a projet by it's user's id
+     */
     @GetMapping("/projet/user/{id}")
     @ResponseBody
     public ResponseEntity<List<ProjetDto>> recupererProjetAvecUserId(@PathVariable("id") Long id){

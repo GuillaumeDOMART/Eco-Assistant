@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Calcul")
+@Table(name = "calcul")
 public class CalculEntity implements Serializable {
 
     @EmbeddedId
