@@ -30,4 +30,9 @@ public class ProfilController {
             return new ResponseEntity<>(profil.get(), headers, HttpStatus.OK);
         }
     }
+
+/*    @GetMapping("/profil/{id}")
+    public ProfilDto recupererProfilAvecId(@PathVariable("id") Long id){
+        return repository.findById(id).map(ProfilDto::new).get();
+    }*/
 }
