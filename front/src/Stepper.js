@@ -8,14 +8,27 @@ import Typography from '@mui/material/Typography';
 
 const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
 
+/**
+ * The component representing the Stepper
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function StepperComponent() {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
 
+    /**
+     * Check if the step is in the skipped Set
+     * @param step
+     * @returns {boolean}
+     */
     const isStepSkipped = (step) => {
         return skipped.has(step);
     };
 
+    /**
+     * Go to the next step
+     */
     const handleNext = () => {
         let newSkipped = skipped;
         if (isStepSkipped(activeStep)) {
@@ -27,10 +40,16 @@ export default function StepperComponent() {
         setSkipped(newSkipped);
     };
 
+    /**
+     * Go back to the previous step
+     */
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    /**
+     * Skip the actual step
+     */
     const handleSkip = () => {
 
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -41,6 +60,9 @@ export default function StepperComponent() {
         });
     };
 
+    /**
+     * Reset the stepper
+     */
     const handleReset = () => {
         setActiveStep(0);
     };
