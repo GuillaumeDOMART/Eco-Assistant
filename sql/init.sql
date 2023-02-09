@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS reponsedonnee (
                 entry INT NOT NULL,
                 CONSTRAINT projetid
                 PRIMARY KEY (projetid, reponseposid),
+                CONSTRAINT fk_projetid
                 FOREIGN KEY (projetid)
                     REFERENCES projet (idprojet),
                 CONSTRAINT reponseposid
