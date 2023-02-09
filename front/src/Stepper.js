@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -22,14 +22,18 @@ export default function StepperComponent() {
      * @param step
      * @returns {boolean}
      */
-    const isStepSkipped = (step) => {
+    const isStepSkipped = useCallback(
+        (step) => {
         return skipped.has(step);
-    };
+        },
+        [skipped]
+    );
 
     /**
      * Go to the next step
      */
-    const handleNext = () => {
+    const handleNext = useCallback(
+        () => {
         let newSkipped = skipped;
         if (isStepSkipped(activeStep)) {
             newSkipped = new Set(newSkipped.values());
@@ -38,19 +42,25 @@ export default function StepperComponent() {
 
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setSkipped(newSkipped);
-    };
+        },
+        [skipped, activeStep]
+    );
 
     /**
      * Go back to the previous step
      */
-    const handleBack = () => {
+    const handleBack = useCallback(
+        () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+        },
+        []
+    );
 
     /**
      * Skip the actual step
      */
-    const handleSkip = () => {
+    const handleSkip = useCallback(
+        () => {
 
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setSkipped((prevSkipped) => {
@@ -58,14 +68,19 @@ export default function StepperComponent() {
             newSkipped.add(activeStep);
             return newSkipped;
         });
-    };
+        },
+        [activeStep]
+    );
 
     /**
      * Reset the stepper
      */
-    const handleReset = () => {
+    const handleReset = useCallback(
+        () => {
         setActiveStep(0);
-    };
+        },
+        []
+    );
 
     return (
         <div>
