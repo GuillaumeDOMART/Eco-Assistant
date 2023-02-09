@@ -34,9 +34,9 @@ public class ConstanteController {
     }
 
 
+    //TODO Fix the problem error 400 " Required request parameter 'id' for method parameter type Long is not present"
     @GetMapping("/constante/{id}")
-    public ResponseEntity<ConstanteDto> getConstante(@RequestParam("id") Long constanteId){
-        constanteService.getConstante(constanteId);
+    public ResponseEntity<ConstanteDto> getConstante(@PathVariable("id") Long constanteId){
         ConstanteDto constante = constanteService.getConstante(constanteId);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
