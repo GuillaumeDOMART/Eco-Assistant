@@ -1,5 +1,8 @@
 package com.ecoassitant.back.calcul;
 
+/**
+ * Object of an operation
+ */
 public interface OperationElem {
     /**
      * type of the OperationElem (OPERANDE or OPERATEUR)

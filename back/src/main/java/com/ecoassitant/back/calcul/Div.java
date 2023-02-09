@@ -1,5 +1,7 @@
 package com.ecoassitant.back.calcul;
-
+/**
+ * Object for represente division of a calcul
+ */
 public class Div implements Operateur{
     @Override
     public Double execute(Double x, Double y) {

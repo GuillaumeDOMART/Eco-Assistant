@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 @Service
 public class CalculServiceImpl  implements CalculService {
     private final CalculRepository calculRepository;
@@ -36,7 +35,7 @@ public class CalculServiceImpl  implements CalculService {
         var resultats = new ArrayList<Double>();
         var projet = projetRepository.findById(idProject);
         if (!projet.isPresent())
-            return null;
+            throw new IllegalArgumentException();
         var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
         var calculs = calculRepository.findAll();
 

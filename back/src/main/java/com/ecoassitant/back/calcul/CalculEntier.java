@@ -8,6 +8,9 @@ import com.ecoassitant.back.entity.ReponsePossibleEntity;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * calcul create with part of calcul(calculEntity) and ReponseDonne for a project
+ */
 public class CalculEntier {
     private final List<ReponsePossibleEntity> dependances;
     private final List<CalculEntity> calculs;
@@ -20,8 +23,8 @@ public class CalculEntier {
      * @param repDon list of reponseDonnee for a project
      */
     public CalculEntier(List<CalculEntity> calculs, List<ReponseDonneeEntity> repDon){
-        this.calculs = calculs;
-        this.repDon = repDon;
+        this.calculs = List.copyOf(calculs);
+        this.repDon = List.copyOf(repDon);
         dependances = new ArrayList<>();
         calculs.forEach(calculEntity -> dependances.add(calculEntity.getId().getReponsePossible()));
     }

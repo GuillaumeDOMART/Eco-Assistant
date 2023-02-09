@@ -1,5 +1,8 @@
 package com.ecoassitant.back.calcul;
 
+/**
+ * Represent value of operation
+ */
 public class Operande implements OperationElem {
     private Double value;
 
@@ -11,6 +14,10 @@ public class Operande implements OperationElem {
         this.value = value;
     }
 
+    /**
+     *  Value of the Operande
+     * @return the value
+     */
     public Double val(){
         return value;
     }
