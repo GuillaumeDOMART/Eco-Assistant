@@ -6,15 +6,15 @@ import java.util.List;
  * Reponses of a project
  */
 public class ReponseDonneesDto {
-    private Long idProject;
+    private Long projetId;
     private List<ReponseDto> reponses;
 
-    public Long getIdProject() {
-        return idProject;
+    public Long getProjetId() {
+        return projetId;
     }
 
-    public void setIdProject(Long idProject) {
-        this.idProject = idProject;
+    public void setProjetId(Long projetId) {
+        this.projetId = projetId;
     }
 
     public List<ReponseDto> getReponses() {

@@ -4,5 +4,5 @@ import com.ecoassitant.back.dto.ReponseDonneesDto;
 
 public interface ReponseDonneesService {
 
-    public void saveResponseDonnees(ReponseDonneesDto responses);
+    public boolean saveResponseDonnees(ReponseDonneesDto responses);
 }

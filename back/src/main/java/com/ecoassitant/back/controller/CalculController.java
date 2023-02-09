@@ -26,12 +26,12 @@ public class CalculController {
 
     /**
      * list of calcul for a resultat
-     * @param idProject id of the resultat
+     * @param projectId id of the resultat
      * @return list of calculs executed
      */
     @PostMapping("/calculs")
-    public List<Double> resultatsCalcul(@RequestBody IdDto idProject){
-        return calculService.CalculsForProject(idProject.getId());
+    public List<Double> resultatsCalcul(@RequestBody IdDto projectId){
+        return calculService.CalculsForProject(projectId.getId());
     }
 }
 

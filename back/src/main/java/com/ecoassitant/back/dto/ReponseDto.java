@@ -4,15 +4,15 @@ package com.ecoassitant.back.dto;
  * A reponse of a question for a project
  */
 public class ReponseDto {
-    private Long idReponsePossible;
+    private Long reponsePosId;
     private int entry;
 
-    public Long getIdReponsePossible() {
-        return idReponsePossible;
+    public Long getReponsePosId() {
+        return reponsePosId;
     }
 
-    public void setIdReponsePossible(Long idReponsePossible) {
-        this.idReponsePossible = idReponsePossible;
+    public void setReponsePosId(Long reponsePosId) {
+        this.reponsePosId = reponsePosId;
     }
 
     public int getEntry() {
