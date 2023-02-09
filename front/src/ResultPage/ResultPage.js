@@ -1,8 +1,7 @@
 import Chart from "chart.js/auto";
-import {useEffect, useRef, useState} from "react";
-import { Bar } from "react-chartjs-2"
+import {useEffect, useRef} from "react";
+
 function ResultPage() {
-    const [chartData, setChartData] = useState({});
     const chartContainer = useRef(null);
     const chartInstance = useRef(null);
 
@@ -11,7 +10,7 @@ function ResultPage() {
             chartInstance.current.destroy();
         }
 
-        const myChart = new Chart(chartContainer.current, {
+        chartInstance.current = new Chart(chartContainer.current, {
             type: 'bar',
             data: {
                 labels: ["Planification", "Développement", "Test", "Déploiement", "Maintenance"],
@@ -35,8 +34,6 @@ function ResultPage() {
                 maintainAspectRatio: false
             }
         });
-
-        chartInstance.current = myChart;
     };
 
     useEffect(() => {
