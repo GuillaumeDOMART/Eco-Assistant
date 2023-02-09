@@ -14,6 +14,11 @@ public class CalculEntier {
     private final List<ReponseDonneeEntity> repDon;
     private final Stack<OperationElem> stack = new Stack<>();
 
+    /**
+     * Constructor of CalculEntier
+     * @param calculs list of calculs recovery of the data
+     * @param repDon list of reponseDonnee for a project
+     */
     public CalculEntier(List<CalculEntity> calculs, List<ReponseDonneeEntity> repDon){
         this.calculs = calculs;
         this.repDon = repDon;

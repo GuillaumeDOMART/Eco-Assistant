@@ -18,6 +18,12 @@ public class CalculServiceImpl  implements CalculService {
     private final ReponseDonneeRepository reponseDonneeRepository;
     private final ProjetRepository projetRepository;
 
+    /**
+     * Constructor of CalculService
+     * @param calculRepository calculRepository composite for using Service methode
+     * @param reponseDonneeRepository reponseDonneeRepository composite for using Service methode
+     * @param projetRepository projetRepository composite for using Service methode
+     */
     public CalculServiceImpl(CalculRepository calculRepository, ReponseDonneeRepository reponseDonneeRepository, ProjetRepository projetRepository) {
         this.calculRepository = calculRepository;
         this.reponseDonneeRepository = reponseDonneeRepository;

@@ -12,6 +12,10 @@ import java.util.List;
 public class CalculController {
     private final CalculService calculService;
 
+    /**
+     * Initalise the calculService
+     * @param calculService composite for using Service methode
+     */
     @Autowired
     public CalculController(CalculService calculService) {
         this.calculService = calculService;
