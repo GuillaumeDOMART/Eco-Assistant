@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 import Questionnaire from "./Questionnaire";
 import ErrorPage from "./ErrorPage";
-import StepperComponent from "./Stepper";
 
 const router = createBrowserRouter([
     {

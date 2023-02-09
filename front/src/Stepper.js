@@ -65,7 +65,7 @@ export default function StepperComponent() {
             </Box>
             <Box sx={{ width:'100%', position:'fixed', bottom:'0', mb:'20px', pl:'20px', pr:'20px'}}>
                 {activeStep === steps.length ? (
-                    <React.Fragment>
+                    <>
                         <Typography sx={{ mt: 2, mb: 1 }}>
                             All steps completed - you&apos;re finished
                         </Typography>
@@ -73,9 +73,9 @@ export default function StepperComponent() {
                             <Box sx={{ flex: '1 1 auto' }} />
                             <Button onClick={handleReset}>Reset</Button>
                         </Box>
-                    </React.Fragment>
+                    </>
                 ) : (
-                    <React.Fragment>
+                    <>
                         <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                             <Button
@@ -96,10 +96,9 @@ export default function StepperComponent() {
                                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                             </Button>
                         </Box>
-                    </React.Fragment>
+                    </>
                 )}
             </Box>
         </div>
     );
 }
-// bottom:10px; height : 30px
