@@ -17,7 +17,8 @@ public class QuestionDto {
     private Phase phase;
     private Categorie categorie;
     private  List<ReponsePossibleDto> reponses;
-
+    private boolean isVisible;
+    
     /**
      * Constructor of questionDto
      * @param question question Entity change into questionDto
@@ -26,15 +27,24 @@ public class QuestionDto {
         if (question == null)
             return;
         this.intitule = question.getIntitule();
+        this.isVisible = question.isVisibilite();
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
         this.categorie = question.getCategorie();
         this.reponses = new ArrayList<ReponsePossibleDto>();
-                question.getReponses().forEach(reponse -> {
+        question.getReponses().forEach(reponse -> {
             reponses.add(new ReponsePossibleDto(reponse));
         });
+
     }
 
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
     public String getIntitule() {
         return intitule;
     }
