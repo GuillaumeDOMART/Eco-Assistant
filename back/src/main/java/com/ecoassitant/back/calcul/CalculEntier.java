@@ -19,17 +19,25 @@ public class CalculEntier {
         this.repDon = repDon;
         dependances = new ArrayList<>();
         calculs.forEach(calculEntity -> dependances.add(calculEntity.getId().getReponsePossible()));
-
-
     }
+
+    /**
+     * Try to execute the calcul if it has all dependances
+     * @return the result of the calcul if possible
+     */
     public Optional<Double> execute(){
         if(!isPossible())
             return Optional.empty();
         poloniser(join());
-
+        System.out.println("stack= " + stack);
         var stack2 = new Stack<Double>();
-        while (!stack.isEmpty()){
-            var op = stack.pop();
+        var stack3 = new Stack<OperationElem>();
+        while (!stack.isEmpty())
+            stack3.push(stack.pop());
+        System.out.println(stack3);
+        while (!stack3.isEmpty()){
+            System.out.println(stack2);
+            var op = stack3.pop();
             if(op.type().equals(TypeOp.OPERANDE)) {
                 Operande operande = (Operande) op;
                 stack2.push(operande.val());
@@ -42,33 +50,45 @@ public class CalculEntier {
             }
         }
         return Optional.of(stack2.pop());
-
-
     }
+
+    /**
+     * check if the calcul have all dependances
+     * @return true if all depandances has a response
+     */
     private boolean isPossible(){
         AtomicBoolean possible = new AtomicBoolean(true);
-       dependances.forEach(dependance ->{
-           if(!repDon.stream()
-                   .map(ReponseDonneeEntity::getReponseDonneeKey)
-                   .map(ReponseDonneeKey::getReponsePos).toList().contains(dependance)){
-               possible.set(false);
-           }
-
-       });
+        dependances.forEach(dependance ->{
+            var str = repDon.stream().map(ReponseDonneeEntity::getReponseDonneeKey)
+                    .map(ReponseDonneeKey::getReponsePos)
+                    .map(ReponsePossibleEntity::getIdReponsePos).toList();
+            if(!str.contains(dependance.getIdReponsePos())){
+                possible.set(false);
+            }
+        });
        return possible.get();
     }
-    private Map<ReponsePossibleEntity,Integer> join(){
-        var map = new HashMap<ReponsePossibleEntity, Integer>();
+
+    /**
+     * link the RepPoss with the value for this response
+     * @return a map with un idRepPos for key and a value of the response donne for this id
+     */
+    private Map<Long,Integer> join(){
+        var map = new HashMap<Long, Integer>();
         dependances.forEach(rP ->{
             var rD = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponseDonneeKey().getReponsePos().equals(rP)).findFirst();
             if (!rD.isPresent())
                 throw new IllegalStateException();
-            map.put(rP,(rP.getConstante().getConstante() * rD.get().getEntry()));
+            map.put(rP.getIdReponsePos(),(rP.getConstante().getConstante() * rD.get().getEntry()));
         });
         return map;
     }
 
-    private void poloniser(Map<ReponsePossibleEntity, Integer> val){
+    /**
+     * insert the calcul in the stack in the order of polish calculator inverse
+     * @param val
+     */
+    private void poloniser(Map<Long, Integer> val){
         var iterateur =  calculs.iterator();
         var calcul = iterateur.next();
         while (iterateur.hasNext()){
@@ -80,20 +100,18 @@ public class CalculEntier {
                 case MULT -> operateur = new Mult();
                 default -> operateur = null;
             }
-
-
+            var operande = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
             calcul = iterateur.next();
-            var operande2 = new Operande(val.get(calcul.getId().getReponsePossible()).doubleValue());
+            var operande2 = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
 
             if (stack.isEmpty()){
-                var operande = new Operande(val.get(calcul.getId().getReponsePossible()).doubleValue());
+
                 stack.push(operande);
                 stack.push(operande2);
                 stack.push(operateur);
             }
             else {
                 var operateur2 = stack.pop();
-
                 if (operateur.level() > operateur2.level()){
                     stack.push(operande2);
                     stack.push(operateur);
@@ -105,6 +123,7 @@ public class CalculEntier {
                     stack.push(operateur);
                 }
             }
+            System.out.println(stack);
         }
     }
 }
