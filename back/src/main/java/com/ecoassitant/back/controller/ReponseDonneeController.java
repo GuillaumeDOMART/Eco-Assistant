@@ -20,6 +20,11 @@ public class ReponseDonneeController {
         this.reponseDonneesService = reponseDonneesService;
     }
 
+    /**
+     * Save a list of reponseDonnee fo a project
+     * @param reponseDonneesDto list of reponseDonnee for a project
+     * @return true if save successed
+     */
     @PostMapping("/reponsesDonnees")
     public boolean saveReponseDonnees(@RequestBody ReponseDonneesDto reponseDonneesDto){
         return reponseDonneesService.saveResponseDonnees(reponseDonneesDto);

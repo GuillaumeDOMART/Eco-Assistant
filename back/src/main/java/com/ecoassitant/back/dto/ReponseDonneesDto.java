@@ -22,6 +22,6 @@ public class ReponseDonneesDto {
     }
 
     public void setReponses(List<ReponseDto> reponses) {
-        this.reponses = reponses;
+        this.reponses = List.copyOf(reponses);
     }
 }

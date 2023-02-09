@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Implementation of ReponseDonnees Service
+ */
 @Service
 public class ReponseDonneesServiceImpl implements ReponseDonneesService {
     private final ReponseDonneeRepository reponseDonneeRepository;
