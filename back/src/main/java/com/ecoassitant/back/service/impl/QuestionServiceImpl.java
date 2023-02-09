@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
  * implementation of questionService
  */
 @Service
-public class QuestionServiceImpl implements QuestionService {
+public class
+QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
 
     public QuestionServiceImpl(QuestionRepository questionRepository) {

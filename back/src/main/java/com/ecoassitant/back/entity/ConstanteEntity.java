@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Constante")
+@Table(name = "constante")
 public class ConstanteEntity implements Serializable {
 
     @Id
