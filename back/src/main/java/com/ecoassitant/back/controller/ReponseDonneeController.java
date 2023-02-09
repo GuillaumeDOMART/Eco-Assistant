@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controller for request about ReponseDonnee
  */
-@RequestMapping("api/reponsed")
+@RequestMapping("api/reponsesDonnee")
 @RestController
 public class ReponseDonneeController {
 }
