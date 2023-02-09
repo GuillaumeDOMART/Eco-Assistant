@@ -94,7 +94,7 @@ public class CalculEntier {
 
     /**
      * insert the calcul in the stack in the order of polish calculator inverse
-     * @param val
+     * @param val map create with join()
      */
     private void poloniser(Map<Long, Integer> val){
         var iterateur =  calculs.iterator();

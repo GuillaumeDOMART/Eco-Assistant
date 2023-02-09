@@ -1,5 +1,8 @@
 package com.ecoassitant.back.dto;
 
+/**
+ * Payload for an ID
+ */
 public class IdDto {
     private Long id;
 
