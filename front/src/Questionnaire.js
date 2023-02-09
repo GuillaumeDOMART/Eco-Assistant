@@ -1,4 +1,5 @@
 import React from "react";
+import StepperComponent from "./Stepper";
 
 const test = {"intitule":"Combien d heures codez-vous par semaine ?",
     "type":"NUMERIC",
@@ -89,28 +90,31 @@ function Questionnaire() {
     // const { register, handleSubmit } = useForm();
     // const [questionnaire, onQuestionnaire] = useState([])
 
-    const onSubmit = (data) => {
-        alert(JSON.stringify(data));
-    };
+    // const onSubmit = (data) => {
+    //     alert(JSON.stringify(data));
+    // };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            {buildQuestionnaire(test).map((value) => {
-                if (value[2] === 'QCM') {
-                    return (
-                        <div key={value}>
-                            <QCM question={value}/>
-                        </div>
-                    )}
-                {
-                    return (
-                        <div key={value}>
-                            <NUMERIC question={value}/>
-                        </div>
-                    )
-                }
-            })}
-        </form>
+        <>
+            <StepperComponent/>
+            <form style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
+                {buildQuestionnaire(test).map((value) => {
+                    if (value[2] === 'QCM') {
+                        return (
+                            <div key={value} style={{marginTop: '20px'}}>
+                                <QCM question={value}/>
+                            </div>
+                        )}
+                    {
+                        return (
+                            <div key={value} style={{marginTop: '20px'}}>
+                                <NUMERIC question={value}/>
+                            </div>
+                        )
+                    }
+                })}
+            </form>
+        </>
     );
 }
 
