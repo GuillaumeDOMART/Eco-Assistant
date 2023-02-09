@@ -6,6 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * repository of Profil
  */
 public interface ProfilRepository extends JpaRepository<ProfilEntity, Long> {
+
+    /**
+     * Retrieve a ProfilEntity by it's mail
+     */
     ProfilEntity findByMail(String mail);
 
 }

@@ -1,7 +1,6 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.dto.ProfilDto;
-import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.service.ProfilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,8 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
-
+/**
+ * Class to manage endpoints regarding profiles
+ */
 @RequestMapping("api/")
 @RestController
 public class ProfilController {
@@ -22,6 +22,9 @@ public class ProfilController {
     }
 
 
+    /**
+     * Endpoint to retrieve profil by id
+     */
     @GetMapping("/profil/{id}")
     @ResponseBody
     public ResponseEntity<ProfilDto> recupererProfilAvecId(@PathVariable("id") Long id) {
@@ -35,6 +38,9 @@ public class ProfilController {
         }
     }
 
+    /**
+     * Endpoint to retrieve profil by mail
+     */
     @GetMapping("/profil/search/{mail}")
     @ResponseBody
     public ResponseEntity<ProfilDto> recupererProfilAvecMail(@PathVariable("mail") String mail) {
