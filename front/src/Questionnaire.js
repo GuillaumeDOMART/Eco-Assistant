@@ -97,9 +97,9 @@ function Questionnaire() {
                     setIsLoaded(true);
                     setData(result);
                 },
-                (errorApiGetQuestionnaire) => {
+                (error) => {
                     setIsLoaded(true);
-                    setErrorApiGetQuestionnaire(errorApiGetQuestionnaire);
+                    setErrorApiGetQuestionnaire(error);
                 }
             )
     }, [])
