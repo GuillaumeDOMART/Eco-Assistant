@@ -10,7 +10,7 @@ import java.util.List;
 public interface ConstanteService {
     /**
      * Get ConstanteDto associated with constanteId
-     * @param constanteId
+     * @param constanteId represents id of constante
      * @return ConstanteDto
      */
     ConstanteDto getConstante(Long constanteId);

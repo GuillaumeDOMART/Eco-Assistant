@@ -35,7 +35,7 @@ public class ConstanteController {
 
     /**
      *get the constante associated with the id
-     * @param constanteId
+     * @param constanteId represents id of constante
      * @return Constante associated with id
      */
     @GetMapping("/constante/{id}")

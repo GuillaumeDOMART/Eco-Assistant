@@ -11,14 +11,14 @@ import java.util.List;
 public interface ProjetRepository extends JpaRepository<ProjetEntity, Long> {
     /**
      * Get ProjetEntity associated with the idProjet
-     * @param idProjet
+     * @param idProjet represents id of project
      * @return ProjetEntity
      */
     ProjetEntity findByIdProjet(Long idProjet);
 
     /**
      * Get List<ProjetEntity> associated with idProfil
-     * @param idProfil
+     * @param idProfil represents id of project
      * @return List<ProjetEntity>
      */
     List<ProjetEntity> findByProfil_IdProfil(Long idProfil);
