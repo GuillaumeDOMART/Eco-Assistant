@@ -42,7 +42,10 @@ function ResultPage() {
 
     return (
         <div>
-            <canvas ref={chartContainer} />
+            <h1>Rapport de consomation de CO2</h1>
+            <div>
+                <canvas ref={chartContainer}/>
+            </div>
         </div>
     );
 }
