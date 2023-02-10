@@ -6,7 +6,8 @@ function ResultPage() {
     const chartContainer = useRef(null);
     const chartInstance = useRef(null);
     const pdfContainer = useRef(null);
-
+    const lengthChart = 210;
+    const heightChart = 297;
     const chart = () => {
         if (chartInstance.current) {
             chartInstance.current.destroy();
@@ -40,9 +41,10 @@ function ResultPage() {
 
     const handleDownloadPDF = () => {
         const canvas = chartContainer.current;
-        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const imgData = canvas.toDataURL('image/jpeg', 1.0, );
         const pdf = new jsPDF("p","mm","a4");
-        pdf.addImage(imgData, 'JPEG', 0, 0, 211, 298);
+        pdf.text('Hello World!', 15, 25, { fontSize: 36, fontName: 'Helvetica', fontStyle: 'bold', color: '#000000', maxWidth: 170 });
+        pdf.addImage(imgData, 'JPEG', 15, 35, lengthChart*0.9, heightChart/4);
         pdf.save('chart.pdf');
         //TODO
 
@@ -57,7 +59,6 @@ function ResultPage() {
             <h1>Rapport de consomation de CO2</h1>
             <div>
                 <canvas ref={chartContainer}/>
-
             </div>
             <button onClick={handleDownloadPDF}>Download PDF</button>
         </div>
