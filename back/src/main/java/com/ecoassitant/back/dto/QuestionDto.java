@@ -19,6 +19,7 @@ public class QuestionDto {
     private  List<ReponsePossibleDto> reponses;
     private boolean isVisible;
 
+
     /**
      * Constructor of questionDto
      * @param question question Entity change into questionDto
