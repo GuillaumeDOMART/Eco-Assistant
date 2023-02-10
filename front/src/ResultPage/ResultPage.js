@@ -44,7 +44,7 @@ function ResultPage() {
         const pdf = new jsPDF("p","mm","a4");
         pdf.addImage(imgData, 'JPEG', 0, 0, 211, 298);
         pdf.save('chart.pdf');
-        //todo
+        //TODO
 
     };
 
