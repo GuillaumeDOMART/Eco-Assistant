@@ -1,90 +1,19 @@
 import React from "react";
 import StepperComponent from "./Stepper";
 
-const test = {
-    "intitule": "Sur la duree totale du projet, combiens de jours avez-vous passer sur place (au bureau) ?",
-    "type": "NUMERIC",
-    "phase": "HORS_PHASE",
-    "categorie": "FIRST",
-    "reponses": [
-        {
-            "questionSuiv": {
-                "intitule": "Est-ce que vous vous déplacer à pied pour vous rendre sur place ?",
-                "type": "QCM",
-                "phase": "HORS_PHASE",
-                "categorie": "FIRST",
-                "reponses": [
-                    {
-                        "questionSuiv": {
-                            "intitule": "Combiens de KM est-ce que vous parcourrez en voiture pour vous rendre sur place ?",
-                            "type": "QCM",
-                            "phase": "HORS_PHASE",
-                            "categorie": "FIRST",
-                            "reponses": [
-                                {
-                                    "questionSuiv": {
-                                        "intitule": "Combiens de salariées ont été mobilisé pour la phase de développements ?",
-                                        "type": "NUMERIC",
-                                        "phase": "DEVELOPPEMENT",
-                                        "categorie": "FIRST",
-                                        "reponses": [
-                                            {
-                                                "questionSuiv": {
-                                                    "intitule": "Combiens de jours la phase de développements a-t-elle durée?",
-                                                    "type": "NUMERIC",
-                                                    "phase": "DEVELOPPEMENT",
-                                                    "categorie": "FIRST",
-                                                    "reponses": [
-                                                        {
-                                                            "questionSuiv": null,
-                                                            "intitule": "Veuillez entrer un entier",
-                                                            "constante": 4
-                                                        }
-                                                    ],
-                                                    "visible": true
-                                                },
-                                                "intitule": "Veuillez entrer un entier",
-                                                "constante": 1
-                                            }
-                                        ],
-                                        "visible": true
-                                    },
-                                    "intitule": "Veuillez entrer un entier",
-                                    "constante": 0
-                                }
-                            ],
-                            "visible": false
-                        },
-                        "intitule": "OUI",
-                        "constante": 0
-                    },
-                    {
-                        "questionSuiv": {
-                            "intitule": "Combiens de jours la phase de développements a-t-elle durée?",
-                            "type": "NUMERIC",
-                            "phase": "DEVELOPPEMENT",
-                            "categorie": "FIRST",
-                            "reponses": [
-                                {
-                                    "questionSuiv": null,
-                                    "intitule": "Veuillez entrer un entier",
-                                    "constante": 4
-                                }
-                            ],
-                            "visible": true
-                        },
-                        "intitule": "NON",
-                        "constante": 0
-                    }
-                ],
-                "visible": true
-            },
-            "intitule": "Veuillez entrer un entier",
-            "constante": 1
-        }
-    ],
-    "visible": true
-}
+let test = {};
+
+var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+};
+
+fetch("http://localhost/api/questions", requestOptions)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+
+
 
 /**
  * Return the different possible answers to the question
