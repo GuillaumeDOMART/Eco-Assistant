@@ -1,16 +1,13 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.dto.ProjetDto;
-import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.service.ProjetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Class to manage endpoints regarding profiles

@@ -1,7 +1,6 @@
 package com.ecoassitant.back.dto;
 
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
-import com.ecoassitant.back.entity.ReponseDonneeKey;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
