@@ -1,6 +1,57 @@
 import React, {useEffect, useState} from "react";
 import StepperComponent from "./Stepper";
+import {useForm} from "react-hook-form";
 import {Spinner} from "react-bootstrap";
+import {Select} from "@mui/material";
+
+const test = {"intitule": "Combien d heures codez-vous par semaine ?",
+    "type": "NUMERIC",
+    "phase": "DEVELOPPEMENT",
+    "categorie": "FIRST",
+    "reponses": [
+        {
+            "id": 1,
+            "questionSuiv": {
+                "intitule": "Utilisez-vous les méthodes agiles au sein de votre equipe ?",
+                "type": "QCM",
+                "phase": "PLANIFICATION",
+                "categorie": "FIRST",
+                "reponses": [
+                    {
+                        "id": 2,
+                        "questionSuiv": {
+                            "intitule": "Combiens de jours durre un sprint dans votre équipe",
+                            "type": "NUMERIC",
+                            "phase": "PLANIFICATION",
+                            "categorie": "FIRST",
+                            "reponses": [
+                                {
+                                    "id": 4,
+                                    "questionSuiv": null,
+                                    "intitule": "Veuillez entrer un entier",
+                                    "constante": 20
+                                }
+                            ],
+                            "visible": false
+                        },
+                        "intitule": "Oui",
+                        "constante": 1
+                    },
+                    {
+                        "id": 3,
+                        "questionSuiv": null,
+                        "intitule": "NON",
+                        "constante": 1
+                    }
+                ],
+                "visible": true
+            },
+            "intitule": "Veuillez entrer un entier",
+            "constante": 1
+        }
+    ],
+    "visible": true
+}
 
 /**
  * Return the different possible answers to the question
@@ -10,7 +61,7 @@ import {Spinner} from "react-bootstrap";
 function getResponses(question) {
     const responsesArray = []
     question.reponses.forEach((responses, index) => {
-        responsesArray[index] = responses.intitule
+        responsesArray[index] = [responses.intitule, responses.id]
     })
     return responsesArray;
 }
@@ -22,7 +73,14 @@ function getResponses(question) {
  * @returns {(*|string|"beforeRead"|"read"|"afterRead"|"beforeMain"|"main"|"afterMain"|"beforeWrite"|"write"|"afterWrite")[]}
  */
 function parseQuestion(question, reponseRequise) {
-    return [reponseRequise, question.intitule, question.type, question.phase, question.categorie, getResponses(question)]
+    return {
+        'reponseRequise': reponseRequise,
+        'intitule' : question.intitule,
+        'type' : question.type,
+        'phase' : question.phase,
+        'categorie' : question.categorie,
+        'reponses' : getResponses(question)
+    }
 }
 
 /**
@@ -43,25 +101,32 @@ function buildQuiz(question, arrayReturn = [], index = 0, reponseRequise = null)
     return arrayReturn;
 }
 
+
 /**
  * A component representing a QCM question
  * @param value
  * @returns {JSX.Element}
  * @constructor
  */
-const QCM = (value) => {
+const QCM = React.forwardRef(({ onChange, name, question }, ref) => {
+    const [id, setId] = useState(question.reponses[0][1])
+
+    let handleId = (event) => {
+        onChange(event)
+        setValue
+    }
+
     return (
-        <>
-            <label>{value.question[1]}</label><br/>
-            <select>
-                {value.question[5].map((data) => {
-                    return <option value={data} key={data}> {data}</option>
+        <div style={{marginTop: '20px'}}>
+            <label>{question.intitule}</label><br/>
+            <select name={name} ref={ref} onChange={handleId}>
+                {question.reponses.map((data) => {
+                    return <option value={data[1]} key={data[0]} label={data[0]}/>
                 })}
-            </select>
-            <input type="submit" style={{marginLeft: '10px'}}/>
-        </>
+            </select><br/>
+        </div>
     )
-}
+})
 
 /**
  * A component representing a NUMERIC question
@@ -69,13 +134,12 @@ const QCM = (value) => {
  * @returns {JSX.Element}
  * @constructor
  */
-const NUMERIC = (value) => {
+const NUMERIC = ({question, register, id}) => {
     return (
-        <>
-            <label>{value.question[1]}</label><br/>
-            {value.question[5][0]} : <input/>
-            <input type="submit" style={{marginLeft: '10px'}}/>
-        </>
+        <div style={{marginTop: '20px'}}>
+            <label>{question.intitule}</label><br/>
+            {question.reponses[0][0]} : <input type={"number"} {...register(id.toString())}/><br/>
+        </div>
     )
 }
 
@@ -88,54 +152,64 @@ function Questionnaire() {
     const [errorApiGetQuestionnaire, setErrorApiGetQuestionnaire] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
+    const {register, handleSubmit} = useForm();
 
-    useEffect(() => {
-        fetch("http://localhost/api/questions")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setData(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setErrorApiGetQuestionnaire(error);
-                }
-            )
-    }, [])
+    const onSubmit = (data) => {
+        alert(JSON.stringify(data));
+    };
 
-    if (errorApiGetQuestionnaire) {
-        return <div>Error: {errorApiGetQuestionnaire.message}</div>;
-    } else if (!isLoaded) {
-        return (<>
-            <div>Loading...</div>  <Spinner animation="grow" variant="success" />
-            </>
-        );
-    } else {
+    // useEffect(() => {
+    //     fetch("http://localhost/api/questions")
+    //         .then(res => res.json())
+    //         .then(
+    //             (result) => {
+    //                 setIsLoaded(true);
+    //                 setData(result);
+    //             },
+    //             (error) => {
+    //                 setIsLoaded(true);
+    //                 setErrorApiGetQuestionnaire(error);
+    //             }
+    //         )
+    // }, [])
+
+    // if (errorApiGetQuestionnaire) {
+    //     return <div>Error: {errorApiGetQuestionnaire.message}</div>;
+    // } else if (!isLoaded) {
+    //     return (<>
+    //             <div>Loading...</div>
+    //             <Spinner animation="grow" variant="success"/>
+    //         </>
+    //     );
+    // } else {
         return (
             <>
                 <StepperComponent/>
-                <form style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
-
-                    {buildQuiz(data).map((value) => {
-                        if (value[2] === 'QCM') {
+                <form onSubmit={handleSubmit(onSubmit)}
+                      style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
+                    {buildQuiz(test).map((value) => {
+                        if (value.type === 'QCM') {
                             return (
-                                <div key={value} style={{marginTop: '20px'}}>
-                                    <QCM question={value}/>
-                                </div>
+                                <QCM key={value.intitule}
+                                     question={value}
+                                     {...register(value.intitule)}
+                                />
                             )
                         }
                         return (
-                            <div key={value} style={{marginTop: '20px'}}>
-                                <NUMERIC question={value}/>
-                            </div>
-                        )
+                            <NUMERIC key={value.intitule}
+                                     question={value}
+                                     register={register}
+                                     id={value.reponses[0][1]}
+                            />
 
+                        )
                     })}
+                    <input type="submit" style={{marginTop: '20px'}}/>
                 </form>
             </>
         );
-    }
+    // }
 }
 
 export default Questionnaire
