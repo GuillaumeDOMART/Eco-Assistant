@@ -26,7 +26,7 @@ public class CalculEntier {
         this.calculs = List.copyOf(calculs);
         this.repDon = List.copyOf(repDon);
         dependances = new ArrayList<>();
-        calculs.forEach(calculEntity -> dependances.add(calculEntity.getReponsePossible()));
+        calculs.forEach(calculEntity -> dependances.add(calculEntity.getId().getReponsePossible()));
     }
 
     /**
@@ -37,14 +37,11 @@ public class CalculEntier {
         if(!isPossible())
             return Optional.empty();
         poloniser(join());
-        System.out.println("stack= " + stack);
         var stack2 = new Stack<Double>();
         var stack3 = new Stack<OperationElem>();
         while (!stack.isEmpty())
             stack3.push(stack.pop());
-        System.out.println(stack3);
         while (!stack3.isEmpty()){
-            System.out.println(stack2);
             var op = stack3.pop();
             if(op.type().equals(TypeOp.OPERANDE)) {
                 Operande operande = (Operande) op;
@@ -101,16 +98,16 @@ public class CalculEntier {
         var calcul = iterateur.next();
         while (iterateur.hasNext()){
             Operateur operateur;
-            switch (calcul.getCalculOp().getOperateur()){
+            switch (calcul.getId().getCalculOp().getOperateur()){
                 case ADD -> operateur = new Add();
                 case SUB -> operateur = new Sub();
                 case DIV -> operateur = new Div();
                 case MULT -> operateur = new Mult();
                 default -> operateur = null;
             }
-            var operande = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
+            var operande = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
             calcul = iterateur.next();
-            var operande2 = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
+            var operande2 = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
 
             if (stack.isEmpty()){
 
@@ -119,20 +116,19 @@ public class CalculEntier {
                 stack.push(operateur);
             }
             else {
-                if(operateur != null) {
-                    var operateur2 = stack.pop();
-                    if (operateur.level() > operateur2.level()) {
-                        stack.push(operande2);
-                        stack.push(operateur);
-                        stack.push(operateur2);
-                    } else {
-                        stack.push(operateur2);
-                        stack.push(operande2);
-                        stack.push(operateur);
-                    }
+                var operateur2 = stack.pop();
+                assert operateur != null;
+                if (operateur.level() > operateur2.level()){
+                    stack.push(operande2);
+                    stack.push(operateur);
+                    stack.push(operateur2);
+                }
+                else{
+                    stack.push(operateur2);
+                    stack.push(operande2);
+                    stack.push(operateur);
                 }
             }
-            System.out.println(stack);
         }
     }
 }
