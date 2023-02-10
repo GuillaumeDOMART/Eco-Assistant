@@ -30,9 +30,6 @@ services:
       - 3000:3000
     env_file:
       - .env
-    environment:
-      - REACT_APP_API_HOST=eco-assistant-esipe.fr
-      - HOST=front
 
   nginx:
     image: nginx
