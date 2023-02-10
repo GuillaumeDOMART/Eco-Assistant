@@ -32,10 +32,8 @@ public class QuestionDto {
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
         this.categorie = question.getCategorie();
-        this.reponses = new ArrayList<ReponsePossibleDto>();
-        question.getReponses().forEach(reponse -> {
-            reponses.add(new ReponsePossibleDto(reponse));
-        });
+        this.reponses = new ArrayList<>();
+        question.getReponses().forEach(reponse -> reponses.add(new ReponsePossibleDto(reponse)));
 
     }
 

@@ -37,7 +37,7 @@ public class CalculServiceImpl  implements CalculService {
 
         var resultat = new ResultatDto();
         var projet = projetRepository.findById(idProject);
-        if (!projet.isPresent())
+        if (projet.isEmpty())
             throw new IllegalArgumentException();
         var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
         var calculs = calculRepository.findAll();
@@ -56,8 +56,7 @@ public class CalculServiceImpl  implements CalculService {
             var calculEntier = new CalculEntier(calcul,reponseDonnee);
             var executer = calculEntier.execute();
             System.out.println("executer = " + executer);
-            if(executer.isPresent())
-                resultat.addDeveloppement(executer.get());
+            executer.ifPresent(resultat::addDeveloppement);
         });
         return resultat;
     }

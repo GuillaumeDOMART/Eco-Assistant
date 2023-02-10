@@ -34,8 +34,7 @@ public class ConstanteServiceImpl implements ConstanteService {
 
     @Override
     public List<ConstanteDto> findAll() {
-        var constantes = constanteRepo.findAll().stream().map(ConstanteDto::new).toList();
-        return constantes;
+        return constanteRepo.findAll().stream().map(ConstanteDto::new).toList();
     }
 
 }
