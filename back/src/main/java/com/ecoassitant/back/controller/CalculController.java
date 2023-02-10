@@ -1,11 +1,11 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.dto.IdDto;
+import com.ecoassitant.back.dto.ResultatDto;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * Controller for request about calcul
@@ -30,7 +30,7 @@ public class CalculController {
      * @return list of calculs executed
      */
     @PostMapping("/calculs")
-    public List<Double> resultatsCalcul(@RequestBody IdDto projectId){
+    public ResultatDto resultatsCalcul(@RequestBody IdDto projectId){
         return calculService.CalculsForProject(projectId.getId());
     }
 }

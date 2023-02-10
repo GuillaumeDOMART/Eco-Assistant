@@ -1,19 +1,6 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import StepperComponent from "./Stepper";
-
-let test = {};
-
-var requestOptions = {
-    method: 'GET',
-    redirect: 'follow'
-};
-
-fetch("http://localhost/api/questions", requestOptions)
-    .then(response => response.json())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
-
-
+import {Spinner} from "react-bootstrap";
 
 /**
  * Return the different possible answers to the question
@@ -98,28 +85,57 @@ const NUMERIC = (value) => {
  * @constructor
  */
 function Questionnaire() {
+    const [errorApiGetQuestionnaire, setErrorApiGetQuestionnaire] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [data, setData] = useState({})
 
-    return (
-        <>
-            <StepperComponent/>
-            <form style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
-                {buildQuiz(test).map((value) => {
-                    if (value[2] === 'QCM') {
+    useEffect(() => {
+        fetch("http://localhost/api/questions")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setData(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setErrorApiGetQuestionnaire(error);
+                }
+            )
+    }, [])
+
+    if (errorApiGetQuestionnaire) {
+        return <div>Error: {errorApiGetQuestionnaire.message}</div>;
+    } else if (!isLoaded) {
+        return (<>
+            <div>Loading...</div>  <Spinner animation="grow" variant="success" />
+            </>
+        );
+    } else {
+        return (
+            <>
+                <StepperComponent/>
+                <form style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
+
+                    {buildQuiz(data).map((value) => {
+                        if (value[2] === 'QCM') {
+                            return (
+                                <div key={value} style={{marginTop: '20px'}}>
+                                    <QCM question={value}/>
+                                </div>
+                            )
+                        }
                         return (
                             <div key={value} style={{marginTop: '20px'}}>
-                                <QCM question={value}/>
+                                <NUMERIC question={value}/>
                             </div>
-                        )}
-                    return (
-                        <div key={value} style={{marginTop: '20px'}}>
-                            <NUMERIC question={value}/>
-                        </div>
-                    )
+                        )
 
-                })}
-            </form>
-        </>
-    );
+                    })}
+                </form>
+            </>
+        );
+    }
 }
 
 export default Questionnaire

@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service;
 
-import java.util.List;
+import com.ecoassitant.back.dto.ResultatDto;
 
 /**
  * Service of calcul
@@ -11,5 +11,5 @@ public interface CalculService {
      * @param idProject project of wich we want the result
      * @return list of results
      */
-    public List<Double> CalculsForProject(Long idProject);
+    public ResultatDto CalculsForProject(Long idProject);
 }

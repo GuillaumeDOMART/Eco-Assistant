@@ -1,6 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.calcul.CalculEntier;
+import com.ecoassitant.back.dto.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.repository.CalculRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -8,9 +9,7 @@ import com.ecoassitant.back.repository.ReponseDonneeRepository;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Implementation of calculService
@@ -34,9 +33,9 @@ public class CalculServiceImpl  implements CalculService {
     }
 
     @Override
-    public List<Double> CalculsForProject(Long idProject) {
+    public ResultatDto CalculsForProject(Long idProject) {
 
-        var resultats = new ArrayList<Double>();
+        var resultat = new ResultatDto();
         var projet = projetRepository.findById(idProject);
         if (!projet.isPresent())
             throw new IllegalArgumentException();
@@ -58,8 +57,8 @@ public class CalculServiceImpl  implements CalculService {
             var executer = calculEntier.execute();
             System.out.println("executer = " + executer);
             if(executer.isPresent())
-                resultats.add(executer.get());
+                resultat.addDeveloppement(executer.get());
         });
-        return resultats;
+        return resultat;
     }
 }
