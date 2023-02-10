@@ -1,5 +1,5 @@
 name: Test, Build, Deploy
-
+# deploy the application on server
 on:
   push:
     branches: [ "recette" ]
