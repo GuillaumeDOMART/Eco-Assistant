@@ -1,6 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.calcul.CalculEntier;
+import com.ecoassitant.back.dto.CalculDto;
 import com.ecoassitant.back.dto.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.repository.CalculRepository;
@@ -56,8 +57,11 @@ public class CalculServiceImpl  implements CalculService {
             var calculEntier = new CalculEntier(calcul,reponseDonnee);
             var executer = calculEntier.execute();
             System.out.println("executer = " + executer);
-            executer.ifPresent(resultat::addDeveloppement);
+            var intitule = "test" + k;
+            if (executer.isPresent())
+                resultat.addDeveloppement(new CalculDto(intitule, executer.get()));
         });
+        System.out.println("sortie");
         return resultat;
     }
 }

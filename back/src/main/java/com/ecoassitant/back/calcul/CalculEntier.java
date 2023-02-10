@@ -37,14 +37,11 @@ public class CalculEntier {
         if(!isPossible())
             return Optional.empty();
         poloniser(join());
-        System.out.println("stack= " + stack);
         var stack2 = new Stack<Double>();
         var stack3 = new Stack<OperationElem>();
         while (!stack.isEmpty())
             stack3.push(stack.pop());
-        System.out.println(stack3);
         while (!stack3.isEmpty()){
-            System.out.println(stack2);
             var op = stack3.pop();
             if(op.type().equals(TypeOp.OPERANDE)) {
                 Operande operande = (Operande) op;
@@ -132,7 +129,6 @@ public class CalculEntier {
                     stack.push(operateur);
                 }
             }
-            System.out.println(stack);
         }
     }
 }
