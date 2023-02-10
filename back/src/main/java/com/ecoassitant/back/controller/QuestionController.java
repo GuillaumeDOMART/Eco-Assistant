@@ -3,10 +3,9 @@ package com.ecoassitant.back.controller;
 import com.ecoassitant.back.dto.QuestionDto;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller with api linked to Questions
@@ -21,25 +20,8 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-    /**
-     * get first question of questionnaire
-     * @return first question of questionnaire
-     */
     @GetMapping("/questions")
-    public ResponseEntity<QuestionDto> testsQuestionnaire(){
-        QuestionDto question =  questionService.getQuestionnaire();
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        if(question == null){
-            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
-        }else{
-            return new ResponseEntity<>(question,headers,HttpStatus.OK);
-        }
+    public QuestionDto testsQuestionnaire(){
+        return questionService.getQuestionnaire();
     }
-    //TODO add question in the tree
-//    @PostMapping("/question")
-//    public ResponseEntity<QuestionDto> addQuestion(){
-//
-//    }
-
 }

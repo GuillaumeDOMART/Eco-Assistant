@@ -10,5 +10,5 @@ public interface QuestionService {
      * set quiz
      * @return first question of quiz
      */
-    QuestionDto getQuestionnaire();
+    public QuestionDto getQuestionnaire();
 }
