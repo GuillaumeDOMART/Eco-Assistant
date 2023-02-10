@@ -144,8 +144,8 @@ INSERT INTO reponsedonnee VALUES
 
 --CREATION CALCUL TEST
 INSERT INTO calcul VALUES
-(1, 1, 1),
-(3, 2, 1),
-(5, 4, 1),
-(3, 6, 2),
-(5, 7, 2);
+(1, 1, 1, 1),
+(2, 3, 2, 1),
+(3, 5, 4, 1),
+(4, 3, 6, 2),
+(5, 5, 7, 2);
