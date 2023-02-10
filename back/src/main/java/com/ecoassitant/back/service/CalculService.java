@@ -2,8 +2,6 @@ package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.ResultatDto;
 
-import java.util.List;
-
 /**
  * Service of calcul
  */
