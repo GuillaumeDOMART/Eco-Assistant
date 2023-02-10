@@ -68,11 +68,10 @@ idcalculop serial PRIMARY KEY,
 operateur VARCHAR(10));
 
 CREATE TABLE IF NOT EXISTS calcul (
+idcalcul serial PRIMARY KEY,
 calculopid INT NOT NULL,
 reponsepossibleid INT NOT NULL,
 nbcalcul INT NOT NULL,
-CONSTRAINT calculopid
-PRIMARY KEY (calculopid, reponsepossibleid),
 CONSTRAINT calculopid2
 FOREIGN KEY (calculopid)
 REFERENCES calculoperateur (idcalculop),
@@ -137,7 +136,7 @@ INSERT INTO reponsedonnee VALUES
 
 --CREATION CALCUL TEST
 INSERT INTO calcul VALUES
-(3, 6, 1),
-(3, 5, 1),
-(3, 6, 2),
-(5, 7, 2);
+(1, 3, 6, 1),
+(2, 3, 5, 1),
+(3, 3, 6, 2),
+(4, 5, 7, 2);

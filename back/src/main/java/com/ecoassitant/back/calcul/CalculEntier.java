@@ -26,7 +26,7 @@ public class CalculEntier {
         this.calculs = List.copyOf(calculs);
         this.repDon = List.copyOf(repDon);
         dependances = new ArrayList<>();
-        calculs.forEach(calculEntity -> dependances.add(calculEntity.getId().getReponsePossible()));
+        calculs.forEach(calculEntity -> dependances.add(calculEntity.getReponsePossible()));
     }
 
     /**
@@ -85,7 +85,7 @@ public class CalculEntier {
         var map = new HashMap<Long, Integer>();
         dependances.forEach(rP ->{
             var rD = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponseDonneeKey().getReponsePos().equals(rP)).findFirst();
-            if (!rD.isPresent())
+            if (rD.isEmpty())
                 throw new IllegalStateException();
             map.put(rP.getIdReponsePos(),(rP.getConstante().getConstante() * rD.get().getEntry()));
         });
@@ -101,16 +101,16 @@ public class CalculEntier {
         var calcul = iterateur.next();
         while (iterateur.hasNext()){
             Operateur operateur;
-            switch (calcul.getId().getCalculOp().getOperateur()){
+            switch (calcul.getCalculOp().getOperateur()){
                 case ADD -> operateur = new Add();
                 case SUB -> operateur = new Sub();
                 case DIV -> operateur = new Div();
                 case MULT -> operateur = new Mult();
                 default -> operateur = null;
             }
-            var operande = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
+            var operande = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
             calcul = iterateur.next();
-            var operande2 = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
+            var operande2 = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
 
             if (stack.isEmpty()){
 
@@ -119,16 +119,17 @@ public class CalculEntier {
                 stack.push(operateur);
             }
             else {
-                var operateur2 = stack.pop();
-                if (operateur.level() > operateur2.level()){
-                    stack.push(operande2);
-                    stack.push(operateur);
-                    stack.push(operateur2);
-                }
-                else{
-                    stack.push(operateur2);
-                    stack.push(operande2);
-                    stack.push(operateur);
+                if(operateur != null) {
+                    var operateur2 = stack.pop();
+                    if (operateur.level() > operateur2.level()) {
+                        stack.push(operande2);
+                        stack.push(operateur);
+                        stack.push(operateur2);
+                    } else {
+                        stack.push(operateur2);
+                        stack.push(operande2);
+                        stack.push(operateur);
+                    }
                 }
             }
             System.out.println(stack);
