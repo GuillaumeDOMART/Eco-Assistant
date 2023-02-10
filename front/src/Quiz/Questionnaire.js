@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
-import StepperComponent from "./Stepper";
+import StepperComponent from "../Stepper";
 import {useForm} from "react-hook-form";
+import {NUMERIC, QCM} from "./QuestionType";
 import {Spinner} from "react-bootstrap";
 import {Select} from "@mui/material";
 
@@ -101,46 +102,8 @@ function buildQuiz(question, arrayReturn = [], index = 0, reponseRequise = null)
     return arrayReturn;
 }
 
+function formatResult(data) {
 
-/**
- * A component representing a QCM question
- * @param value
- * @returns {JSX.Element}
- * @constructor
- */
-const QCM = React.forwardRef(({ onChange, name, question }, ref) => {
-    const [id, setId] = useState(question.reponses[0][1])
-
-    let handleId = (event) => {
-        onChange(event)
-        setValue
-    }
-
-    return (
-        <div style={{marginTop: '20px'}}>
-            <label>{question.intitule}</label><br/>
-            <select name={name} ref={ref} onChange={handleId}>
-                {question.reponses.map((data) => {
-                    return <option value={data[1]} key={data[0]} label={data[0]}/>
-                })}
-            </select><br/>
-        </div>
-    )
-})
-
-/**
- * A component representing a NUMERIC question
- * @param value
- * @returns {JSX.Element}
- * @constructor
- */
-const NUMERIC = ({question, register, id}) => {
-    return (
-        <div style={{marginTop: '20px'}}>
-            <label>{question.intitule}</label><br/>
-            {question.reponses[0][0]} : <input type={"number"} {...register(id.toString())}/><br/>
-        </div>
-    )
 }
 
 /**
@@ -188,22 +151,24 @@ function Questionnaire() {
                 <form onSubmit={handleSubmit(onSubmit)}
                       style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
                     {buildQuiz(test).map((value) => {
-                        if (value.type === 'QCM') {
-                            return (
+                        switch (value.type) {
+                            case 'QCM' :
+                                return (
                                 <QCM key={value.intitule}
                                      question={value}
                                      {...register(value.intitule)}
                                 />
                             )
+                            case 'NUMERIC' :
+                                return (
+                                    <NUMERIC key={value.intitule}
+                                             question={value}
+                                             register={register}
+                                             id={value.reponses[0][1]}
+                                    />
+                                )
+                            default : return;
                         }
-                        return (
-                            <NUMERIC key={value.intitule}
-                                     question={value}
-                                     register={register}
-                                     id={value.reponses[0][1]}
-                            />
-
-                        )
                     })}
                     <input type="submit" style={{marginTop: '20px'}}/>
                 </form>
