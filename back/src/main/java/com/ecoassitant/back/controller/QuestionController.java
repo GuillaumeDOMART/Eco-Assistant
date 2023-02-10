@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controller with api linked to Questions
  */
-@RequestMapping("api/")
+@RequestMapping("api")
 @RestController
 public class QuestionController {
     private final QuestionService questionService;

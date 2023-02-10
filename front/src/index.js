@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 import {
     createBrowserRouter,
@@ -12,6 +11,7 @@ import {
 } from "react-router-dom";
 import Questionnaire from "./Questionnaire";
 import ErrorPage from "./ErrorPage";
+import ResultPage from "./ResultPage/ResultPage";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
     {
         path:"/questionnaire",
         element: <Questionnaire />,
+    }
+    ,{
+        path:"/result",
+        element: <ResultPage/>
     }
 ]);
 
