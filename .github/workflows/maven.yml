@@ -3,8 +3,7 @@ name: Test, Build, Deploy
 on:
   push:
     branches: [ "recette" ]
-  pull_request:
-    branches: [ "recette" ]
+# add on pull request accepted
 
 env:
   MAIL_ADDRESS: ${{ secrets.MAIL_ADDRESS }}
