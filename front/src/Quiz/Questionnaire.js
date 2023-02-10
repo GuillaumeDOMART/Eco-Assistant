@@ -1,110 +1,165 @@
 import React, {useEffect, useState} from "react";
-import StepperComponent from "../Stepper";
+import StepperComponent from "../Stepper/Stepper";
 import {useForm} from "react-hook-form";
 import {NUMERIC, QCM} from "./QuestionType";
 import {Spinner} from "react-bootstrap";
-import {Select} from "@mui/material";
 
-const test = {"intitule": "Combien d heures codez-vous par semaine ?",
+const test = {
+    "questionId": 1,
+    "intitule": "Sur la duree totale du projet, combiens de jours avez-vous passer sur place (au bureau) ?",
     "type": "NUMERIC",
-    "phase": "DEVELOPPEMENT",
+    "phase": "HORS_PHASE",
     "categorie": "FIRST",
     "reponses": [
         {
-            "id": 1,
             "questionSuiv": {
-                "intitule": "Utilisez-vous les méthodes agiles au sein de votre equipe ?",
+                "questionId": 2,
+                "intitule": "Est-ce que vous vous déplacer à pied pour vous rendre sur place ?",
                 "type": "QCM",
-                "phase": "PLANIFICATION",
+                "phase": "HORS_PHASE",
                 "categorie": "FIRST",
                 "reponses": [
                     {
-                        "id": 2,
                         "questionSuiv": {
-                            "intitule": "Combiens de jours durre un sprint dans votre équipe",
-                            "type": "NUMERIC",
-                            "phase": "PLANIFICATION",
+                            "questionId": 3,
+                            "intitule": "Combiens de KM est-ce que vous parcourrez en voiture pour vous rendre sur place ?",
+                            "type": "QCM",
+                            "phase": "HORS_PHASE",
                             "categorie": "FIRST",
                             "reponses": [
                                 {
-                                    "id": 4,
-                                    "questionSuiv": null,
+                                    "questionSuiv": {
+                                        "questionId": 4,
+                                        "intitule": "Combiens de salariées ont été mobilisé pour la phase de développements ?",
+                                        "type": "NUMERIC",
+                                        "phase": "DEVELOPPEMENT",
+                                        "categorie": "FIRST",
+                                        "reponses": [
+                                            {
+                                                "questionSuiv": {
+                                                    "questionId": 5,
+                                                    "intitule": "Combiens de jours la phase de développements a-t-elle durée?",
+                                                    "type": "NUMERIC",
+                                                    "phase": "DEVELOPPEMENT",
+                                                    "categorie": "FIRST",
+                                                    "reponses": [
+                                                        {
+                                                            "questionSuiv": null,
+                                                            "intitule": "Veuillez entrer un entier",
+                                                            "constante": 4,
+                                                            "id": 7
+                                                        }
+                                                    ],
+                                                    "visible": true
+                                                },
+                                                "intitule": "Veuillez entrer un entier",
+                                                "constante": 1,
+                                                "id": 6
+                                            }
+                                        ],
+                                        "visible": true
+                                    },
                                     "intitule": "Veuillez entrer un entier",
-                                    "constante": 20
+                                    "constante": 0,
+                                    "id": 5
                                 }
                             ],
                             "visible": false
                         },
-                        "intitule": "Oui",
-                        "constante": 1
+                        "intitule": "OUI",
+                        "constante": 0,
+                        "id": 3
                     },
                     {
-                        "id": 3,
-                        "questionSuiv": null,
+                        "questionSuiv": {
+                            "questionId": 5,
+                            "intitule": "Combiens de jours la phase de développements a-t-elle durée?",
+                            "type": "NUMERIC",
+                            "phase": "DEVELOPPEMENT",
+                            "categorie": "FIRST",
+                            "reponses": [
+                                {
+                                    "questionSuiv": null,
+                                    "intitule": "Veuillez entrer un entier",
+                                    "constante": 4,
+                                    "id": 7
+                                }
+                            ],
+                            "visible": true
+                        },
                         "intitule": "NON",
-                        "constante": 1
+                        "constante": 0,
+                        "id": 4
                     }
                 ],
                 "visible": true
             },
             "intitule": "Veuillez entrer un entier",
-            "constante": 1
+            "constante": 1,
+            "id": 2
         }
     ],
     "visible": true
 }
 
-/**
- * Return the different possible answers to the question
- * @param question
- * @returns {*[]}
- */
-function getResponses(question) {
-    const responsesArray = []
-    question.reponses.forEach((responses, index) => {
-        responsesArray[index] = [responses.intitule, responses.id]
-    })
-    return responsesArray;
-}
-
-/**
- * Return an array containing informations about the given response
- * @param question
- * @param reponseRequise
- * @returns {(*|string|"beforeRead"|"read"|"afterRead"|"beforeMain"|"main"|"afterMain"|"beforeWrite"|"write"|"afterWrite")[]}
- */
-function parseQuestion(question, reponseRequise) {
-    return {
-        'reponseRequise': reponseRequise,
-        'intitule' : question.intitule,
-        'type' : question.type,
-        'phase' : question.phase,
-        'categorie' : question.categorie,
-        'reponses' : getResponses(question)
+    function questionInList(question, questionArray) {
+        let accepted = true;
+        questionArray.forEach(value => {
+            if (question.questionId === value.questionId){
+                accepted =  false;
+            }
+        })
+        return accepted;
     }
-}
 
-/**
- * Create an array containing the quiz from a json format
- * @param question
- * @param arrayReturn
- * @param index
- * @param reponseRequise
- * @returns {*[]|null}
- */
-function buildQuiz(question, arrayReturn = [], index = 0, reponseRequise = null) {
-    if (question === null)
-        return null;
-    arrayReturn[index] = parseQuestion(question, reponseRequise)
-    question.reponses.forEach((value) => {
-        buildQuiz(value.questionSuiv, arrayReturn, index + 1, value.intitule)
-    })
-    return arrayReturn;
-}
+    /**
+     * Return the different possible answers to the question
+     * @param question
+     * @returns {*[]}
+     */
+    function getResponses(question) {
+        const responses = []
+        question.reponses.forEach((response, index) => {
+            responses[index] = response.intitule
+        })
+        return responses;
+    }
 
-function formatResult(data) {
+    /**
+     * Return an array containing informations about the given response
+     * @param question
+     * @returns {(*|string|"beforeRead"|"read"|"afterRead"|"beforeMain"|"main"|"afterMain"|"beforeWrite"|"write"|"afterWrite")[]}
+     */
+    function parseQuestion(question) {
+        return {
+            'questionId': question.questionId,
+            'intitule' : question.intitule,
+            'type' : question.type,
+            'phase' : question.phase,
+            'categorie' : question.categorie,
+            'reponses' : getResponses(question)
+        }
+    }
 
-}
+    /**
+     * Create an array containing the quiz from a json format
+     * @param question
+     * @param arrayReturn
+     * @returns {*[]|null}
+     */
+    function buildQuiz(question, arrayReturn = []) {
+        if (question === null) {
+            return null;
+        }
+        if (questionInList(question, arrayReturn)) {
+            arrayReturn.push(parseQuestion(question))
+        } else {
+        }
+        question.reponses.forEach((value) => {
+            buildQuiz(value.questionSuiv, arrayReturn)
+        })
+        return arrayReturn;
+    }
 
 /**
  * The component representing the quiz
@@ -118,7 +173,34 @@ function Questionnaire() {
     const {register, handleSubmit} = useForm();
 
     const onSubmit = (data) => {
+        let projectId = '1'; // A MODIFIER
+        let sendToBack = {}
+        let responses = []
+        for(const [key, value] of Object.entries(data)) {
+            let tuple = {}
+            tuple['questionId'] = key;
+            tuple['entry'] = value;
+            responses.push(tuple)
+        }
+        sendToBack['projetId'] = projectId;
+        sendToBack['reponses'] = responses;
+        console.log(sendToBack)
         alert(JSON.stringify(data));
+
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: sendToBack,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost/api/reponsesDonnee", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     };
 
     // useEffect(() => {
@@ -152,19 +234,18 @@ function Questionnaire() {
                       style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
                     {buildQuiz(test).map((value) => {
                         switch (value.type) {
-                            case 'QCM' :
-                                return (
-                                <QCM key={value.intitule}
-                                     question={value}
-                                     {...register(value.intitule)}
-                                />
+                             case 'QCM' :
+                                 return (
+                                        <QCM key={value.intitule}
+                                             question={value}
+                                             {...register(value.questionId.toString())}
+                                        />
                             )
                             case 'NUMERIC' :
                                 return (
                                     <NUMERIC key={value.intitule}
                                              question={value}
                                              register={register}
-                                             id={value.reponses[0][1]}
                                     />
                                 )
                             default : return;
