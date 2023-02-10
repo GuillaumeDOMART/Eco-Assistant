@@ -1,12 +1,13 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.dto.ProjetDto;
-import com.ecoassitant.back.repository.ProjetRepository;
+import com.ecoassitant.back.service.ProjetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Class to manage endpoints regarding profiles
@@ -14,11 +15,11 @@ import java.util.Objects;
 @RequestMapping("api")
 @RestController
 public class ProjetController {
-    private final ProjetRepository projetRepository;
+    private final ProjetService projetService;
 
     @Autowired
-    public ProjetController(ProjetRepository projetRepository) {
-        this.projetRepository = projetRepository;
+    public ProjetController(ProjetService projetService) {
+        this.projetService = projetService;
     }
 
     /**
@@ -26,8 +27,15 @@ public class ProjetController {
      */
     @GetMapping("/projets")
     @ResponseBody
-    public List<ProjetDto> listerLesProjets(){
-        return projetRepository.findAll().stream().map(ProjetDto::new).toList();
+    public ResponseEntity<List<ProjetDto>> listerLesProjets(){
+        List<ProjetDto> projets = projetService.findAll();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        if(projets.isEmpty()){
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(projets,headers,HttpStatus.OK);
+        }
     }
 
     /**
@@ -35,9 +43,15 @@ public class ProjetController {
      */
     @GetMapping("/projet/{id}")
     @ResponseBody
-    public ProjetDto recupererProjetAvecId(@PathVariable("id") Long id){
-        var entity = projetRepository.findById(id);
-        return entity.map(ProjetDto::new).orElse(null);
+    public ResponseEntity<ProjetDto> recupererProjetAvecId(@PathVariable("id") Long id){
+        ProjetDto projet = projetService.getProject(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        if(projet == null){
+            return new ResponseEntity<>(projet,headers,HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(projet,headers,HttpStatus.OK);
+        }
     }
 
     /**
@@ -45,7 +59,17 @@ public class ProjetController {
      */
     @GetMapping("/projet/user/{id}")
     @ResponseBody
-    public List<ProjetDto> recupererProjetAvecUserId(@PathVariable("id") Long id){
-        return projetRepository.findAll().stream().filter(e -> Objects.equals(e.getProfil().getIdProfil(), id)).map(ProjetDto::new).toList();
+    public ResponseEntity<List<ProjetDto>> recupererProjetAvecUserId(@PathVariable("id") Long id){
+        List<ProjetDto> projets = projetService.findProjectByProfilId(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        if(projets.isEmpty()){
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(projets,headers,HttpStatus.OK);
+        }
     }
+    //TODO POST Créer un projet return projet créer avec CREATE
+    //TODO Dissocier un projet return projet dissocié avec 204
+
 }
