@@ -4,7 +4,7 @@ package com.ecoassitant.back.calcul;
  * Represent value of operation
  */
 public class Operande implements OperationElem {
-    private Double value;
+    private final Double value;
 
     /**
      * constructor of Operande

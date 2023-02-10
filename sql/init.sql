@@ -131,9 +131,14 @@ INSERT INTO reponsepossible VALUES
 INSERT INTO reponsedonnee VALUES
 (1, 1, 30),
 (1, 2, 1),
-(1, 4, 3);
+(1, 4, 3),
+(1, 6, 10),
+(1, 7, 15);
 
 --CREATION CALCUL TEST
 INSERT INTO calcul VALUES
-(3, 6, 1),
-(3, 5, 1);
+(1, 1, 1),
+(3, 2, 1),
+(5, 4, 1),
+(3, 6, 2),
+(5, 7, 2);

@@ -85,7 +85,7 @@ public class CalculEntier {
         var map = new HashMap<Long, Integer>();
         dependances.forEach(rP ->{
             var rD = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponseDonneeKey().getReponsePos().equals(rP)).findFirst();
-            if (!rD.isPresent())
+            if (rD.isEmpty())
                 throw new IllegalStateException();
             map.put(rP.getIdReponsePos(),(rP.getConstante().getConstante() * rD.get().getEntry()));
         });
@@ -120,6 +120,7 @@ public class CalculEntier {
             }
             else {
                 var operateur2 = stack.pop();
+                assert operateur != null;
                 if (operateur.level() > operateur2.level()){
                     stack.push(operande2);
                     stack.push(operateur);

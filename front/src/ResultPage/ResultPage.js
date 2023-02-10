@@ -1,9 +1,11 @@
 import Chart from "chart.js/auto";
 import {useEffect, useRef} from "react";
+import jsPDF from "jspdf";
 
 function ResultPage() {
     const chartContainer = useRef(null);
     const chartInstance = useRef(null);
+    const pdfContainer = useRef(null);
 
     const chart = () => {
         if (chartInstance.current) {
@@ -36,16 +38,28 @@ function ResultPage() {
         });
     };
 
+    const handleDownloadPDF = () => {
+        const canvas = chartContainer.current;
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        const pdf = new jsPDF("p","mm","a4");
+        pdf.addImage(imgData, 'JPEG', 0, 0, 211, 298);
+        pdf.save('chart.pdf');
+        //TODO
+
+    };
+
     useEffect(() => {
         chart();
     }, []);
 
     return (
-        <div>
+        <div ref={pdfContainer}>
             <h1>Rapport de consomation de CO2</h1>
             <div>
                 <canvas ref={chartContainer}/>
+
             </div>
+            <button onClick={handleDownloadPDF}>Download PDF</button>
         </div>
     );
 }
