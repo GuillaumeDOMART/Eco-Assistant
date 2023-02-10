@@ -80,6 +80,13 @@ CONSTRAINT reponsepossibleid
 FOREIGN KEY (reponsepossibleid)
 REFERENCES reponsepossible (idreponsepos));
 
+CREATE TABLE IF NOT EXISTS questionpropose (
+    idquestion SERIAL PRIMARY KEY,
+    intitule VARCHAR(255) NOT NULL ,
+    phase VARCHAR (50) NOT NULL,
+    vote INT,
+    isapprove INT NOT NULL);
+
 
 --CREATION CALCULOPERATEUR
 INSERT INTO calculoperateur VALUES

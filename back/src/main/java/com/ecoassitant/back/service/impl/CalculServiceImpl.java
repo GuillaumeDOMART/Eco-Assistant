@@ -56,12 +56,9 @@ public class CalculServiceImpl  implements CalculService {
 
             var calculEntier = new CalculEntier(calcul,reponseDonnee);
             var executer = calculEntier.execute();
-            System.out.println("executer = " + executer);
             var intitule = "test" + k;
-            if (executer.isPresent())
-                resultat.addDeveloppement(new CalculDto(intitule, executer.get()));
+            executer.ifPresent(aDouble -> resultat.addDeveloppement(new CalculDto(intitule, aDouble)));
         });
-        System.out.println("sortie");
         return resultat;
     }
 }
