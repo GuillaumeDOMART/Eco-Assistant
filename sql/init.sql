@@ -80,6 +80,13 @@ CONSTRAINT reponsepossibleid
 FOREIGN KEY (reponsepossibleid)
 REFERENCES reponsepossible (idreponsepos));
 
+CREATE TABLE IF NOT EXISTS questionpropose (
+    idquestion SERIAL PRIMARY KEY,
+    intitule VARCHAR(255) NOT NULL ,
+    phase VARCHAR (50) NOT NULL,
+    vote INT,
+    isapprove INT NOT NULL);
+
 
 --CREATION CALCULOPERATEUR
 INSERT INTO calculoperateur VALUES
@@ -121,8 +128,8 @@ INSERT INTO constante VALUES
 INSERT INTO reponsepossible VALUES
 (1, 6, 1, 'Veuillez entrer un entier', 2),
 (2, 1, 2, 'Veuillez entrer un entier', 2),
-(3, 2, 3, 'OUI', 1),
-(4, 2, 5, 'NON', 1),
+(3, 2, 3, 'OUI', 2),
+(4, 2, 5, 'NON', 2),
 (5, 3, 4, 'Veuillez entrer un entier', 4),
 (6, 4, 5, 'Veuillez entrer un entier', 2),
 (7, 5, null, 'Veuillez entrer un entier', 3);
@@ -137,8 +144,8 @@ INSERT INTO reponsedonnee VALUES
 
 --CREATION CALCUL TEST
 INSERT INTO calcul VALUES
-(1, 1, 1),
-(3, 2, 1),
-(5, 4, 1),
-(3, 6, 2),
-(5, 7, 2);
+(1, 1, 1, 1),
+(2, 3, 2, 1),
+(3, 5, 4, 1),
+(4, 3, 6, 2),
+(5, 5, 7, 2);
