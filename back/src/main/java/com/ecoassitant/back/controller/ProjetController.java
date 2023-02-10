@@ -1,6 +1,7 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.dto.ProjetDto;
+import com.ecoassitant.back.dto.ProjetSimpleDto;
 import com.ecoassitant.back.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,4 +49,10 @@ public class ProjetController {
     public List<ProjetDto> recupererProjetAvecUserId(@PathVariable("id") Long id){
         return projetRepository.findAll().stream().filter(e -> Objects.equals(e.getProfil().getIdProfil(), id)).map(ProjetDto::new).toList();
     }
+
+    @PostMapping("projet/create")
+    public Long createProjet(@RequestBody ProjetSimpleDto projet){
+        return 1L;
+    }
+
 }
