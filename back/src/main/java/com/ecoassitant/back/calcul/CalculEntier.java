@@ -26,7 +26,7 @@ public class CalculEntier {
         this.calculs = List.copyOf(calculs);
         this.repDon = List.copyOf(repDon);
         dependances = new ArrayList<>();
-        calculs.forEach(calculEntity -> dependances.add(calculEntity.getId().getReponsePossible()));
+        calculs.forEach(calculEntity -> dependances.add(calculEntity.getReponsePossible()));
     }
 
     /**
@@ -98,16 +98,16 @@ public class CalculEntier {
         var calcul = iterateur.next();
         while (iterateur.hasNext()){
             Operateur operateur;
-            switch (calcul.getId().getCalculOp().getOperateur()){
+            switch (calcul.getCalculOp().getOperateur()){
                 case ADD -> operateur = new Add();
                 case SUB -> operateur = new Sub();
                 case DIV -> operateur = new Div();
                 case MULT -> operateur = new Mult();
                 default -> operateur = null;
             }
-            var operande = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
+            var operande = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
             calcul = iterateur.next();
-            var operande2 = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
+            var operande2 = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
 
             if (stack.isEmpty()){
 
