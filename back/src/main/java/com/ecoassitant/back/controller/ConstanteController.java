@@ -33,7 +33,11 @@ public class ConstanteController {
     }
 
 
-    //TODO Fix the problem error 400 " Required request parameter 'id' for method parameter type Long is not present"
+    /**
+     *get the constante associated with the id
+     * @param constanteId
+     * @return Constante associated with id
+     */
     @GetMapping("/constante/{id}")
     public ResponseEntity<ConstanteDto> getConstante(@PathVariable("id") Long constanteId){
         ConstanteDto constante = constanteService.getConstante(constanteId);
@@ -47,6 +51,10 @@ public class ConstanteController {
 
     }
 
+    /**
+     * Get all constantes in the DB
+     * @return all constantes
+     */
     @GetMapping("/constantes")
     public ResponseEntity<List<ConstanteDto>> getAllConstantes(){
         List<ConstanteDto> constantes = constanteService.findAll();

@@ -9,6 +9,11 @@ import java.util.List;
  * repository of Constant
  */
 public interface ConstantRepository extends JpaRepository<ConstanteEntity, Long> {
+    /**
+     * Get ConstanteEntity associated with id
+     * @param idConstante
+     * @return ConstanteEntity
+     */
     ConstanteEntity findByIdConstante(Long idConstante);
 
 

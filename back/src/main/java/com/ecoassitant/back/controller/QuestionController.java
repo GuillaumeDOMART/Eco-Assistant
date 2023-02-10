@@ -20,6 +20,11 @@ public class QuestionController {
     public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
     }
+
+    /**
+     * get first question of questionnaire
+     * @return first question of questionnaire
+     */
     @GetMapping("/questions")
     public ResponseEntity<QuestionDto> testsQuestionnaire(){
         QuestionDto question =  questionService.getQuestionnaire();
