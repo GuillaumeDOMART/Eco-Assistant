@@ -4,22 +4,22 @@ package com.ecoassitant.back.dto;
  * A reponse of a question for a project
  */
 public class ReponseDto {
-    private Long reponsePosId;
-    private int entry;
+    private Long questionId;
+    private String entry;
 
-    public Long getReponsePosId() {
-        return reponsePosId;
-    }
-
-    public void setReponsePosId(Long reponsePosId) {
-        this.reponsePosId = reponsePosId;
-    }
-
-    public int getEntry() {
+    public String getEntry() {
         return entry;
     }
 
-    public void setEntry(int entry) {
+    public void setEntry(String entry) {
         this.entry = entry;
+    }
+
+    public Long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 }
