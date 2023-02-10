@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of a ConstanteService
+ */
 @Service
 public class ConstanteServiceImpl implements ConstanteService {
     private final ConstantRepository constanteRepo;

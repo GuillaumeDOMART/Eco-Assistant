@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.util.Objects;
 
+/**
+ * DTO of a ReponseDonneeEntity
+ */
 @Data
 @AllArgsConstructor
 public class ReponseDonneeDto {

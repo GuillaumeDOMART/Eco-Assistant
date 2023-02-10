@@ -7,6 +7,9 @@ import lombok.Data;
 
 import java.util.Objects;
 
+/**
+ * DTO of a ProjectEntity
+ */
 @Data
 @AllArgsConstructor
 public class ProjetDto {

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of a ProjetService
+ */
 @Service
 public class ProjetServiceImpl implements ProjetService {
     private final ProjetRepository projetRepository;

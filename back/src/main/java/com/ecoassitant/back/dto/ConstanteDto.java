@@ -6,6 +6,9 @@ import lombok.Data;
 
 import java.util.Objects;
 
+/**
+ * DTO of ConstanteEntity
+ */
 @Data
 @AllArgsConstructor
 public class ConstanteDto {
