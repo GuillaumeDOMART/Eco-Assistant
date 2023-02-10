@@ -6,7 +6,6 @@ import com.ecoassitant.back.service.CalculService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * Controller for request about calcul
