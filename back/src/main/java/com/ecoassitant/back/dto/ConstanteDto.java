@@ -16,7 +16,11 @@ public class ConstanteDto {
     private int constante;
     private String tracabilite;
 
-
+    /**
+     * Generate a DTO from a ConstanteEntity
+     *
+     * @throws IllegalArgumentException if entity is null
+     */
     public ConstanteDto(ConstanteEntity constanteEntity) {
         Objects.requireNonNull(constanteEntity);
         this.idConstante = constanteEntity.getIdConstante();

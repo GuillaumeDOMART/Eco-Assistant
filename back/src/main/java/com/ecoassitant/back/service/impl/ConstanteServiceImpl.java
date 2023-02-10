@@ -15,6 +15,10 @@ import java.util.List;
 public class ConstanteServiceImpl implements ConstanteService {
     private final ConstantRepository constanteRepo;
 
+    /**
+     * Constructor of ConstanteService
+     * @param constanteRepo constanteRepository composite for using ConstanteService methods
+     */
     @Autowired
     public ConstanteServiceImpl(ConstantRepository constanteRepo) {
         this.constanteRepo = constanteRepo;

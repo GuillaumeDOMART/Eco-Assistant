@@ -15,6 +15,10 @@ import java.util.List;
 public class ProjetServiceImpl implements ProjetService {
     private final ProjetRepository projetRepository;
 
+    /**
+     * Constructor of ConstanteService
+     * @param projetRepository projetRepository composite for using ProjetService methods
+     */
     @Autowired
     public ProjetServiceImpl(ProjetRepository projetRepository) {
         this.projetRepository = projetRepository;

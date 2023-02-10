@@ -23,6 +23,10 @@ public class ConstanteController {
 
     private final ConstanteService constanteService;
 
+    /**
+     * Initialize the constanteService
+     * @param constanteService composite for using Service methods
+     */
     @Autowired
     public ConstanteController(ConstanteService constanteService) {
         this.constanteService = constanteService;
