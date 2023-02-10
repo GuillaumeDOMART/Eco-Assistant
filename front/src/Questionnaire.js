@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import StepperComponent from "./Stepper";
+import {Spinner} from "react-bootstrap";
 
 /**
  * Return the different possible answers to the question
@@ -84,7 +85,7 @@ const NUMERIC = (value) => {
  * @constructor
  */
 function Questionnaire() {
-    const [error, setError] = useState(null);
+    const [errorApiGetQuestionnaire, setErrorApiGetQuestionnaire] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
 
@@ -96,9 +97,9 @@ function Questionnaire() {
                     setIsLoaded(true);
                     setData(result);
                 },
-                (error) => {
+                (errorApiGetQuestionnaire) => {
                     setIsLoaded(true);
-                    setError(error);
+                    setErrorApiGetQuestionnaire(errorApiGetQuestionnaire);
                 }
             )
     }, [])
