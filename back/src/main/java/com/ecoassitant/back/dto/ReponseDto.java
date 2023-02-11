@@ -4,7 +4,7 @@ package com.ecoassitant.back.dto;
  * A reponse of a question for a project
  */
 public class ReponseDto {
-    private Long questionId;
+    private String questionId;
     private String entry;
 
     public String getEntry() {
@@ -16,10 +16,10 @@ public class ReponseDto {
     }
 
     public Long getQuestionId() {
-        return questionId;
+        return Long.getLong(questionId);
     }
 
     public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
+        this.questionId = questionId.toString();
     }
 }

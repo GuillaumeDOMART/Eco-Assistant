@@ -4,104 +4,12 @@ import {useForm} from "react-hook-form";
 import {NUMERIC, QCM} from "./QuestionType";
 import {Spinner} from "react-bootstrap";
 
-const test = {
-    "questionId": 1,
-    "intitule": "Sur la duree totale du projet, combiens de jours avez-vous passer sur place (au bureau) ?",
-    "type": "NUMERIC",
-    "phase": "HORS_PHASE",
-    "categorie": "FIRST",
-    "reponses": [
-        {
-            "questionSuiv": {
-                "questionId": 2,
-                "intitule": "Est-ce que vous vous déplacer à pied pour vous rendre sur place ?",
-                "type": "QCM",
-                "phase": "HORS_PHASE",
-                "categorie": "FIRST",
-                "reponses": [
-                    {
-                        "questionSuiv": {
-                            "questionId": 3,
-                            "intitule": "Combiens de KM est-ce que vous parcourrez en voiture pour vous rendre sur place ?",
-                            "type": "QCM",
-                            "phase": "HORS_PHASE",
-                            "categorie": "FIRST",
-                            "reponses": [
-                                {
-                                    "questionSuiv": {
-                                        "questionId": 4,
-                                        "intitule": "Combiens de salariées ont été mobilisé pour la phase de développements ?",
-                                        "type": "NUMERIC",
-                                        "phase": "DEVELOPPEMENT",
-                                        "categorie": "FIRST",
-                                        "reponses": [
-                                            {
-                                                "questionSuiv": {
-                                                    "questionId": 5,
-                                                    "intitule": "Combiens de jours la phase de développements a-t-elle durée?",
-                                                    "type": "NUMERIC",
-                                                    "phase": "DEVELOPPEMENT",
-                                                    "categorie": "FIRST",
-                                                    "reponses": [
-                                                        {
-                                                            "questionSuiv": null,
-                                                            "intitule": "Veuillez entrer un entier",
-                                                            "constante": 4,
-                                                            "id": 7
-                                                        }
-                                                    ],
-                                                    "visible": true
-                                                },
-                                                "intitule": "Veuillez entrer un entier",
-                                                "constante": 1,
-                                                "id": 6
-                                            }
-                                        ],
-                                        "visible": true
-                                    },
-                                    "intitule": "Veuillez entrer un entier",
-                                    "constante": 0,
-                                    "id": 5
-                                }
-                            ],
-                            "visible": false
-                        },
-                        "intitule": "OUI",
-                        "constante": 0,
-                        "id": 3
-                    },
-                    {
-                        "questionSuiv": {
-                            "questionId": 5,
-                            "intitule": "Combiens de jours la phase de développements a-t-elle durée?",
-                            "type": "NUMERIC",
-                            "phase": "DEVELOPPEMENT",
-                            "categorie": "FIRST",
-                            "reponses": [
-                                {
-                                    "questionSuiv": null,
-                                    "intitule": "Veuillez entrer un entier",
-                                    "constante": 4,
-                                    "id": 7
-                                }
-                            ],
-                            "visible": true
-                        },
-                        "intitule": "NON",
-                        "constante": 0,
-                        "id": 4
-                    }
-                ],
-                "visible": true
-            },
-            "intitule": "Veuillez entrer un entier",
-            "constante": 1,
-            "id": 2
-        }
-    ],
-    "visible": true
-}
-
+    /**
+     * Check if the question is in the array
+     * @param question
+     * @param questionArray
+     * @returns {boolean}
+     */
     function questionInList(question, questionArray) {
         let accepted = true;
         questionArray.forEach(value => {
@@ -176,7 +84,7 @@ function Questionnaire() {
         let projectId = '1'; // A MODIFIER
         let sendToBack = {}
         let responses = []
-        for(const [key, value] of Object.entries(data)) {
+        for (const [key, value] of Object.entries(data)) {
             let tuple = {}
             tuple['questionId'] = key;
             tuple['entry'] = value;
@@ -185,7 +93,7 @@ function Questionnaire() {
         sendToBack['projetId'] = projectId;
         sendToBack['reponses'] = responses;
         console.log(sendToBack)
-        alert(JSON.stringify(data));
+        // alert(JSON.stringify(data));
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -197,42 +105,42 @@ function Questionnaire() {
             redirect: 'follow'
         };
 
-        fetch("http://localhost/api/reponsesDonnee", requestOptions)
+        fetch("/api/reponsesDonnees", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-    };
+    }
 
-    // useEffect(() => {
-    //     fetch("http://localhost/api/questions")
-    //         .then(res => res.json())
-    //         .then(
-    //             (result) => {
-    //                 setIsLoaded(true);
-    //                 setData(result);
-    //             },
-    //             (error) => {
-    //                 setIsLoaded(true);
-    //                 setErrorApiGetQuestionnaire(error);
-    //             }
-    //         )
-    // }, [])
+    useEffect(() => {
+        fetch("/api/questions")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setData(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setErrorApiGetQuestionnaire(error);
+                }
+            )
+    }, [])
 
-    // if (errorApiGetQuestionnaire) {
-    //     return <div>Error: {errorApiGetQuestionnaire.message}</div>;
-    // } else if (!isLoaded) {
-    //     return (<>
-    //             <div>Loading...</div>
-    //             <Spinner animation="grow" variant="success"/>
-    //         </>
-    //     );
-    // } else {
+    if (errorApiGetQuestionnaire) {
+        return <div>Error: {errorApiGetQuestionnaire.message}</div>;
+    } else if (!isLoaded) {
+        return (<>
+                <div>Loading...</div>
+                <Spinner animation="grow" variant="success"/>
+            </>
+        );
+    } else {
         return (
             <>
                 <StepperComponent/>
                 <form onSubmit={handleSubmit(onSubmit)}
                       style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
-                    {buildQuiz(test).map((value) => {
+                    {buildQuiz(data).map((value) => {
                         switch (value.type) {
                              case 'QCM' :
                                  return (
@@ -248,14 +156,14 @@ function Questionnaire() {
                                              register={register}
                                     />
                                 )
-                            default : return;
+                            default : return null;
                         }
                     })}
                     <input type="submit" style={{marginTop: '20px'}}/>
                 </form>
             </>
         );
-    // }
+    }
 }
 
 export default Questionnaire
