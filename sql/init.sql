@@ -68,12 +68,11 @@ idcalculop serial PRIMARY KEY,
 operateur VARCHAR(10));
 
 CREATE TABLE IF NOT EXISTS calcul (
+idcalcul SERIAL PRIMARY KEY,
 calculopid INT NOT NULL,
 reponsepossibleid INT NOT NULL,
 nbcalcul INT NOT NULL,
 CONSTRAINT calculopid
-PRIMARY KEY (calculopid, reponsepossibleid),
-CONSTRAINT calculopid2
 FOREIGN KEY (calculopid)
 REFERENCES calculoperateur (idcalculop),
 CONSTRAINT reponsepossibleid
