@@ -16,7 +16,7 @@ public class ReponseDto {
     }
 
     public Long getQuestionId() {
-        return Long.getLong(questionId);
+        return Long.valueOf(questionId);
     }
 
     public void setQuestionId(Long questionId) {

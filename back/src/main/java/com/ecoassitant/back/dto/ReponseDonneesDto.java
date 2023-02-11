@@ -6,15 +6,15 @@ import java.util.List;
  * Reponses of a project
  */
 public class ReponseDonneesDto {
-    private Long projetId;
+    private String projetId;
     private List<ReponseDto> reponses;
 
     public Long getProjetId() {
-        return projetId;
+        return Long.valueOf(projetId);
     }
 
     public void setProjetId(Long projetId) {
-        this.projetId = projetId;
+        this.projetId = projetId.toString();
     }
 
     public List<ReponseDto> getReponses() {
