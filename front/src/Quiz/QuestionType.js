@@ -7,7 +7,6 @@ import React from "react";
  * @constructor
  */
 export const QCM = React.forwardRef(({ onChange, name, question }, ref) => {
-
     return (
         <div style={{marginTop: '20px'}}>
             <p>{question.intitule}</p>
@@ -19,6 +18,8 @@ export const QCM = React.forwardRef(({ onChange, name, question }, ref) => {
         </div>
     )
 })
+
+QCM.displayName = 'QCM';
 
 /**
  * A component representing a NUMERIC question

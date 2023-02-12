@@ -61,7 +61,6 @@ import {Spinner} from "react-bootstrap";
         }
         if (questionInList(question, arrayReturn)) {
             arrayReturn.push(parseQuestion(question))
-        } else {
         }
         question.reponses.forEach((value) => {
             buildQuiz(value.questionSuiv, arrayReturn)
@@ -80,20 +79,22 @@ function Questionnaire() {
     const [data, setData] = useState({})
     const {register, handleSubmit} = useForm();
 
-    const onSubmit = (data) => {
-        let projectId = '1'; // A MODIFIER
-        let sendToBack = {}
-        let responses = []
-        for (const [key, value] of Object.entries(data)) {
-            let tuple = {}
-            tuple['questionId'] = key;
-            tuple['entry'] = value;
+    /**
+     * Create and send the json used in the backend
+     * @param dataList
+     */
+    const onSubmit = (dataList) => {
+        const projectId = '1'; // A MODIFIER
+        const sendToBack = {}
+        const responses = []
+        for (const [key, value] of Object.entries(dataList)) {
+            const tuple = {}
+            tuple["questionId"] = key;
+            tuple["entry"] = value;
             responses.push(tuple)
         }
-        sendToBack['projetId'] = projectId;
-        sendToBack['reponses'] = responses;
-        console.log(sendToBack)
-        // alert(JSON.stringify(data));
+        sendToBack["projetId"] = projectId;
+        sendToBack["reponses"] = responses;
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -107,8 +108,8 @@ function Questionnaire() {
 
         fetch("/api/reponsesDonnees", requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+            // .then(result => console.log(result))
+            // .catch(error => console.log('error', error));
     }
 
     useEffect(() => {
