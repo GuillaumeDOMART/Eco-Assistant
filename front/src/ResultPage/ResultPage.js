@@ -6,8 +6,6 @@ function ResultPage() {
     const chartContainer = useRef(null);
     const chartInstance = useRef(null);
     const pdfContainer = useRef(null);
-    const [data, setData] = useState(null);
-    const [sum, setSum] = useState(0);
 
     const chart = (result) => {
         if (chartInstance.current) {
@@ -61,10 +59,8 @@ function ResultPage() {
         fetch('api/calculs',options)
             .then(response => response.json())
             .then(jsonData => {
-                setData(jsonData);
                 const developpementResults = jsonData.developpement.map(item => item.result);
                 const total = developpementResults.reduce((acc, current) => acc + current, 0);
-                setSum(total);
                 chart(total);
             });
     }, []);
