@@ -7,7 +7,7 @@ function ResultPage() {
     const chartInstance = useRef(null);
     const pdfContainer = useRef(null);
 
-    const chart = () => {
+    const chart = (result) => {
         if (chartInstance.current) {
             chartInstance.current.destroy();
         }
@@ -19,7 +19,7 @@ function ResultPage() {
                 datasets: [
                     {
                         label: 'Consomation en CO2',
-                        data: [12, 19, 3, 5, 2, 3],
+                        data: [12, result, 3, 5, 2, 3],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
@@ -49,7 +49,20 @@ function ResultPage() {
     };
 
     useEffect(() => {
-        chart();
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: 1 })
+        };
+        fetch('api/calculs',options)
+            .then(response => response.json())
+            .then(jsonData => {
+                const developpementResults = jsonData.developpement.map(item => item.result);
+                const total = developpementResults.reduce((acc, current) => acc + current, 0);
+                chart(total);
+            });
     }, []);
 
     return (
