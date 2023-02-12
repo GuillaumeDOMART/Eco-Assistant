@@ -43,7 +43,7 @@ export default function StepperComponent() {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         setSkipped(newSkipped);
         },
-        [skipped, activeStep]
+        [skipped, activeStep, isStepSkipped]
     );
 
     /**

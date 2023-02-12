@@ -6,7 +6,7 @@ import com.ecoassitant.back.entity.ReponsePossibleEntity;
  * ReponsePossible build with ReponsePossibleEntity for use in app
  */
 public class ReponsePossibleDto {
-    private Long id;
+    private Long reponseId;
     private QuestionDto questionSuiv;
     private String intitule;
     private int constante;
@@ -19,7 +19,7 @@ public class ReponsePossibleDto {
         this.questionSuiv = reponse.getQuestionSuiv() != null? new QuestionDto(reponse.getQuestionSuiv()) : null;
         this.intitule = reponse.getIntitule();
         this.constante = reponse.getConstante().getConstante();
-        this.id = reponse.getIdReponsePos();
+        this.reponseId = reponse.getIdReponsePos();
     }
 
     public QuestionDto getQuestionSuiv() {
@@ -47,10 +47,10 @@ public class ReponsePossibleDto {
     }
 
     public Long getId() {
-        return id;
+        return reponseId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.reponseId = id;
     }
 }
