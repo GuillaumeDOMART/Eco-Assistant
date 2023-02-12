@@ -89,12 +89,12 @@ function Questionnaire() {
         const responses = []
         for (const [key, value] of Object.entries(dataList)) {
             const tuple = {}
-            tuple["questionId"] = key;
-            tuple["entry"] = value;
+            tuple.questionId = key;
+            tuple.entry = value;
             responses.push(tuple)
         }
-        sendToBack["projetId"] = projectId;
-        sendToBack["reponses"] = responses;
+        sendToBack.projetId = projectId;
+        sendToBack.reponses = responses;
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
