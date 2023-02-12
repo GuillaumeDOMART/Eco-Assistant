@@ -101,7 +101,7 @@ function Questionnaire() {
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            body: sendToBack,
+            body: JSON.stringify(sendToBack),
             redirect: 'follow'
         };
 
