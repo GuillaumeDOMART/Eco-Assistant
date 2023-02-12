@@ -65,7 +65,6 @@ function ResultPage() {
                 const developpementResults = jsonData.developpement.map(item => item.result);
                 const total = developpementResults.reduce((acc, current) => acc + current, 0);
                 setSum(total);
-                console.log(total)
                 chart(total);
             });
     }, []);
