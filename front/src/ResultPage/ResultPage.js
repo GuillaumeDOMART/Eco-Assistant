@@ -1,5 +1,5 @@
 import Chart from "chart.js/auto";
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useRef} from "react";
 import jsPDF from "jspdf";
 
 function ResultPage() {
