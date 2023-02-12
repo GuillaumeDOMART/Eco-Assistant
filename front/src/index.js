@@ -9,7 +9,7 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import Questionnaire from "./Questionnaire";
+import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
 
