@@ -24,7 +24,7 @@ public class ProfilServiceImpl implements ProfilService {
     @Override
     public ProfilDto getProfilByID(Long id){
         var profil = repository.findById(id);
-        return profil.isEmpty() ? null : new ProfilDto(profil.get());
+        return new ProfilDto(profil.orElseGet(null));
     }
 
 
@@ -32,6 +32,6 @@ public class ProfilServiceImpl implements ProfilService {
     public ProfilDto getProfilByMail(String mail) {
 
         var profil = repository.findByMail(mail);
-        return profil == null ? null : new ProfilDto(profil);
+        return new ProfilDto(profil.orElseThrow());
     }
 }
