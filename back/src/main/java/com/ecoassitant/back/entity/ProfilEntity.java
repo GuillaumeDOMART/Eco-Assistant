@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,9 +17,10 @@ import java.io.Serializable;
 public class ProfilEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profil_sequence")
+    @SequenceGenerator(name = "profil_sequence", sequenceName = "profil_sequence", allocationSize = 1)
     @Column(name = "idprofil", nullable = false)
-    private Long idProfil;
+    private Integer idProfil;
 
     @Column(name = "mail")
     private String mail;
