@@ -1,32 +1,50 @@
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import {useForm} from "react-hook-form";
-import {Input} from "@mui/material";
+import {Button, TextField} from "@mui/material";
+import leaves from './leaves.png';
+import "./Connection.css"
 
 function Connection() {
     const {register, handleSubmit} = useForm();
     return (
-       <>
            <Container>
                <Row>
                    <Col
-                       style={{backgroundColor:"green", margin:"10px"}}>
-                       <p>Test</p>
+                       className="left"
+                   >
+                       <h1>Open Sans Light</h1>
+                       <h1>Eco-Assistant</h1>
+                       <img className="leaves" src={require('./leaves.png')}  alt={"leaves"}/>
+                       <hr/>
+                       <p>Envie de connaitre<br/>
+                       l'empreinte carbone de<br/>
+                       ton projet informatique ?<br/>
+                           <br/>
+                       Grâce au questionnaire<br/>
+                       Eco-Assistant, calcule ton<br/>
+                       impact environnemental :</p>
+                       <a href="/questionnaire">Remplir le questionnaire*</a>
+                       <hr/>
+                       <p>* Remplir un questionnaire sans être connecté entrainera une perte<br/>
+                       des données en cas d'abandon. Pour conserver l'avancement<br/>
+                       connectez-vous ou créez un compte</p>
                    </Col>
                    <Col
-                       style={{backgroundColor:"pink", margin:"10px"}}>
+                       className="right"
+                   >
                        <h1>Créer un compte</h1>
                        <form onSubmit={handleSubmit}>
-                            <Input type={"text"} placeholder={"Prénom"}/><br/>
-                           <Input type={"text"} placeholder={"Nom"}/><br/>
-                           <Input type={"text"} placeholder={"Adresse Mail"}/><br/>
-                           <Input type={"text"} placeholder={"Mot de passe"}/><br/>
-                           <Input type={"text"} placeholder={"Valider le mot de passe"}/><br/>
-                           <Button type={"submit"} style={{}}>Créer</Button>
+                           <TextField label="Prénom" type="text" variant="standard" className="textfield"/><br/>
+                           <TextField label="Nom" type="text" variant="standard" className="textfield"/><br/>
+                           <TextField label="Adresse Mail" type="email" variant="standard" className="textfield"/><br/>
+                           <TextField label="Mot de passe" type="password" variant="standard" className="textfield"/><br/>
+                           <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield"/><br/>
+                           <Button type={"submit"} style={{}}>Créer</Button><br/>
+                           <p>Déjà un compte ? <a href="/questionnaire">Se connecter</a></p>
                        </form>
                    </Col>
                </Row>
            </Container>
-       </>
     )
 }
 
