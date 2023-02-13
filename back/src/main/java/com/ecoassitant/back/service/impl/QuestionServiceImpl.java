@@ -1,9 +1,14 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.QuestionDto;
+import com.ecoassitant.back.dto.QuestionUniqueDto;
+import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.repository.QuestionRepository;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * implementation of questionService
@@ -19,11 +24,14 @@ QuestionServiceImpl implements QuestionService {
 
     /**
      * Set 1st question of questionary, all the questionnary is accessible with responses.questionSuiv
+     *
      * @return 1st question of questionary
      */
     @Override
-    public QuestionDto getQuestionnaire() {
+    public HashMap<Phase, List<QuestionUniqueDto>> getQuestionnaire() {
         var questionEntity = questionRepository.findAll().stream().findFirst();
-        return questionEntity.map(QuestionDto::new).orElse(null);
+        var questionDto = questionEntity.map(QuestionDto::new).orElse(null);
+        return QuestionUniqueDto.Mapper(questionDto);
     }
+
 }
