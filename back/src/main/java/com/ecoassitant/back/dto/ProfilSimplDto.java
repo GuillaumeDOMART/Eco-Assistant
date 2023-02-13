@@ -6,6 +6,13 @@ public class ProfilSimplDto {
     private String mail;
     private String mdp;
 
+    public ProfilSimplDto(String firstname, String lastname, String mail, String mdp) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.mail = mail;
+        this.mdp = mdp;
+    }
+
     public String getFirstname() {
         return firstname;
     }
