@@ -8,11 +8,8 @@ h1 {
     text-align: center;
 }
 
-.container {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+body {
+    height: 100%;
     font-family: OpenSansLight, serif;
 }
 
@@ -25,16 +22,16 @@ hr {
 }
 
 .leaves {
-    height:30px;
+    height:5%;
 }
 
 .left {
-    margin-right : 25px;
+    margin-right : 2%;
     text-align : center;
 }
 
 .right {
-    margin-left:25px;
+    margin-left:2%;
     border-radius: 5px;
     border: 5px solid #aee1c6;
     box-shadow: 15px 10px 1px #EAF7F0;
