@@ -110,7 +110,7 @@ INSERT INTO projet VALUES
 INSERT INTO question VALUES
 (1, 'Sur la duree totale du projet, combiens de jours avez-vous passer sur place (au bureau) ?', 6, 'NUMERIC', 'HORS_PHASE', 'FIRST', 1),
 (2, 'Est-ce que vous vous déplacer à pied pour vous rendre sur place ?', 1, 'QCM', 'HORS_PHASE', 'FIRST', 1),
-(3, 'Combiens de KM est-ce que vous parcourrez en voiture pour vous rendre sur place ?', 2, 'QCM', 'HORS_PHASE', 'FIRST', 0),
+(3, 'Combiens de KM est-ce que vous parcourrez en voiture pour vous rendre sur place ?', 2, 'NUMERIC', 'HORS_PHASE', 'FIRST', 0),
 (4, 'Combiens de salariées ont été mobilisé pour la phase de développements ?', 3, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
 (5, 'Combiens de jours la phase de développements a-t-elle durée?', 4, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
 (6, 'Combiens de jours au total le projet a-t-il / vas-t-il duré ?', null, 'NUMERIC', 'HORS_PHASE', 'FIRST', 1);
