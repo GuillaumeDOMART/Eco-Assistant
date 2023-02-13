@@ -12,6 +12,7 @@ import {
 import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
+import ConnexionPage from "./Connexion/ConnexionPage";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
     ,{
         path:"/result",
         element: <ResultPage/>
+    },
+    {
+        path:"/login",
+        element: <ConnexionPage/>
     }
 ]);
 
