@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,11 +11,12 @@ import {
 import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
+import Connection from "./Connection/Connection";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <Connection />,
         errorElement: <ErrorPage/>,
     },
     {
