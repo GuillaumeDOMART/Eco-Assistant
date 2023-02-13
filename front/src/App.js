@@ -1,13 +1,9 @@
-import './App.css';
-import BarreNavCore from "./BarreNav/BarreNavCore";
-
+import "./App.css"
+import AccueilProfil from "./AccueilProfil/AccueilProfil";
 
 function App() {
   return (
-    <div id="app" className="App .container-fluid row">
-      <BarreNavCore/>
-      <div className="col">METTRE LES AUTRES COMPOSANTS ICI</div>
-    </div>
+   <AccueilProfil></AccueilProfil>
   );
 }
 
