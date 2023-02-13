@@ -19,7 +19,7 @@ function ResultPage() {
                 datasets: [
                     {
                         label: 'Consomation en CO2',
-                        data: [12, result, 3, 5, 2, 3],
+                        data: [result["planification"], result["developpement"], result["test"], result["deploiement"], result["maintenance"]],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
@@ -49,19 +49,28 @@ function ResultPage() {
     };
 
     useEffect(() => {
+        const id = new URLSearchParams(window.location.search).get('id');
         const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ id: 1 })
+            body: JSON.stringify({ id: id })
         };
         fetch('api/calculs',options)
             .then(response => response.json())
             .then(jsonData => {
-                const developpementResults = jsonData.developpement.map(item => item.result);
-                const total = developpementResults.reduce((acc, current) => acc + current, 0);
-                chart(total);
+                const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
+                const sums = {};
+                arrays.forEach(array => {
+                    if (jsonData[array]) {
+                        const results = jsonData[array].map(item => item.result);
+                        sums[array] = results.reduce((acc, current) => acc + current, 0);
+                    }else {
+                        sums[array] = 0;
+                    }
+                });
+                chart(sums);
             });
     }, []);
 
