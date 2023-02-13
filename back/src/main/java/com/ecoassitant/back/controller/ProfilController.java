@@ -1,6 +1,7 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.dto.ProfilDto;
+import com.ecoassitant.back.dto.ProfilSimplDto;
 import com.ecoassitant.back.service.ProfilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -52,5 +53,11 @@ public class ProfilController {
         } else {
             return new ResponseEntity<>(profil, headers, HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/profil")
+    public ResponseEntity<Long> createProfil(@RequestBody ProfilSimplDto profilDto){
+        var id = profilService.createProfil(profilDto);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }
