@@ -55,7 +55,7 @@ function ResultPage() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ id: id })
+            body: JSON.stringify({ id })
         };
         fetch('api/calculs',options)
             .then(response => response.json())
