@@ -3,6 +3,7 @@ import StepperComponent from "../Stepper/Stepper";
 import {useForm} from "react-hook-form";
 import {NUMERIC, QCM} from "./QuestionType";
 import {Spinner} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
     /**
      * Check if the question is in the array
@@ -78,6 +79,7 @@ function Questionnaire() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
     const {register, handleSubmit} = useForm();
+    const navigate = useNavigate();
 
     /**
      * Create and send the json used in the backend
@@ -110,6 +112,8 @@ function Questionnaire() {
             .then(response => response.text())
             // .then(result => console.log(result))
             // .catch(error => console.log('error', error));
+
+        navigate("/result")
     }
 
     useEffect(() => {
