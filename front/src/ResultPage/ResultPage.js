@@ -8,6 +8,9 @@ function ResultPage() {
     const pdfContainer = useRef(null);
     const lengthChart = 210;
     const heightChart = 297;
+    const marginLeft = 15;
+    const yText = 25;
+    const yImage = 35;
 
     const chart = (result) => {
         if (chartInstance.current) {
@@ -42,10 +45,12 @@ function ResultPage() {
 
     const handleDownloadPDF = () => {
         const canvas = chartContainer.current;
-        const imgData = canvas.toDataURL('image/jpeg', 1.0, );
+        console.log(canvas.width);
+        console.log(canvas.height);
+        const imgData = canvas.toDataURL('image/png', 1.0);
         const pdf = new jsPDF("p","mm","a4");
-        pdf.text('Hello World!', 15, 25, { fontSize: 36, fontName: 'Helvetica', fontStyle: 'bold', color: '#000000', maxWidth: 170 });
-        pdf.addImage(imgData, 'JPEG', 15, 35, lengthChart*0.9, heightChart/4);
+        pdf.text('Hello World!', marginLeft, yText, { fontSize: 36, fontName: 'Helvetica', fontStyle: 'bold', color: '#000000', maxWidth: 170 });
+        pdf.addImage(imgData, 'PNG', marginLeft, yImage, lengthChart*0.9, heightChart/4);
         pdf.save('chart.pdf');
         //TODO
 
