@@ -4,18 +4,41 @@ import {Alert, Table} from "@mui/material";
 import Button from "@mui/material/Button";
 import {Placeholder} from "react-bootstrap";
 
+/**
+ * This function generate a line containing informations about a project
+ *
+ * @param data a json object of this type :
+ *
+ ```json
+ {
+        "id": 1,
+        "profil": {
+            "id": 2,
+            "mail": "createur-dev@demo.fr",
+            "nom": "DEMO",
+            "prenom": "Createur Dev",
+            "admin": false
+        },
+        "nomProjet": "QUESTIONAIRE POUR DEVELOPPEURS",
+        "etat": "INPROGRESS"
+    }
+ ```
+ */
 function LigneTableauProjet(data){
     return (
         <tr>
-            <td>{data["nomProjet"]}</td>
+            <td>{data.nomProjet}</td>
             <td>{data.etat}</td>
             <td><Button >Modifier</Button><Button>Visionner</Button><Button>Exporter</Button><Button>Dissocier</Button></td>
         </tr>
     );
 }
 
+/**
+ * Generate a project listing table with data from API, use placeholder while loading
+ */
 function TableauProjets() {
-    const [error, setError] = useState(null);
+    const [apiError, setApiError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
@@ -30,63 +53,65 @@ function TableauProjets() {
 
                 (error) => {
                     setIsLoaded(true);
-                    setError(error);
+                    setApiError(error);
                 }
             )
     }, [])
 
-    if (error) {
+    if (apiError) {
         return (
             <Alert variant="danger">
                 <Alert.Heading>Error</Alert.Heading>
                 <p>{error.message}</p>
             </Alert>
         );
-    } else if (!isLoaded) {
-        return <TableauPlaceholder/>;
+    } else if (!isLoaded){
+        return (
+            <Table striped bordered hover>
+                <TableauProjetsHeader/>
+                <LigneTableauProjetsPlaceholder/>
+            </Table>
+        );
     } else {
         return (
             <Table striped bordered hover>
-                <thead>
-                <tr>
-                    <th>Nom du projet</th>
-                    <th>Etat du questionnaire</th>
-                    <th>Actions possibles</th>
-                </tr>
-                </thead>
-                <tbody>
+                <TableauProjetsHeader/>
                 {items.map(item => (
-                    <LigneTableauProjet key={item['id']} {...item}/>
+                    <LigneTableauProjet key={item.id} {...item}/>
                 ))}
-                </tbody>
             </Table>
         );
     }
 }
-
-function TableauPlaceholder(){
+/**
+ * Placeholder lines for project listing table
+ */
+function LigneTableauProjetsPlaceholder(){
     return(
-        <Table striped bordered hover>
-            <thead>
-                <tr>
-                    <th>Nom du projet</th>
-                    <th>Etat du questionnaire</th>
-                    <th>Actions possibles</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td> <Placeholder xs={4}/></td>
-                    <td><Placeholder xs={4}/></td>
-                    <td><Placeholder xs={1} aria-hidden="true"/><Placeholder xs={1} aria-hidden="true"/><Placeholder
-                    xs={1} aria-hidden="true"/><Placeholder xs={1} aria-hidden="true"/></td>
-                </tr>
-            </tbody>
-        </Table>
-        );
+        <tr>
+            <td> <Placeholder xs={5}/></td>
+            <td><Placeholder xs={5}/></td>
+            <td><Placeholder xs={2} aria-hidden="true"/></td>
+        </tr>
+    );
 }
 
+/**
+ * Header for project listing table with data or placeholder
+ */
+function TableauProjetsHeader(){
+    return (
+        <tr>
+            <th>Nom du projet</th>
+            <th>Etat du questionnaire</th>
+            <th>Actions possibles</th>
+        </tr>
+    );
+}
 
+/**
+ * Generate a web page containing a navigation bar and a project listing table
+ */
 function AccueilProfil() {
         return (
             <div id="app" className="App .container-fluid row">
