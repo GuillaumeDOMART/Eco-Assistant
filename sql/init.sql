@@ -2,8 +2,9 @@
 Initialisation DataBase
 */
 
+CREATE SEQUENCE profil_sequence START WITH 1;
 CREATE TABLE IF NOT EXISTS profil (
-idprofil serial PRIMARY KEY,
+idprofil INTEGER PRIMARY KEY DEFAULT nextval('profil_sequence'),
 mail VARCHAR (140) NOT NULL,
 mdp VARCHAR (140) NOT NULL,
 nom VARCHAR (50) NOT NULL,
@@ -95,11 +96,11 @@ INSERT INTO calculoperateur VALUES
 (4, 'DIV'),
 (5, 'NOTHING');
 
-INSERT INTO profil VALUES
-(1, 'admin@demo.fr', 'admin@demo.com', 'DEMO', 'Admin', 1),
-(2, 'createur-dev@demo.fr', 'createur-dev@demo.fr', 'DEMO', 'Createur Dev', 0),
-(3, 'createur-support@demo.fr', 'createur-support@demo.fr', 'DEMO', 'Createur Support', 0),
-(4, 'salarie@demo.fr', 'salarie@demo.fr', 'DEMO', 'Salarie', 0);
+INSERT INTO profil (mail,mdp,nom,prenom,isadmin) VALUES
+('admin@demo.fr', 'admin@demo.com', 'DEMO', 'Admin', 1),
+('createur-dev@demo.fr', 'createur-dev@demo.fr', 'DEMO', 'Createur Dev', 0),
+('createur-support@demo.fr', 'createur-support@demo.fr', 'DEMO', 'Createur Support', 0),
+('salarie@demo.fr', 'salarie@demo.fr', 'DEMO', 'Salarie', 0);
 
 -- CREATION DES PROJETS DEVS ET SUPPORT
 INSERT INTO projet VALUES
