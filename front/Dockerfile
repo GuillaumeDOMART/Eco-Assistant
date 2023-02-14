@@ -8,6 +8,8 @@ COPY /src ./src
 
 COPY /public ./public
 
+RUN npm install -g sass
+
 RUN npm install
 
 EXPOSE 3000
