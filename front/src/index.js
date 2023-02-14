@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'scss/custom.scss'
+import './scss/custom.scss'
 
 import {
     createBrowserRouter,

@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../logo.svg';
+import logo from '../logo/Eco-Assistant_transparent.PNG';
 /**
  * Composant qui représente la barre de navigation laérale.
  * */
@@ -11,12 +11,10 @@ function BarreNavCore() {
         </a>
     ));
 
-
-
     return (
-        <nav id="sidebarMenu" className="col-2 h-100 border border-2 border-secondary">
-            <div className="position-sticky list-group list-group-flush mx-3 mt-4 h-100">
-                <img alt="logo react" src={logo} height="100px"></img>
+        <nav id="sidebarMenu" className="col-2 border border-2 border-secondary">
+            <div className="position-sticky list-group list-group-flush px-3 pt-4 h-100">
+                <img alt="logo eco-assistant" src={logo}></img>
                 {listeLiens}
             </div>
         </nav>
