@@ -74,15 +74,62 @@ function TableauProjets() {
         );
     } else {
         return (
-            <Table striped bordered hover>
-                <TableauProjetsHeader/>
-                {items.map(item => (
-                    <LigneTableauProjet key={item.id} {...item}/>
-                ))}
-            </Table>
+            <>
+                <h1>Accueil</h1>
+                <br/>
+                <Table>
+                    <TableauProjetsHeader/>
+                    {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                </Table>
+            </>
         );
     }
 }
+
+/**
+ * Generate a project listing table with Mock data
+ */
+function MockTableauProjets() {
+    const items = [
+        {
+            "id": 1,
+            "profil": {
+                "id": 2,
+                "mail": "createur-dev@demo.fr",
+                "nom": "DEMO",
+                "prenom": "Createur Dev",
+                "admin": false
+            },
+            "nomProjet": "QUESTIONAIRE POUR DEVELOPPEURS",
+            "etat": "INPROGRESS"
+        },
+        {
+            "id": 2,
+            "profil": {
+                "id": 3,
+                "mail": "createur-support@demo.fr",
+                "nom": "DEMO",
+                "prenom": "Createur Support",
+                "admin": false
+            },
+            "nomProjet": "QUESTIONAIRE POUR L EQUIPE SUPPORT",
+            "etat": "INPROGRESS"
+        }
+    ]
+
+    return (
+        <>
+            <h1>Accueil (TEST FRONT)</h1>
+            <br/>
+
+            <Table>
+                <TableauProjetsHeader/>
+                {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+            </Table>
+        </>
+    );
+}
+
 /**
  * Placeholder lines for project listing table
  */
@@ -109,19 +156,22 @@ function TableauProjetsHeader(){
     );
 }
 
+
 /**
  * Generate a web page containing a navigation bar and a project listing table
  */
 function AccueilProfil() {
-        return (
-            <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
-                <BarreNavCore/>
-                <div className="col-10 h-100">
-                    <TableauProjets/>
-                </div>
-            </div>
-        );
-    }
+    let mockFront = true;
+    let tableToDisplay = <MockTableauProjets/>;
+    if(!mockFront) tableToDisplay = <TableauProjets/>
+
+    return (
+        <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
+            <BarreNavCore/>
+            <div className="col-10 px-5 pt-4">{tableToDisplay}</div>
+        </div>
+    );
+}
 
 
 export default AccueilProfil
