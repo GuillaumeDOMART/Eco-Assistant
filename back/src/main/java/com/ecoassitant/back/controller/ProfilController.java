@@ -26,7 +26,7 @@ public class ProfilController {
     /**
      * Endpoint to retrieve profil by id
      */
-    @GetMapping("/profil/{id}")
+    @GetMapping("profil/{id}")
     @ResponseBody
     public ResponseEntity<ProfilDto> recupererProfilAvecId(@PathVariable("id") Long id) {
         HttpHeaders headers = new HttpHeaders();
@@ -42,7 +42,7 @@ public class ProfilController {
     /**
      * Endpoint to retrieve profil by mail
      */
-    @GetMapping("/profil/search/{mail}")
+    @GetMapping("profil/search/{mail}")
     @ResponseBody
     public ResponseEntity<ProfilDto> recupererProfilAvecMail(@PathVariable("mail") String mail) {
         HttpHeaders headers = new HttpHeaders();
@@ -55,8 +55,8 @@ public class ProfilController {
         }
     }
 
-    @PostMapping("/profil")
-    public ResponseEntity<Long> createProfil(@RequestBody ProfilSimplDto profilDto){
+    @PostMapping("profil")
+    public ResponseEntity<Integer> createProfil(@RequestBody ProfilSimplDto profilDto){
         var id = profilService.createProfil(profilDto);
         System.out.println("j'ai id");
         return new ResponseEntity<>(id, HttpStatus.OK);

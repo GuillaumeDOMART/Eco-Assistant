@@ -35,6 +35,5 @@ public class ProfilEntity implements Serializable {
     private String prenom;
 
     @Column(name = "isadmin", nullable = false)
-    @Type(type="org.hibernate.type.NumericBooleanType")
-    private boolean isAdmin;
+    private Integer isAdmin;
 }
