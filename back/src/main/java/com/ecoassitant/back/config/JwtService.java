@@ -12,6 +12,8 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import io.jsonwebtoken.Jwts;
+
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -34,7 +36,7 @@ public class JwtService {
      * @param claims extra claims
      * @return the token
      */
-    public String generateToken(ProfilEntity profilEntity, HashMap<String, Object> claims){
+    public String generateToken(ProfilEntity profilEntity, Map<String, Object> claims){
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(profilEntity.getMail())
@@ -46,7 +48,7 @@ public class JwtService {
 
     /**
      * Getter for get secret key in a byte array
-     * @return
+     * @return byte array that represent the secret key
      */
     private Key getKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
@@ -96,7 +98,6 @@ public class JwtService {
      * @param token the token that contain claims
      * @param claimsResolver the lambda to extract the claims
      * @return the claims
-     * @param <T> the type of the claims
      */
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
