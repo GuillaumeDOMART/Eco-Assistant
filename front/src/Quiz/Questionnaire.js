@@ -5,6 +5,104 @@ import {NUMERIC, QCM} from "./QuestionType";
 import {Spinner} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
+const test = {
+    "questionId": 1,
+    "intitule": "Sur la duree totale du projet, combiens de jours avez-vous passer sur place (au bureau) ?",
+    "type": "NUMERIC",
+    "phase": "HORS_PHASE",
+    "categorie": "FIRST",
+    "reponses": [
+        {
+            "questionSuiv": {
+                "questionId": 2,
+                "intitule": "Est-ce que vous vous déplacer à pied pour vous rendre sur place ?",
+                "type": "QCM",
+                "phase": "HORS_PHASE",
+                "categorie": "FIRST",
+                "reponses": [
+                    {
+                        "questionSuiv": {
+                            "questionId": 3,
+                            "intitule": "Combiens de KM est-ce que vous parcourrez en voiture pour vous rendre sur place ?",
+                            "type": "QCM",
+                            "phase": "HORS_PHASE",
+                            "categorie": "FIRST",
+                            "reponses": [
+                                {
+                                    "questionSuiv": {
+                                        "questionId": 4,
+                                        "intitule": "Combiens de salariées ont été mobilisé pour la phase de développements ?",
+                                        "type": "NUMERIC",
+                                        "phase": "DEVELOPPEMENT",
+                                        "categorie": "FIRST",
+                                        "reponses": [
+                                            {
+                                                "questionSuiv": {
+                                                    "questionId": 5,
+                                                    "intitule": "Combiens de jours la phase de développements a-t-elle durée?",
+                                                    "type": "NUMERIC",
+                                                    "phase": "DEVELOPPEMENT",
+                                                    "categorie": "FIRST",
+                                                    "reponses": [
+                                                        {
+                                                            "questionSuiv": null,
+                                                            "intitule": "Veuillez entrer un entier",
+                                                            "constante": 4,
+                                                            "id": 7
+                                                        }
+                                                    ],
+                                                    "visible": true
+                                                },
+                                                "intitule": "Veuillez entrer un entier",
+                                                "constante": 1,
+                                                "id": 6
+                                            }
+                                        ],
+                                        "visible": true
+                                    },
+                                    "intitule": "Veuillez entrer un entier",
+                                    "constante": 0,
+                                    "id": 5
+                                }
+                            ],
+                            "visible": false
+                        },
+                        "intitule": "OUI",
+                        "constante": 0,
+                        "id": 3
+                    },
+                    {
+                        "questionSuiv": {
+                            "questionId": 5,
+                            "intitule": "Combiens de jours la phase de développements a-t-elle durée?",
+                            "type": "NUMERIC",
+                            "phase": "DEVELOPPEMENT",
+                            "categorie": "FIRST",
+                            "reponses": [
+                                {
+                                    "questionSuiv": null,
+                                    "intitule": "Veuillez entrer un entier",
+                                    "constante": 4,
+                                    "id": 7
+                                }
+                            ],
+                            "visible": true
+                        },
+                        "intitule": "NON",
+                        "constante": 0,
+                        "id": 4
+                    }
+                ],
+                "visible": true
+            },
+            "intitule": "Veuillez entrer un entier",
+            "constante": 1,
+            "id": 2
+        }
+    ],
+    "visible": true
+}
+
     /**
      * Check if the question is in the array
      * @param question
@@ -117,6 +215,7 @@ function Questionnaire() {
     }
 
     useEffect(() => {
+        console.log(buildQuiz(test))
         fetch("/api/questions")
             .then(res => res.json())
             .then(

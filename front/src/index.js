@@ -11,7 +11,7 @@ import {
 import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
-import AccueilSite from "./Connection/Connection";
+import AccueilSite from "./AccueilSite/AccueilSite";
 
 const router = createBrowserRouter([
     {
