@@ -43,7 +43,14 @@ function TableauProjets() {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost/api/projets')
+        const token = sessionStorage.getItem("token")
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer '+token
+            },
+        };
+        fetch('http://localhost/api/projet/user',options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -161,7 +168,7 @@ function TableauProjetsHeader(){
  * Generate a web page containing a navigation bar and a project listing table
  */
 function AccueilProfil() {
-    const mockFront = true;
+    const mockFront = false;
     let tableToDisplay = <MockTableauProjets/>;
     if(!mockFront) tableToDisplay = <TableauProjets/>
 
