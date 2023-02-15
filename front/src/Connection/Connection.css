@@ -4,11 +4,12 @@
     url("../font/OpenSans-Light.ttf") format("truetype");
 }
 
-h1 {
-    text-align: center;
-}
+/*h1 {*/
+/*    text-align: center;*/
+/*}*/
 
 body {
+    text-align: center;
     height: 100%;
     font-family: OpenSansLight, serif;
 }
@@ -31,7 +32,7 @@ hr {
 }
 
 .right {
-    margin-left:2%;
+    /*margin-left:2%;*/
     border-radius: 5px;
     border: 5px solid #aee1c6;
     box-shadow: 15px 10px 1px #EAF7F0;

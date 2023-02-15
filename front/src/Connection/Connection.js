@@ -7,9 +7,9 @@ import "./Connection.css"
 function Connection() {
     const {register, handleSubmit} = useForm();
     return (
-           <Container className="vh-100" fluid>
-               <Row>
-                   <Col className="left">
+           <Container className="" fluid>
+               <Row className="vh-100">
+                   <Col className="border border-danger mx-5 my-5">
                        <h1>Eco-Assistant</h1>
                        {/*<img className="leaves" src={require('./leaves.png')}  alt={"leaves"}/>*/}
                        <hr/>
@@ -26,7 +26,7 @@ function Connection() {
                        des données en cas d'abandon. Pour conserver l'avancement<br/>
                        connectez-vous ou créez un compte</p>
                    </Col>
-                   <Col className="right">
+                   <Col className="border border-danger mx-5 my-5">
                        <h1>Créer un compte</h1>
                        <form onSubmit={handleSubmit}>
                            <TextField label="Prénom" type="text" variant="standard" className="textfield"/><br/>
