@@ -14,6 +14,7 @@ import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
 import ConnexionPage from "./Connexion/ConnexionPage";
 import AccueilSite from "./Connection/Connection";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
 
 const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
     {
         path:"/login",
         element: <ConnexionPage/>
+    },
+    {
+        path:"/forgotPassword",
+        element: <ForgotPassword/>
     }
 ]);
 
