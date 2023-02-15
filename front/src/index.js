@@ -8,13 +8,13 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
 import ConnexionPage from "./Connexion/ConnexionPage";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import AccueilSite from "./AccueilSite/AccueilSite";
 import AccueilProfil from "./AccueilProfil/AccueilProfil";
+import StepperComponent from "./Stepper/Stepper";
 
 const router = createBrowserRouter([
     {
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     },
     {
         path:"/questionnaire",
-        element: <Questionnaire />,
+        element: <StepperComponent/>,
     }
     ,{
         path:"/result",

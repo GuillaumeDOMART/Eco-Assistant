@@ -1,6 +1,10 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.QuestionDto;
+import com.ecoassitant.back.dto.QuestionUniqueDto;
+import com.ecoassitant.back.entity.tools.Phase;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Service for QuestionController
@@ -8,7 +12,8 @@ import com.ecoassitant.back.dto.QuestionDto;
 public interface QuestionService {
     /**
      * set quiz
+     *
      * @return first question of quiz
      */
-    public QuestionDto getQuestionnaire();
+    public Map<Phase, List<QuestionUniqueDto>> getQuestionnaire();
 }
