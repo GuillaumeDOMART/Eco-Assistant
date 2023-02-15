@@ -48,7 +48,7 @@ public class ProjetController {
     }
 
     /**
-     * Endpoint to retrieve a projet by it's user's id
+     * Endpoint to retrieve a projet by it's user's token
      */
     @GetMapping("/projet/user")
     @ResponseBody
