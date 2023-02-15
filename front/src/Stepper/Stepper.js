@@ -5,6 +5,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Questionnaire from "../Quiz/Questionnaire";
 
 const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
 
@@ -135,6 +136,8 @@ export default function StepperComponent() {
                     </>
                 )}
             </Box>
+            <Questionnaire activeStep={activeStep}/>
         </div>
+
     );
 }
