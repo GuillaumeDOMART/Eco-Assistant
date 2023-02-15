@@ -1,4 +1,4 @@
-package com.ecoassitant.back.auth.config;
+package com.ecoassitant.back.config;
 
 import com.ecoassitant.back.entity.ProfilEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * representation of user in the program
+ */
 public class UserDetailsImpl implements UserDetails {
     private final ProfilEntity profilEntity;
 

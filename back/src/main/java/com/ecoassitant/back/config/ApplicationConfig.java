@@ -1,7 +1,6 @@
-package com.ecoassitant.back.auth.config;
+package com.ecoassitant.back.config;
 
 import com.ecoassitant.back.repository.ProfilRepository;
-import com.ecoassitant.back.service.impl.ProfilServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
