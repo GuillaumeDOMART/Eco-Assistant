@@ -15,6 +15,7 @@ import ConnexionPage from "./Connexion/ConnexionPage";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import AccueilSite from "./AccueilSite/AccueilSite";
 import AccueilProfil from "./AccueilProfil/AccueilProfil";
+import Profil from "./InfoProfil/Profil";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
     {
         path:"/forgotPassword",
         element: <ForgotPassword/>
+    },
+    {
+        path: "/infoProfil",
+        element: <Profil/>
     }
 ]);
 
