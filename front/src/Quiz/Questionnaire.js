@@ -102,7 +102,7 @@ function Questionnaire() {
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Bearer "+token);
+        myHeaders.append("Authorization", `Bearer ${token}`);
 
         const requestOptions = {
             method: 'POST',
@@ -124,7 +124,7 @@ function Questionnaire() {
         const options = {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer '+token
+                'Authorization': `Bearer ${token}`
             },
         };
         fetch("/api/questions",options)
