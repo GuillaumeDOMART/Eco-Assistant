@@ -2,6 +2,7 @@ package com.ecoassitant.back.entity;
 
 import com.ecoassitant.back.entity.tools.Etat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,12 +12,14 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "projet")
 public class ProjetEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_sequence")
+    @SequenceGenerator(name = "project_sequence", sequenceName = "project_sequence", allocationSize = 1)
     @Column(name = "idprojet", nullable = false)
     private Long idProjet;
 

@@ -2,16 +2,18 @@
 Initialisation DataBase
 */
 
+CREATE SEQUENCE profil_sequence START WITH 1;
 CREATE TABLE IF NOT EXISTS profil (
-idprofil serial PRIMARY KEY,
+idprofil INTEGER PRIMARY KEY DEFAULT nextval('profil_sequence'),
 mail VARCHAR (140) NOT NULL,
 mdp VARCHAR (140) NOT NULL,
 nom VARCHAR (50) NOT NULL,
 prenom VARCHAR (50) NOT NULL,
 isadmin INT NOT NULL);
 
+CREATE SEQUENCE project_sequence START WITH 1;
 CREATE TABLE IF NOT EXISTS projet (
-idprojet serial PRIMARY KEY,
+idprojet INTEGER PRIMARY KEY DEFAULT nextval('project_sequence'),
 profilid INT NOT NULL,
 nomprojet VARCHAR (50) NOT NULL,
 etat VARCHAR (50) NOT NULL,

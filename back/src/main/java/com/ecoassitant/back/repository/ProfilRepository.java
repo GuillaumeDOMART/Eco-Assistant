@@ -2,6 +2,9 @@ package com.ecoassitant.back.repository;
 
 import com.ecoassitant.back.entity.ProfilEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
 /**
  * repository of Profil
  */
@@ -11,6 +14,6 @@ public interface ProfilRepository extends JpaRepository<ProfilEntity, Long> {
     /**
      * Retrieve a ProfilEntity by it's mail
      */
-    ProfilEntity findByMail(String mail);
+    Optional<ProfilEntity> findByMail(String mail);
 
 }

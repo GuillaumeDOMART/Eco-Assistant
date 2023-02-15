@@ -26,7 +26,7 @@ public class ProfilServiceImpl implements ProfilService {
     @Override
     public ProfilDto getProfilByID(Long id){
         var profil = repository.findById(id);
-        return profil.isEmpty() ? null : new ProfilDto(profil.get());
+        return new ProfilDto(profil.orElseGet(null));
     }
 
 
@@ -34,11 +34,11 @@ public class ProfilServiceImpl implements ProfilService {
     public ProfilDto getProfilByMail(String mail) {
 
         var profil = repository.findByMail(mail);
-        return profil == null ? null : new ProfilDto(profil);
+        return new ProfilDto(profil.orElseThrow());
     }
 
     @Override
-    public Long createProfil(ProfilSimplDto profilDto) {
+    public Integer createProfil(ProfilSimplDto profilDto) {
         var profilEntity = new ProfilEntity();
         System.out.println("la");
         profilEntity.setMail(profilDto.getMail());
@@ -46,12 +46,12 @@ public class ProfilServiceImpl implements ProfilService {
         profilEntity.setPrenom(profilDto.getFirstname());
         System.out.println("la la");
         profilEntity.setPassword(profilDto.getMdp());
-        profilEntity.setAdmin(false);
+        profilEntity.setIsAdmin(1);
         System.out.println(profilEntity.getPassword());
         repository.save(profilEntity);
         System.out.println("la la la la");
 
-        var profil = repository.findByMail(profilDto.getMail());
+        var profil = repository.findByMail(profilDto.getMail()).orElseThrow();
         return profil.getIdProfil();
     }
 }

@@ -1,27 +1,11 @@
 import {Col, Container, Row} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 
 
-/**
- * Create the JSON for connexion and send it to the backend
- * @param datas
- */
-const onSubmit = (datas)=>{
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
 
-    const requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: JSON.stringify(datas),
-        redirect: 'follow'
-    };
-
-    fetch("{{base_url}}/auth/authentication", requestOptions)
-        .then(response => response.text())
-}
 
 /**
  * The component representing the page for connexion
@@ -58,7 +42,6 @@ function Logo(){
  * @constructor
  */
 function FormContainer(){
-
     return (
         <Row>
             <Container style={{
@@ -84,6 +67,31 @@ function FormContainer(){
 }
 function Form(){
     const {register, handleSubmit} = useForm();
+    const navigate = useNavigate();
+
+    /**
+     * Create the JSON for connexion and send it to the backend
+     * @param datas
+     */
+    const onSubmit = (datas)=>{
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify(datas),
+            redirect: 'follow'
+        };
+
+        fetch("/api/auth/authentication", requestOptions)
+            .then(response => response.json())
+            .then(jsonData => {
+                sessionStorage.setItem("token", jsonData.token);
+            })
+        navigate("/profil")
+    }
+
 return (
     <form onSubmit={handleSubmit(onSubmit)}>
         <TextField label="Adresse Mail" type="email" variant="standard" style={{width:"75%"}} required {...register('login', {

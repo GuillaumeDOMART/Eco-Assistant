@@ -22,5 +22,5 @@ public interface ProfilService {
      */
     ProfilDto getProfilByMail(String mail);
 
-    Long createProfil(ProfilSimplDto profilDto);
+    Integer createProfil(ProfilSimplDto profilDto);
 }
