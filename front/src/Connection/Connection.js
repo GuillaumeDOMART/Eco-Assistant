@@ -22,7 +22,7 @@ const Connection = ({handleSubmit, register}) => {
                 <TextField label="Mot de passe" type="password" variant="standard" className="textfield" {...register("password")}/><br/>
                 <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield" {...register("passwordConfirmed")}/><br/>
                 <Button type={"submit"}>Créer</Button><br/>
-                <p>Déjà un compte ? <a href="">Se connecter</a></p>
+                <p>Déjà un compte ? {/*<a href="/questionnaire">*/}Se connecter{/*</a>*/}</p>
             </form>
         </Col>
     )
@@ -40,7 +40,7 @@ const Anonyme = () => {
             {/*<img className="leaves" src={require('./leaves.png')}  alt={"leaves"}/>*/}
             <hr/>
             <p>Envie de connaitre<br/>
-                l'empreinte carbone de<br/>
+                l&lsquo;empreinte carbone de<br/>
                 ton projet informatique ?<br/>
                 <br/>
                 Grâce au questionnaire<br/>
@@ -49,7 +49,7 @@ const Anonyme = () => {
             <a href="/questionnaire">Remplir le questionnaire*</a>
             <hr/>
             <p>* Remplir un questionnaire sans être connecté entrainera une perte<br/>
-                des données en cas d'abandon. Pour conserver l'avancement<br/>
+                des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
                 connectez-vous ou créez un compte</p>
         </Col>
     )
