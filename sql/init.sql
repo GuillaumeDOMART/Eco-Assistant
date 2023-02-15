@@ -111,9 +111,13 @@ INSERT INTO question (intitule, questionpre, typeq, phase, categorie, visibilite
 ('Sur la duree totale du projet, combiens de jours avez-vous passer sur place (au bureau) ?', 6, 'NUMERIC', 'HORS_PHASE', 'FIRST', 1),
 ('Est-ce que vous vous déplacer à pied pour vous rendre sur place ?', 1, 'QCM', 'HORS_PHASE', 'FIRST', 1),
 ('Combiens de KM est-ce que vous parcourrez en voiture pour vous rendre sur place ?', 2, 'NUMERIC', 'HORS_PHASE', 'FIRST', 0),
-('Combiens de salariées ont été mobilisé pour la phase de développements ?', 3, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
+('Combiens de salariées ont été mobilisé pour la phase de développements ?', 7, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
 ('Combiens de jours la phase de développements a-t-elle durée?', 4, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
-('Combiens de jours au total le projet a-t-il / vas-t-il duré ?', null, 'NUMERIC', 'HORS_PHASE', 'FIRST', 1);
+('Combiens de jours au total le projet a-t-il / vas-t-il duré ?', null, 'NUMERIC', 'HORS_PHASE', 'FIRST', 1),
+('Cest une question de planification?',3, 'QCM','PLANIFICATION', 'FIRST', 1),
+('combien de test avez vous fait?', 5, 'NUMERIC', 'TEST', 'FIRST', 1),
+('Maxime a mis en place le deploiement?', 8,'QCM', 'DEPLOIEMENT',  'FIRST', 1),
+('ça maintient?', 9, 'QCM', 'MAINTENANCE',  'FIRST', 1);
 
 --- CREATION DES CONSTANTES
 INSERT INTO constante (constante, tracabilite) VALUES
@@ -131,7 +135,15 @@ INSERT INTO reponsepossible (questionasso, questionsuiv, intitule, constanteid) 
 (2, 5, 'NON', 2),
 (3, 4, 'Veuillez entrer un entier', 4),
 (4, 5, 'Veuillez entrer un entier', 2),
-(5, null, 'Veuillez entrer un entier', 3);
+(5, 7, 'Veuillez entrer un entier', 3),
+(7, 8, 'OUI', 2),
+(7, 8, 'NON', 2),
+(7, 8, 'REPONSE D', 2),
+(8, 9, 'Veuillez entrer un entier', 3),
+(9, 10, 'NON', 1),
+(9, 10, 'TOUJOURS NON', 1),
+(10, null, 'couci', 4),
+(10, null, 'couça', 4);
 
 --CREATION REPONSEDONNEE
 INSERT INTO reponsedonnee VALUES
