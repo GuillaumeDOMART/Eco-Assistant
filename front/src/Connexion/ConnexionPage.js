@@ -32,14 +32,18 @@ function ConnexionPage(){
 
 
     return (
-        <>
-                <Col>
-                    <Logo/>
-                    <Form/>
-                </Col>
-        </>
+        <Col>
+            <Logo/>
+            <FormContainer/>
+        </Col>
     )
 }
+
+/**
+ * The component representing the logo of Eco Assistant
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function Logo(){
     return (
         <Row>
@@ -47,8 +51,13 @@ function Logo(){
         </Row>
     );
 }
-function Form(){
-    const {register, handleSubmit} = useForm();
+
+/**
+ * The component representing the form of connexion
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function FormContainer(){
 
     return (
         <Row>
@@ -67,29 +76,35 @@ function Form(){
                         padding:"5%"
                     }}>
                     <h1 style={{paddingBottom : "8%"}}>Page de Connexion</h1>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <TextField label="Adresse Mail" type="email" variant="standard" style={{width:"75%"}} required {...register('login', {
-                            required: 'Email is required',
-                            pattern: {
-                                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                message: 'Please enter a valid email',
-                            },
-                        })}/><br/>
-                        <TextField label="Mot de passe" type="password" variant="standard" style={{width:"75%"}} required {...register('password')}/><br/>
-                        <Row>
-                            <Col>
-                                <Button href={"/"} style={{}}>Retour</Button><br/>
-                            </Col>
-                            <Col>
-                                <Button type={"submit"} style={{}}>Connexion</Button><br/>
-                            </Col>
-                        </Row>
-
-                        <p>Mot de passe oublié ? <a href="/forgotPassword">Réinitialiser le mot de passe</a></p>
-                    </form>
+                    <Form/>
                 </Col>
             </Container>
         </Row>
     );
+}
+function Form(){
+    const {register, handleSubmit} = useForm();
+return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+        <TextField label="Adresse Mail" type="email" variant="standard" style={{width:"75%"}} required {...register('login', {
+            required: 'Email is required',
+            pattern: {
+                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Please enter a valid email',
+            },
+        })}/><br/>
+        <TextField label="Mot de passe" type="password" variant="standard" style={{width:"75%"}} required {...register('password')}/><br/>
+        <Row>
+            <Col>
+                <Button href={"/"} style={{}}>Retour</Button><br/>
+            </Col>
+            <Col>
+                <Button type={"submit"} style={{}}>Connexion</Button><br/>
+            </Col>
+        </Row>
+
+        <p>Mot de passe oublié ? <a href="/forgotPassword">Réinitialiser le mot de passe</a></p>
+    </form>
+);
 }
 export default ConnexionPage;
