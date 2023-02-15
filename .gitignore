@@ -27,5 +27,6 @@ hs_err_pid*
 Front/Front.iml
 Back/Back.iml
 /.env
+/front/node_modules/
 
 Eco-Assistant.iml
