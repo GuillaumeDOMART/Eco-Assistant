@@ -45,8 +45,6 @@ function ResultPage() {
 
     const handleDownloadPDF = () => {
         const canvas = chartContainer.current;
-        console.log(canvas.width);
-        console.log(canvas.height);
         const imgData = canvas.toDataURL('image/png', 1.0);
         const pdf = new jsPDF("p","mm","a4");
         pdf.text('Hello World!', marginLeft, yText, { fontSize: 36, fontName: 'Helvetica', fontStyle: 'bold', color: '#000000', maxWidth: 170 });
