@@ -17,9 +17,13 @@ import ConnexionPage from "./Connexion/ConnexionPage";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <AccueilSite/>,
         errorElement: <ErrorPage/>,
     },
+    // {
+    //     path: "/connexion",
+    //     element: <AccueilSite/>,
+    // },
     {
         path:"/questionnaire",
         element: <Questionnaire />,

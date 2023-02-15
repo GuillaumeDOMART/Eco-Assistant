@@ -1,6 +1,7 @@
 package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.ProfilDto;
+import com.ecoassitant.back.dto.ProfilSimplDto;
 
 /**
  * Service for ProfilController
@@ -20,4 +21,6 @@ public interface ProfilService {
      * @return a ProfilDto with the submitted mail, or null if it doesn't exist
      */
     ProfilDto getProfilByMail(String mail);
+
+    Long createProfil(ProfilSimplDto profilDto);
 }

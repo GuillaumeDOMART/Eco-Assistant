@@ -1,22 +1,20 @@
 import React from 'react';
-import logo from '../logo.svg';
+import logo from '../logo/Eco-Assistant_transparent.PNG';
 /**
  * Composant qui représente la barre de navigation laérale.
  * */
 function BarreNavCore() {
     const listeOnglets = [['Accueil', './'], ['Profil', './'], ['Remplir un questionnaire', '/questionnaire'], ["Questions proposées", './'], ['Moderation', './'], ['Se déconnecter', './']]
     const listeLiens = listeOnglets.map((x) => (
-        <a href={x[1]} className="list-group-item list-group-item-action py-2 ripple" key={x[0]} aria-current="true">
+        <a href={x[1]} className="list-group-item list-group-item-action text-center" key={x[0]} aria-current="true">
             <span key="key">{x[0]}</span>
         </a>
     ));
 
-
-
     return (
-        <nav id="sidebarMenu" className="col-2 order-12 collapse d-lg-block sidebar collapse bg-black">
-            <div className="position-sticky list-group list-group-flush mx-3 mt-4">
-                <img alt="logo react" src={logo} height="100px"></img>
+        <nav id="sidebarMenu" className="col-2 border border-2 border-secondary">
+            <div className="position-sticky list-group list-group-flush px-3 pt-4 h-100">
+                <img alt="logo eco-assistant" src={logo}></img>
                 {listeLiens}
             </div>
         </nav>
