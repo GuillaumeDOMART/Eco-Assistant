@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './scss/custom.scss'
 
@@ -13,8 +12,9 @@ import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
 import ConnexionPage from "./Connexion/ConnexionPage";
-import AccueilSite from "./Connection/Connection";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import AccueilSite from "./AccueilSite/AccueilSite";
+import AccueilProfil from "./AccueilProfil/AccueilProfil";
 
 const router = createBrowserRouter([
     {
@@ -24,13 +24,12 @@ const router = createBrowserRouter([
     },
     {
         path: "/profil",
-        element: <App/>,
-        errorElement: <ErrorPage/>,
+        element: <AccueilProfil/>,
     },
-    // {
-    //     path: "/connexion",
-    //     element: <AccueilSite/>,
-    // },
+    {
+      path: "/connexion",
+      element: <ConnexionPage/>,
+    },
     {
         path:"/questionnaire",
         element: <Questionnaire />,
