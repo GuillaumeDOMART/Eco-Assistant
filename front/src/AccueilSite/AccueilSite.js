@@ -65,6 +65,10 @@ function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
 
+    /**
+     * Send datas to the back
+     * @param datas
+     */
     const submitCreation = (datas) => {
 
         const myHeaders = new Headers();
