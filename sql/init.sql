@@ -2,8 +2,9 @@
 Initialisation DataBase
 */
 
+CREATE SEQUENCE profil_sequence START WITH 1;
 CREATE TABLE IF NOT EXISTS profil (
-idprofil serial PRIMARY KEY,
+idprofil INTEGER PRIMARY KEY DEFAULT nextval('profil_sequence'),
 mail VARCHAR (140) NOT NULL,
 mdp VARCHAR (140) NOT NULL,
 nom VARCHAR (50) NOT NULL,
