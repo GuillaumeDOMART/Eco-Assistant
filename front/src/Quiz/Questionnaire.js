@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {NUMERIC, QCM} from "./QuestionType";
 import {Spinner} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import Phase from "./Phase";
@@ -77,8 +76,7 @@ function Questionnaire(activeStep) {
             </>
         );
     } else {
-        //  <Phase register={register} value={data.DEPLOIEMENT.map}/> IL SERT A QUOI LE .MAP ???
-       let currentPhase;
+       let currentPhase = data.HORS_PHASE;
        switch(activeStep.activeStep) {
            case 0:
                currentPhase = data.PLANIFICATION
@@ -96,9 +94,7 @@ function Questionnaire(activeStep) {
                currentPhase = data.MAINTENANCE
                break;
        }
-        //console.log("phase "+JSON.stringify(activeStep)+" : "+JSON.stringify(currentPhase))
         return (
-            <>
                 <form onSubmit={handleSubmit(onSubmit)}
                       style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
                     {currentPhase.map(question =>
@@ -106,7 +102,6 @@ function Questionnaire(activeStep) {
                     )}
                     <input type="submit" style={{marginTop: '20px'}}/>
                 </form>
-            </>
         );
     }
 }

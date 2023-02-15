@@ -28,6 +28,10 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
+    /**
+     * Api for get quiz
+     * @return quiz type Map
+     */
     @GetMapping("/questions")
     public ResponseEntity<Map<Phase, List<QuestionUniqueDto>>> testsQuestionnaire(){
         var quiz = questionService.getQuestionnaire();

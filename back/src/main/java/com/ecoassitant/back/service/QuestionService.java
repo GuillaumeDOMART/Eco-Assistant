@@ -3,8 +3,8 @@ package com.ecoassitant.back.service;
 import com.ecoassitant.back.dto.QuestionUniqueDto;
 import com.ecoassitant.back.entity.tools.Phase;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service for QuestionController
@@ -15,5 +15,5 @@ public interface QuestionService {
      *
      * @return first question of quiz
      */
-    public HashMap<Phase, List<QuestionUniqueDto>> getQuestionnaire();
+    public Map<Phase, List<QuestionUniqueDto>> getQuestionnaire();
 }

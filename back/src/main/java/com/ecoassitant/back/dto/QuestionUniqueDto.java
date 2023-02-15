@@ -7,7 +7,11 @@ import com.ecoassitant.back.entity.tools.TypeQ;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Question with Id for questionSuiv
+ */
 public class QuestionUniqueDto {
     private final Long questionId;
     private final String intitule;
@@ -17,6 +21,10 @@ public class QuestionUniqueDto {
     private final List<ReponseUniqueDto> reponses;
     private static HashMap<Phase,List<QuestionUniqueDto>> map = new HashMap<>();
 
+    /**
+     * create a quuestion with a quiz
+     * @param quiz format tree
+     */
     public QuestionUniqueDto(QuestionDto quiz) {
         this.categorie = quiz.getCategorie();
         this.intitule = quiz.getIntitule();
@@ -29,7 +37,12 @@ public class QuestionUniqueDto {
         });
     }
 
-    public static HashMap<Phase, List<QuestionUniqueDto>> Mapper(QuestionDto quiz){
+    /**
+     * create quiz in the map
+     * @param quiz quiz  format tree
+     * @return quiz format map
+     */
+    public static Map<Phase, List<QuestionUniqueDto>> Mapper(QuestionDto quiz){
         map.put(Phase.DEPLOIEMENT, new ArrayList<QuestionUniqueDto>());
         map.put(Phase.DEVELOPPEMENT, new ArrayList<QuestionUniqueDto>());
         map.put(Phase.MAINTENANCE, new ArrayList<QuestionUniqueDto>());

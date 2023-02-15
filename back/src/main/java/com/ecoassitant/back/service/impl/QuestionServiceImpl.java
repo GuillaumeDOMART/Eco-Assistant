@@ -7,8 +7,8 @@ import com.ecoassitant.back.repository.QuestionRepository;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * implementation of questionService
@@ -28,7 +28,7 @@ QuestionServiceImpl implements QuestionService {
      * @return 1st question of questionary
      */
     @Override
-    public HashMap<Phase, List<QuestionUniqueDto>> getQuestionnaire() {
+    public Map<Phase, List<QuestionUniqueDto>> getQuestionnaire() {
         var questionEntity = questionRepository.findAll().stream().findFirst();
         var questionDto = questionEntity.map(QuestionDto::new).orElse(null);
         return QuestionUniqueDto.Mapper(questionDto);
