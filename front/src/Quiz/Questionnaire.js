@@ -66,7 +66,6 @@ import {useNavigate} from "react-router-dom";
         question.reponses.forEach((value) => {
             buildQuiz(value.questionSuiv, arrayReturn)
         })
-        console.log(arrayReturn)
         return arrayReturn;
     }
 

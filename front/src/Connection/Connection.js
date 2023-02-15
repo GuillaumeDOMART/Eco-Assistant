@@ -1,26 +1,38 @@
 import {Col, Container, Row} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
-import leaves from './leaves.png';
+// import leaves from './leaves.png';
 import "./Connection.css"
 
-const Connection = (handleSubmit) => {
+/**
+ * Display the right part of the home page of the website
+ * @param handleSubmit
+ * @param register
+ * @returns {JSX.Element}
+ * @constructor
+ */
+const Connection = ({handleSubmit, register}) => {
     return (
         <Col className="border border-danger mx-5 my-5">
             <h1>Créer un compte</h1>
             <form onSubmit={handleSubmit}>
-                <TextField label="Prénom" type="text" variant="standard" className="textfield"/><br/>
-                <TextField label="Nom" type="text" variant="standard" className="textfield"/><br/>
-                <TextField label="Adresse Mail" type="email" variant="standard" className="textfield"/><br/>
-                <TextField label="Mot de passe" type="password" variant="standard" className="textfield"/><br/>
-                <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield"/><br/>
-                <Button type={"submit"} style={{}}>Créer</Button><br/>
+                <TextField label="Prénom" type="text" variant="standard" className="textfield" {...register("firstname")}/><br/>
+                <TextField label="Nom" type="text" variant="standard" className="textfield" {...register("lastname")}/><br/>
+                <TextField label="Adresse Mail" type="email" variant="standard" className="textfield" {...register("mail")}/><br/>
+                <TextField label="Mot de passe" type="password" variant="standard" className="textfield" {...register("password")}/><br/>
+                <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield" {...register("passwordConfirmed")}/><br/>
+                <Button type={"submit"}>Créer</Button><br/>
                 <p>Déjà un compte ? <a href="/questionnaire">Se connecter</a></p>
             </form>
         </Col>
     )
 }
 
+/**
+ * Display the left part of the home page of the website
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Anonyme = () => {
     return (
         <Col className="border border-danger mx-5 my-5">
@@ -43,13 +55,18 @@ const Anonyme = () => {
     )
 }
 
+/**
+ * Display the home page of the website
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
     return (
            <Container className="" fluid>
                <Row className="vh-100">
                    <Anonyme/>
-                   <Connection handleSumbit={handleSubmit}/>
+                   <Connection handleSumbit={handleSubmit} register={register}/>
                </Row>
            </Container>
     )
