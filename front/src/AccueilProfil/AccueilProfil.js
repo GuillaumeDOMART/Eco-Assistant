@@ -26,7 +26,7 @@ import {Placeholder} from "react-bootstrap";
  */
 function LigneTableauProjet(data){
     return (
-        <tr>
+        <tr className='table border-bottom border-2 border-secondary'>
             <td>{data.nomProjet}</td>
             <td>{data.etat}</td>
             <td><Button >Modifier</Button><Button>Visionner</Button><Button>Exporter</Button><Button>Dissocier</Button></td>
@@ -67,7 +67,7 @@ function TableauProjets() {
         );
     } else if (!isLoaded){
         return (
-            <Table striped bordered hover>
+            <Table>
                 <TableauProjetsHeader/>
                 <LigneTableauProjetsPlaceholder/>
             </Table>
@@ -135,7 +135,7 @@ function MockTableauProjets() {
  */
 function LigneTableauProjetsPlaceholder(){
     return(
-        <tr>
+        <tr className='table border-bottom border-3 border-primary'>
             <td> <Placeholder xs={5}/></td>
             <td><Placeholder xs={5}/></td>
             <td><Placeholder xs={2} aria-hidden="true"/></td>
@@ -148,9 +148,9 @@ function LigneTableauProjetsPlaceholder(){
  */
 function TableauProjetsHeader(){
     return (
-        <tr>
+        <tr className='table border-bottom border-3 border-primary'>
             <th>Nom du projet</th>
-            <th>Etat du questionnaire</th>
+            <th>Etat du Projet</th>
             <th>Actions possibles</th>
         </tr>
     );
@@ -161,14 +161,14 @@ function TableauProjetsHeader(){
  * Generate a web page containing a navigation bar and a project listing table
  */
 function AccueilProfil() {
-    let mockFront = true;
+    const mockFront = true;
     let tableToDisplay = <MockTableauProjets/>;
     if(!mockFront) tableToDisplay = <TableauProjets/>
 
     return (
         <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
             <BarreNavCore/>
-            <div className="col-10 px-5 pt-4">{tableToDisplay}</div>
+            <div className="col-10 p-5">{tableToDisplay}</div>
         </div>
     );
 }
