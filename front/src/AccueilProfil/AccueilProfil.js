@@ -26,7 +26,7 @@ import {Placeholder} from "react-bootstrap";
  */
 function LigneTableauProjet(data){
     return (
-        <tr>
+        <tr className='table border-bottom border-2 border-secondary'>
             <td>{data.nomProjet}</td>
             <td>{data.etat}</td>
             <td><Button >Modifier</Button><Button>Visionner</Button><Button>Exporter</Button><Button>Dissocier</Button></td>
@@ -67,7 +67,7 @@ function TableauProjets() {
         );
     } else if (!isLoaded){
         return (
-            <Table striped bordered hover>
+            <Table className='table m-2 p-3'>
                 <TableauProjetsHeader/>
                 <LigneTableauProjetsPlaceholder/>
             </Table>
@@ -77,7 +77,7 @@ function TableauProjets() {
             <>
                 <h1>Accueil</h1>
                 <br/>
-                <Table>
+                <Table className='table m-2 p-3'>
                     <TableauProjetsHeader/>
                     {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
                 </Table>
@@ -122,7 +122,7 @@ function MockTableauProjets() {
             <h1>Accueil (TEST FRONT)</h1>
             <br/>
 
-            <Table>
+            <Table className='table m-2 p-3'>
                 <TableauProjetsHeader/>
                 {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
             </Table>
@@ -135,7 +135,7 @@ function MockTableauProjets() {
  */
 function LigneTableauProjetsPlaceholder(){
     return(
-        <tr>
+        <tr className='table border-bottom border-3 border-primary'>
             <td> <Placeholder xs={5}/></td>
             <td><Placeholder xs={5}/></td>
             <td><Placeholder xs={2} aria-hidden="true"/></td>
@@ -148,9 +148,9 @@ function LigneTableauProjetsPlaceholder(){
  */
 function TableauProjetsHeader(){
     return (
-        <tr>
+        <tr className='table border-bottom border-3 border-primary'>
             <th>Nom du projet</th>
-            <th>Etat du questionnaire</th>
+            <th>Etat du Projet</th>
             <th>Actions possibles</th>
         </tr>
     );
