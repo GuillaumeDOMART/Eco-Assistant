@@ -22,7 +22,7 @@ const Connection = ({handleSubmit, register}) => {
                 <TextField label="Mot de passe" type="password" variant="standard" className="textfield" {...register("password")}/><br/>
                 <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield" {...register("passwordConfirmed")}/><br/>
                 <Button type={"submit"}>Créer</Button><br/>
-                <p>Déjà un compte ? <a href="/questionnaire">Se connecter</a></p>
+                <p>Déjà un compte ? <a href="">Se connecter</a></p>
             </form>
         </Col>
     )
