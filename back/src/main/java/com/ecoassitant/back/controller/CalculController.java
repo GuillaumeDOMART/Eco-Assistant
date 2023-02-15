@@ -66,6 +66,38 @@ public class CalculController {
         }
 
     }
+
+    @RequestMapping("api/auth")
+    @RestController
+    public static class AuthenticationController {
+        private final AuthenticationService authenticationService;
+        @Autowired
+        public AuthenticationController(AuthenticationService authenticationService) {
+            this.authenticationService = authenticationService;
+        }
+
+        /**
+         * Function to register a user
+         *
+         * @param registerInputDto input that represent the profile to create
+         * @return Token authentication
+         */
+        @PostMapping("register")
+        public ResponseEntity<TokenDto> register(@RequestBody RegisterInputDto registerInputDto){
+            return authenticationService.register(registerInputDto);
+        }
+
+        /**
+         * Function to logged user
+         * @param authenticationInputDto input that represent the login form
+         * @return Token authentication and the mail
+         */
+        @PostMapping("authentication")
+        public AuthenticationOutPutDto authentication(@RequestBody AuthenticationInputDto authenticationInputDto){
+            return authenticationService.authentication(authenticationInputDto);
+        }
+
+    }
 }
 
 
