@@ -1,4 +1,4 @@
-package com.ecoassitant.back.auth.config;
+package com.ecoassitant.back.config;
 
 import com.ecoassitant.back.repository.ProfilRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+/**
+ * representation of user service in the program
+ */
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final ProfilRepository profilRepository;
 

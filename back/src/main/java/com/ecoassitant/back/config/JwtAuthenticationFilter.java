@@ -1,4 +1,4 @@
-package com.ecoassitant.back.auth.config;
+package com.ecoassitant.back.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +23,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * This function is an internal filter. Its purpose is to filter the requests received by the back.
+     * It checks that the token used is valid
+     * @param request request received by the back
+     * @param response request returned by the back
+     * @param filterChain filterChain
+     * @throws ServletException if an I/O error occurs during the processing of the request
+     * @throws IOException if the processing fails for any other reason
+     */
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
 
