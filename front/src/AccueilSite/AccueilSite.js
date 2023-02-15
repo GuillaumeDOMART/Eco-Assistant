@@ -63,7 +63,14 @@ const Anonyme = () => {
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
 
+
     const submitCreation = (datas) => {
+        console.log("press")
+        if (datas.password !== datas.passwordConfirmed) {
+            return false;
+        }
+        console.log(datas)
+
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -78,7 +85,6 @@ function AccueilSite() {
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-        alert(JSON.stringify(datas))
     }
 
     return (
