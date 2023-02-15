@@ -1,8 +1,14 @@
 import {NUMERIC, QCM} from "./QuestionType";
 import React from "react";
 
+/**
+ * gestion affuchage d'une question
+ * @param value question
+ * @param register register du quiz
+ * @returns {JSX.Element|null}
+ * @constructor
+ */
 export default function Phase({value, register}){
-    console.log("value" + value)
     switch (value.type) {
         case 'QCM' :
             return (
