@@ -33,13 +33,10 @@ function ConnexionPage(){
 
     return (
         <>
-            <Container>
                 <Col>
                     <Logo/>
                     <Form/>
                 </Col>
-            </Container>
-
         </>
     )
 }
