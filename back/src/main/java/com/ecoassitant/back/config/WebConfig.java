@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:8001","http://localhost:80","http://nginx:80","https://eco-assistant-esipe.fr")
+                .allowedOrigins("http://localhost","http://localhost:8001","http://localhost:80","http://nginx:80", "http://nginx:80","https://eco-assistant-esipe.fr")
                 .allowedMethods("*")
                 .allowedHeaders("*").exposedHeaders("*");
     }
