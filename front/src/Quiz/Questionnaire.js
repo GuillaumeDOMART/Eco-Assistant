@@ -11,7 +11,7 @@ import {useNavigate} from "react-router-dom";
      * @param questionArray
      * @returns {boolean}
      */
-    function questionInList(question, questionArray) {
+    /*function questionInList(question, questionArray) {
         let accepted = true;
         questionArray.forEach(value => {
             if (question.questionId === value.questionId){
@@ -19,27 +19,27 @@ import {useNavigate} from "react-router-dom";
             }
         })
         return accepted;
-    }
+    }*/
 
     /**
      * Return the different possible answers to the question
      * @param question
      * @returns {*[]}
      */
-    function getResponses(question) {
+    /*function getResponses(question) {
         const responses = []
         question.reponses.forEach((response, index) => {
             responses[index] = response.intitule
         })
         return responses;
-    }
+    }*/
 
     /**
      * Return an array containing informations about the given response
      * @param question
      * @returns {(*|string|"beforeRead"|"read"|"afterRead"|"beforeMain"|"main"|"afterMain"|"beforeWrite"|"write"|"afterWrite")[]}
      */
-    function parseQuestion(question) {
+    /*function parseQuestion(question) {
         return {
             'questionId': question.questionId,
             'intitule' : question.intitule,
@@ -48,7 +48,7 @@ import {useNavigate} from "react-router-dom";
             'categorie' : question.categorie,
             'reponses' : getResponses(question)
         }
-    }
+    }*/
 
     /**
      * Create an array containing the quiz from a json format
@@ -56,7 +56,7 @@ import {useNavigate} from "react-router-dom";
      * @param arrayReturn
      * @returns {*[]|null}
      */
-    function buildQuiz(question, arrayReturn = []) {
+    /*function buildQuiz(question, arrayReturn = []) {
         if (question === null) {
             return null;
         }
@@ -68,7 +68,7 @@ import {useNavigate} from "react-router-dom";
         })
         console.log(arrayReturn)
         return arrayReturn;
-    }
+    }*/
 
 /**
  * The component representing the quiz
@@ -146,7 +146,7 @@ function Questionnaire() {
                 <StepperComponent/>
                 <form onSubmit={handleSubmit(onSubmit)}
                       style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
-                    {data.map((value) => {
+                    {data["DEVELOPPEMENT"].map((value) => {
                         switch (value.type) {
                              case 'QCM' :
                                  return (
