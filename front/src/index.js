@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './scss/custom.scss'
 
@@ -11,8 +12,9 @@ import {
 import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
+import ConnexionPage from "./Connexion/ConnexionPage";
 import AccueilSite from "./Connection/Connection";
-import App from "./App";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
     ,{
         path:"/result",
         element: <ResultPage/>
+    },
+    {
+        path:"/login",
+        element: <ConnexionPage/>
+    },
+    {
+        path:"/forgotPassword",
+        element: <ForgotPassword/>
     }
 ]);
 
