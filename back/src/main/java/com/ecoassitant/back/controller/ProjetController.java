@@ -1,5 +1,6 @@
 package com.ecoassitant.back.controller;
 
+import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.dto.ProjetSimpleDto;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -18,10 +19,12 @@ import java.util.Objects;
 @RestController
 public class ProjetController {
     private final ProjetRepository projetRepository;
+    private final JwtService jwtService;
 
     @Autowired
-    public ProjetController(ProjetRepository projetRepository) {
+    public ProjetController(ProjetRepository projetRepository, JwtService jwtService) {
         this.projetRepository = projetRepository;
+        this.jwtService = jwtService;
     }
 
     /**
@@ -45,12 +48,14 @@ public class ProjetController {
     }
 
     /**
-     * Endpoint to retrieve a projet by it's user's id
+     * Endpoint to retrieve a projet by it's user's token
      */
-    @GetMapping("/projet/user/{id}")
+    @GetMapping("/projet/user")
     @ResponseBody
-    public ResponseEntity<List<ProjetDto>> recupererProjetAvecUserId(@PathVariable("id") Long id){
-        return new ResponseEntity<>(projetRepository.findAll().stream().filter(e -> Objects.equals(e.getProfil().getIdProfil(), id)).map(ProjetDto::new).toList(), HttpStatus.OK);
+    public ResponseEntity<List<ProjetDto>> recupererProjetAvecToken(@RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(projetEntity -> new ProjetDto(projetEntity)).toList());
     }
 
     @PostMapping("projet/create")

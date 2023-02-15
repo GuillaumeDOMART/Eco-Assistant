@@ -34,8 +34,11 @@ function Questionnaire(activeStep) {
         sendToBack.projetId = projectId;
         sendToBack.reponses = responses;
 
+        const token = sessionStorage.getItem("token")
+
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
 
         const requestOptions = {
             method: 'POST',
@@ -53,7 +56,14 @@ function Questionnaire(activeStep) {
     }
 
     useEffect(() => {
-        fetch("/api/questions")
+        const token = sessionStorage.getItem("token")
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        };
+        fetch("/api/questions",options)
             .then(res => res.json())
             .then(
                 (result) => {

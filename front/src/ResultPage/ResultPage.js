@@ -56,10 +56,12 @@ function ResultPage() {
 
     useEffect(() => {
         const id = new URLSearchParams(window.location.search).get('id');
+        const token = sessionStorage.getItem("token")
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ id })
         };
