@@ -11,9 +11,10 @@ import {
 import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
-import AccueilSite from "./AccueilSite";
 import ConnexionPage from "./Connexion/ConnexionPage";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import AccueilSite from "./AccueilSite/AccueilSite";
+import AccueilProfil from "./AccueilProfil/AccueilProfil";
 
 const router = createBrowserRouter([
     {
@@ -23,13 +24,12 @@ const router = createBrowserRouter([
     },
     {
         path: "/profil",
-        element: <App/>,
-        errorElement: <ErrorPage/>,
+        element: <AccueilProfil/>,
     },
-    // {
-    //     path: "/connexion",
-    //     element: <AccueilSite/>,
-    // },
+    {
+      path: "/connexion",
+      element: <ConnexionPage/>,
+    },
     {
         path:"/questionnaire",
         element: <Questionnaire />,

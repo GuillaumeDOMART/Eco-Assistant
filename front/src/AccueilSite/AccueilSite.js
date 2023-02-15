@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
 // import leaves from './leaves.png';
 import "./AccueilSite.css"
+import {useNavigate} from "react-router-dom";
 
 /**
  * Display the right part of the home page of the website
@@ -22,7 +23,7 @@ const Connexion = ({onSubmit, register}) => {
                 <TextField label="Mot de passe" type="password" variant="standard" className="textfield" {...register("password")} required/><br/>
                 <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield" {...register("passwordConfirmed")} required/><br/>
                 <Button type="submit">Créer</Button><br/>
-                <p>Déjà un compte ? {/*<a href="/questionnaire">*/}Se connecter{/*</a>*/}</p>
+                <p>Déjà un compte ? <a href="/connexion">Se connecter</a></p>
             </form>
         </Col>
     )
@@ -62,14 +63,9 @@ const Anonyme = () => {
  */
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
-
+    const navigate = useNavigate();
 
     const submitCreation = (datas) => {
-        console.log("press")
-        if (datas.password !== datas.passwordConfirmed) {
-            return false;
-        }
-        console.log(datas)
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -85,6 +81,8 @@ function AccueilSite() {
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
+
+        navigate("/profil")
     }
 
     return (
