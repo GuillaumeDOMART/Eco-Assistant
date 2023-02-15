@@ -79,8 +79,6 @@ function AccueilSite() {
 
         fetch("http://localhost/api/profil", requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
 
         navigate("/profil")
     }
