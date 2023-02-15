@@ -31,6 +31,7 @@ public class QuestionController {
     @GetMapping("/questions")
     public ResponseEntity<Map<Phase, List<QuestionUniqueDto>>> testsQuestionnaire(){
         var quiz = questionService.getQuestionnaire();
+        System.out.println(quiz);
         return quiz != null? new ResponseEntity<>(quiz, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }

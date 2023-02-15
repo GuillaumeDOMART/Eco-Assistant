@@ -12,11 +12,18 @@ import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
 import AccueilSite from "./Connection/Connection";
+import App from "./App";
+import StepperComponent from "./Stepper/Stepper";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <AccueilSite/>,
+        errorElement: <ErrorPage/>,
+    },
+    {
+        path: "/profil",
+        element: <App/>,
         errorElement: <ErrorPage/>,
     },
     // {
@@ -25,7 +32,7 @@ const router = createBrowserRouter([
     // },
     {
         path:"/questionnaire",
-        element: <Questionnaire />,
+        element: <StepperComponent />,
     }
     ,{
         path:"/result",

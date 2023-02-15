@@ -2,6 +2,7 @@ package com.ecoassitant.back.dto;
 
 import com.ecoassitant.back.entity.tools.Categorie;
 import com.ecoassitant.back.entity.tools.Phase;
+import com.ecoassitant.back.entity.tools.TypeQ;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ public class QuestionUniqueDto {
     private final Long questionId;
     private final String intitule;
     private final Phase phase;
+    private final TypeQ type;
     private final Categorie categorie;
     private final List<ReponseUniqueDto> reponses;
     private static HashMap<Phase,List<QuestionUniqueDto>> map = new HashMap<>();
@@ -20,6 +22,7 @@ public class QuestionUniqueDto {
         this.intitule = quiz.getIntitule();
         this.phase = quiz.getPhase();
         this.questionId = quiz.getQuestionId();
+        this.type = quiz.getType();
         this.reponses = new ArrayList<>();
         quiz.getReponses().forEach(reponsePossibleDto -> {
             this.reponses.add(new ReponseUniqueDto(reponsePossibleDto));
@@ -68,5 +71,9 @@ public class QuestionUniqueDto {
 
     public List<ReponseUniqueDto> getReponses() {
         return reponses;
+    }
+
+    public TypeQ getType() {
+        return type;
     }
 }

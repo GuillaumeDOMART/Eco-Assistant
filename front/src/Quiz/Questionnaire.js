@@ -1,81 +1,17 @@
 import React, {useEffect, useState} from "react";
-import StepperComponent from "../Stepper/Stepper";
 import {useForm} from "react-hook-form";
 import {NUMERIC, QCM} from "./QuestionType";
 import {Spinner} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
+import Phase from "./Phase";
 
-    /**
-     * Check if the question is in the array
-     * @param question
-     * @param questionArray
-     * @returns {boolean}
-     */
-    /*function questionInList(question, questionArray) {
-        let accepted = true;
-        questionArray.forEach(value => {
-            if (question.questionId === value.questionId){
-                accepted =  false;
-            }
-        })
-        return accepted;
-    }*/
-
-    /**
-     * Return the different possible answers to the question
-     * @param question
-     * @returns {*[]}
-     */
-    /*function getResponses(question) {
-        const responses = []
-        question.reponses.forEach((response, index) => {
-            responses[index] = response.intitule
-        })
-        return responses;
-    }*/
-
-    /**
-     * Return an array containing informations about the given response
-     * @param question
-     * @returns {(*|string|"beforeRead"|"read"|"afterRead"|"beforeMain"|"main"|"afterMain"|"beforeWrite"|"write"|"afterWrite")[]}
-     */
-    /*function parseQuestion(question) {
-        return {
-            'questionId': question.questionId,
-            'intitule' : question.intitule,
-            'type' : question.type,
-            'phase' : question.phase,
-            'categorie' : question.categorie,
-            'reponses' : getResponses(question)
-        }
-    }*/
-
-    /**
-     * Create an array containing the quiz from a json format
-     * @param question
-     * @param arrayReturn
-     * @returns {*[]|null}
-     */
-    /*function buildQuiz(question, arrayReturn = []) {
-        if (question === null) {
-            return null;
-        }
-        if (questionInList(question, arrayReturn)) {
-            arrayReturn.push(parseQuestion(question))
-        }
-        question.reponses.forEach((value) => {
-            buildQuiz(value.questionSuiv, arrayReturn)
-        })
-        console.log(arrayReturn)
-        return arrayReturn;
-    }*/
 
 /**
  * The component representing the quiz
  * @returns {JSX.Element}
  * @constructor
  */
-function Questionnaire() {
+function Questionnaire(activeStep) {
     const [errorApiGetQuestionnaire, setErrorApiGetQuestionnaire] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
@@ -141,30 +77,33 @@ function Questionnaire() {
             </>
         );
     } else {
+        //  <Phase register={register} value={data.DEPLOIEMENT.map}/> IL SERT A QUOI LE .MAP ???
+       let currentPhase;
+       switch(activeStep.activeStep) {
+           case 0:
+               currentPhase = data.PLANIFICATION
+               break;
+           case 1:
+               currentPhase = data.DEVELOPPEMENT
+               break;
+           case 2:
+               currentPhase = data.TEST
+               break;
+           case 3:
+               currentPhase = data.DEPLOIEMENT
+               break;
+           default:
+               currentPhase = data.MAINTENANCE
+               break;
+       }
+        //console.log("phase "+JSON.stringify(activeStep)+" : "+JSON.stringify(currentPhase))
         return (
             <>
-                <StepperComponent/>
                 <form onSubmit={handleSubmit(onSubmit)}
                       style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
-                    {data["DEVELOPPEMENT"].map((value) => {
-                        switch (value.type) {
-                             case 'QCM' :
-                                 return (
-                                        <QCM key={value.intitule}
-                                             question={value}
-                                             {...register(value.questionId.toString())}
-                                        />
-                            )
-                            case 'NUMERIC' :
-                                return (
-                                    <NUMERIC key={value.intitule}
-                                             question={value}
-                                             register={register}
-                                    />
-                                )
-                            default : return null;
-                        }
-                    })}
+                    {currentPhase.map(question =>
+                        <Phase key={question.questionId} register={register} value={question}/>
+                    )}
                     <input type="submit" style={{marginTop: '20px'}}/>
                 </form>
             </>

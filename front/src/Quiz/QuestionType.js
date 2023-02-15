@@ -12,7 +12,7 @@ export const QCM = React.forwardRef(({ onChange, name, question }, ref) => {
             <p>{question.intitule}</p>
             <select name={name} ref={ref} onChange={onChange}>
                 {question.reponses.map((data) => {
-                    return <option value={data} key={data} label={data}/>
+                    return <option value={data.intitule} key={data.intitule} label={data.intitule}/>
                 })}
             </select><br/>
         </div>
@@ -31,7 +31,7 @@ export const NUMERIC = ({question, register}) => {
     return (
         <div style={{marginTop: '20px'}}>
             <label>{question.intitule}</label><br/>
-            {question.reponses[0]} : <input type={"number"}
+            {question.reponses[0].intitule} :<input type={"number"}
                                                {...register(question.questionId.toString())}
                                                defaultValue={0}
                                                min={0}
