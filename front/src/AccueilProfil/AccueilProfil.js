@@ -47,7 +47,7 @@ function TableauProjets() {
         const options = {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ${token}'
+                'Authorization': 'Bearer '+token
             },
         };
         fetch('http://localhost/api/projet/user',options)
