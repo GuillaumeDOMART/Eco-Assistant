@@ -146,7 +146,7 @@ function Questionnaire() {
                 <StepperComponent/>
                 <form onSubmit={handleSubmit(onSubmit)}
                       style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}>
-                    {buildQuiz(data).map((value) => {
+                    {data.map((value) => {
                         switch (value.type) {
                              case 'QCM' :
                                  return (
