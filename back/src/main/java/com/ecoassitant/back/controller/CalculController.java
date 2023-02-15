@@ -4,6 +4,8 @@ import com.ecoassitant.back.dto.IdDto;
 import com.ecoassitant.back.dto.ResultatDto;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,8 +32,8 @@ public class CalculController {
      * @return list of calculs executed
      */
     @PostMapping("/calculs")
-    public ResultatDto resultatsCalcul(@RequestBody IdDto projectId){
-        return calculService.CalculsForProject(projectId.getId());
+    public ResponseEntity<ResultatDto> resultatsCalcul(@RequestBody IdDto projectId){
+        return new ResponseEntity<>(calculService.CalculsForProject(projectId.getId()), HttpStatus.OK);
     }
 }
 

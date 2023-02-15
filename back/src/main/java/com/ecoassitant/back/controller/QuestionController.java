@@ -3,6 +3,8 @@ package com.ecoassitant.back.controller;
 import com.ecoassitant.back.dto.QuestionDto;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +23,8 @@ public class QuestionController {
     }
 
     @GetMapping("/questions")
-    public QuestionDto testsQuestionnaire(){
-        return questionService.getQuestionnaire();
+    public ResponseEntity<QuestionDto> testsQuestionnaire(){
+        var quiz = questionService.getQuestionnaire();
+        return quiz != null? new ResponseEntity<>(quiz, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }

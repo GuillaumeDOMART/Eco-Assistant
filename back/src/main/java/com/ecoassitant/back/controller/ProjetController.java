@@ -4,6 +4,8 @@ import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.dto.ProjetSimpleDto;
 import com.ecoassitant.back.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,9 +38,10 @@ public class ProjetController {
      */
     @GetMapping("/projet/{id}")
     @ResponseBody
-    public ProjetDto recupererProjetAvecId(@PathVariable("id") Long id){
+    public ResponseEntity<ProjetDto> recupererProjetAvecId(@PathVariable("id") Long id){
         var entity = projetRepository.findById(id);
-        return entity.map(ProjetDto::new).orElse(null);
+        var dto = entity.map(ProjetDto::new).orElse(null);
+        return dto!= null? new ResponseEntity<>(dto, HttpStatus.OK): new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -46,13 +49,13 @@ public class ProjetController {
      */
     @GetMapping("/projet/user/{id}")
     @ResponseBody
-    public List<ProjetDto> recupererProjetAvecUserId(@PathVariable("id") Long id){
-        return projetRepository.findAll().stream().filter(e -> Objects.equals(e.getProfil().getIdProfil(), id)).map(ProjetDto::new).toList();
+    public ResponseEntity<List<ProjetDto>> recupererProjetAvecUserId(@PathVariable("id") Long id){
+        return new ResponseEntity<>(projetRepository.findAll().stream().filter(e -> Objects.equals(e.getProfil().getIdProfil(), id)).map(ProjetDto::new).toList(), HttpStatus.OK);
     }
 
     @PostMapping("projet/create")
-    public Long createProjet(@RequestBody ProjetSimpleDto projet){
-        return 1L;
+    public ResponseEntity<Long> createProjet(@RequestBody ProjetSimpleDto projet){
+        return new ResponseEntity<>(1L, HttpStatus.OK);
     }
 
 }
