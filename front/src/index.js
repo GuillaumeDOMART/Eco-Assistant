@@ -11,19 +11,18 @@ import {
 import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
-import Connection from "./Connection/Connection";
-import App from "./App";
+import AccueilSite from "./Connection/Connection";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <AccueilSite/>,
         errorElement: <ErrorPage/>,
     },
-    {
-        path: "/connexion",
-        element: <Connection/>,
-    },
+    // {
+    //     path: "/connexion",
+    //     element: <AccueilSite/>,
+    // },
     {
         path:"/questionnaire",
         element: <Questionnaire />,
