@@ -13,12 +13,18 @@ import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
 import ConnexionPage from "./Connexion/ConnexionPage";
+import AccueilSite from "./Connection/Connection";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <AccueilSite/>,
         errorElement: <ErrorPage/>,
+    },
+    {
+        path: "/profil",
+        element: <App/>,
+        errorElement: <ErrorPage/>
     },
     // {
     //     path: "/connexion",

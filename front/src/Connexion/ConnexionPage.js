@@ -6,10 +6,10 @@ function ConnexionPage(){
     const {register, handleSubmit} = useForm();
     return (
         <>
-            <Col style={{minWidth:"20%",minHeight:"50%"}}>
+            <Col >
             <Row>
                 <Container>
-                <img className="logo" src={require('./logo.PNG')}  alt={"logo"} style={{width:'10%',height: 'auto'}}/>
+                <img className="logo position-fixed start-0" src={require('./logo.PNG')}  alt={"logo"} style={{width:'10%',height: 'auto'}}/>
                 </Container>
             </Row>
             <Row>
