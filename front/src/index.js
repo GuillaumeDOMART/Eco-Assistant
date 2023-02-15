@@ -11,8 +11,10 @@ import {
 import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
-import AccueilSite from "./Connection/Connection";
-import App from "./App";
+import ConnexionPage from "./Connexion/ConnexionPage";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import AccueilSite from "./AccueilSite/AccueilSite";
+import AccueilProfil from "./AccueilProfil/AccueilProfil";
 import StepperComponent from "./Stepper/Stepper";
 
 const router = createBrowserRouter([
@@ -23,20 +25,27 @@ const router = createBrowserRouter([
     },
     {
         path: "/profil",
-        element: <App/>,
-        errorElement: <ErrorPage/>,
+        element: <AccueilProfil/>,
     },
-    // {
-    //     path: "/connexion",
-    //     element: <AccueilSite/>,
-    // },
+    {
+      path: "/connexion",
+      element: <ConnexionPage/>,
+    },
     {
         path:"/questionnaire",
-        element: <StepperComponent />,
+        element: <StepperComponent/>,
     }
     ,{
         path:"/result",
         element: <ResultPage/>
+    },
+    {
+        path:"/login",
+        element: <ConnexionPage/>
+    },
+    {
+        path:"/forgotPassword",
+        element: <ForgotPassword/>
     }
 ]);
 
