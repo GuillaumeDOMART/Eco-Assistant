@@ -26,7 +26,7 @@ import {Placeholder} from "react-bootstrap";
  */
 function LigneTableauProjet(data){
     return (
-        <tr>
+        <tr className='table border-bottom border-2 border-secondary'>
             <td>{data.nomProjet}</td>
             <td>{data.etat}</td>
             <td><Button >Modifier</Button><Button>Visionner</Button><Button>Exporter</Button><Button>Dissocier</Button></td>
@@ -67,28 +67,75 @@ function TableauProjets() {
         );
     } else if (!isLoaded){
         return (
-            <Table striped bordered hover>
+            <Table>
                 <TableauProjetsHeader/>
                 <LigneTableauProjetsPlaceholder/>
             </Table>
         );
     } else {
         return (
-            <Table striped bordered hover>
-                <TableauProjetsHeader/>
-                {items.map(item => (
-                    <LigneTableauProjet key={item.id} {...item}/>
-                ))}
-            </Table>
+            <>
+                <h1>Accueil</h1>
+                <br/>
+                <Table>
+                    <TableauProjetsHeader/>
+                    {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                </Table>
+            </>
         );
     }
 }
+
+/**
+ * Generate a project listing table with Mock data
+ */
+function MockTableauProjets() {
+    const items = [
+        {
+            "id": 1,
+            "profil": {
+                "id": 2,
+                "mail": "createur-dev@demo.fr",
+                "nom": "DEMO",
+                "prenom": "Createur Dev",
+                "admin": false
+            },
+            "nomProjet": "QUESTIONAIRE POUR DEVELOPPEURS",
+            "etat": "INPROGRESS"
+        },
+        {
+            "id": 2,
+            "profil": {
+                "id": 3,
+                "mail": "createur-support@demo.fr",
+                "nom": "DEMO",
+                "prenom": "Createur Support",
+                "admin": false
+            },
+            "nomProjet": "QUESTIONAIRE POUR L EQUIPE SUPPORT",
+            "etat": "INPROGRESS"
+        }
+    ]
+
+    return (
+        <>
+            <h1>Accueil (TEST FRONT)</h1>
+            <br/>
+
+            <Table>
+                <TableauProjetsHeader/>
+                {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+            </Table>
+        </>
+    );
+}
+
 /**
  * Placeholder lines for project listing table
  */
 function LigneTableauProjetsPlaceholder(){
     return(
-        <tr>
+        <tr className='table border-bottom border-3 border-primary'>
             <td> <Placeholder xs={5}/></td>
             <td><Placeholder xs={5}/></td>
             <td><Placeholder xs={2} aria-hidden="true"/></td>
@@ -101,27 +148,30 @@ function LigneTableauProjetsPlaceholder(){
  */
 function TableauProjetsHeader(){
     return (
-        <tr>
+        <tr className='table border-bottom border-3 border-primary'>
             <th>Nom du projet</th>
-            <th>Etat du questionnaire</th>
+            <th>Etat du Projet</th>
             <th>Actions possibles</th>
         </tr>
     );
 }
 
+
 /**
  * Generate a web page containing a navigation bar and a project listing table
  */
 function AccueilProfil() {
-        return (
-            <div id="app" className="App .container-fluid row">
-                <BarreNavCore/>
-                <div className="col">
-                    <TableauProjets/>
-                </div>
-            </div>
-        );
-    }
+    const mockFront = true;
+    let tableToDisplay = <MockTableauProjets/>;
+    if(!mockFront) tableToDisplay = <TableauProjets/>
+
+    return (
+        <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
+            <BarreNavCore/>
+            <div className="col-10 p-5">{tableToDisplay}</div>
+        </div>
+    );
+}
 
 
 export default AccueilProfil
