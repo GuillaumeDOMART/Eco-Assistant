@@ -101,10 +101,10 @@ function InfoProfil(datas){
     return(
         <>
             <Row><p>Profil</p></Row>
-            <Row> {"Prénom : "+datas.prenom}</Row>
-            <Row> {"Nom : "+datas.nom}</Row>
+            <Row> Prénom : ${datas.prenom}</Row>
+            <Row> Nom : ${datas.nom}</Row>
             <Row>
-                <Row> {"Identifiant : "+datas.mail}</Row>
+                <Row> Identifiant : ${datas.mail}</Row>
                 <Button onClick={navigate("/mail")} type={"button"}>Modifier l&lsquo;identifiant</Button>
             </Row>
             <Button onClick={navigate("/")}>Modifier le mot de passe</Button>
