@@ -79,14 +79,14 @@ function ExampleInfoProfil({navigate}){
 
     return(
         <>
-            <Row className="fs-1"><p>Profil</p></Row>
+            <Row><p>Profil</p></Row>
             <Row> {"Prénom : "+items.prenom}</Row>
             <Row> {"Nom : "+items.nom}</Row>
             <Row>
                 <Row> {"Identifiant : "+items.mail}</Row>
-                <Button onClick={()=>navigate("/mail")}>Modifier l'identifiant</Button>
+                <Button onClick={navigate("/mail")}>Modifier l&lsquo;identifiant</Button>
             </Row>
-            <Button onClick={()=>navigate("/")}>Modifier le mot de passe</Button>
+            <Button onClick={navigate("/")}>Modifier le mot de passe</Button>
 
         </>
 
@@ -113,9 +113,9 @@ function ActionBlockProfil(datas){
 /**
  * Action done when you click on the button delete profile
  */
+
 function handleDeleteProfil(){
     const id = new URLSearchParams(window.location.search).get('id');
-    alert("implement this method bro i'm solo id = "+id);
 
 
 }
@@ -130,14 +130,14 @@ function InfoProfil(datas){
     const navigate = useNavigate();
     return(
         <>
-            <Row className="fs-1"><p>Profil</p></Row>
+            <Row><p>Profil</p></Row>
             <Row> {"Prénom : "+datas.prenom}</Row>
             <Row> {"Nom : "+datas.nom}</Row>
             <Row>
                 <Row> {"Identifiant : "+datas.mail}</Row>
-                <Button onClick={()=>navigate("/mail")} type={"button"}>Modifier l'identifiant</Button>
+                <Button onClick={navigate("/mail")} type={"button"}>Modifier l&lsquo;identifiant</Button>
             </Row>
-            <Button onClick={()=>navigate("/")}>Modifier le mot de passe</Button>
+            <Button onClick={navigate("/")}>Modifier le mot de passe</Button>
 
         </>
 
@@ -152,19 +152,6 @@ function InfoProfil(datas){
  * @constructor
  */
 function InfoProfilContainer (datas){
-    const token = sessionStorage.getItem("token");
-    if(token == null){
-        return(
-            <Container>
-                <Col>
-                    {/*<InfoProfil datas={datas} navigate={navigate}/>*/}
-                    <ExampleInfoProfil/>
-                </Col>
-            </Container>
-
-        );
-    }
-    else{
         return(
             <Container>
                 <Col>
@@ -173,7 +160,7 @@ function InfoProfilContainer (datas){
             </Container>
 
         );
-    }
+
 
 }
 
