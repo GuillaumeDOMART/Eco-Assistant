@@ -98,10 +98,10 @@ INSERT INTO calculoperateur (operateur) VALUES
 ('NOTHING');
 
 INSERT INTO profil(mail, mdp, nom, prenom, isadmin) VALUES
-('admin@demo.fr', 'admin@demo.com', 'DEMO', 'Admin', 1),
-('createur-dev@demo.fr', 'createur-dev@demo.fr', 'DEMO', 'Createur Dev', 0),
-('createur-support@demo.fr', 'createur-support@demo.fr', 'DEMO', 'Createur Support', 0),
-('salarie@demo.fr', 'salarie@demo.fr', 'DEMO', 'Salarie', 0);
+('admin@demo.fr', '$2a$10$tAfXbsbalMGsseTyMG27t.9pZUWNg6HFWtIb1HBuzRaAkS8488liG', 'DEMO', 'Admin', 1),
+('createur-dev@demo.fr', '$2a$10$L1wc9VFuVubzp3XM0ac8L.Hd5lofhASafDLmAhX7Lcay4wMGmQWpC', 'DEMO', 'Createur Dev', 0),
+('createur-support@demo.fr', '$2a$10$nrjb0whx5h1ff3RBT.LtDO7BKt8guR9YPVY7FDJO9aQv0KOcOZ1By', 'DEMO', 'Createur Support', 0),
+('salarie@demo.fr', '$2a$10$ROQBZWocrPcmAXwQw7mgEO.LSXYhmbz63bJLipXLHfFojDRQLQAfq', 'DEMO', 'Salarie', 0);
 
 -- CREATION DES PROJETS DEVS ET SUPPORT
 INSERT INTO projet(profilid, nomprojet, etat) VALUES
