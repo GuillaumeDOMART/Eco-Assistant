@@ -17,6 +17,7 @@ import AccueilProfil from "./AccueilProfil/AccueilProfil";
 import StepperComponent from "./Stepper/Stepper";
 import CreateProject from "./Quiz/CreateProject";
 import Deconnection from "./Deconnection/LogOut";
+import Guest from "./guest/Guest";
 
 const router = createBrowserRouter([
     {
@@ -54,6 +55,9 @@ const router = createBrowserRouter([
     },{
         path:"/logout",
         element: <Deconnection/>
+    },{
+        path:"/guest",
+        element: <Guest/>
     }
 ]);
 
