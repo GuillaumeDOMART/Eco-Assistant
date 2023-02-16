@@ -1,5 +1,6 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.quiz;
 
+import com.ecoassitant.back.dto.quiz.QuestionDto;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 
 /**

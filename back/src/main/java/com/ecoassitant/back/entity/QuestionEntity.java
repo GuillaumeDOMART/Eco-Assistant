@@ -51,4 +51,6 @@ public class QuestionEntity implements Serializable {
     private List<ReponsePossibleEntity> reponses;
 
 
+    public QuestionEntity(long l, String q2, QuestionEntity q1, TypeQ qcm, Phase horsPhase, Categorie first, boolean b) {
+    }
 }

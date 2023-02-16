@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.resultat;
 
 public class CalculDto {
     private final Double result;

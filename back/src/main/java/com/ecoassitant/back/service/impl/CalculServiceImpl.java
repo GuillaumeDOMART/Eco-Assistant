@@ -1,8 +1,8 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.calcul.CalculEntier;
-import com.ecoassitant.back.dto.CalculDto;
-import com.ecoassitant.back.dto.ResultatDto;
+import com.ecoassitant.back.dto.resultat.CalculDto;
+import com.ecoassitant.back.dto.resultat.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.repository.CalculRepository;
 import com.ecoassitant.back.repository.ProjetRepository;

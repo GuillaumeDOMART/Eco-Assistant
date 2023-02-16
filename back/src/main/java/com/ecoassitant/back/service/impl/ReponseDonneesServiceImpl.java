@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.ReponseDonneesDto;
+import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.tools.TypeQ;

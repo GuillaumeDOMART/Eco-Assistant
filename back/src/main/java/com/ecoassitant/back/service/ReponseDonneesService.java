@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.ReponseDonneesDto;
+import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
 
 /**
  * Service of ReponseDonnees
