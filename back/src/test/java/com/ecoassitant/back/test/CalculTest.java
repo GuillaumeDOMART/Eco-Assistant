@@ -6,13 +6,15 @@ import com.ecoassitant.back.entity.tools.Categorie;
 import com.ecoassitant.back.entity.tools.Operator;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeQ;
+import net.bytebuddy.pool.TypePool;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class TestCalculTest {
+class CalculTest {
     ProjetEntity projet = new ProjetEntity();
 
     QuestionEntity q1 = new QuestionEntity(1L, "q1", null, TypeQ.NUMERIC, Phase.HORS_PHASE, Categorie.FIRST, true);
@@ -67,5 +69,9 @@ class TestCalculTest {
         var calcul = new CalculEntier(listCalcul, listRd);
         double executer = calcul.execute().get();
         Assert.assertEquals(10 + 5 * 20, executer);
+    }
+    @Test
+    void creationCalculNull() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> new CalculEntier(null, listRd));
     }
 }
