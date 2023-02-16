@@ -13,7 +13,7 @@ public interface ProfilService {
      * @param id the profil id
      * @return a ProfilDto with the submitted ID, or null if it doesn't exist
      */
-    ProfilDto getProfilByID(Long id);
+    ProfilDto getProfilByID(Integer id);
 
     /**
      * Retrieve a profil by it mail address
