@@ -34,13 +34,13 @@ class CalculTest {
     CalculOperateurEntity mult = new CalculOperateurEntity(3L, Operator.MULT);
     CalculOperateurEntity div = new CalculOperateurEntity(4L, Operator.DIV);
     CalculOperateurEntity stop = new CalculOperateurEntity(5L, Operator.NOTHING);
-    List listRd = new ArrayList<ReponseDonneeEntity>();
+    List<ReponseDonneeEntity> listRd = new ArrayList<>();
     ReponseDonneeKey rdk1 = new ReponseDonneeKey();
     ReponseDonneeEntity rd1 = new ReponseDonneeEntity(rdk1, 10);
     ReponseDonneeKey rdk2 = new ReponseDonneeKey();
     ReponseDonneeEntity rd2 = new ReponseDonneeEntity(rdk2, 5);
     ReponseDonneeKey rdk3 = new ReponseDonneeKey();
-    List listCalcul = new ArrayList<CalculEntity>();
+    List<CalculEntity> listCalcul = new ArrayList<>();
     @Test
     void creationCalculEntier() {
 
