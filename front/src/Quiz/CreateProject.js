@@ -4,7 +4,7 @@ import {Button, TextField} from "@mui/material";
 import {Col, Container, Row} from "react-bootstrap";
 
 
-function Project(onSubmit, register) {
+function Project({onSubmit, register}) {
     return (
         <Col className="">
             <h1>Nouveau Projet</h1>

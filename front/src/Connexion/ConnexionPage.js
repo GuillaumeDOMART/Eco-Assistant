@@ -73,7 +73,7 @@ function Form(){
      * Create the JSON for connexion and send it to the backend
      * @param datas
      */
-    const onSubmit = (datas)=>{
+    const onSubmit = async (datas) => {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -84,12 +84,11 @@ function Form(){
             redirect: 'follow'
         };
 
-        fetch("/api/auth/authentication", requestOptions)
-            .then(response => response.json())
-            .then(jsonData => {
-                sessionStorage.setItem("token", jsonData.token);
-            })
-        navigate("/profil")
+        const reponse = await fetch("/api/auth/authentication", requestOptions);
+        const json = await reponse.json();
+        const token = json.token
+        sessionStorage.setItem("token", token);
+        navigate("/profil");
     }
 
 return (
