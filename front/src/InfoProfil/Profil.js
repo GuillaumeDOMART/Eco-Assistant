@@ -3,7 +3,11 @@ import React, {useEffect, useState} from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
-
+/**
+ * The component representing the information page for a profile
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function Profil(){
     const [isLoaded, setIsLoaded] = useState(false);
     const [apiError, setApiError] = useState(null);
@@ -34,14 +38,12 @@ function Profil(){
             )
     }, [])
     if(apiError){
-        console.log("API not fetched")
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
                 <ActionBlockProfil datas={datas}/>
             </div>);
     } else if(!isLoaded){
-        console.log("Failed to load datas")
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
@@ -60,7 +62,12 @@ function Profil(){
 
 }
 
-
+/**
+ * Component for row datas of profile
+ * @param navigate
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function ExampleInfoProfil({navigate}){
     const items ={
         "id": 1,
@@ -69,7 +76,6 @@ function ExampleInfoProfil({navigate}){
         "prenom": "Admin",
         "admin": true
     }
-    console.log("Print Example datas")
 
     return(
         <>
@@ -87,6 +93,13 @@ function ExampleInfoProfil({navigate}){
     );
 
 }
+
+/**
+ * Component of the right side of the profile informations screen
+ * @param datas
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function ActionBlockProfil(datas){
     return(
         <Col>
@@ -96,16 +109,25 @@ function ActionBlockProfil(datas){
 
     );
 }
-function handleDeleteProfil(){
-    //TODO POP UP Es tu sur de vouloir supprimer ton profil?
-    const id = new URLSearchParams(window.location.search).get('id');
 
+/**
+ * Action done when you click on the button delete profile
+ */
+function handleDeleteProfil(){
+    const id = new URLSearchParams(window.location.search).get('id');
+    alert("implement this method bro i'm solo id = "+id);
 
 
 }
+
+/**
+ * Component that uses data fetched of profile
+ * @param datas
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function InfoProfil(datas){
     const navigate = useNavigate();
-    console.log("Print Fetched datas")
     return(
         <>
             <Row className="fs-1"><p>Profil</p></Row>
@@ -121,12 +143,16 @@ function InfoProfil(datas){
 
     );
 }
-/*function handleNavigate(path,navigate){
-    navigate(path)
-}*/
+
+
+/**
+ * Component that contain raw datas or data fetched if the token is not present
+ * @param datas
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function InfoProfilContainer (datas){
     const token = sessionStorage.getItem("token");
-    console.log(token);
     if(token == null){
         return(
             <Container>
@@ -150,6 +176,10 @@ function InfoProfilContainer (datas){
     }
 
 }
+
+/**
+ * Component that holds the button for deleting the profile
+ */
 function DeleteProfilContainer(){
     return(
         <Container>
