@@ -74,6 +74,7 @@ idcalcul SERIAL PRIMARY KEY,
 calculopid INT NOT NULL,
 reponsepossibleid INT NOT NULL,
 nbcalcul INT NOT NULL,
+phase VARCHAR (50) NOT NULL,
 CONSTRAINT calculopid
 FOREIGN KEY (calculopid)
 REFERENCES calculoperateur (idcalculop),
@@ -156,9 +157,9 @@ INSERT INTO reponsedonnee VALUES
 (1, 7, 15);
 
 --CREATION CALCUL TEST
-INSERT INTO calcul(calculopid, reponsepossibleid,nbcalcul) VALUES
-(1, 1, 1),
-(3, 2, 1),
-(5, 4, 1),
-(3, 6, 2),
-(5, 7, 2);
+INSERT INTO calcul(calculopid, reponsepossibleid,nbcalcul, phase) VALUES
+(1, 1, 1, 'DEVELOPPEMENT'),
+(3, 2, 1, 'DEVELOPPEMENT'),
+(5, 4, 1, 'DEVELOPPEMENT'),
+(3, 6, 2, 'DEVELOPPEMENT'),
+(5, 7, 2, 'DEVELOPPEMENT');
