@@ -48,7 +48,7 @@ const Anonyme = () => {
                 Grâce au questionnaire<br/>
                 Eco-Assistant, calcule ton<br/>
                 impact environnemental :</p>
-            <a href="/questionnaire">Remplir le questionnaire*</a>
+            <a href="/newproject">Remplir le questionnaire*</a>
             <hr/>
             <p>* Remplir un questionnaire sans être connecté entrainera une perte<br/>
                 des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
