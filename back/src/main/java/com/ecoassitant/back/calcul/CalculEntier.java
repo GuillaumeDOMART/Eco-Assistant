@@ -4,6 +4,7 @@ import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
+import com.ecoassitant.back.entity.tools.Phase;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -16,6 +17,7 @@ public class CalculEntier {
     private final List<CalculEntity> calculs;
     private final List<ReponseDonneeEntity> repDon;
     private final Stack<OperationElem> stack = new Stack<>();
+    private final Phase phase;
 
     /**
      * Constructor of CalculEntier
@@ -23,9 +25,11 @@ public class CalculEntier {
      * @param repDon list of reponseDonnee for a project
      */
     public CalculEntier(List<CalculEntity> calculs, List<ReponseDonneeEntity> repDon){
+        Objects.requireNonNull(calculs);
         this.calculs = List.copyOf(calculs);
         this.repDon = List.copyOf(repDon);
         dependances = new ArrayList<>();
+        phase = calculs.get(0).getPhase();
         calculs.forEach(calculEntity -> dependances.add(calculEntity.getReponsePossible()));
     }
 
@@ -130,5 +134,13 @@ public class CalculEntier {
                 }
             }
         }
+    }
+
+    /**
+     * gives the phase to which the question belongs
+     * @return the phase
+     */
+    public Phase getPhase() {
+        return phase;
     }
 }

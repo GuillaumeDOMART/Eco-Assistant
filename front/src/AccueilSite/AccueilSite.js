@@ -4,6 +4,7 @@ import {Button, TextField} from "@mui/material";
 // import leaves from './leaves.png';
 import "./AccueilSite.css"
 import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 /**
  * Display the right part of the home page of the website
@@ -47,7 +48,7 @@ const Anonyme = () => {
                 Grâce au questionnaire<br/>
                 Eco-Assistant, calcule ton<br/>
                 impact environnemental :</p>
-            <a href="/questionnaire">Remplir le questionnaire*</a>
+            <a href="/newproject">Remplir le questionnaire*</a>
             <hr/>
             <p>* Remplir un questionnaire sans être connecté entrainera une perte<br/>
                 des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
@@ -69,23 +70,36 @@ function AccueilSite() {
      * Send datas to the back
      * @param datas
      */
-    const submitCreation = (datas) => {
+    const submitCreation = async (datas) => {
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
+        if(datas.password !== datas.passwordConfirmed){
+            return
+        }
+        const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.firstname, prenom: datas.lastname}
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            body: JSON.stringify(datas),
+            body: JSON.stringify(jsonBody),
             redirect: 'follow'
         };
 
-        fetch("http://localhost/api/profil", requestOptions)
-            .then(response => response.text())
-
+        const response = await fetch("api/auth/register", requestOptions);
+        const json = await response.json();
+        const token = json.token
+        sessionStorage.setItem("token", token)
         navigate("/profil")
     }
+
+    useEffect(() => {
+        const value = sessionStorage.getItem('token');
+        if (value) {
+            navigate("/profil")
+        }
+    }, []);
+
 
     return (
            <Container className="" fluid>

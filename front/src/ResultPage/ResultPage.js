@@ -61,7 +61,7 @@ function ResultPage() {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ id })
+            body: JSON.stringify({id })
         };
         fetch('api/calculs',options)
             .then(response => response.json())
