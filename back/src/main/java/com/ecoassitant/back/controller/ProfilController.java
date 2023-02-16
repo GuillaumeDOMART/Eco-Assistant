@@ -28,7 +28,7 @@ public class ProfilController {
      */
     @GetMapping("profil/{id}")
     @ResponseBody
-    public ResponseEntity<ProfilDto> recupererProfilAvecId(@PathVariable("id") Long id) {
+    public ResponseEntity<ProfilDto> recupererProfilAvecId(@PathVariable("id") Integer id) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         var profil = profilService.getProfilByID(id);

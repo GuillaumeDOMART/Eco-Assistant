@@ -70,21 +70,26 @@ function AccueilSite() {
      * Send datas to the back
      * @param datas
      */
-    const submitCreation = (datas) => {
+    const submitCreation = async (datas) => {
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
+        if(datas.password !== datas.passwordConfirmed){
+            return
+        }
+        const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.firstname, prenom: datas.lastname}
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            body: JSON.stringify(datas),
+            body: JSON.stringify(jsonBody),
             redirect: 'follow'
         };
 
-        fetch("http://localhost/api/profil", requestOptions)
-            .then(response => response.text())
-
+        const response = await fetch("api/auth/register", requestOptions);
+        const json = await response.json();
+        const token = json.token
+        sessionStorage.setItem("token", token)
         navigate("/profil")
     }
 
