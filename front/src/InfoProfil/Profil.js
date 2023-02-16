@@ -1,7 +1,6 @@
 import BarreNavCore from "../BarreNav/BarreNavCore";
 import React, {useEffect, useState} from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
-import {TextField} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
 
@@ -9,17 +8,19 @@ function Profil(){
     const [isLoaded, setIsLoaded] = useState(false);
     const [apiError, setApiError] = useState(null);
     const [datas, setDatas] = useState([]);
-    const navigate = useNavigate();
     useEffect(() => {
         const id = new URLSearchParams(window.location.search).get('id');
+        const token = sessionStorage.getItem("token")
         const options = {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+
             },
             body: JSON.stringify({ id })
         };
-        fetch("/api/profil",options)
+        fetch('/api/profil',options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -33,23 +34,25 @@ function Profil(){
             )
     }, [])
     if(apiError){
-        alert("API not fetched")
+        console.log("API not fetched")
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
+                <ActionBlockProfil datas={datas}/>
             </div>);
     } else if(!isLoaded){
-        alert("Failed to load datas")
+        console.log("Failed to load datas")
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
-            </div>);
+            </div>
+        );
     }else{
         return(
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
                 <div className="col-10 p-5">
-                    <ActionBlockProfil datas={datas} navigate={navigate}/>
+                    <ActionBlockProfil datas={datas}/>
                 </div>
             </div>
         );
@@ -58,7 +61,7 @@ function Profil(){
 }
 
 
-function ExampleInfoProfil(){
+function ExampleInfoProfil(navigate){
     const items ={
         "id": 1,
         "mail": "admin@demo.fr",
@@ -66,12 +69,28 @@ function ExampleInfoProfil(){
         "prenom": "Admin",
         "admin": true
     }
+    console.log("Print Example datas")
+
+    return(
+        <>
+            <Row className="fs-1"><p>Profil</p></Row>
+            <Row> {"Prénom : "+items.prenom}</Row>
+            <Row> {"Nom : "+items.nom}</Row>
+            <Row>
+                <Row> {"Identifiant : "+items.mail}</Row>
+                <Button onClick={()=>navigate("/mail")}>Modifier l'identifiant</Button>
+            </Row>
+            <Button onClick={()=>navigate("/")}>Modifier le mot de passe</Button>
+
+        </>
+
+    );
 
 }
-function ActionBlockProfil(datas,navigate){
+function ActionBlockProfil(datas){
     return(
         <Col>
-            <InfoProfilContainer datas={datas} navigate={navigate}/>
+            <InfoProfilContainer datas={datas}/>
             <DeleteProfilContainer/>
         </Col>
 
@@ -81,39 +100,58 @@ function handleDeleteProfil(){
     //TODO POP UP Es tu sur de vouloir supprimer ton profil?
 
 }
-function InfoProfil(datas,navigate){
+function InfoProfil(datas){
+    const navigate = useNavigate();
+    console.log("Print Fetched datas")
     return(
         <>
-            <TextField> {datas.prenom}</TextField>
-            <TextField> {datas.nom}</TextField>
+            <Row className="fs-1"><p>Profil</p></Row>
+            <Row> {"Prénom : "+datas.prenom}</Row>
+            <Row> {"Nom : "+datas.nom}</Row>
             <Row>
-                <TextField> {datas.mail}</TextField>
-                <Button onClick={handleNavigate('/mail',navigate)} value={"Modifier l'identifiant"}/>
+                <Row> {"Identifiant : "+datas.mail}</Row>
+                <Button onClick={()=>navigate("/mail")} type={"button"}>Modifier l'identifiant</Button>
             </Row>
-            <TextField>d</TextField>
+            <Button onClick={()=>navigate("/")}>Modifier le mot de passe</Button>
 
         </>
 
     );
 }
-function handleNavigate(path,navigate){
+/*function handleNavigate(path,navigate){
     navigate(path)
-}
-function InfoProfilContainer (datas, navigate){
-    return(
-        <Container>
-            <Col>
-                <InfoProfil datas={datas} navigate={navigate}/>
-            </Col>
-        </Container>
+}*/
+function InfoProfilContainer (datas){
+    const token = sessionStorage.getItem("token");
+    console.log(token);
+    if(token == null){
+        return(
+            <Container>
+                <Col>
+                    {/*<InfoProfil datas={datas} navigate={navigate}/>*/}
+                    <ExampleInfoProfil/>
+                </Col>
+            </Container>
 
-    );
+        );
+    }
+    else{
+        return(
+            <Container>
+                <Col>
+                    <InfoProfil datas={datas}/>
+                </Col>
+            </Container>
+
+        );
+    }
+
 }
 function DeleteProfilContainer(){
     return(
         <Container>
             <Row>
-                <Button onClick={handleDeleteProfil} type={"button"} value="Supprimer le Profil"/>
+                <Button onClick={handleDeleteProfil} type={"button"}>Supprimer le Profil</Button>
             </Row>
         </Container>
 
