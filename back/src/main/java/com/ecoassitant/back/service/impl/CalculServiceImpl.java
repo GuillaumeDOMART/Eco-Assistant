@@ -79,7 +79,6 @@ public class CalculServiceImpl  implements CalculService {
                     default -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
                 }
             });
-            System.out.println(resultat);
         });
         return resultat;
     }
