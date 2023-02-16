@@ -15,6 +15,7 @@ import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import AccueilSite from "./AccueilSite/AccueilSite";
 import AccueilProfil from "./AccueilProfil/AccueilProfil";
 import StepperComponent from "./Stepper/Stepper";
+import Deconnection from "./Deconnection/LogOut";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,9 @@ const router = createBrowserRouter([
     {
         path:"/forgotPassword",
         element: <ForgotPassword/>
+    },{
+        path:"/logout",
+        element: <Deconnection/>
     }
 ]);
 
