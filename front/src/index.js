@@ -14,6 +14,7 @@ import ConnexionPage from "./Connexion/ConnexionPage";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import AccueilSite from "./AccueilSite/AccueilSite";
 import AccueilProfil from "./AccueilProfil/AccueilProfil";
+import Profil from "./InfoProfil/Profil";
 import StepperComponent from "./Stepper/Stepper";
 import CreateProject from "./Quiz/CreateProject";
 import Deconnection from "./Deconnection/LogOut";
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
     {
         path:"/forgotPassword",
         element: <ForgotPassword/>
+    },
+    {
+        path: "/infoProfil",
+        element: <Profil/>
     },{
         path:"/logout",
         element: <Deconnection/>
