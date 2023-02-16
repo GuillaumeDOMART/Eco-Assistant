@@ -61,7 +61,7 @@ function Profil(){
 }
 
 
-function ExampleInfoProfil(navigate){
+function ExampleInfoProfil({navigate}){
     const items ={
         "id": 1,
         "mail": "admin@demo.fr",
@@ -98,6 +98,9 @@ function ActionBlockProfil(datas){
 }
 function handleDeleteProfil(){
     //TODO POP UP Es tu sur de vouloir supprimer ton profil?
+    const id = new URLSearchParams(window.location.search).get('id');
+
+
 
 }
 function InfoProfil(datas){
