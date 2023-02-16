@@ -62,37 +62,7 @@ function Profil(){
 
 }
 
-/**
- * Component for row datas of profile
- * @param navigate
- * @returns {JSX.Element}
- * @constructor
- */
-function ExampleInfoProfil({navigate}){
-    const items ={
-        "id": 1,
-        "mail": "admin@demo.fr",
-        "nom": "DEMO",
-        "prenom": "Admin",
-        "admin": true
-    }
 
-    return(
-        <>
-            <Row><p>Profil</p></Row>
-            <Row> {"Prénom : "+items.prenom}</Row>
-            <Row> {"Nom : "+items.nom}</Row>
-            <Row>
-                <Row> {"Identifiant : "+items.mail}</Row>
-                <Button onClick={navigate("/mail")}>Modifier l&lsquo;identifiant</Button>
-            </Row>
-            <Button onClick={navigate("/")}>Modifier le mot de passe</Button>
-
-        </>
-
-    );
-
-}
 
 /**
  * Component of the right side of the profile informations screen
