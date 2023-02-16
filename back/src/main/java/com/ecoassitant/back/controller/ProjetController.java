@@ -3,6 +3,9 @@ package com.ecoassitant.back.controller;
 import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.dto.ProjetSimpleDto;
+import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Class to manage endpoints regarding profiles
@@ -20,11 +22,13 @@ import java.util.Objects;
 public class ProjetController {
     private final ProjetRepository projetRepository;
     private final JwtService jwtService;
+    private final ProfilRepository profilRepository;
 
     @Autowired
-    public ProjetController(ProjetRepository projetRepository, JwtService jwtService) {
+    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository) {
         this.projetRepository = projetRepository;
         this.jwtService = jwtService;
+        this.profilRepository = profilRepository;
     }
 
     /**
@@ -55,12 +59,25 @@ public class ProjetController {
     public ResponseEntity<List<ProjetDto>> recupererProjetAvecToken(@RequestHeader("Authorization") String authorizationHeader){
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
-        return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(projetEntity -> new ProjetDto(projetEntity)).toList());
+        return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(ProjetDto::new).toList());
     }
 
     @PostMapping("projet/create")
-    public ResponseEntity<Long> createProjet(@RequestBody ProjetSimpleDto projet){
-        return new ResponseEntity<>(1L, HttpStatus.OK);
+    public ResponseEntity<Long> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        var profilEntityOptional = profilRepository.findByMail(mail);
+        if(profilEntityOptional.isEmpty()){
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+        var profil = profilEntityOptional.get();
+        var projetEntity = ProjetEntity.builder()
+                .nomProjet(projet.getNom())
+                .profil(profil)
+                .etat(Etat.INPROGRESS)
+                .build();
+        projetRepository.save(projetEntity);
+        return new ResponseEntity<>(projetEntity.getIdProjet(), HttpStatus.OK);
     }
 
 }
