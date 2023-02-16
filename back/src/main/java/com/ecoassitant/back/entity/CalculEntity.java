@@ -1,5 +1,6 @@
 package com.ecoassitant.back.entity;
 
+import com.ecoassitant.back.entity.tools.Phase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,5 +33,8 @@ public class CalculEntity implements Serializable {
 
     @Column(name = "nbcalcul", nullable = false)
     private int nbCalcul;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "phase")
+    private Phase phase;
 }
 

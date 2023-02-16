@@ -24,7 +24,7 @@ public class ProfilServiceImpl implements ProfilService {
     }
 
     @Override
-    public ProfilDto getProfilByID(Long id){
+    public ProfilDto getProfilByID(Integer id){
         var profil = repository.findById(id);
         return new ProfilDto(profil.orElseGet(null));
     }

@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * repository of Profil
  */
-public interface ProfilRepository extends JpaRepository<ProfilEntity, Long> {
+public interface ProfilRepository extends JpaRepository<ProfilEntity, Integer> {
 
 
     /**

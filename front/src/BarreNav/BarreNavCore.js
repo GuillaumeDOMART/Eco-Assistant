@@ -4,7 +4,7 @@ import logo from '../logo/Eco-Assistant_transparent.PNG';
  * Composant qui représente la barre de navigation laérale.
  * */
 function BarreNavCore() {
-    const listeOnglets = [['Accueil', '/profil'], ['Profil', '/infoProfil'], ['Remplir un questionnaire', '/newproject'], ["Questions proposées", './'], ['Moderation', './'], ['Se déconnecter', './']]
+    const listeOnglets = [['Accueil', '/profil'], ['Profil', '/infoProfil'], ['Remplir un questionnaire', '/newproject'], ["Questions proposées", './'], ['Moderation', './'], ['Se déconnecter', './logout']]
     const listeLiens = listeOnglets.map((x) => (
         <a href={x[1]} className="list-group-item list-group-item-action text-center" key={x[0]} aria-current="true">
             <span key="key">{x[0]}</span>

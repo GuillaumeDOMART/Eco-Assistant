@@ -32,8 +32,9 @@ public class CalculController {
      * @return list of calculs executed
      */
     @PostMapping("/calculs")
-    public ResponseEntity<ResultatDto> resultatsCalcul(@RequestBody IdDto projectId){
-        return new ResponseEntity<>(calculService.CalculsForProject(projectId.getId()), HttpStatus.OK);
+    public ResponseEntity<ResultatsPhaseDto> resultatsCalcul(@RequestBody IdDto projectId){
+        var resultat = calculService.calculsForProject(projectId.getId());
+        return resultat != null? new ResponseEntity<>(resultat, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
 

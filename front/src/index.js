@@ -16,6 +16,8 @@ import AccueilSite from "./AccueilSite/AccueilSite";
 import AccueilProfil from "./AccueilProfil/AccueilProfil";
 import Profil from "./InfoProfil/Profil";
 import StepperComponent from "./Stepper/Stepper";
+import CreateProject from "./Quiz/CreateProject";
+import Deconnection from "./Deconnection/LogOut";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
     {
         path:"/questionnaire",
         element: <StepperComponent/>,
+    },
+    {
+      path:"/newproject",
+      element: <CreateProject/>
     }
     ,{
         path:"/result",
@@ -50,6 +56,9 @@ const router = createBrowserRouter([
     {
         path: "/infoProfil",
         element: <Profil/>
+    },{
+        path:"/logout",
+        element: <Deconnection/>
     }
 ]);
 
