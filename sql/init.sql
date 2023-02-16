@@ -137,14 +137,14 @@ INSERT INTO reponsepossible (questionasso, questionsuiv, intitule, constanteid) 
                                                                                     (6, 1, 'Veuillez entrer un entier', 2),
                                                                                     (1, 2, 'Veuillez entrer un entier', 2),
                                                                                     (2, 3, 'OUI', 2),
-                                                                                    (2, 5, 'NON', 2),
-                                                                                    (3, 11, 'Veuillez entrer un entier', 4),
+                                                                                    (2, 7, 'NON', 2),
+                                                                                    (3, 7, 'Veuillez entrer un entier', 4),
                                                                                     (4, 5, 'Veuillez entrer un entier', 2),
-                                                                                    (5, 7, 'Veuillez entrer un entier', 3),
+                                                                                    (5, 9, 'Veuillez entrer un entier', 3),
                                                                                     (7, 8, 'OUI', 2),
                                                                                     (7, 8, 'NON', 2),
                                                                                     (7, 8, 'REPONSE D', 2),
-                                                                                    (8, 9, 'Veuillez entrer un entier', 3),
+                                                                                    (8, 11, 'Veuillez entrer un entier', 3),
                                                                                     (9, 10, 'NON', 1),
                                                                                     (9, 10, 'TOUJOURS NON', 1),
                                                                                     (10, null, 'couci', 4),
@@ -157,14 +157,15 @@ INSERT INTO reponsedonnee VALUES
                               (1, 2, 1),
                               (1, 4, 3),
                               (1, 6, 10),
-                              (1, 7, 15);
+                              (1, 7, 15),
+                              (1, 11, 10);
 
 --CREATION CALCUL TEST
 
 INSERT INTO calcul(calculopid, reponsepossibleid,nbcalcul, phase) VALUES
-(5, 11, 3, 'DEVELOPPEMENT'),
-(1, 1, 1, 'DEVELOPPEMENT'),
-(3, 2, 1, 'DEVELOPPEMENT'),
-(5, 4, 1, 'DEVELOPPEMENT'),
-(3, 6, 2, 'DEVELOPPEMENT'),
-(5, 7, 2, 'DEVELOPPEMENT');
+(5, 11, 1, 'DEVELOPPEMENT'),
+(1, 1, 2, 'DEVELOPPEMENT'),
+(3, 2, 2, 'DEVELOPPEMENT'),
+(5, 4, 2, 'DEVELOPPEMENT'),
+(3, 6, 3, 'DEVELOPPEMENT'),
+(5, 7, 3, 'DEVELOPPEMENT');

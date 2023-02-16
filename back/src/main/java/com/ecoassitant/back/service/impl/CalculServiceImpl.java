@@ -44,10 +44,7 @@ public class CalculServiceImpl  implements CalculService {
         var projects = projetRepository.findAll();
         if (projects.isEmpty())
             return null;
-        projects.forEach(projetEntity -> {
-            if (projetEntity.getIdProjet() != idProject)
-            resultat.addOther(resultatForProject(projetEntity.getIdProjet()));
-        });
+        projects.forEach(projetEntity -> resultat.addOther(resultatForProject(projetEntity.getIdProjet())));
         return resultat;
     }
 
@@ -82,6 +79,7 @@ public class CalculServiceImpl  implements CalculService {
                     default -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
                 }
             });
+            System.out.println(resultat);
         });
         return resultat;
     }

@@ -100,6 +100,10 @@ public class CalculEntier {
     private void poloniser(Map<Long, Integer> val){
         var iterateur =  calculs.iterator();
         var calcul = iterateur.next();
+        if(val.size() == 1){
+            var operande = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
+            stack.push(operande);
+        }
         while (iterateur.hasNext()){
             Operateur operateur;
             switch (calcul.getCalculOp().getOperateur()){
