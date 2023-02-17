@@ -21,6 +21,7 @@ import Guest from "./Views/guest/Guest";
 import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
 import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
 import ModifyID from "./Views/ModifyID/ModifyID";
+import {TestBarreNav} from "./Views/TestBarreNav";
 
 const router = createBrowserRouter([
     {
@@ -73,6 +74,9 @@ const router = createBrowserRouter([
     },{
         path:"/guest",
         element: <Guest/>
+    },{
+        path:"/testbarnav",
+        element: <TestBarreNav/>
     }
 ]);
 

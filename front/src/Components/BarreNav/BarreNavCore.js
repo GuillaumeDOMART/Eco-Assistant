@@ -1,24 +1,42 @@
 import React from 'react';
 import logo from '../logo/Eco-Assistant_transparent.PNG';
+import {useLocation} from "react-router-dom";
+import {ListGroup} from "react-bootstrap";
 /**
  * Composant qui représente la barre de navigation laérale.
  * */
 function BarreNavCore() {
     const listeOnglets = [['Accueil', '/profil'], ['Profil', '/infoProfil'], ['Remplir un questionnaire', '/newproject'], ["Questions proposées", './'], ['Moderation', './'], ['Se déconnecter', './logout']]
+
     const listeLiens = listeOnglets.map((x) => (
-        <a href={x[1]} className="list-group-item list-group-item-action text-center" key={x[0]} aria-current="true">
-            <span key="key">{x[0]}</span>
-        </a>
+        <BarreNav_GroupItem key={x[0]} {...x}/>
     ));
 
     return (
         <nav id="sidebarMenu" className="col-2 border border-2 border-secondary">
             <div className="position-sticky list-group list-group-flush px-3 pt-4 h-100">
-                <img alt="logo eco-assistant" src={logo}></img>
-                {listeLiens}
+                <a href="/profil">
+                    <img alt="logo eco-assistant" src={logo}/>
+                </a>
+                <ListGroup variant="flush">
+                    {listeLiens}
+                </ListGroup>
             </div>
         </nav>
     );
+}
+
+/**
+ * Return a list group item, with the correct color
+ */
+
+function BarreNav_GroupItem(pair){
+    const localisation = useLocation()
+    console.log(localisation)
+
+    if(pair[0] === localisation.pathname){
+         return <ListGroup.Item variant="primary" action href={pair[1]}>{pair[0]}</ListGroup.Item>;
+    } else return <ListGroup.Item action href={pair[1]}>{pair[0]}</ListGroup.Item>;
 }
 
 export default BarreNavCore;
