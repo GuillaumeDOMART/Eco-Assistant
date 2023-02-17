@@ -1,31 +1,68 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './scss/custom.scss'
 
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import Questionnaire from "./Questionnaire";
 import ErrorPage from "./ErrorPage";
 import ResultPage from "./ResultPage/ResultPage";
+import ConnexionPage from "./Connexion/ConnexionPage";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import AccueilSite from "./AccueilSite/AccueilSite";
+import AccueilProfil from "./AccueilProfil/AccueilProfil";
+import Profil from "./InfoProfil/Profil";
+import StepperComponent from "./Stepper/Stepper";
+import CreateProject from "./Quiz/CreateProject";
+import Deconnection from "./Deconnection/LogOut";
+import Guest from "./guest/Guest";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <AccueilSite/>,
         errorElement: <ErrorPage/>,
     },
     {
+        path: "/profil",
+        element: <AccueilProfil/>,
+    },
+    {
+      path: "/connexion",
+      element: <ConnexionPage/>,
+    },
+    {
         path:"/questionnaire",
-        element: <Questionnaire />,
+        element: <StepperComponent/>,
+    },
+    {
+      path:"/newproject",
+      element: <CreateProject/>
     }
     ,{
         path:"/result",
         element: <ResultPage/>
+    },
+    {
+        path:"/login",
+        element: <ConnexionPage/>
+    },
+    {
+        path:"/forgotPassword",
+        element: <ForgotPassword/>
+    },
+    {
+        path: "/infoProfil",
+        element: <Profil/>
+    },{
+        path:"/logout",
+        element: <Deconnection/>
+    },{
+        path:"/guest",
+        element: <Guest/>
     }
 ]);
 

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class ProfilDto {
 
-    private Long id;
+    private Integer id;
 
     private String mail;
 
@@ -14,7 +14,7 @@ public class ProfilDto {
 
     private String prenom;
 
-    private boolean isAdmin;
+    private Integer isAdmin;
 
     public ProfilDto(ProfilEntity entity){
         Objects.requireNonNull(entity);
@@ -23,14 +23,14 @@ public class ProfilDto {
         this.mail = entity.getMail();
         this.nom = entity.getNom();
         this.prenom = entity.getPrenom();
-        this.isAdmin = entity.isAdmin();
+        this.isAdmin = entity.getIsAdmin();
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -58,11 +58,11 @@ public class ProfilDto {
         this.prenom = prenom;
     }
 
-    public boolean isAdmin() {
+    public Integer isAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Integer admin) {
         isAdmin = admin;
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
  * Question build with an QuestionEntity without id for use in app
  */
 public class QuestionDto {
+    private Long questionId;
     private String intitule;
     private TypeQ type;
     private Phase phase;
@@ -27,15 +28,14 @@ public class QuestionDto {
     public QuestionDto(QuestionEntity question) {
         if (question == null)
             return;
+        this.questionId = question.getIdQuestion();
         this.intitule = question.getIntitule();
         this.isVisible = question.isVisibilite();
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
         this.categorie = question.getCategorie();
-        this.reponses = new ArrayList<ReponsePossibleDto>();
-        question.getReponses().forEach(reponse -> {
-            reponses.add(new ReponsePossibleDto(reponse));
-        });
+        this.reponses = new ArrayList<>();
+        question.getReponses().forEach(reponse -> reponses.add(new ReponsePossibleDto(reponse)));
 
     }
 
@@ -92,5 +92,13 @@ public class QuestionDto {
 
     public void setReponses(List<ReponsePossibleDto> reponses) {
         this.reponses = List.copyOf(reponses);
+    }
+
+    public Long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 }

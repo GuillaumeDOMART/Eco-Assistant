@@ -10,13 +10,13 @@ public interface Operateur extends OperationElem {
      * @param y second value
      * @return the operation between x and y (x OP y)
      */
-    public Double execute(Double x, Double y);
+    Double execute(Double x, Double y);
 
     /**
      * indicate the type of the Operateur
      * @return  TypeOp.OPERATEUR
      */
-    default public TypeOp type() {
+    default TypeOp type() {
         return TypeOp.OPERATEUR;
     }
 }

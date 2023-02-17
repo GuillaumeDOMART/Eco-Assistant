@@ -4,6 +4,7 @@ import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
+import com.ecoassitant.back.entity.tools.Phase;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -16,6 +17,7 @@ public class CalculEntier {
     private final List<CalculEntity> calculs;
     private final List<ReponseDonneeEntity> repDon;
     private final Stack<OperationElem> stack = new Stack<>();
+    private final Phase phase;
 
     /**
      * Constructor of CalculEntier
@@ -23,10 +25,12 @@ public class CalculEntier {
      * @param repDon list of reponseDonnee for a project
      */
     public CalculEntier(List<CalculEntity> calculs, List<ReponseDonneeEntity> repDon){
+        Objects.requireNonNull(calculs);
         this.calculs = List.copyOf(calculs);
         this.repDon = List.copyOf(repDon);
         dependances = new ArrayList<>();
-        calculs.forEach(calculEntity -> dependances.add(calculEntity.getId().getReponsePossible()));
+        phase = calculs.get(0).getPhase();
+        calculs.forEach(calculEntity -> dependances.add(calculEntity.getReponsePossible()));
     }
 
     /**
@@ -37,14 +41,11 @@ public class CalculEntier {
         if(!isPossible())
             return Optional.empty();
         poloniser(join());
-        System.out.println("stack= " + stack);
         var stack2 = new Stack<Double>();
         var stack3 = new Stack<OperationElem>();
         while (!stack.isEmpty())
             stack3.push(stack.pop());
-        System.out.println(stack3);
         while (!stack3.isEmpty()){
-            System.out.println(stack2);
             var op = stack3.pop();
             if(op.type().equals(TypeOp.OPERANDE)) {
                 Operande operande = (Operande) op;
@@ -85,7 +86,7 @@ public class CalculEntier {
         var map = new HashMap<Long, Integer>();
         dependances.forEach(rP ->{
             var rD = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponseDonneeKey().getReponsePos().equals(rP)).findFirst();
-            if (!rD.isPresent())
+            if (rD.isEmpty())
                 throw new IllegalStateException();
             map.put(rP.getIdReponsePos(),(rP.getConstante().getConstante() * rD.get().getEntry()));
         });
@@ -99,18 +100,22 @@ public class CalculEntier {
     private void poloniser(Map<Long, Integer> val){
         var iterateur =  calculs.iterator();
         var calcul = iterateur.next();
+        if(val.size() == 1){
+            var operande = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
+            stack.push(operande);
+        }
         while (iterateur.hasNext()){
             Operateur operateur;
-            switch (calcul.getId().getCalculOp().getOperateur()){
+            switch (calcul.getCalculOp().getOperateur()){
                 case ADD -> operateur = new Add();
                 case SUB -> operateur = new Sub();
                 case DIV -> operateur = new Div();
                 case MULT -> operateur = new Mult();
                 default -> operateur = null;
             }
-            var operande = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
+            var operande = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
             calcul = iterateur.next();
-            var operande2 = new Operande(val.get(calcul.getId().getReponsePossible().getIdReponsePos()).doubleValue());
+            var operande2 = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
 
             if (stack.isEmpty()){
 
@@ -120,6 +125,7 @@ public class CalculEntier {
             }
             else {
                 var operateur2 = stack.pop();
+                assert operateur != null;
                 if (operateur.level() > operateur2.level()){
                     stack.push(operande2);
                     stack.push(operateur);
@@ -131,7 +137,14 @@ public class CalculEntier {
                     stack.push(operateur);
                 }
             }
-            System.out.println(stack);
         }
+    }
+
+    /**
+     * gives the phase to which the question belongs
+     * @return the phase
+     */
+    public Phase getPhase() {
+        return phase;
     }
 }
