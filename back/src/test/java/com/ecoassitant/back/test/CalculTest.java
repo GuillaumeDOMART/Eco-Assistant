@@ -6,8 +6,6 @@ import com.ecoassitant.back.entity.tools.Categorie;
 import com.ecoassitant.back.entity.tools.Operator;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeQ;
-import net.bytebuddy.pool.TypePool;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
