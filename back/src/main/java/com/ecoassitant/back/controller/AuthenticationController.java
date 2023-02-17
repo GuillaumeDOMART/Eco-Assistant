@@ -1,9 +1,6 @@
 package com.ecoassitant.back.controller;
 
-import com.ecoassitant.back.dto.AuthenticationInputDto;
-import com.ecoassitant.back.dto.AuthenticationOutPutDto;
-import com.ecoassitant.back.dto.RegisterInputDto;
-import com.ecoassitant.back.dto.TokenDto;
+import com.ecoassitant.back.dto.*;
 import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +43,11 @@ public class AuthenticationController {
     @GetMapping("guest")
     public ResponseEntity<TokenDto> guest() {
         return authenticationService.guest();
+    }
+
+    @PatchMapping("forgotMail")
+    public boolean forgotMail(@RequestBody ForgotMailInput forgotMailInput){
+        return authenticationService.forgotMail(forgotMailInput.getMail());
     }
 
 }
