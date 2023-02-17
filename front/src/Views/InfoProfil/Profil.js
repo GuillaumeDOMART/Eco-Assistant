@@ -20,8 +20,7 @@ function Profil(){
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
 
-            },
-            body: JSON.stringify({ id })
+            }
         };
         fetch(`/api/profil/`,options)
             .then(res => res.json())
