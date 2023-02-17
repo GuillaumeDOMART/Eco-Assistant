@@ -43,9 +43,6 @@ class CalculTest {
     List<CalculEntity> listCalcul = new ArrayList<>();
     @Test
     void creationCalculEntier() {
-
-
-
         rdk1.setProjet(projet);
         rdk1.setReponsePos(r1);
 
@@ -60,11 +57,31 @@ class CalculTest {
         listRd.add(rd2);
         listRd.add(rd3);
 
-
         //10 + 5 * 20
-        listCalcul.add(new CalculEntity(1L, add, r1, 1));
-        listCalcul.add(new CalculEntity(2L, mult, r3, 1));
-        listCalcul.add(new CalculEntity(3L, stop, r4, 1));
+        var cl1 = new CalculEntity();
+        cl1.setIdCalcul(1L);
+        cl1.setCalculOp(add);
+        cl1.setReponsePossible(r1);
+        cl1.setPhase(Phase.DEVELOPPEMENT);
+        cl1.setNbCalcul(1);
+
+        var cl2 = new CalculEntity();
+        cl2.setIdCalcul(2L);
+        cl2.setCalculOp(mult);
+        cl2.setReponsePossible(r3);
+        cl2.setPhase(Phase.DEVELOPPEMENT);
+        cl2.setNbCalcul(1);
+
+        var cl3 = new CalculEntity();
+        cl3.setIdCalcul(3L);
+        cl3.setCalculOp(stop);
+        cl3.setReponsePossible(r4);
+        cl3.setPhase(Phase.DEVELOPPEMENT);
+        cl3.setNbCalcul(1);
+
+        listCalcul.add(cl1);
+        listCalcul.add(cl2);
+        listCalcul.add(cl3);
 
         var calcul = new CalculEntier(listCalcul, listRd);
         double executer = calcul.execute().get();
@@ -72,6 +89,6 @@ class CalculTest {
     }
     @Test
     void creationCalculNull() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> new CalculEntier(null, listRd));
+        Assert.assertThrows(NullPointerException.class, () -> new CalculEntier(null, listRd));
     }
 }
