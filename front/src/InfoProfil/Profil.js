@@ -1,6 +1,6 @@
 import BarreNavCore from "../BarreNav/BarreNavCore";
 import React, {useEffect, useState} from "react";
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
 /**
@@ -15,7 +15,6 @@ function Profil(){
 
 
     useEffect(() => {
-        const id = sessionStorage.getItem("id")
         const token = sessionStorage.getItem("token")
         const options = {
             method: 'GET',
@@ -25,7 +24,7 @@ function Profil(){
 
             }
         };
-        fetch(`/api/profil/${id}`,options)
+        fetch(`/api/profil/`,options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -104,8 +103,6 @@ function InfoProfil(datas){
             <div className="d-flex justify-content-center p-3">
                 <Button variant="outline-danger" onClick={handleDeleteProfil}>Supprimer le Profil</Button>
             </div>
-
-
         </>
 
     );

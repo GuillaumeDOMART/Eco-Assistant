@@ -25,7 +25,7 @@ public class AuthenticationController {
      * @return Token authentication
      */
     @PostMapping("register")
-    public ResponseEntity<AuthenticationOutPutDto> register(@RequestBody RegisterInputDto registerInputDto){
+    public ResponseEntity<TokenDto> register(@RequestBody RegisterInputDto registerInputDto){
         return authenticationService.register(registerInputDto);
     }
 

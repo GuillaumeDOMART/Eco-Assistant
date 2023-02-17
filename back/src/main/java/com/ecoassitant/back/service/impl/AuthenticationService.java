@@ -31,7 +31,7 @@ public class AuthenticationService {
      * @param registerInputDto input that represent the profile to create
      * @return Token authentication
      */
-    public ResponseEntity<AuthenticationOutPutDto> register(RegisterInputDto registerInputDto){
+    public ResponseEntity<TokenDto> register(RegisterInputDto registerInputDto){
         if(profilRepository.findByMail(registerInputDto.getMail()).isPresent()){
             return ResponseEntity.status(403).body(null);
         }
@@ -45,7 +45,7 @@ public class AuthenticationService {
 
         profilRepository.save(profile);
         var token = jwtService.generateToken(profile);
-        return ResponseEntity.ok(new AuthenticationOutPutDto(profile.getIdProfil(), profile.getMail(), token));
+        return ResponseEntity.ok(new TokenDto(token));
     }
 
     /**
@@ -62,7 +62,7 @@ public class AuthenticationService {
         );
         var profile = profilRepository.findByMail(authenticationInputDto.getLogin()).orElseThrow();
         var token = jwtService.generateToken(profile);
-        return new AuthenticationOutPutDto(profile.getIdProfil(), profile.getMail(),token);
+        return new AuthenticationOutPutDto(profile.getMail(),token);
     }
 
     public ResponseEntity<TokenDto> guest() {
