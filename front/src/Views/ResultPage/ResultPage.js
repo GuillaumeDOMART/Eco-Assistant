@@ -1,11 +1,14 @@
 import Chart from "chart.js/auto";
 import {useEffect, useRef} from "react";
 import jsPDF from "jspdf";
+import {Button} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 function ResultPage() {
     const chartContainer = useRef(null);
     const chartInstance = useRef(null);
     const pdfContainer = useRef(null);
+    const navigate = useNavigate();
     const marginLeft = 15;
     const yText = 25;
     const A4 = {
@@ -49,6 +52,10 @@ function ResultPage() {
 
     };
 
+    const handleQuit = () => {
+        navigate("/profil")
+    }
+
     useEffect(() => {
         const id = new URLSearchParams(window.location.search).get('id');
         const token = sessionStorage.getItem("token")
@@ -84,7 +91,8 @@ function ResultPage() {
                 <canvas ref={chartContainer}/>
 
             </div>
-            <button onClick={handleDownloadPDF}>Download PDF</button>
+            <Button onClick={handleDownloadPDF} type={"button"}>Download PDF</Button>
+            <Button onClick={handleQuit} type={"button"}>Retourner au menu</Button>
         </div>
     );
 }
