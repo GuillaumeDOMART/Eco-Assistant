@@ -346,7 +346,7 @@ VALUES (1, 1, 30),
        (1, 4, 3),
        (1, 6, 10),
        (1, 7, 15);
---CREATION CALCUL TEST
+--CREATIONS CALCUL TEST
 INSERT INTO calcul(calculopid, reponsepossibleid, nbcalcul,
                    phase)
 VALUES (5, 11, 1, 'DEVELOPPEMENT'),
