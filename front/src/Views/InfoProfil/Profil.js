@@ -1,5 +1,5 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Button, Col, Container} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
  * @returns {JSX.Element}
  * @constructor
  */
-function Profil(){
+function Profil() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [apiError, setApiError] = useState(null);
     const [datas, setDatas] = useState([]);
@@ -22,7 +22,7 @@ function Profil(){
 
             }
         };
-        fetch(`/api/profil/`,options)
+        fetch(`/api/profil/`, options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -35,20 +35,20 @@ function Profil(){
                 }
             )
     }, [])
-    if(apiError){
+    if (apiError) {
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
                 <InfoProfilContainer datas={datas}/>
             </div>);
-    } else if(!isLoaded){
+    } else if (!isLoaded) {
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
             </div>
         );
-    }else{
-        return(
+    } else {
+        return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
                 <div className="col-10 p-5">
@@ -64,7 +64,7 @@ function Profil(){
  * Action done when you click on the button delete profile
  */
 
-function handleDeleteProfil(){
+function handleDeleteProfil() {
     //const id = new URLSearchParams(window.location.search).get('id');
 }
 
@@ -74,20 +74,20 @@ function handleDeleteProfil(){
  * @returns {JSX.Element}
  * @constructor
  */
-function InfoProfil(datas){
+function InfoProfil(datas) {
     const prenom = `Prénom : ${datas.prenom}`
     const nom = `Nom : ${datas.nom}`
     const email = `Identifiant : ${datas.mail}`
     const navigate = useNavigate()
 
-    const handleID = () => {
+    const handleID = useCallback(() => {
         navigate("/modifyID");
-    }
+    }, [navigate])
 
-    const handlePassword = () => {
+    const handlePassword = useCallback(() => {
         navigate("/modifyPassword");
-    }
-    return(
+    }, [navigate])
+    return (
         <>
             <div className="d-flex justify-content-left p-3">
                 <p>{prenom}</p>
@@ -120,8 +120,8 @@ function InfoProfil(datas){
  * @returns {JSX.Element}
  * @constructor
  */
-function InfoProfilContainer (datas){
-    return(
+function InfoProfilContainer(datas) {
+    return (
         <>
             <div className="d-flex justify-content-left p-3">
                 <h1>Profil</h1>
@@ -132,4 +132,5 @@ function InfoProfilContainer (datas){
         </>
     );
 }
+
 export default Profil;
