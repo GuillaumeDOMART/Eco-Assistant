@@ -83,7 +83,8 @@ class CalculTest {
 
         var calcul = new CalculEntier(listCalcul, listRd);
         double executer = calcul.execute().get();
-        Assert.assertEquals(10 + 5 * 20, executer);
+        double test = 110;
+        Assert.assertEquals(test, executer);
     }
     @Test
     void creationCalculNull() {
