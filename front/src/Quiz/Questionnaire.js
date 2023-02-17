@@ -86,7 +86,7 @@ function Questionnaire(activeStep) {
             </>
         );
     } else {
-       let currentPhase;
+       let currentPhase = data.MAINTENANCE;
        switch(activeStep.activeStep) {
            case 0:
                currentPhase = data.PLANIFICATION
@@ -101,7 +101,6 @@ function Questionnaire(activeStep) {
                currentPhase = data.DEPLOIEMENT
                break;
            default:
-               currentPhase = data.MAINTENANCE
                break;
        }
         return (

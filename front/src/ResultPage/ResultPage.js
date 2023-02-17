@@ -67,7 +67,6 @@ function ResultPage() {
                 const sums = {};
                 arrays.forEach(array => {
                     if (jsonData.mine[array]) {
-                        console.log(jsonData.mine[array])
                         const results = jsonData.mine[array].map(item => item.result);
                         sums[array] = results.reduce((acc, current) => acc + current, 0);
                     } else {
@@ -229,7 +228,6 @@ function ResultPage() {
     const sums = {};
     arrays.forEach(array => {
         if (jsonData.mine[array]) {
-            console.log(jsonData.mine[array])
             const results = jsonData.mine[array].map(item => item.result);
             sums[array] = results.reduce((acc, current) => acc + current, 0);
         } else {
