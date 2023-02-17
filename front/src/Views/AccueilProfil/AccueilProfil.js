@@ -1,8 +1,8 @@
-import BarreNavCore from "../BarreNav/BarreNavCore";
+import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useEffect, useState} from "react";
-import {Alert, Table} from "@mui/material";
+import {Table} from "@mui/material";
 import Button from "@mui/material/Button";
-import {Placeholder} from "react-bootstrap";
+import {Alert, Placeholder} from "react-bootstrap";
 
 /**
  * This function generate a line containing informations about a project
@@ -50,7 +50,7 @@ function TableauProjets() {
                 'Authorization': `Bearer ${token}`
             },
         };
-        fetch('http://localhost/api/projet/user',options)
+        fetch('/api/projet/user',options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -68,15 +68,17 @@ function TableauProjets() {
     if (apiError) {
         return (
             <Alert variant="danger">
-                <Alert.Heading>Error</Alert.Heading>
-                <p>{apiError.message}</p>
+                <Alert.Heading >Error</Alert.Heading>
+                {apiError.message}
             </Alert>
         );
     } else if (!isLoaded){
         return (
             <Table>
-                <TableauProjetsHeader/>
-                <LigneTableauProjetsPlaceholder/>
+                    <TableauProjetsHeader/>
+                <tbody>
+                    <LigneTableauProjetsPlaceholder/>
+                </tbody>
             </Table>
         );
     } else {
@@ -85,8 +87,10 @@ function TableauProjets() {
                 <h1>Accueil</h1>
                 <br/>
                 <Table>
-                    <TableauProjetsHeader/>
-                    {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                        <TableauProjetsHeader/>
+                    <tbody>
+                        {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                    </tbody>
                 </Table>
             </>
         );
@@ -130,7 +134,7 @@ function MockTableauProjets() {
             <br/>
 
             <Table>
-                <TableauProjetsHeader/>
+                {/*<TableauProjetsHeader/>*/}
                 {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
             </Table>
         </>
@@ -155,11 +159,13 @@ function LigneTableauProjetsPlaceholder(){
  */
 function TableauProjetsHeader(){
     return (
-        <tr className='table border-bottom border-3 border-primary'>
-            <th>Nom du projet</th>
-            <th>Etat du Projet</th>
-            <th>Actions possibles</th>
-        </tr>
+        <thead>
+            <tr className='table border-bottom border-3 border-primary'>
+                <th>Nom du projet</th>
+                <th>Etat du Projet</th>
+                <th>Actions possibles</th>
+            </tr>
+        </thead>
     );
 }
 
@@ -179,6 +185,5 @@ function AccueilProfil() {
         </div>
     );
 }
-
 
 export default AccueilProfil

@@ -62,7 +62,7 @@ public class ProjetController {
         return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(ProjetDto::new).toList());
     }
 
-    @PostMapping("projet/create")
+    @PostMapping("/projet/create")
     public ResponseEntity<Long> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);

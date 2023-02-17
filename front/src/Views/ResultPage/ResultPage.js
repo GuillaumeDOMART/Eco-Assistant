@@ -84,7 +84,7 @@ function ResultPage() {
                 <canvas ref={chartContainer}/>
 
             </div>
-            <button onClick={handleDownloadPDF}>Download PDF</button>
+            <button onClick={handleDownloadPDF} type={"button"}>Download PDF</button>
         </div>
     );
 }

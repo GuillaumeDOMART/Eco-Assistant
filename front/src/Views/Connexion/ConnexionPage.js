@@ -31,7 +31,7 @@ function ConnexionPage(){
 function Logo(){
     return (
         <Row>
-            <img className="logo position-fixed start-0" src={require('./logo.PNG')}  alt={"logo"} style={{width:'10%',height: 'auto'}}/>
+            <img className="logo position-fixed start-0" src={require('./logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
         </Row>
     );
 }
@@ -110,7 +110,7 @@ return (
             </Col>
         </Row>
 
-        <p>Mot de passe oublié ? <a href="/forgotPassword">Réinitialiser le mot de passe</a></p>
+        <a href="/forgotPassword">Mot de passe oublié ?</a>
     </form>
 );
 }
