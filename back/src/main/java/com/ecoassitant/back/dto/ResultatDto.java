@@ -27,7 +27,7 @@ public class ResultatDto {
      * @param calcul result of calcul
      */
     public void addPlanification(CalculDto calcul){
-        if(planification.isEmpty())
+        if(durationPlanification == null)
             durationPlanification = calcul.getResult();
         else
             planification.add(calcul);
@@ -38,7 +38,7 @@ public class ResultatDto {
      * @param calcul result of calcul
      */
     public void addDeveloppement(CalculDto calcul){
-        if (developpement.isEmpty())
+        if (durationDeveloppement == null)
             durationDeveloppement = calcul.getResult();
         else
             developpement.add(calcul);
@@ -49,7 +49,7 @@ public class ResultatDto {
      * @param calcul result of calcul
      */
     public void addTest(CalculDto calcul){
-        if (test.isEmpty())
+        if (durationTest == null)
             durationTest = calcul.getResult();
         else
             test.add(calcul);
@@ -60,7 +60,7 @@ public class ResultatDto {
      * @param calcul result of calcul
      */
     public void addDeploiement(CalculDto calcul){
-        if (deploiement.isEmpty())
+        if (durationDeploiement == null)
             durationDeploiement = calcul.getResult();
         else
             deploiement.add(calcul);
@@ -71,7 +71,7 @@ public class ResultatDto {
      * @param calcul result of calcul
      */
     public void addMaintenance(CalculDto calcul){
-        if (maintenance.isEmpty())
+        if (durationMaintenance == null)
             durationMaintenance = calcul.getResult();
         else
             maintenance.add(calcul);
