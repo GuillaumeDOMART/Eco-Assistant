@@ -252,8 +252,9 @@ INSERT INTO reponsedonnee VALUES
 --CREATION CALCUL TEST
 
 INSERT INTO calcul(calculopid, reponsepossibleid,nbcalcul, phase) VALUES
-(1, 1, 1, 'DEVELOPPEMENT'),
-(3, 2, 1, 'DEVELOPPEMENT'),
-(5, 4, 1, 'DEVELOPPEMENT'),
-(3, 6, 2, 'DEVELOPPEMENT'),
-(5, 7, 2, 'DEVELOPPEMENT');
+                                                                      (5, 11, 1, 'DEVELOPPEMENT'),
+                                                                      (1, 1, 2, 'DEVELOPPEMENT'),
+                                                                      (3, 2, 2, 'DEVELOPPEMENT'),
+                                                                      (5, 4, 2, 'DEVELOPPEMENT'),
+                                                                      (3, 6, 3, 'DEVELOPPEMENT'),
+                                                                      (5, 7, 3, 'DEVELOPPEMENT');
