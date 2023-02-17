@@ -1,5 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
+import com.ecoassitant.back.EmailSenderService;
 import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.AuthenticationInputDto;
 import com.ecoassitant.back.dto.AuthenticationOutPutDto;
@@ -8,6 +9,7 @@ import com.ecoassitant.back.dto.TokenDto;
 import com.ecoassitant.back.entity.ProfilEntity;
 import com.ecoassitant.back.repository.ProfilRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +26,9 @@ public class AuthenticationService {
     private final ProfilRepository profilRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmailSenderService emailSenderService;
+    @Value("${DOMAIN}")
+    private String domain;
 
     /**
      * Function to register a user
@@ -96,5 +101,14 @@ public class AuthenticationService {
             sb.append(randomChar);
         }
         return sb.toString();
+    }
+
+    public boolean forgotMail(String mail) {
+        var profil = profilRepository.findByMail(mail);
+        if(profil.isEmpty()){
+            return false;
+        }
+        emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de pass oublié", "Voici le liens pour changer vôtre mot de pass: http://"+domain+"/forgot");
+        return true;
     }
 }
