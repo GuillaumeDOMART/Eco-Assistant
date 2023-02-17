@@ -22,7 +22,7 @@ function Profil() {
 
             }
         };
-        fetch(`/api/profil/`, options)
+        fetch(`/api/profil/user`, options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -39,7 +39,7 @@ function Profil() {
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
-                <InfoProfilContainer datas={datas}/>
+                <InfoProfilContainer {...datas}/>
             </div>);
     } else if (!isLoaded) {
         return (
@@ -52,7 +52,7 @@ function Profil() {
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
                 <div className="col-10 p-5">
-                    <InfoProfilContainer datas={datas}/>
+                    <InfoProfilContainer {...datas}/>
                 </div>
             </div>
         );
@@ -98,7 +98,7 @@ function InfoProfil(datas) {
             </div>
             <div className="d-flex justify-content-between p-3">
                 <p>{email}</p>
-                <Button onClick={handleID} variant='outline-info'>Modifier l&lsquo;identifiant</Button>
+                <Button onClick={handleID} variant='outline-info'>Modifier l&lsquo;adresse email</Button>
             </div>
             <div className="d-flex justify-content-between p-3">
                 <p>Mot de passe : ************</p>
