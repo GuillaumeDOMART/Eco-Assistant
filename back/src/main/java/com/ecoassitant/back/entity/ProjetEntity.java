@@ -21,7 +21,7 @@ public class ProjetEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_sequence")
     @SequenceGenerator(name = "project_sequence", sequenceName = "project_sequence", allocationSize = 1)
     @Column(name = "idprojet", nullable = false)
-    private Long idProjet;
+    private Integer idProjet;
 
     @ManyToOne
     @JoinColumn(name = "profilid", nullable = false)

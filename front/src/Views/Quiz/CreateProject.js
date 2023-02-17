@@ -19,7 +19,7 @@ function CreateProject() {
     const navigate = useNavigate();
     const {register, handleSubmit} = useForm();
 
-    const onSubmit = (datas) => {
+    const onSubmit = async (datas) => {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
         myHeaders.append("Content-Type", "application/json");
@@ -31,8 +31,9 @@ function CreateProject() {
             redirect: 'follow'
         };
 
-        fetch("/api/projet/create", requestOptions)
-            .then(response => response.json())
+        const response = await fetch("/api/projet/create", requestOptions)
+        const json = await response.json();
+        sessionStorage.setItem("project",json.id)
         navigate("/questionnaire")
     }
 
