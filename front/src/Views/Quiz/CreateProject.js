@@ -36,10 +36,17 @@ function CreateProject() {
         navigate("/questionnaire")
     }
 
+    const handleQuit = () => {
+        navigate("/profil")
+    }
+
     return (
         <Container fluid>
             <Row className="border border-5 vh-100">
-                <Project onSubmit={handleSubmit(onSubmit)} register={register}/>
+                <Col>
+                    <Project onSubmit={handleSubmit(onSubmit)} register={register}/>
+                    <Button onClick={handleQuit} type={"button"}>Revenir à l&lsquo;accueil</Button>
+                </Col>
             </Row>
         </Container>
     );
