@@ -19,6 +19,11 @@ public class ProfilController {
     private final JwtService jwtService;
     private final ProfilService profilService;
 
+    /**
+     * Constructor of ProfilController
+     * @param jwtService for decipher the token
+     * @param profilService Service of Profil
+     */
     @Autowired
     public ProfilController(JwtService jwtService, ProfilService profilService) {
         this.jwtService = jwtService;
