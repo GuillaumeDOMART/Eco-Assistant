@@ -5,107 +5,254 @@ Initialisation DataBase
 CREATE SEQUENCE profil_sequence START WITH 1;
 CREATE TABLE IF NOT EXISTS profil
 (
-    idprofil INTEGER PRIMARY KEY DEFAULT nextval('profil_sequence'),
-    mail     VARCHAR(140) NOT NULL,
-    mdp      VARCHAR(140) NOT NULL,
-    nom      VARCHAR(50)  NOT NULL,
-    prenom   VARCHAR(50)  NOT NULL,
-    isadmin  INT          NOT NULL
-);
+    idprofil INTEGER PRIMARY KEY DEFAULT nextval
+(
+    'profil_sequence'
+),
+    mail VARCHAR
+(
+    140
+) NOT NULL,
+    mdp VARCHAR
+(
+    140
+) NOT NULL,
+    nom VARCHAR
+(
+    50
+) NOT NULL,
+    prenom VARCHAR
+(
+    50
+) NOT NULL,
+    isadmin INT NOT NULL);
 
 CREATE SEQUENCE project_sequence START WITH 1;
 CREATE TABLE IF NOT EXISTS projet
 (
-    idprojet  INTEGER PRIMARY KEY DEFAULT nextval('project_sequence'),
-    profilid  INT         NOT NULL,
-    nomprojet VARCHAR(50) NOT NULL,
-    etat      VARCHAR(50) NOT NULL,
+    idprojet INTEGER PRIMARY KEY DEFAULT nextval
+(
+    'project_sequence'
+),
+    profilid INT NOT NULL,
+    nomprojet VARCHAR
+(
+    50
+) NOT NULL,
+    etat VARCHAR
+(
+    50
+) NOT NULL,
     CONSTRAINT profilid
-    FOREIGN KEY (profilid)
-    REFERENCES profil (idprofil)
-);
+    FOREIGN KEY
+(
+    profilid
+)
+    REFERENCES profil
+(
+    idprofil
+));
 
 CREATE TABLE IF NOT EXISTS question
 (
-    idquestion  serial PRIMARY KEY,
-    intitule    VARCHAR(255) NOT NULL,
+    idquestion
+    serial
+    PRIMARY
+    KEY,
+    intitule
+    VARCHAR
+(
+    255
+) NOT NULL,
     questionpre INT,
-    typeq       VARCHAR(140) NOT NULL,
-    phase       VARCHAR(50)  NOT NULL,
-    categorie   VARCHAR(50)  NOT NULL,
-    visibilite  INT,
+    typeq VARCHAR
+(
+    140
+) NOT NULL,
+    phase VARCHAR
+(
+    50
+) NOT NULL,
+    categorie VARCHAR
+(
+    50
+) NOT NULL,
+    visibilite INT,
     CONSTRAINT questionpre
-    FOREIGN KEY (questionpre)
-    REFERENCES question (idquestion)
-);
+    FOREIGN KEY
+(
+    questionpre
+)
+    REFERENCES question
+(
+    idquestion
+));
 
 CREATE TABLE IF NOT EXISTS constante
 (
-    idconstante serial PRIMARY KEY,
-    constante   INT,
-    tracabilite VARCHAR(255)
-);
+    idconstante
+    serial
+    PRIMARY
+    KEY,
+    constante
+    INT,
+    tracabilite
+    VARCHAR
+(
+    255
+)
+    );
 
 CREATE TABLE IF NOT EXISTS reponsepossible
 (
-    idreponsepos serial PRIMARY KEY,
-    questionasso INT          NOT NULL,
-    questionsuiv INT,
-    intitule     VARCHAR(140) NOT NULL,
-    constanteid  INT          NOT NULL,
+    idreponsepos
+    serial
+    PRIMARY
+    KEY,
+    questionasso
+    INT
+    NOT
+    NULL,
+    questionsuiv
+    INT,
+    intitule
+    VARCHAR
+(
+    140
+) NOT NULL,
+    constanteid INT NOT NULL,
     CONSTRAINT questionasso
-    FOREIGN KEY (questionasso)
-    REFERENCES question (idquestion),
+    FOREIGN KEY
+(
+    questionasso
+)
+    REFERENCES question
+(
+    idquestion
+),
     CONSTRAINT questionsuiv
-    FOREIGN KEY (questionsuiv)
-    REFERENCES question (idquestion)
-);
+    FOREIGN KEY
+(
+    questionsuiv
+)
+    REFERENCES question
+(
+    idquestion
+));
 
 CREATE TABLE IF NOT EXISTS reponsedonnee
 (
-    projetid     INT NOT NULL,
-    reponseposid INT NOT NULL,
-    entry        INT NOT NULL,
-    CONSTRAINT projetid
-    PRIMARY KEY (projetid, reponseposid),
+    projetid
+    INT
+    NOT
+    NULL,
+    reponseposid
+    INT
+    NOT
+    NULL,
+    entry
+    INT
+    NOT
+    NULL,
+    CONSTRAINT
+    projetid
+    PRIMARY
+    KEY
+(
+    projetid,
+    reponseposid
+),
     CONSTRAINT fk_projetid
-    FOREIGN KEY (projetid)
-    REFERENCES projet (idprojet),
+    FOREIGN KEY
+(
+    projetid
+)
+    REFERENCES projet
+(
+    idprojet
+),
     CONSTRAINT reponseposid
-    FOREIGN KEY (reponseposid)
-    REFERENCES reponsepossible (idreponsepos)
-);
+    FOREIGN KEY
+(
+    reponseposid
+)
+    REFERENCES reponsepossible
+(
+    idreponsepos
+));
 
 CREATE TABLE IF NOT EXISTS calculoperateur
 (
-    idcalculop serial PRIMARY KEY,
-    operateur  VARCHAR(10)
-);
+    idcalculop
+    serial
+    PRIMARY
+    KEY,
+    operateur
+    VARCHAR
+(
+    10
+));
 
 CREATE TABLE IF NOT EXISTS calcul
 (
 
-    idcalcul          SERIAL PRIMARY KEY,
-    calculopid        INT         NOT NULL,
-    reponsepossibleid INT         NOT NULL,
-    nbcalcul          INT         NOT NULL,
-    phase             VARCHAR(50) NOT NULL,
+    idcalcul
+    SERIAL
+    PRIMARY
+    KEY,
+    calculopid
+    INT
+    NOT
+    NULL,
+    reponsepossibleid
+    INT
+    NOT
+    NULL,
+    nbcalcul
+    INT
+    NOT
+    NULL,
+    phase
+    VARCHAR
+(
+    50
+) NOT NULL,
     CONSTRAINT calculopid
-    FOREIGN KEY (calculopid)
-    REFERENCES calculoperateur (idcalculop),
+    FOREIGN KEY
+(
+    calculopid
+)
+    REFERENCES calculoperateur
+(
+    idcalculop
+),
     CONSTRAINT reponsepossibleid
-    FOREIGN KEY (reponsepossibleid)
-    REFERENCES reponsepossible (idreponsepos)
-);
+    FOREIGN KEY
+(
+    reponsepossibleid
+)
+    REFERENCES reponsepossible
+(
+    idreponsepos
+));
 
 CREATE TABLE IF NOT EXISTS questionpropose
 (
-    idquestion SERIAL PRIMARY KEY,
-    intitule   VARCHAR(255) NOT NULL,
-    phase      VARCHAR(50)  NOT NULL,
-    vote       INT,
-    isapprove  INT          NOT NULL
-);
+    idquestion
+    SERIAL
+    PRIMARY
+    KEY,
+    intitule
+    VARCHAR
+(
+    255
+) NOT NULL ,
+    phase VARCHAR
+(
+    50
+) NOT NULL,
+    vote INT,
+    isapprove INT NOT NULL);
 
 
 --CREATION CALCULOPERATEUR
@@ -130,59 +277,58 @@ VALUES (1, 'QUESTIONAIRE POUR Administrateur', 'INPROGRESS'),
 INSERT INTO question (intitule, questionpre, typeq, phase, categorie, visibilite)
 VALUES
     /*HORS_PHASE*/
-    ('Votre projet, nécessite-t-il des trajets en avions ?', null, 'QCM', 'HORS_PHASE', 'FIRST', 1),
+    ('Votre projet, nécessite-t-il des trajets en avion ?', null, 'QCM', 'HORS_PHASE', 'FIRST', 1),
     ('Combien ?', 1, 'NUMERIC', 'HORS_PHASE', 'FIRST', 0),
     ('Produisez-vous de l’énergie verte ?', 2, 'QCM', 'HORS_PHASE', 'FIRST', 1),
-    ('A qu’elle pourcentage couvre t’elle vos dépenses énergétique', 3, 'NUMERIC', 'HORS_PHASE', 'FIRST', 0),
+    ('A quel pourcentage couvre t-elle vos dépenses énergétiques', 3, 'NUMERIC', 'HORS_PHASE', 'FIRST', 0),
     ('Combien de jours de télétravail par semaine ?', 4, 'NUMERIC', 'HORS_PHASE', 'FIRST', 1),
     /*PLANIFICATION*/
-    ('Combien de collaborateur travaille sur cette phase ?', 5, 'NUMERIC', 'PLANIFICATION', 'FIRST', 1),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 5, 'NUMERIC', 'PLANIFICATION', 'FIRST', 1),
     ('Connaissez-vous à peu près la distance de trajet de vos collaborateurs ?', 6, 'QCM', 'PLANIFICATION', 'FIRST', 1),
-    ('Quelle est la distance moyenne de trajet par personne pour aller au travail ?', 7, 'NUMERIC', 'PLANIFICATION',
-     'FIRST', 0),
-    ('Combien vienne en voiture ?', 8, 'NUMERIC', 'PLANIFICATION', 'FIRST', 1),
-    ('Combien de page de document avez-vous utilisé', 9, 'NUMERIC', 'PLANIFICATION', 'FIRST', 1),
+    ('Quelle est la distance moyenne de trajet de vos collaborateurs pour aller au travail ?', 7, 'NUMERIC',
+     'PLANIFICATION', 'FIRST', 0),
+    ('Combien viennent en voiture ?', 8, 'NUMERIC', 'PLANIFICATION', 'FIRST', 1),
+    ('Combien de pages de document avez-vous utilisé ?', 9, 'NUMERIC', 'PLANIFICATION', 'FIRST', 1),
     ('Dématérialisez-vous vos documents ?', 10, 'QCM', 'PLANIFICATION', 'FIRST', 1),
-    ('Donner un pourcentage (de 0 à 100) de la dématérialisation de vos documents', 11, 'NUMERIC', 'PLANIFICATION',
-     'FIRST', 0),
+    ('Quel pourcentage de vos documents est dématérialisé?', 11, 'NUMERIC', 'PLANIFICATION', 'FIRST', 0),
     /*DEVELOPPEMENT*/
-    ('Combien de collaborateur travaille sur cette phase ?', 12, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 12, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
     ('Connaissez-vous à peu près la distance de trajet de vos collaborateurs ?', 13, 'QCM', 'DEVELOPPEMENT', 'FIRST',
      1),
-    ('Quelle est la distance moyenne de trajet par personne pour aller au travail ?', 14, 'NUMERIC', 'DEVELOPPEMENT',
-     'FIRST', 0),
-    ('Combien vienne en voiture ?', 15, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
-    ('Combien de pc utilisez-vous pour cette phase ?', 16, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
+    ('Quelle est la distance moyenne de trajet de vos collaborateurs pour aller au travail ?', 14, 'NUMERIC',
+     'DEVELOPPEMENT', 'FIRST', 0),
+    ('Combien viennent en voiture ?', 15, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
+    ('Combien de PC utilisez-vous pour cette phase ?', 16, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 1),
     ('Utilisez-vous des machines virtuelles ?', 17, 'QCM', 'DEVELOPPEMENT', 'FIRST', 1),
     ('Combien ?', 18, 'NUMERIC', 'DEVELOPPEMENT', 'FIRST', 0),
-    ('Quelle langage utilisez-vous pour développer en back ?', 19, 'QCM', 'DEVELOPPEMENT', 'FIRST', 1),
-    ('Quelle langage utilisez-vous pour développer en front ?', 20, 'QCM', 'DEVELOPPEMENT', 'FIRST', 1),
+    ('Quel langage utilisez-vous pour développer en Back ?', 19, 'QCM', 'DEVELOPPEMENT', 'FIRST', 1),
+    ('Quel langage utilisez-vous pour développer en Front ?', 20, 'QCM', 'DEVELOPPEMENT', 'FIRST', 1),
     /*TEST*/
-    ('Combien de collaborateur travaille sur cette phase ?', 21, 'NUMERIC', 'TEST', 'FIRST', 1),
-    ('Connaissez-vous a peut prés la distance de trajet de vos collaborateurs ?', 22, 'QCM', 'TEST', 'FIRST', 1),
-    ('Quelle est la distance moyenne de trajet par personne pour aller au travail ?', 23, 'NUMERIC', 'TEST', 'FIRST',
-     0),
-    ('Combien vienne en voiture ?', 24, 'NUMERIC', 'TEST', 'FIRST', 1),
-    ('Combien de pc utilisez-vous pour cette phase ?', 25, 'NUMERIC', 'TEST', 'FIRST', 1),
-    /*DEPLOIEMENT*/
-    ('Combien de collaborateur travaille sur cette phase ?', 26, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 1),
-    ('Connaissez-vous à peu près la distance de trajet de vos collaborateurs ?', 27, 'QCM', 'DEPLOIEMENT', 'FIRST', 1),
-    ('Quelle est la distance moyenne de trajet par personne pour aller au travail ?', 28, 'NUMERIC', 'DEPLOIEMENT',
+    ('Combien de collaborateurs travaillent sur cette phase ?', 21, 'NUMERIC', 'TEST', 'FIRST', 1),
+    ('Connaissez-vous à peu prés la distance de trajet de vos collaborateurs ?', 22, 'QCM', 'TEST', 'FIRST', 1),
+    ('Quelle est la distance moyenne de trajet de vos collaborateurs pour aller au travail ?', 23, 'NUMERIC', 'TEST',
      'FIRST', 0),
-    ('Combien vienne en voiture ?', 29, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 1),
-    ('Combien de pc utilisez-vous pour cette phase ?', 30, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 1),
-    ('Avez-vous une base de donnée ?', 31, 'QCM', 'DEPLOIEMENT', 'FIRST', 1),
+    ('Combien viennent en voiture ?', 24, 'NUMERIC', 'TEST', 'FIRST', 1),
+    ('Combien de PC utilisez-vous pour cette phase ?', 25, 'NUMERIC', 'TEST', 'FIRST', 1),
+    /*DEPLOIEMENT*/
+    ('Combien de collaborateurs travaillent sur cette phase ?', 26, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 1),
+    ('Connaissez-vous à peu près la distance de trajet de vos collaborateurs ?', 27, 'QCM', 'DEPLOIEMENT', 'FIRST', 1),
+    ('Quelle est la distance moyenne de trajet de vos collaborateurs pour aller au travail ?', 28, 'NUMERIC', 'DEPLOIEMENT',
+     'FIRST', 0),
+    ('Combien viennent en voiture ?', 29, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 1),
+    ('Combien de PC utilisez-vous pour cette phase ?', 30, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 1),
+    ('Avez-vous une base de données ?', 31, 'QCM', 'DEPLOIEMENT', 'FIRST', 1),
     ('Quelle taille fait-elle ?', 32, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 0),
     ('Est-elle stockée dans le cloud ?', 33, 'QCM', 'DEPLOIEMENT', 'FIRST', 0),
-    ('Savez-vous qu’elle énergie alimente votre cloud ?', 34, 'QCM', 'DEPLOIEMENT', 'FIRST', 0),
-    ('Citez qu’elle énergie alimente votre Cloud ?', 35, 'QCM', 'DEPLOIEMENT', 'FIRST', 0),
+    ('Savez-vous quelle énergie alimente votre cloud ?', 34, 'QCM', 'DEPLOIEMENT', 'FIRST', 0),
+    ('Citez quelle énergie alimente votre Cloud ?', 35, 'QCM', 'DEPLOIEMENT', 'FIRST', 0),
     /*MAINTENANCE*/
     ('Faites-vous une phase de maintenance ?', 36, 'QCM', 'MAINTENANCE', 'FIRST', 1),
-    ('Combien de collaborateur travaille sur cette phase ?', 37, 'NUMERIC', 'MAINTENANCE', 'FIRST', 1),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 37, 'NUMERIC', 'MAINTENANCE', 'FIRST', 1),
     ('Connaissez-vous à peu près la distance de trajet de vos collaborateurs ?', 38, 'QCM', 'MAINTENANCE', 'FIRST', 1),
-    ('Quelle est la distance moyenne de trajet par personne pour aller au travail ?', 39, 'NUMERIC', 'MAINTENANCE',
+    ('Quelle est la distance moyenne de trajet de vos collaborateurs pour aller au travail ?', 39, 'NUMERIC', 'MAINTENANCE',
      'FIRST', 0),
-    ('Combien vienne en voiture ?', 40, 'NUMERIC', 'MAINTENANCE', 'FIRST', 1);
+    ('Combien viennent en voiture ?', 40, 'NUMERIC', 'MAINTENANCE', 'FIRST', 1);
 
 
 --- CREATION DES CONSTANTES
@@ -192,7 +338,7 @@ VALUES (0, 'Constante neutre de l addition et la soustraction'),
        (3.83,
         'https://docs.google.com/document/d/1vlv_qH2_NvRNO2uHRH93mogf9ENM6OsNc3a3wXjNaR8/edit#heading=h.72nwi8b72wp2'),
        (0.103,
-        'Consomation moyenne d une voiture en KG ce CO2/KM : https://carlabelling.ademe.fr/chiffrescles/r/evolutionTauxCo2');
+        'Consommation moyenne d une voiture en KG de CO2/KM : https://carlabelling.ademe.fr/chiffrescles/r/evolutionTauxCo2');
 
 
 --- CREATION DES REPONSES POSSIBLE
