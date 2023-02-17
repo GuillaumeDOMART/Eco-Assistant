@@ -51,7 +51,7 @@ function Questionnaire(activeStep) {
         fetch("/api/reponsesDonnees", requestOptions)
             .then(response => response.text())
 
-        navigate("/result?id="+projectId)
+        navigate(`/result?id=${projectId}`)
     }
 
     useEffect(() => {

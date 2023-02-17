@@ -1,7 +1,7 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
-import com.ecoassitant.back.dto.ProjectId;
+import com.ecoassitant.back.dto.ProjectIdDto;
 import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.dto.ProjetSimpleDto;
 import com.ecoassitant.back.entity.ProjetEntity;
@@ -64,7 +64,7 @@ public class ProjetController {
     }
 
     @PostMapping("/projet/create")
-    public ResponseEntity<ProjectId> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
+    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
@@ -78,7 +78,7 @@ public class ProjetController {
                 .etat(Etat.INPROGRESS)
                 .build();
         projetRepository.save(projetEntity);
-        return new ResponseEntity<>(new ProjectId(projetEntity.getIdProjet()), HttpStatus.OK);
+        return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()), HttpStatus.OK);
     }
 
 }
