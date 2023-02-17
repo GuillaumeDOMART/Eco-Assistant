@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS projet
     nomprojet VARCHAR(50) NOT NULL,
     etat      VARCHAR(50) NOT NULL,
     CONSTRAINT profilid
-        FOREIGN KEY (profilid)
-            REFERENCES profil (idprofil)
+    FOREIGN KEY (profilid)
+    REFERENCES profil (idprofil)
 );
 
 CREATE TABLE IF NOT EXISTS question
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS question
     categorie   VARCHAR(50)  NOT NULL,
     visibilite  INT,
     CONSTRAINT questionpre
-        FOREIGN KEY (questionpre)
-            REFERENCES question (idquestion)
+    FOREIGN KEY (questionpre)
+    REFERENCES question (idquestion)
 );
 
 CREATE TABLE IF NOT EXISTS constante
@@ -54,11 +54,11 @@ CREATE TABLE IF NOT EXISTS reponsepossible
     intitule     VARCHAR(140) NOT NULL,
     constanteid  INT          NOT NULL,
     CONSTRAINT questionasso
-        FOREIGN KEY (questionasso)
-            REFERENCES question (idquestion),
+    FOREIGN KEY (questionasso)
+    REFERENCES question (idquestion),
     CONSTRAINT questionsuiv
-        FOREIGN KEY (questionsuiv)
-            REFERENCES question (idquestion)
+    FOREIGN KEY (questionsuiv)
+    REFERENCES question (idquestion)
 );
 
 CREATE TABLE IF NOT EXISTS reponsedonnee
@@ -67,13 +67,13 @@ CREATE TABLE IF NOT EXISTS reponsedonnee
     reponseposid INT NOT NULL,
     entry        INT NOT NULL,
     CONSTRAINT projetid
-        PRIMARY KEY (projetid, reponseposid),
+    PRIMARY KEY (projetid, reponseposid),
     CONSTRAINT fk_projetid
-        FOREIGN KEY (projetid)
-            REFERENCES projet (idprojet),
+    FOREIGN KEY (projetid)
+    REFERENCES projet (idprojet),
     CONSTRAINT reponseposid
-        FOREIGN KEY (reponseposid)
-            REFERENCES reponsepossible (idreponsepos)
+    FOREIGN KEY (reponseposid)
+    REFERENCES reponsepossible (idreponsepos)
 );
 
 CREATE TABLE IF NOT EXISTS calculoperateur
@@ -91,11 +91,11 @@ CREATE TABLE IF NOT EXISTS calcul
     nbcalcul          INT         NOT NULL,
     phase             VARCHAR(50) NOT NULL,
     CONSTRAINT calculopid
-        FOREIGN KEY (calculopid)
-            REFERENCES calculoperateur (idcalculop),
+    FOREIGN KEY (calculopid)
+    REFERENCES calculoperateur (idcalculop),
     CONSTRAINT reponsepossibleid
-        FOREIGN KEY (reponsepossibleid)
-            REFERENCES reponsepossible (idreponsepos)
+    FOREIGN KEY (reponsepossibleid)
+    REFERENCES reponsepossible (idreponsepos)
 );
 
 CREATE TABLE IF NOT EXISTS questionpropose
