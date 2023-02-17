@@ -80,15 +80,6 @@ function ActionBlockProfil(datas){
     );
 }
 
-/**
- * Action done when you click on the button delete profile
- */
-
-function handleDeleteProfil(){
-    const id = new URLSearchParams(window.location.search).get('id');
-
-
-}
 
 /**
  * Component that uses data fetched of profile
@@ -98,6 +89,13 @@ function handleDeleteProfil(){
  */
 function InfoProfil(datas){
     const navigate = useNavigate();
+
+    const handleID = () => {
+        navigate("/modifyID");
+    }
+    const handlePassword = () => {
+        navigate("/modifyPassword");
+    }
     return(
         <>
             <Row><p>Profil</p></Row>
@@ -105,9 +103,9 @@ function InfoProfil(datas){
             <Row> Nom : ${datas.nom}</Row>
             <Row>
                 <Row> Identifiant : ${datas.mail}</Row>
-                <Button onClick={navigate("/mail")} type={"button"}>Modifier l&lsquo;identifiant</Button>
+                <Button onClick={handleID} type={"button"}>Modifier l&lsquo;identifiant</Button>
             </Row>
-            <Button onClick={navigate("/")}>Modifier le mot de passe</Button>
+            <Button onClick={handlePassword}>Modifier le mot de passe</Button>
 
         </>
 
@@ -138,10 +136,16 @@ function InfoProfilContainer (datas){
  * Component that holds the button for deleting the profile
  */
 function DeleteProfilContainer(){
+    const navigate = useNavigate()
+    function handleDelete(){
+        const id = new URLSearchParams(window.location.search).get('id');
+        navigate("/")
+    }
+
     return(
         <Container>
             <Row>
-                <Button onClick={handleDeleteProfil} type={"button"}>Supprimer le Profil</Button>
+                <Button onClick={handleDelete} type={"button"}>Supprimer le Profil</Button>
             </Row>
         </Container>
 

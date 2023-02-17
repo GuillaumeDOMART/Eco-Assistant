@@ -19,6 +19,8 @@ import CreateProject from "./Views/Quiz/CreateProject";
 import Deconnection from "./Views/Deconnection/LogOut";
 import Guest from "./Views/guest/Guest";
 import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
+import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
+import ModifyID from "./Views/ModifyID/ModifyID";
 
 const router = createBrowserRouter([
     {
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
     {
         path:"/forgotPassword",
         element: <ForgotPassword/>
+    },
+    {
+      path:"/modifyPassword",
+      element: <ModifyPassword/>
+    },
+    {
+        path:"/modifyID",
+        element: <ModifyID/>
     },
     {
         path: "/infoProfil",

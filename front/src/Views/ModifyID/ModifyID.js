@@ -1,7 +1,7 @@
-import BarreNavCore from "../../../../../../../src/Components/BarreNav/BarreNavCore";
 import {Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
+import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 
 function ModifyID() {
     const {register, handleSubmit} = useForm()
@@ -19,7 +19,7 @@ function ModifyID() {
                <h1>Modification du mot de passe</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField label="Nouvel identifiant" type="text" variant="standard" className="textfield" {...register("newID")} required/><br/>
-                    <Button href="/profil">Annuler</Button><Button type="submit">Valider</Button><br/>
+                    <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
            </div>
        </div>

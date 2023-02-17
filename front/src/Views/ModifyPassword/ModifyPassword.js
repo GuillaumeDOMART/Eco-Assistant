@@ -1,7 +1,7 @@
-import BarreNavCore from "../../../../../../../src/Components/BarreNav/BarreNavCore";
 import {Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
+import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 
 function ModifyPassword() {
     const {register, handleSubmit} = useForm()
@@ -21,7 +21,7 @@ function ModifyPassword() {
                     <TextField label="Mot de passe actuel" type="password" variant="standard" className="textfield" {...register("actualPassword")} required/>
                     <TextField label="Nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPassword")} required/><br/>
                     <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPasswordConfirmed")} required/><br/>
-                    <Button href="/profil">Annuler</Button><Button type="submit">Valider</Button><br/>
+                    <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
            </div>
        </div>
