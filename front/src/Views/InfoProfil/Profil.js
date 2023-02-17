@@ -59,27 +59,8 @@ function Profil(){
     }
 }
 
-
-/**
- * Action done when you click on the button delete profile
- */
-
 function handleDeleteProfil(){
     //const id = new URLSearchParams(window.location.search).get('id');
-    navigate("/");
-}
-
-/**
- * Action performed when clicking on the modify id button
- */
-function handleID () {
-    const navigate = useNavigate();
-    navigate("/modifyID");
-}
-
-function handlePassword () {
-    const navigate = useNavigate();
-    navigate("/modifyPassword");
 }
 
 /**
@@ -92,7 +73,15 @@ function InfoProfil(datas){
     const prenom = `Prénom : ${datas.prenom}`
     const nom = `Nom : ${datas.nom}`
     const email = `Identifiant : ${datas.mail}`
+    const navigate = useNavigate()
 
+    const handleID = () => {
+        navigate("/modifyID");
+    }
+
+    const handlePassword = () => {
+        navigate("/modifyPassword");
+    }
     return(
         <>
             <div className="d-flex justify-content-left p-3">
