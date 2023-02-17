@@ -52,7 +52,7 @@ function Questionnaire(activeStep) {
             // .then(result => console.log(result))
             // .catch(error => console.log('error', error));
 
-        navigate("/result")
+        navigate("/result?id=1")
     }
 
     useEffect(() => {
@@ -87,7 +87,7 @@ function Questionnaire(activeStep) {
             </>
         );
     } else {
-       let currentPhase = data.HORS_PHASE;
+       let currentPhase = data.MAINTENANCE;
        switch(activeStep.activeStep) {
            case 0:
                currentPhase = data.PLANIFICATION
@@ -102,7 +102,6 @@ function Questionnaire(activeStep) {
                currentPhase = data.DEPLOIEMENT
                break;
            default:
-               currentPhase = data.MAINTENANCE
                break;
        }
         return (
