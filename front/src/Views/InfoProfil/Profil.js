@@ -59,8 +59,14 @@ function Profil(){
     }
 }
 
+
+/**
+ * Action done when you click on the button delete profile
+ */
+
 function handleDeleteProfil(){
     //const id = new URLSearchParams(window.location.search).get('id');
+    navigate("/");
 }
 
 /**
