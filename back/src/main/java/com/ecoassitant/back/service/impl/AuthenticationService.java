@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -129,7 +130,7 @@ public class AuthenticationService {
         var claims = new HashMap<String,Object>() {{
             put("verify",true);
         }};
-        var token = jwtService.generateToken(profile.get(),claims);
+        var token = jwtService.generateToken(profil.get(),claims);
         emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de pass oublié", "Voici le liens pour changer vôtre mot de pass: http://"+domain+"/forgot?token="+token);
         return true;
     }
