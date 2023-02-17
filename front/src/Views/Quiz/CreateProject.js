@@ -9,7 +9,7 @@ function Project({onSubmit, register}) {
         <Col className="">
             <h1>Nouveau Projet</h1>
             <form onSubmit={onSubmit} className="">
-                <TextField label="Nom du projet" type="text" variant="standard" className="textfield" {...register("projectName")} required/><br/>
+                <TextField label="Nom du projet" type="text" variant="standard" className="textfield" {...register("nom")} required/><br/>
                 <Button type="submit">Créer le projet</Button><br/>
             </form>
         </Col>
@@ -31,12 +31,10 @@ function CreateProject() {
             redirect: 'follow'
         };
 
-        fetch("/projet/create", requestOptions)
+        fetch("/api/projet/create", requestOptions)
             .then(response => response.json())
             .then(result => console.log(result))
-        navigate("/questionnaire", {
-            "idProject": ""
-        })
+        navigate("/questionnaire")
     }
 
     return (
