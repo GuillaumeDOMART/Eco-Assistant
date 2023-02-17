@@ -17,6 +17,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -108,7 +110,11 @@ public class AuthenticationService {
         if(profil.isEmpty()){
             return false;
         }
-        emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de pass oublié", "Voici le liens pour changer vôtre mot de pass: http://"+domain+"/forgot");
+        var claims = new HashMap<String,Object>() {{
+            put("verify",true);
+        }};
+        var token = jwtService.generateToken(profil.get(),claims);
+        emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de pass oublié", "Voici le liens pour changer vôtre mot de pass: http://"+domain+"/forgot?token="+token);
         return true;
     }
 }
