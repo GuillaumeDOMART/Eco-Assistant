@@ -26,13 +26,13 @@ public class ProjetServiceImpl implements ProjetService {
 
 
     @Override
-    public ProjetDto getProject(Long id) {
+    public ProjetDto getProject(Integer id) {
         var projet = projetRepository.findByIdProjet(id);
         return new ProjetDto(projet);
     }
 
     @Override
-    public List<ProjetDto> findProjectByProfilId(Long id) {
+    public List<ProjetDto> findProjectByProfilId(Integer id) {
         return projetRepository.findByProfil_IdProfil(id).stream().map(ProjetDto::new).toList();
 
     }

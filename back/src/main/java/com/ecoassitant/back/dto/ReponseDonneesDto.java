@@ -9,8 +9,8 @@ public class ReponseDonneesDto {
     private String projetId;
     private List<ReponseDto> reponses;
 
-    public Long getProjetId() {
-        return Long.valueOf(projetId);
+    public Integer getProjetId() {
+        return Integer.valueOf(projetId);
     }
 
     public void setProjetId(Long projetId) {
