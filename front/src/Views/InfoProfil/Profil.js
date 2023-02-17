@@ -1,4 +1,4 @@
-import BarreNavCore from "../BarreNav/BarreNavCore";
+import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useEffect, useState} from "react";
 import {Button, Col, Container} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
@@ -12,8 +12,6 @@ function Profil(){
     const [isLoaded, setIsLoaded] = useState(false);
     const [apiError, setApiError] = useState(null);
     const [datas, setDatas] = useState([]);
-
-
     useEffect(() => {
         const token = sessionStorage.getItem("token")
         const options = {
@@ -22,7 +20,8 @@ function Profil(){
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
 
-            }
+            },
+            body: JSON.stringify({ id })
         };
         fetch(`/api/profil/`,options)
             .then(res => res.json())
@@ -37,7 +36,6 @@ function Profil(){
                 }
             )
     }, [])
-
     if(apiError){
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
@@ -82,6 +80,13 @@ function InfoProfil(datas){
     const nom = `Nom : ${datas.nom}`
     const email = `Identifiant : ${datas.mail}`
     const navigate = useNavigate();
+
+    const handleID = () => {
+        navigate("/modifyID");
+    }
+    const handlePassword = () => {
+        navigate("/modifyPassword");
+    }
     return(
         <>
             <div className="d-flex justify-content-left p-3">
@@ -93,11 +98,11 @@ function InfoProfil(datas){
             </div>
             <div className="d-flex justify-content-between p-3">
                 <p>{email}</p>
-                <Button onClick={navigate("/mail")} variant='outline-info'>Modifier l&lsquo;identifiant</Button>
+                <Button onClick={handleID} variant='outline-info'>Modifier l&lsquo;identifiant</Button>
             </div>
             <div className="d-flex justify-content-between p-3">
                 <p>Mot de passe : ************</p>
-                <Button variant="outline-info" onClick={navigate("/")}>Modifier le mot de passe</Button>
+                <Button variant="outline-info" onClick={handlePassword}>Modifier le mot de passe</Button>
             </div>
 
             <div className="d-flex justify-content-center p-3">
@@ -127,5 +132,4 @@ function InfoProfilContainer (datas){
         </>
     );
 }
-
 export default Profil;

@@ -5,7 +5,8 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Questionnaire from "../Quiz/Questionnaire";
+import Questionnaire from "../../Views/Quiz/Questionnaire";
+import {useNavigate} from "react-router-dom";
 
 const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
 
@@ -17,6 +18,7 @@ const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance
 export default function StepperComponent() {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
+    const navigate = useNavigate()
 
     /**
      * Check if the step is in the skipped Set
@@ -78,9 +80,9 @@ export default function StepperComponent() {
      */
     const handleReset = useCallback(
         () => {
-        setActiveStep(0);
+            navigate("/result")
         },
-        []
+        [navigate]
     );
 
     return (
