@@ -138,7 +138,7 @@ function InfoProfilContainer (datas){
 function DeleteProfilContainer(){
     const navigate = useNavigate()
     const handleDelete = () => {
-        const id = new URLSearchParams(window.location.search).get('id');
+        // const id = new URLSearchParams(window.location.search).get('id');
         navigate("/")
     }
 

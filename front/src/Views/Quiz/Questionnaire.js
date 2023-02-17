@@ -49,8 +49,6 @@ function Questionnaire(activeStep) {
 
         fetch("/api/reponsesDonnees", requestOptions)
             .then(response => response.text())
-            // .then(result => console.log(result))
-            // .catch(error => console.log('error', error));
 
         navigate("/result?id=1")
     }
@@ -68,7 +66,6 @@ function Questionnaire(activeStep) {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    console.log(result)
                     setData(result);
                 },
                 (error) => {

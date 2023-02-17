@@ -33,7 +33,6 @@ function CreateProject() {
 
         fetch("/api/projet/create", requestOptions)
             .then(response => response.json())
-            .then(result => console.log(result))
         navigate("/questionnaire")
     }
 
