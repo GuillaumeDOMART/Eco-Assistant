@@ -22,7 +22,8 @@ function Questionnaire(activeStep) {
      * @param dataList
      */
     const onSubmit = (dataList) => {
-        const projectId = '1'; // A MODIFIER
+        const projectId = sessionStorage.getItem("project")
+        sessionStorage.removeItem("project")
         const sendToBack = {}
         const responses = []
         for (const [key, value] of Object.entries(dataList)) {
@@ -49,10 +50,8 @@ function Questionnaire(activeStep) {
 
         fetch("/api/reponsesDonnees", requestOptions)
             .then(response => response.text())
-            // .then(result => console.log(result))
-            // .catch(error => console.log('error', error));
 
-        navigate("/result?id=1")
+        navigate(`/result?id=${projectId}`)
     }
 
     useEffect(() => {
@@ -109,7 +108,6 @@ function Questionnaire(activeStep) {
                     {currentPhase.map(question =>
                         <Phase key={question.questionId} register={register} value={question}/>
                     )}
-                    <input type="submit" style={{marginTop: '20px'}}/>
                 </form>
         );
     }

@@ -88,8 +88,7 @@ function AccueilSite() {
 
         const response = await fetch("api/auth/register", requestOptions);
         const json = await response.json();
-        const token = json.token
-        sessionStorage.setItem("token", token)
+        sessionStorage.setItem("token", json.token);
         navigate("/profil")
     }
 

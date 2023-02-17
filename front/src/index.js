@@ -2,23 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import './scss/custom.scss'
+import './Components/scss/custom.scss'
 
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
-import ResultPage from "./ResultPage/ResultPage";
-import ConnexionPage from "./Connexion/ConnexionPage";
-import ForgotPassword from "./ForgotPassword/ForgotPassword";
-import AccueilSite from "./AccueilSite/AccueilSite";
-import AccueilProfil from "./AccueilProfil/AccueilProfil";
-import Profil from "./InfoProfil/Profil";
-import StepperComponent from "./Stepper/Stepper";
-import CreateProject from "./Quiz/CreateProject";
-import Deconnection from "./Deconnection/LogOut";
-import Guest from "./guest/Guest";
+import ResultPage from "./Views/ResultPage/ResultPage";
+import ConnexionPage from "./Views/Connexion/ConnexionPage";
+import AccueilSite from "./Views/AccueilSite/AccueilSite";
+import AccueilProfil from "./Views/AccueilProfil/AccueilProfil";
+import Profil from "./Views/InfoProfil/Profil";
+import StepperComponent from "./Components/Stepper/Stepper";
+import CreateProject from "./Views/Quiz/CreateProject";
+import Deconnection from "./Views/Deconnection/LogOut";
+import Guest from "./Views/guest/Guest";
+import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
+import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
+import ModifyID from "./Views/ModifyID/ModifyID";
 
 const router = createBrowserRouter([
     {
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
     {
         path:"/forgotPassword",
         element: <ForgotPassword/>
+    },
+    {
+      path:"/modifyPassword",
+      element: <ModifyPassword/>
+    },
+    {
+        path:"/modifyID",
+        element: <ModifyID/>
     },
     {
         path: "/infoProfil",

@@ -1,3 +1,5 @@
+@import url('../font/font.css');
+
 $ea-green-1: #25995C !default;
 $ea-green-2: #44AC74 !default;
 $ea-green-3: #64C692 !default;
@@ -14,4 +16,6 @@ $danger : #ee204d !default;
 $dark : #0B1729 !default;
 $light: #FBF5F3 !default;
 
-@import "~bootstrap";
+$font-family-base: 'OpenSansLight' !default;
+
+@import "node_modules/bootstrap/scss/bootstrap";

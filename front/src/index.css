@@ -1,7 +1,7 @@
 @font-face {
     font-family: "OpenSansLight";   /*Can be any text*/
     src: local("OpenSans-Light"),
-    url("font/OpenSans-Light.ttf") format("truetype");
+    url("Components/font/OpenSans-Light.ttf") format("truetype");
 }
 
 body {

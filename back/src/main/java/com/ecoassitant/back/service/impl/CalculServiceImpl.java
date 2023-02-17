@@ -35,7 +35,7 @@ public class CalculServiceImpl  implements CalculService {
     }
 
     @Override
-    public ResultatsPhaseDto calculsForProject(Long idProject) {
+    public ResultatsPhaseDto calculsForProject(Integer idProject) {
         var mine = resultatForProject(idProject);
         if (mine == null)
             return null;
@@ -48,7 +48,7 @@ public class CalculServiceImpl  implements CalculService {
         return resultat;
     }
 
-    private ResultatDto resultatForProject(Long idProject){
+    private ResultatDto resultatForProject(Integer idProject){
         var resultat = new ResultatDto();
         var projet = projetRepository.findById(idProject);
         if (projet.isEmpty())

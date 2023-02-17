@@ -1,6 +1,7 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
+import com.ecoassitant.back.dto.ProjectIdDto;
 import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.dto.ProjetSimpleDto;
 import com.ecoassitant.back.entity.ProjetEntity;
@@ -45,7 +46,7 @@ public class ProjetController {
      */
     @GetMapping("/projet/{id}")
     @ResponseBody
-    public ResponseEntity<ProjetDto> recupererProjetAvecId(@PathVariable("id") Long id){
+    public ResponseEntity<ProjetDto> recupererProjetAvecId(@PathVariable("id") Integer id){
         var entity = projetRepository.findById(id);
         var dto = entity.map(ProjetDto::new).orElse(null);
         return dto!= null? new ResponseEntity<>(dto, HttpStatus.OK): new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
@@ -62,8 +63,8 @@ public class ProjetController {
         return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(ProjetDto::new).toList());
     }
 
-    @PostMapping("projet/create")
-    public ResponseEntity<Long> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
+    @PostMapping("/projet/create")
+    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
@@ -77,7 +78,7 @@ public class ProjetController {
                 .etat(Etat.INPROGRESS)
                 .build();
         projetRepository.save(projetEntity);
-        return new ResponseEntity<>(projetEntity.getIdProjet(), HttpStatus.OK);
+        return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()), HttpStatus.OK);
     }
 
 }

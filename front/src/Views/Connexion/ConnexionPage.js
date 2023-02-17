@@ -31,7 +31,7 @@ function ConnexionPage(){
 function Logo(){
     return (
         <Row>
-            <img className="logo position-fixed start-0" src={require('./logo.PNG')}  alt={"logo"} style={{width:'10%',height: 'auto'}}/>
+            <img className="logo position-fixed start-0" src={require('./logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
         </Row>
     );
 }
@@ -86,8 +86,7 @@ function Form(){
 
         const reponse = await fetch("/api/auth/authentication", requestOptions);
         const json = await reponse.json();
-        const token = json.token
-        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("token", json.token);
         navigate("/profil");
     }
 
@@ -110,7 +109,7 @@ return (
             </Col>
         </Row>
 
-        <p>Mot de passe oublié ? <a href="/forgotPassword">Réinitialiser le mot de passe</a></p>
+        <a href="/forgotPassword">Mot de passe oublié ?</a>
     </form>
 );
 }
