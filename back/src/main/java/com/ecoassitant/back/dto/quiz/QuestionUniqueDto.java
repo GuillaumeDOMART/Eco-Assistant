@@ -53,6 +53,10 @@ public class QuestionUniqueDto {
         return map;
         }
 
+    /**
+     * filled the map with the quiz format tree
+     * @param quiz
+     */
     private static void remplir(QuestionDto quiz) {
         if (quiz == null)
             return;

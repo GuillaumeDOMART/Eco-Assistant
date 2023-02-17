@@ -49,8 +49,4 @@ public class QuestionEntity implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionAsso")
     private List<ReponsePossibleEntity> reponses;
-
-
-    public QuestionEntity(long l, String q2, QuestionEntity q1, TypeQ qcm, Phase horsPhase, Categorie first, boolean b) {
-    }
 }
