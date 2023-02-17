@@ -6,11 +6,8 @@ function ResultPage() {
     const chartContainer = useRef(null);
     const chartInstance = useRef(null);
     const pdfContainer = useRef(null);
-    const lengthChart = 210;
-    const heightChart = 297;
     const marginLeft = 15;
     const yText = 25;
-    const yImage = 35;
     const A4 = {
         "h": 297,
         "w": 210
@@ -69,10 +66,11 @@ function ResultPage() {
                 const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
                 const sums = {};
                 arrays.forEach(array => {
-                    if (jsonData[array]) {
-                        const results = jsonData[array].map(item => item.result);
+                    if (jsonData.mine[array]) {
+                        console.log(jsonData.mine[array])
+                        const results = jsonData.mine[array].map(item => item.result);
                         sums[array] = results.reduce((acc, current) => acc + current, 0);
-                    }else {
+                    } else {
                         sums[array] = 0;
                     }
                 });
@@ -94,10 +92,7 @@ function ResultPage() {
 
 export default ResultPage;
 
-/*import Chart from "chart.js/auto";
-import {useEffect, useRef} from "react";
-import jsPDF from "jspdf";
-
+/*
 function ResultPage() {
     const chartContainer = useRef(null);
     const chartInstance = useRef(null);
@@ -156,27 +151,86 @@ function ResultPage() {
     const id = new URLSearchParams(window.location.search).get('id');
 
     const jsonData = {
-        "planification": [],
-        "developpement": [
+        "mine": {
+            "planification": [],
+            "developpement": [
+                {
+                    "result": 33.0,
+                    "intitule": "test2"
+                },
+                {
+                    "result": 0.0,
+                    "intitule": "test3"
+                }
+            ],
+            "test": [],
+            "deploiement": [],
+            "maintenance": [],
+            "horsPhase": [],
+            "durationPlanification": null,
+            "durationDeveloppement": 0.0,
+            "durationTest": null,
+            "durationDeploiement": null,
+            "durationMaintenance": null
+        },
+        "others": [
             {
-                "result": 30,
-                "intitule": "test1"
+                "planification": [],
+                "developpement": [
+                    {
+                        "result": 33.0,
+                        "intitule": "test2"
+                    },
+                    {
+                        "result": 0.0,
+                        "intitule": "test3"
+                    }
+                ],
+                "test": [],
+                "deploiement": [],
+                "maintenance": [],
+                "horsPhase": [],
+                "durationPlanification": null,
+                "durationDeveloppement": 0.0,
+                "durationTest": null,
+                "durationDeploiement": null,
+                "durationMaintenance": null
             },
             {
-                "result": 0,
-                "intitule": "test2"
+                "planification": [],
+                "developpement": [],
+                "test": [],
+                "deploiement": [],
+                "maintenance": [],
+                "horsPhase": [],
+                "durationPlanification": null,
+                "durationDeveloppement": null,
+                "durationTest": null,
+                "durationDeploiement": null,
+                "durationMaintenance": null
+            },
+            {
+                "planification": [],
+                "developpement": [],
+                "test": [],
+                "deploiement": [],
+                "maintenance": [],
+                "horsPhase": [],
+                "durationPlanification": null,
+                "durationDeveloppement": null,
+                "durationTest": null,
+                "durationDeploiement": null,
+                "durationMaintenance": null
             }
-        ],
-        "test": [],
-        "deploiement": [],
-        "maintenance": []
+        ]
     }
 
     const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
     const sums = {};
     arrays.forEach(array => {
-        if (jsonData[array]) {
-            const results = jsonData[array].map(item => item.result);
+        if (jsonData.mine[array]) {
+            console.log(jsonData.mine[array])
+            const results = jsonData.mine[array].map(item => item.result);
             sums[array] = results.reduce((acc, current) => acc + current, 0);
         } else {
             sums[array] = 0;
