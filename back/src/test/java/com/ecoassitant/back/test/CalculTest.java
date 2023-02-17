@@ -82,8 +82,8 @@ class CalculTest {
         listCalcul.add(cl3);
 
         var calcul = new CalculEntier(listCalcul, listRd);
-        double executer = calcul.execute().get();
-        double test = 110;
+        Double executer = calcul.execute().get();
+        Double test =  110D;
         Assert.assertEquals(test, executer);
     }
     @Test
