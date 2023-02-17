@@ -8,11 +8,14 @@ import com.ecoassitant.back.dto.TokenDto;
 import com.ecoassitant.back.entity.ProfilEntity;
 import com.ecoassitant.back.repository.ProfilRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -60,5 +63,38 @@ public class AuthenticationService {
         var profile = profilRepository.findByMail(authenticationInputDto.getLogin()).orElseThrow();
         var token = jwtService.generateToken(profile);
         return new AuthenticationOutPutDto(profile.getMail(),token);
+    }
+
+    public ResponseEntity<TokenDto> guest() {
+        for(int i =0; i < 5; i++){
+            var randomMail = "guest" + "." + generateRandomString(8)+"@eco-assistant-esipe.fr";
+            if(profilRepository.findByMail(randomMail).isPresent()){
+                continue;
+            }
+            var profile = ProfilEntity.builder()
+                    .mail(randomMail)
+                    .password("guest")
+                    .nom("guest")
+                    .prenom("guest")
+                    .isAdmin(-1)
+                    .build();
+
+            profilRepository.save(profile);
+            var token = jwtService.generateToken(profile);
+            return ResponseEntity.ok(new TokenDto(token));
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    private static String generateRandomString(int length){
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var random = new Random();
+        var sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(chars.length());
+            char randomChar = chars.charAt(index);
+            sb.append(randomChar);
+        }
+        return sb.toString();
     }
 }
