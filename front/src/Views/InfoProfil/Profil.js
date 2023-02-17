@@ -1,6 +1,6 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useCallback, useEffect, useState} from "react";
-import {Button, Col, Container} from "react-bootstrap";
+import {Button, Col, Container,Modal} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
 /**
@@ -60,13 +60,7 @@ function Profil() {
 }
 
 
-/**
- * Action done when you click on the button delete profile
- */
 
-function handleDeleteProfil() {
-    //const id = new URLSearchParams(window.location.search).get('id');
-}
 
 /**
  * Component that uses data fetched of profile
@@ -79,7 +73,26 @@ function InfoProfil(datas) {
     const nom = `Nom : ${datas.nom}`
     const email = `Identifiant : ${datas.mail}`
     const navigate = useNavigate()
+    const [show, setShow] = useState(false);
 
+    const handleCancel = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const handleDeleteProfil = () => {
+        const token = sessionStorage.getItem("token")
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+
+            }
+        };
+        fetch(`/api/profil/user`, options)
+            .then(res => res.json())
+            .then(
+                res => console.log(res)
+            )
+    }
     const handleID = useCallback(() => {
         navigate("/modifyID");
     }, [navigate])
@@ -106,8 +119,22 @@ function InfoProfil(datas) {
             </div>
 
             <div className="d-flex justify-content-center p-3">
-                <Button variant="outline-danger" onClick={handleDeleteProfil}>Supprimer le Profil</Button>
+                <Button variant="outline-danger" onClick={handleShow}>Supprimer le Profil</Button>
             </div>
+            <Modal show={show} onHide={handleCancel}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Supprimer le Profil</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Êtes-vous sûr de vouloir supprimer votre compte?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCancel}>
+                        Annuler
+                    </Button>
+                    <Button variant="primary" onClick={handleDeleteProfil}>
+                        Valider
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
 
     );
