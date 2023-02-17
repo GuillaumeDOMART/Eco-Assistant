@@ -33,7 +33,9 @@ function CreateProject() {
 
         fetch("{{base_url}}/projet/create", requestOptions)
             .then(response => response.text())
-        navigate("/questionnaire")
+        navigate("/questionnaire", {
+            "idProject": ""
+        })
     }
 
     return (

@@ -1,8 +1,8 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useEffect, useState} from "react";
-import {Alert, Table} from "@mui/material";
+import {Table} from "@mui/material";
 import Button from "@mui/material/Button";
-import {Placeholder} from "react-bootstrap";
+import {Alert, Placeholder} from "react-bootstrap";
 
 /**
  * This function generate a line containing informations about a project
@@ -50,7 +50,7 @@ function TableauProjets() {
                 'Authorization': `Bearer ${token}`
             },
         };
-        fetch('http://localhost/api/projet/user',options)
+        fetch('/api/projet/user',options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -68,8 +68,8 @@ function TableauProjets() {
     if (apiError) {
         return (
             <Alert variant="danger">
-                <Alert.Heading>Error</Alert.Heading>
-                <p>{apiError.message}</p>
+                <Alert.Heading >Error</Alert.Heading>
+                {apiError.message}
             </Alert>
         );
     } else if (!isLoaded){
@@ -130,7 +130,7 @@ function MockTableauProjets() {
             <br/>
 
             <Table>
-                <TableauProjetsHeader/>
+                {/*<TableauProjetsHeader/>*/}
                 {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
             </Table>
         </>
@@ -179,6 +179,5 @@ function AccueilProfil() {
         </div>
     );
 }
-
 
 export default AccueilProfil
