@@ -1,6 +1,6 @@
 import "./App.css"
 import React from "react";
-import AccueilProfil from "./AccueilProfil/AccueilProfil";
+import AccueilProfil from "./Views/AccueilProfil/AccueilProfil";
 
 
 function App() {

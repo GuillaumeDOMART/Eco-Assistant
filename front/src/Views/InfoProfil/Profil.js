@@ -1,4 +1,4 @@
-import BarreNavCore from "../BarreNav/BarreNavCore";
+import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useEffect, useState} from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";

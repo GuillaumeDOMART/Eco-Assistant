@@ -1,4 +1,4 @@
-import BarreNavCore from "../BarreNav/BarreNavCore";
+import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useEffect, useState} from "react";
 import {Alert, Table} from "@mui/material";
 import Button from "@mui/material/Button";

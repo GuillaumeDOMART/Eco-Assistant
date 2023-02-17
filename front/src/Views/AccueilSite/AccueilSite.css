@@ -1,0 +1,15 @@
+body {
+    text-align: center;
+}
+
+.textfield {
+    width : 75%;
+}
+
+hr {
+    border: 2px solid #64c692;
+}
+
+.leaves {
+    height:5%;
+}
