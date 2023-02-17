@@ -1,4 +1,4 @@
-package com.ecoassitant.back.cucumber.steps;
+package com.ecoassitant.back.steps;
 
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
