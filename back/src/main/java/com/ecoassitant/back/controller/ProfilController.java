@@ -1,5 +1,6 @@
 package com.ecoassitant.back.controller;
 
+import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.ProfilDto;
 import com.ecoassitant.back.dto.ProfilSimplDto;
 import com.ecoassitant.back.service.ProfilService;
@@ -15,10 +16,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/")
 @RestController
 public class ProfilController {
+    private final JwtService jwtService;
     private final ProfilService profilService;
 
+    /**
+     * Constructor of ProfilController
+     * @param jwtService for decipher the token
+     * @param profilService Service of Profil
+     */
     @Autowired
-    public ProfilController(ProfilService profilService) {
+    public ProfilController(JwtService jwtService, ProfilService profilService) {
+        this.jwtService = jwtService;
         this.profilService = profilService;
     }
 
@@ -60,5 +68,23 @@ public class ProfilController {
         var id = profilService.createProfil(profilDto);
         System.out.println("j'ai id");
         return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
+    /**
+     * Endpoint to retrieve a profil by it's user's token
+     */
+    @GetMapping("/profil/user")
+    @ResponseBody
+    public ResponseEntity<ProfilDto> recupererProfilAvecToken(@RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        var profil = profilService.getProfilByMail(mail);
+        if (profil == null) {
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(profil, headers, HttpStatus.OK);
+        }
     }
 }
