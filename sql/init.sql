@@ -6,253 +6,213 @@ CREATE SEQUENCE profil_sequence START WITH 1;
 CREATE TABLE IF NOT EXISTS profil
 (
     idprofil INTEGER PRIMARY KEY DEFAULT nextval
-(
-    'profil_sequence'
-),
-    mail VARCHAR
-(
-    140
-) NOT NULL,
-    mdp VARCHAR
-(
-    140
-) NOT NULL,
-    nom VARCHAR
-(
-    50
-) NOT NULL,
-    prenom VARCHAR
-(
-    50
-) NOT NULL,
-    isadmin INT NOT NULL);
+        (
+            'profil_sequence'
+        ),
+    mail     VARCHAR(140) NOT NULL,
+    mdp      VARCHAR(140) NOT NULL,
+    nom      VARCHAR(50)  NOT NULL,
+    prenom   VARCHAR(50)  NOT NULL,
+    isadmin  INT          NOT NULL
+);
 
 CREATE SEQUENCE project_sequence START WITH 1;
 CREATE TABLE IF NOT EXISTS projet
 (
-    idprojet INTEGER PRIMARY KEY DEFAULT nextval
-(
-    'project_sequence'
-),
-    profilid INT NOT NULL,
-    nomprojet VARCHAR
-(
-    50
-) NOT NULL,
-    etat VARCHAR
-(
-    50
-) NOT NULL,
+    idprojet  INTEGER PRIMARY KEY DEFAULT nextval
+        (
+            'project_sequence'
+        ),
+    profilid  INT         NOT NULL,
+    nomprojet VARCHAR(50) NOT NULL,
+    etat      VARCHAR(50) NOT NULL,
     CONSTRAINT profilid
-    FOREIGN KEY
-(
-    profilid
-)
-    REFERENCES profil
-(
-    idprofil
-));
+        FOREIGN KEY
+            (
+             profilid
+                )
+            REFERENCES profil
+                (
+                 idprofil
+                    )
+);
 
 CREATE TABLE IF NOT EXISTS question
 (
     idquestion
-    serial
-    PRIMARY
-    KEY,
+                serial
+        PRIMARY
+            KEY,
     intitule
-    VARCHAR
-(
-    255
-) NOT NULL,
+                VARCHAR(255) NOT NULL,
     questionpre INT,
-    typeq VARCHAR
-(
-    140
-) NOT NULL,
-    phase VARCHAR
-(
-    50
-) NOT NULL,
-    categorie VARCHAR
-(
-    50
-) NOT NULL,
-    visibilite INT,
+    typeq       VARCHAR(140) NOT NULL,
+    phase       VARCHAR(50)  NOT NULL,
+    categorie   VARCHAR(50)  NOT NULL,
+    visibilite  INT,
     CONSTRAINT questionpre
-    FOREIGN KEY
-(
-    questionpre
-)
-    REFERENCES question
-(
-    idquestion
-));
+        FOREIGN KEY
+            (
+             questionpre
+                )
+            REFERENCES question
+                (
+                 idquestion
+                    )
+);
 
 CREATE TABLE IF NOT EXISTS constante
 (
     idconstante
-    serial
-    PRIMARY
-    KEY,
+        serial
+        PRIMARY
+            KEY,
     constante
-    INT,
+        INT,
     tracabilite
-    VARCHAR
-(
-    255
-)
-    );
+        VARCHAR(255)
+);
 
 CREATE TABLE IF NOT EXISTS reponsepossible
 (
     idreponsepos
-    serial
-    PRIMARY
-    KEY,
+                serial
+        PRIMARY
+            KEY,
     questionasso
-    INT
-    NOT
-    NULL,
+                INT
+                             NOT
+                                 NULL,
     questionsuiv
-    INT,
+                INT,
     intitule
-    VARCHAR
-(
-    140
-) NOT NULL,
-    constanteid INT NOT NULL,
+                VARCHAR(140) NOT NULL,
+    constanteid INT          NOT NULL,
     CONSTRAINT questionasso
-    FOREIGN KEY
-(
-    questionasso
-)
-    REFERENCES question
-(
-    idquestion
-),
+        FOREIGN KEY
+            (
+             questionasso
+                )
+            REFERENCES question
+                (
+                 idquestion
+                    ),
     CONSTRAINT questionsuiv
-    FOREIGN KEY
-(
-    questionsuiv
-)
-    REFERENCES question
-(
-    idquestion
-));
+        FOREIGN KEY
+            (
+             questionsuiv
+                )
+            REFERENCES question
+                (
+                 idquestion
+                    )
+);
 
 CREATE TABLE IF NOT EXISTS reponsedonnee
 (
     projetid
-    INT
-    NOT
-    NULL,
+        INT
+        NOT
+            NULL,
     reponseposid
-    INT
-    NOT
-    NULL,
+        INT
+        NOT
+            NULL,
     entry
-    INT
-    NOT
-    NULL,
+        INT
+        NOT
+            NULL,
     CONSTRAINT
-    projetid
-    PRIMARY
-    KEY
-(
-    projetid,
-    reponseposid
-),
+        projetid
+        PRIMARY
+            KEY
+            (
+             projetid,
+             reponseposid
+                ),
     CONSTRAINT fk_projetid
-    FOREIGN KEY
-(
-    projetid
-)
-    REFERENCES projet
-(
-    idprojet
-),
+        FOREIGN KEY
+            (
+             projetid
+                )
+            REFERENCES projet
+                (
+                 idprojet
+                    ),
     CONSTRAINT reponseposid
-    FOREIGN KEY
-(
-    reponseposid
-)
-    REFERENCES reponsepossible
-(
-    idreponsepos
-));
+        FOREIGN KEY
+            (
+             reponseposid
+                )
+            REFERENCES reponsepossible
+                (
+                 idreponsepos
+                    )
+);
 
 CREATE TABLE IF NOT EXISTS calculoperateur
 (
     idcalculop
-    serial
-    PRIMARY
-    KEY,
+        serial
+        PRIMARY
+            KEY,
     operateur
-    VARCHAR
-(
-    10
-));
+        VARCHAR(10)
+);
 
 CREATE TABLE IF NOT EXISTS calcul
 (
 
     idcalcul
-    SERIAL
-    PRIMARY
-    KEY,
+        SERIAL
+        PRIMARY
+            KEY,
     calculopid
-    INT
-    NOT
-    NULL,
+        INT
+                    NOT
+                        NULL,
     reponsepossibleid
-    INT
-    NOT
-    NULL,
+        INT
+                    NOT
+                        NULL,
     nbcalcul
-    INT
-    NOT
-    NULL,
+        INT
+                    NOT
+                        NULL,
     phase
-    VARCHAR
-(
-    50
-) NOT NULL,
+        VARCHAR(50) NOT NULL,
     CONSTRAINT calculopid
-    FOREIGN KEY
-(
-    calculopid
-)
-    REFERENCES calculoperateur
-(
-    idcalculop
-),
+        FOREIGN KEY
+            (
+             calculopid
+                )
+            REFERENCES calculoperateur
+                (
+                 idcalculop
+                    ),
     CONSTRAINT reponsepossibleid
-    FOREIGN KEY
-(
-    reponsepossibleid
-)
-    REFERENCES reponsepossible
-(
-    idreponsepos
-));
+        FOREIGN KEY
+            (
+             reponsepossibleid
+                )
+            REFERENCES reponsepossible
+                (
+                 idreponsepos
+                    )
+);
 
 CREATE TABLE IF NOT EXISTS questionpropose
 (
     idquestion
-    SERIAL
-    PRIMARY
-    KEY,
+              SERIAL
+        PRIMARY
+            KEY,
     intitule
-    VARCHAR
-(
-    255
-) NOT NULL ,
-    phase VARCHAR
-(
-    50
-) NOT NULL,
-    vote INT,
-    isapprove INT NOT NULL);
+              VARCHAR(255) NOT NULL,
+    phase     VARCHAR(50)  NOT NULL,
+    vote      INT,
+    isapprove INT          NOT NULL
+);
 
 
 --CREATION CALCULOPERATEUR
@@ -313,7 +273,8 @@ VALUES
     /*DEPLOIEMENT*/
     ('Combien de collaborateurs travaillent sur cette phase ?', 26, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 1),
     ('Connaissez-vous à peu près la distance de trajet de vos collaborateurs ?', 27, 'QCM', 'DEPLOIEMENT', 'FIRST', 1),
-    ('Quelle est la distance moyenne de trajet de vos collaborateurs pour aller au travail ?', 28, 'NUMERIC', 'DEPLOIEMENT',
+    ('Quelle est la distance moyenne de trajet de vos collaborateurs pour aller au travail ?', 28, 'NUMERIC',
+     'DEPLOIEMENT',
      'FIRST', 0),
     ('Combien viennent en voiture ?', 29, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 1),
     ('Combien de PC utilisez-vous pour cette phase ?', 30, 'NUMERIC', 'DEPLOIEMENT', 'FIRST', 1),
@@ -326,7 +287,8 @@ VALUES
     ('Faites-vous une phase de maintenance ?', 36, 'QCM', 'MAINTENANCE', 'FIRST', 1),
     ('Combien de collaborateurs travaillent sur cette phase ?', 37, 'NUMERIC', 'MAINTENANCE', 'FIRST', 1),
     ('Connaissez-vous à peu près la distance de trajet de vos collaborateurs ?', 38, 'QCM', 'MAINTENANCE', 'FIRST', 1),
-    ('Quelle est la distance moyenne de trajet de vos collaborateurs pour aller au travail ?', 39, 'NUMERIC', 'MAINTENANCE',
+    ('Quelle est la distance moyenne de trajet de vos collaborateurs pour aller au travail ?', 39, 'NUMERIC',
+     'MAINTENANCE',
      'FIRST', 0),
     ('Combien viennent en voiture ?', 40, 'NUMERIC', 'MAINTENANCE', 'FIRST', 1);
 

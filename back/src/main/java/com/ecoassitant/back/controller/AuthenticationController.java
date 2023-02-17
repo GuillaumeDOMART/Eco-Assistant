@@ -8,7 +8,9 @@ import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+/**
+ * Class to manage endpoints regarding authentication
+ */
 @RequestMapping("api/auth")
 @RestController
 public class AuthenticationController {
