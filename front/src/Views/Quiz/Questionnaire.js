@@ -68,6 +68,7 @@ function Questionnaire(activeStep) {
             .then(
                 (result) => {
                     setIsLoaded(true);
+                    console.log(result)
                     setData(result);
                 },
                 (error) => {

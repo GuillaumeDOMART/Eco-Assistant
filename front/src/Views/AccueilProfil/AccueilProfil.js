@@ -75,8 +75,10 @@ function TableauProjets() {
     } else if (!isLoaded){
         return (
             <Table>
-                <TableauProjetsHeader/>
-                <LigneTableauProjetsPlaceholder/>
+                    <TableauProjetsHeader/>
+                <tbody>
+                    <LigneTableauProjetsPlaceholder/>
+                </tbody>
             </Table>
         );
     } else {
@@ -85,8 +87,10 @@ function TableauProjets() {
                 <h1>Accueil</h1>
                 <br/>
                 <Table>
-                    <TableauProjetsHeader/>
-                    {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                        <TableauProjetsHeader/>
+                    <tbody>
+                        {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                    </tbody>
                 </Table>
             </>
         );
@@ -155,11 +159,13 @@ function LigneTableauProjetsPlaceholder(){
  */
 function TableauProjetsHeader(){
     return (
-        <tr className='table border-bottom border-3 border-primary'>
-            <th>Nom du projet</th>
-            <th>Etat du Projet</th>
-            <th>Actions possibles</th>
-        </tr>
+        <thead>
+            <tr className='table border-bottom border-3 border-primary'>
+                <th>Nom du projet</th>
+                <th>Etat du Projet</th>
+                <th>Actions possibles</th>
+            </tr>
+        </thead>
     );
 }
 

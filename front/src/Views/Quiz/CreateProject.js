@@ -4,7 +4,7 @@ import {Button, TextField} from "@mui/material";
 import {Col, Container, Row} from "react-bootstrap";
 
 
-function Project(onSubmit, register) {
+function Project({onSubmit, register}) {
     return (
         <Col className="">
             <h1>Nouveau Projet</h1>
@@ -31,8 +31,9 @@ function CreateProject() {
             redirect: 'follow'
         };
 
-        fetch("{{base_url}}/projet/create", requestOptions)
-            .then(response => response.text())
+        fetch("/projet/create", requestOptions)
+            .then(response => response.json())
+            .then(result => console.log(result))
         navigate("/questionnaire", {
             "idProject": ""
         })
