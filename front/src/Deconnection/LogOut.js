@@ -8,7 +8,7 @@ function Deconnection() {
     useEffect(() => {
         sessionStorage.removeItem("token")
         navigate("/")
-    }, []);
+    }, [navigate]);
 
 }
 
