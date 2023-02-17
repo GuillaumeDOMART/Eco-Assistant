@@ -7,10 +7,7 @@ import com.ecoassitant.back.dto.TokenDto;
 import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("api/auth")
 @RestController
@@ -40,6 +37,11 @@ public class AuthenticationController {
     @PostMapping("authentication")
     public AuthenticationOutPutDto authentication(@RequestBody AuthenticationInputDto authenticationInputDto){
         return authenticationService.authentication(authenticationInputDto);
+    }
+
+    @GetMapping("guest")
+    public ResponseEntity<TokenDto> guest(){
+        return authenticationService.guest();
     }
 
 }
