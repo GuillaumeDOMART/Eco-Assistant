@@ -86,8 +86,9 @@ function Form(){
 
         const reponse = await fetch("/api/auth/authentication", requestOptions);
         const json = await reponse.json();
-        const token = json.token
-        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("token", json.token);
+        sessionStorage.setItem("id", json.id);
+        sessionStorage.setItem("mail", json.mail);
         navigate("/profil");
     }
 

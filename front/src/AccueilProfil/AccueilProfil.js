@@ -50,7 +50,7 @@ function TableauProjets() {
                 'Authorization': `Bearer ${token}`
             },
         };
-        fetch('http://localhost/api/projet/user',options)
+        fetch(`http://localhost/api/projet/user`,options)
             .then(res => res.json())
             .then(
                 (result) => {

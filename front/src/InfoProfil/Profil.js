@@ -12,8 +12,10 @@ function Profil(){
     const [isLoaded, setIsLoaded] = useState(false);
     const [apiError, setApiError] = useState(null);
     const [datas, setDatas] = useState([]);
+
+
     useEffect(() => {
-        const id = new URLSearchParams(window.location.search).get('id');
+        const id = sessionStorage.getItem("id")
         const token = sessionStorage.getItem("token")
         const options = {
             method: 'GET',
@@ -21,10 +23,9 @@ function Profil(){
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
 
-            },
-            body: JSON.stringify({ id })
+            }
         };
-        fetch('/api/profil',options)
+        fetch(`/api/profil/${id}`,options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -37,11 +38,12 @@ function Profil(){
                 }
             )
     }, [])
+
     if(apiError){
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
-                <ActionBlockProfil datas={datas}/>
+                <InfoProfilContainer datas={datas}/>
             </div>);
     } else if(!isLoaded){
         return (
@@ -54,31 +56,13 @@ function Profil(){
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
                 <div className="col-10 p-5">
-                    <ActionBlockProfil datas={datas}/>
+                    <InfoProfilContainer datas={datas}/>
                 </div>
             </div>
         );
     }
-
 }
 
-
-
-/**
- * Component of the right side of the profile informations screen
- * @param datas
- * @returns {JSX.Element}
- * @constructor
- */
-function ActionBlockProfil(datas){
-    return(
-        <Col>
-            <InfoProfilContainer datas={datas}/>
-            <DeleteProfilContainer/>
-        </Col>
-
-    );
-}
 
 /**
  * Action done when you click on the button delete profile
@@ -86,8 +70,6 @@ function ActionBlockProfil(datas){
 
 function handleDeleteProfil(){
     const id = new URLSearchParams(window.location.search).get('id');
-
-
 }
 
 /**
@@ -97,17 +79,32 @@ function handleDeleteProfil(){
  * @constructor
  */
 function InfoProfil(datas){
+    const prenom = `Prénom : ${datas.prenom}`
+    const nom = `Nom : ${datas.nom}`
+    const email = `Identifiant : ${datas.mail}`
     const navigate = useNavigate();
     return(
         <>
-            <Row><p>Profil</p></Row>
-            <Row> Prénom : ${datas.prenom}</Row>
-            <Row> Nom : ${datas.nom}</Row>
-            <Row>
-                <Row> Identifiant : ${datas.mail}</Row>
-                <Button onClick={navigate("/mail")} type={"button"}>Modifier l&lsquo;identifiant</Button>
-            </Row>
-            <Button onClick={navigate("/")}>Modifier le mot de passe</Button>
+            <div className="d-flex justify-content-left p-3">
+                <p>{prenom}</p>
+            </div>
+            <div className="d-flex justify-content-left p-3">
+                <p>{nom}</p>
+                <Col/>
+            </div>
+            <div className="d-flex justify-content-between p-3">
+                <p>{email}</p>
+                <Button onClick={navigate("/mail")} variant='outline-info'>Modifier l&lsquo;identifiant</Button>
+            </div>
+            <div className="d-flex justify-content-between p-3">
+                <p>Mot de passe : ************</p>
+                <Button variant="outline-info" onClick={navigate("/")}>Modifier le mot de passe</Button>
+            </div>
+
+            <div className="d-flex justify-content-center p-3">
+                <Button variant="outline-danger" onClick={handleDeleteProfil}>Supprimer le Profil</Button>
+            </div>
+
 
         </>
 
@@ -122,29 +119,16 @@ function InfoProfil(datas){
  * @constructor
  */
 function InfoProfilContainer (datas){
-        return(
-            <Container>
-                <Col>
-                    <InfoProfil datas={datas}/>
-                </Col>
-            </Container>
-
-        );
-
-
-}
-
-/**
- * Component that holds the button for deleting the profile
- */
-function DeleteProfilContainer(){
     return(
-        <Container>
-            <Row>
-                <Button onClick={handleDeleteProfil} type={"button"}>Supprimer le Profil</Button>
-            </Row>
-        </Container>
-
+        <>
+            <div className="d-flex justify-content-left p-3">
+                <h1>Profil</h1>
+            </div>
+            <Container fluid>
+                <InfoProfil {...datas}/>
+            </Container>
+        </>
     );
 }
+
 export default Profil;
