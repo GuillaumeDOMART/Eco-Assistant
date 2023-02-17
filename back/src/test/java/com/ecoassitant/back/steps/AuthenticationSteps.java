@@ -5,13 +5,16 @@ import com.ecoassitant.back.dto.TokenDto;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-
+@CucumberContextConfiguration
+@SpringBootTest
 public class AuthenticationSteps {
     private String baseUrl = "http://localhost:8001";
     private String mail;
