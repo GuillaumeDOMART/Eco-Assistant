@@ -33,54 +33,54 @@ const router = createBrowserRouter([
         element: <AccueilProfil/>,
     },
     {
-      path: "/connexion",
-      element: <ConnexionPage/>,
+        path: "/connexion",
+        element: <ConnexionPage/>,
     },
     {
-        path:"/questionnaire",
+        path: "/questionnaire",
         element: <StepperComponent/>,
     },
     {
-      path:"/newproject",
-      element: <CreateProject/>
+        path: "/newproject",
+        element: <CreateProject/>
     }
-    ,{
-        path:"/result",
+    , {
+        path: "/result",
         element: <ResultPage/>
     },
     {
-        path:"/login",
+        path: "/login",
         element: <ConnexionPage/>
     },
     {
-        path:"/forgotPassword",
+        path: "/forgotPassword",
         element: <ForgotPassword/>
     },
     {
-      path:"/modifyPassword",
-      element: <ModifyPassword/>
+        path: "/modifyPassword",
+        element: <ModifyPassword/>
     },
     {
-        path:"/modifyID",
+        path: "/modifyID",
         element: <ModifyID/>
     },
     {
         path: "/infoProfil",
         element: <Profil/>
-    },{
-        path:"/logout",
+    }, {
+        path: "/logout",
         element: <Deconnection/>
-    },{
-        path:"/guest",
+    }, {
+        path: "/guest",
         element: <Guest/>
     }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-      <RouterProvider router={router} />
-  </React.StrictMode>
+    <React.StrictMode>
+        <RouterProvider router={router}/>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,9 +1,23 @@
+.bg {
+    background-image: url("/src/Components/Pictures/accueilSite.png");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 body {
     text-align: center;
+    height: 100%;
+}
+
+a {
+    color: black;
 }
 
 .textfield {
     width : 75%;
+    background: rgba(255, 255, 255, 0.4);
 }
 
 hr {
