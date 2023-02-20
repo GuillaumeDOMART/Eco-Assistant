@@ -21,6 +21,7 @@ import Guest from "./Views/guest/Guest";
 import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
 import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
 import ModifyID from "./Views/ModifyID/ModifyID";
+import QuestionProposee from "./Views/QuestionProposée/QuestionProposee";
 
 const router = createBrowserRouter([
     {
@@ -73,6 +74,9 @@ const router = createBrowserRouter([
     }, {
         path: "/guest",
         element: <Guest/>
+    }, {
+        path: "/questionsProposees",
+        element: <QuestionProposee/>
     }
 ]);
 
