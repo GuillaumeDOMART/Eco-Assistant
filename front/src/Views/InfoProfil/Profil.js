@@ -127,8 +127,8 @@ function InfoProfil(datas) {
                     <Button variant="secondary" onClick={handleCancel}>
                         Annuler
                     </Button>
-                    <Button variant="primary">
-                        Valider
+                    <Button variant="outline-danger">
+                        Supprimer
                     </Button>
                 </Modal.Footer>
             </Modal>
