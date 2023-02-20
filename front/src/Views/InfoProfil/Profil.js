@@ -78,20 +78,7 @@ function InfoProfil(datas) {
     const handleCancel = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleDeleteProfil = () => {
-        const token = sessionStorage.getItem("token")
-        const options = {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
 
-            }
-        };
-        fetch(`/api/profil/user`, options)
-            .then(res => res.json())
-            .then(
-                res => console.log(res)
-            )
     }
     const handleID = useCallback(() => {
         navigate("/modifyID");
