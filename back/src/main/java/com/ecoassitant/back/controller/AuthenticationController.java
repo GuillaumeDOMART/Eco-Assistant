@@ -54,7 +54,7 @@ public class AuthenticationController {
 
     /**
      * Function to send email when the user forgot his password
-     * @param forgotMailInput
+     * @param forgotMailInput the mail of the user
      * @return
      */
     @PatchMapping("forgotMail")
