@@ -1,7 +1,7 @@
 package com.ecoassitant.back.controller;
 
 
-import com.ecoassitant.back.dto.ReponseDonneesDto;
+import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
 import com.ecoassitant.back.service.ReponseDonneesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

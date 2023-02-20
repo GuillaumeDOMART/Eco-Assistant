@@ -50,5 +50,23 @@ public class QuestionEntity implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionAsso")
     private List<ReponsePossibleEntity> reponses;
 
-
+    /**
+     * constructor of questionEntity
+     * @param l id
+     * @param q1 entitled
+     * @param q previous question
+     * @param type type of question
+     * @param phase phase of question
+     * @param categorie categorie of question
+     * @param b visibility of question
+     */
+    public QuestionEntity(long l, String q1, QuestionEntity q, TypeQ type, Phase phase, Categorie categorie, boolean b) {
+        this.idQuestion = l;
+        this.intitule = q1;
+        this.questionPre = q;
+        this.typeQ = type;
+        this.phase = phase;
+        this.categorie = categorie;
+        this.visibilite = b;
+    }
 }
