@@ -46,7 +46,7 @@ function BarNavContent(){
                     setApiError(error);
                 }
             )
-    }, [])
+    }, [pair, localisation.pathname])
 
     if(apiError){
         return (
