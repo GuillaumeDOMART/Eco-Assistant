@@ -7,6 +7,7 @@
 }
 
 body {
+    font-weight: bold;
     text-align: center;
     height: 100%;
 }
@@ -21,9 +22,24 @@ a {
 }
 
 hr {
-    border: 2px solid #64c692;
+    border: 2px solid #25995C;
 }
 
-.leaves {
-    height:5%;
+.NB {
+    font-size: x-small;
+}
+
+.Title {
+    font-size: xxx-large;
+    margin-bottom: -20px;
+}
+
+.Text {
+    font-size: 120%;
+}
+
+.logo {
+    height: 70px;
+    margin-bottom: 10px;
+    margin-left: -100px;
 }

@@ -1,7 +1,6 @@
 import {Col, Container, Row} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
-// import leaves from './leaves.png';
 import "./AccueilSite.css"
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
@@ -26,6 +25,9 @@ const Connexion = ({onSubmit, register}) => {
                 <Button type="submit" className="text-black mb-4">Créer</Button><br/>
                 <p>Déjà un compte ? <a href="/connexion">Se connecter</a></p>
             </form>
+            <p className="NB">Remplir un questionnaire sans être connecté entrainera une perte<br/>
+                des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
+                connectez-vous ou créez un compte</p>
         </Col>
     )
 }
@@ -38,21 +40,18 @@ const Connexion = ({onSubmit, register}) => {
 const Anonyme = () => {
     return (
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75">
-                <h1 className="m-3 mb-4 mt-3">Eco-Assistant</h1>
-                {/*<img className="leaves" src={require('./leaves.png')}  alt={"leaves"}/>*/}
+            <h1 className="Title"><img className="logo" src={require('../../Components/logo/Eco-Assistant_transparent.PNG')}  alt={"logo"}/>
+                Eco-Assistant</h1>
                 <hr/>
-                <p>Envie de connaitre<br/>
-                    l&lsquo;empreinte carbone de<br/>
-                    ton projet informatique ?<br/>
+                <p className="Text">Envie de connaitre l&lsquo;empreinte<br/>
+                     carbone de ton projet<br/>
+                    informatique ?<br/>
                     <br/>
-                    Grâce au questionnaire<br/>
-                    Eco-Assistant, calcule ton<br/>
-                    impact environnemental :</p>
-                <a href="/guest">Remplir le questionnaire*</a>
+                    Grâce au questionnaire Eco-Assistant,<br/>
+                     calcule l&lsquo;impact environnemental<br/>
+                    de ton projet :</p>
+                <a href="/guest" className="fs-4">Remplir le questionnaire</a>
                 <hr/>
-                <p>* Remplir un questionnaire sans être connecté entrainera une perte<br/>
-                    des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
-                    connectez-vous ou créez un compte</p>
         </Col>
     )
 }
@@ -102,8 +101,9 @@ function AccueilSite() {
 
     return (
            <Container className="bg" fluid>
-               <Row className="vh-100">
+               <Row className="vh-100 align-items-center">
                    <Connexion onSubmit={handleSubmit(submitCreation)} register={register}/>
+                   <Col className="col-1"></Col>
                    <Anonyme/>
                </Row>
            </Container>
