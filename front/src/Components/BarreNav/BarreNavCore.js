@@ -12,6 +12,10 @@ function BarreNavCore() {
             <div className="position-sticky list-group list-group-flush px-3 pt-4 h-100">
                 <BarNavContent/>
             </div>
+
+            <div className="col-2 fixed-bottom">
+                v0.2-alpha
+            </div>
         </nav>
     );
 }
