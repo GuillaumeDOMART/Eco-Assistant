@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Service for the Authentication
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -71,6 +74,10 @@ public class AuthenticationService {
         return new AuthenticationOutPutDto(profile.getMail(),token);
     }
 
+    /**
+     * Function to create au guest profile
+     * @return the token of the guest profile
+     */
     public ResponseEntity<TokenDto> guest() {
         for(int i =0; i < 5; i++){
             var randomMail = "guest" + "." + generateRandomString(8)+"@eco-assistant-esipe.fr";
@@ -92,6 +99,11 @@ public class AuthenticationService {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Function to generate a random string
+     * @param length the length of the random string
+     * @return the random string
+     */
     private static String generateRandomString(int length){
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         var random = new Random();
@@ -104,6 +116,11 @@ public class AuthenticationService {
         return sb.toString();
     }
 
+    /**
+     * Function to send a mail for when the user forgot his password
+     * @param mail the mail of the user
+     * @return if the mail was send
+     */
     public boolean forgotMail(String mail) {
         var profile = profilRepository.findByMail(mail);
         if(profile.isEmpty()){

@@ -17,6 +17,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
+/**
+ * Service for implement the jwt token
+ */
 @Service
 public class JwtService {
     private final static String SECRET_KEY = "9nWcIUOcoBTOrAJjkSi3Ltl/OJpEyXvLPZ3R8hF6pZs=";
