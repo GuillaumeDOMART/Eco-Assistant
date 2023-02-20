@@ -22,6 +22,10 @@ import java.util.Objects;
 public class QuestionController {
     private final QuestionService questionService;
 
+    /**
+     * Constructor for QuestionController
+     * @param questionService QuestionService
+     */
     @Autowired
     public QuestionController(QuestionService questionService) {
         Objects.requireNonNull(questionService);
