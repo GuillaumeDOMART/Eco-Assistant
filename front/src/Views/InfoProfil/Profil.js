@@ -78,7 +78,7 @@ function InfoProfil(datas) {
     const handleCancel = () => setShow(false);
     const handleShow = () => setShow(true);
     const handleDeleteProfil = () => {
-
+        //TODO
     }
     const handleID = useCallback(() => {
         navigate("/modifyID");
