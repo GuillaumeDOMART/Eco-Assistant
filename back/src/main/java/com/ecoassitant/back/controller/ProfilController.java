@@ -1,9 +1,11 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
+import com.ecoassitant.back.dto.ForgotPasswordVerifyDto;
 import com.ecoassitant.back.dto.ProfilDto;
 import com.ecoassitant.back.dto.ProfilSimplDto;
 import com.ecoassitant.back.service.ProfilService;
+import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,16 +22,20 @@ import java.util.Objects;
 public class ProfilController {
     private final JwtService jwtService;
     private final ProfilService profilService;
+    private final AuthenticationService authenticationService;
 
     /**
      * Constructor of ProfilController
+     *
      * @param jwtService for decipher the token
      * @param profilService Service of Profil
+     * @param authenticationService AuthenticationService
      */
     @Autowired
-    public ProfilController(JwtService jwtService, ProfilService profilService) {
+    public ProfilController(JwtService jwtService, ProfilService profilService, AuthenticationService authenticationService) {
         this.jwtService = Objects.requireNonNull(jwtService);
         this.profilService = Objects.requireNonNull(profilService);
+        this.authenticationService = authenticationService;
     }
 
 
@@ -101,11 +107,12 @@ public class ProfilController {
      * @return if the password was change successfully
      */
     @PostMapping("/profil/forgotMail")
-    public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader){
+    public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
         String token = authorizationHeader.substring(7);
         if(!jwtService.extractVerify(token)){
             return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
         }
-        return ResponseEntity.ok(true);
+        var mail = jwtService.extractMail(token);
+        return authenticationService.changePassword(mail, forgotPasswordVerifyDto.getPassword());
     }
 }

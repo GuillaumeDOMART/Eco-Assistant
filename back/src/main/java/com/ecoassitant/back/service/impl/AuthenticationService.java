@@ -133,4 +133,21 @@ public class AuthenticationService {
         emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de pass oublié", "Voici le liens pour changer vôtre mot de pass: http://"+domain+"/forgot?token="+token);
         return true;
     }
+
+    /**
+     * Function to change password for user
+     * @param mail mail of the user
+     * @param password new password
+     * @return if the password was change
+     */
+    public ResponseEntity<Boolean> changePassword(String mail, String password) {
+        var profil = profilRepository.findByMail(mail);
+        if(profil.isEmpty()){
+            return  new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
+        }
+        var user = profil.get();
+        user.setPassword(passwordEncoder.encode(password));
+        profilRepository.save(user);
+        return ResponseEntity.ok(true);
+    }
 }
