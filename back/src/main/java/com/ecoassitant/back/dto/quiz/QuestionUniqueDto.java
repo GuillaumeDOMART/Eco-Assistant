@@ -18,6 +18,12 @@ public class QuestionUniqueDto {
     private final Phase phase;
     private final TypeQ type;
     private final Categorie categorie;
+
+    public Long getDependance() {
+        return dependance;
+    }
+
+    private final Long dependance;
     private final List<ReponseUniqueDto> reponses;
     private static HashMap<Phase,List<QuestionUniqueDto>> map = new HashMap<>();
 
@@ -30,6 +36,7 @@ public class QuestionUniqueDto {
         this.intitule = quiz.getIntitule();
         this.phase = quiz.getPhase();
         this.questionId = quiz.getQuestionId();
+        this.dependance = quiz.getDependance();
         this.type = quiz.getType();
         this.reponses = new ArrayList<>();
         quiz.getReponses().forEach(reponsePossibleDto -> {

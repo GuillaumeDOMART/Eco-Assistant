@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,6 +35,5 @@ public class ProfilEntity implements Serializable {
     private String prenom;
 
     @Column(name = "isadmin", nullable = false)
-    @Type(type="boolean")
-    private boolean isAdmin;
+    private Integer isAdmin;
 }
