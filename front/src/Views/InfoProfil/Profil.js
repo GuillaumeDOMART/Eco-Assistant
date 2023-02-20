@@ -100,11 +100,11 @@ function InfoProfil(datas) {
             </div>
             <div className="d-flex justify-content-between p-3">
                 <p>{email}</p>
-                <Button onClick={handleID} variant='outline-info'>Modifier l&lsquo;adresse email</Button>
+                <Button onClick={handleID} variant='outline-warning'>Modifier l&lsquo;adresse email</Button>
             </div>
             <div className="d-flex justify-content-between p-3">
                 <p>Mot de passe : ************</p>
-                <Button variant="outline-info" onClick={handlePassword}>Modifier le mot de passe</Button>
+                <Button variant="outline-warning" onClick={handlePassword}>Modifier le mot de passe</Button>
             </div>
 
             <div className="d-flex justify-content-center p-3">
