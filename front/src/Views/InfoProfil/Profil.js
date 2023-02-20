@@ -75,11 +75,19 @@ function InfoProfil(datas) {
     const navigate = useNavigate()
     const [show, setShow] = useState(false);
 
-    const handleCancel = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const handleDeleteProfil = () => {
-        //TODO
-    }
+    /**
+     * Hide pop-up if deletion of profile is refused
+     */
+    const handleCancel = useCallback(() => {
+        setShow(false);
+    },[setShow])
+    /**
+     * Show the pop-up when you push the button delete profil
+     */
+    const handleShow = useCallback(() => {
+        setShow(true);
+    },[setShow])
+
     const handleID = useCallback(() => {
         navigate("/modifyID");
     }, [navigate])
@@ -117,7 +125,7 @@ function InfoProfil(datas) {
                     <Button variant="secondary" onClick={handleCancel}>
                         Annuler
                     </Button>
-                    <Button variant="primary" onClick={handleDeleteProfil}>
+                    <Button variant="primary">
                         Valider
                     </Button>
                 </Modal.Footer>
