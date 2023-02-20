@@ -62,11 +62,19 @@ function FormContainer(){
     );
 }
 
-
+/**
+ * Component that represent the form
+ * @returns {JSX.Element} return the form
+ * @constructor default constructor
+ */
 function Form(){
     const [show, setShow] = useState(false);
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate();
+
+    /**
+     * Function for the form
+     */
     const onSubmit = () => {
         setShow(true)
     }
