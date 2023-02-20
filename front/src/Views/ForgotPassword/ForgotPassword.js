@@ -1,7 +1,7 @@
 import {Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {Col, Container, Row, Modal} from "react-bootstrap";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 /**
@@ -71,9 +71,9 @@ function Form(){
         setShow(true)
     }
 
-    const onClose = () => {
-        navigate("/")
-    }
+    const onClose = useCallback(() => {
+        navigate("/");
+    }, [navigate])
 
     return (
         <>
