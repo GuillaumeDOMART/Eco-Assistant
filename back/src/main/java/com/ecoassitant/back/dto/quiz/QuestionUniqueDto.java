@@ -19,11 +19,13 @@ public class QuestionUniqueDto {
     private final TypeQ type;
     private final Categorie categorie;
     private final List<ReponseUniqueDto> reponses;
+    private final boolean isVisible;
     private static HashMap<Phase,List<QuestionUniqueDto>> map = new HashMap<>();
 
     /**
      * create a quuestion with a quiz
-     * @param quiz format tree
+     *
+     * @param quiz      format tree
      */
     public QuestionUniqueDto(QuestionDto quiz) {
         this.categorie = quiz.getCategorie();
@@ -31,6 +33,7 @@ public class QuestionUniqueDto {
         this.phase = quiz.getPhase();
         this.questionId = quiz.getQuestionId();
         this.type = quiz.getType();
+        this.isVisible = quiz.isVisible();
         this.reponses = new ArrayList<>();
         quiz.getReponses().forEach(reponsePossibleDto -> {
             this.reponses.add(new ReponseUniqueDto(reponsePossibleDto));
@@ -92,5 +95,9 @@ public class QuestionUniqueDto {
 
     public TypeQ getType() {
         return type;
+    }
+
+    public boolean getIsVisible() {
+        return isVisible;
     }
 }

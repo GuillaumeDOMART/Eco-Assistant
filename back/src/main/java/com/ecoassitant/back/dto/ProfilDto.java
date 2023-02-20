@@ -58,11 +58,11 @@ public class ProfilDto {
         this.prenom = prenom;
     }
 
-    public Integer isAdmin() {
+    public Integer getIsAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(Integer admin) {
+    public void setIsAdmin(Integer admin) {
         isAdmin = admin;
     }
 }
