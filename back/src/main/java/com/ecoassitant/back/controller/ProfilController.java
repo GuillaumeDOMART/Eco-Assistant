@@ -89,4 +89,13 @@ public class ProfilController {
             return new ResponseEntity<>(profil, headers, HttpStatus.OK);
         }
     }
+
+    @PostMapping("/profil/forgotMail")
+    public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader){
+        String token = authorizationHeader.substring(7);
+        if(!jwtService.extractVerify(token)){
+            return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
+        }
+        return ResponseEntity.ok(true);
+    }
 }

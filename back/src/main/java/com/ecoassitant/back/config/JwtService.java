@@ -117,4 +117,8 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public boolean extractVerify(String token){
+        return (boolean) extractClaim(token, claims -> claims.get("verify"));
+    }
 }

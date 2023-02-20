@@ -9,7 +9,7 @@ import {useNavigate} from "react-router-dom";
  * @returns {JSX.Element}
  * @constructor
  */
-function ForgotPassword(){
+function ForgotPasswordMail(){
     return (
         <Col>
             <Logo/>
@@ -97,4 +97,4 @@ function Form(){
         </>
     )
 }
-export default ForgotPassword;
+export default ForgotPasswordMail;
