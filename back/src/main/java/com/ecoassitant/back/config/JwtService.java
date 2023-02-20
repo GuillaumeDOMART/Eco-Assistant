@@ -121,6 +121,11 @@ public class JwtService {
                 .getBody();
     }
 
+    /**
+     * Function to extract verify claims
+     * @param token the token of the user
+     * @return return verify claims. Return false is the claims verify is not present
+     */
     public boolean extractVerify(String token){
         return (boolean) extractClaim(token, claims -> claims.get("verify"));
     }
