@@ -97,7 +97,7 @@ public class QuestionUniqueDto {
         return type;
     }
 
-    public boolean isVisible() {
+    public boolean getIsVisible() {
         return isVisible;
     }
 }
