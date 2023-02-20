@@ -12,5 +12,5 @@ public interface CalculService {
      * @param idProject project of wich we want the result
      * @return list of results
      */
-    public ResultatsPhaseDto calculsForProject(Long idProject);
+    public ResultatsPhaseDto calculsForProject(Integer idProject);
 }

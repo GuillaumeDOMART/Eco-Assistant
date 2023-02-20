@@ -75,10 +75,8 @@ function TableauProjets() {
     } else if (!isLoaded){
         return (
             <Table>
-                    <TableauProjetsHeader/>
-                <tbody>
-                    <LigneTableauProjetsPlaceholder/>
-                </tbody>
+                <TableauProjetsHeader/>
+                <LigneTableauProjetsPlaceholder/>
             </Table>
         );
     } else {
@@ -87,10 +85,8 @@ function TableauProjets() {
                 <h1>Accueil</h1>
                 <br/>
                 <Table>
-                        <TableauProjetsHeader/>
-                    <tbody>
-                        {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
-                    </tbody>
+                    <TableauProjetsHeader/>
+                    {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
                 </Table>
             </>
         );
@@ -134,7 +130,7 @@ function MockTableauProjets() {
             <br/>
 
             <Table>
-                {/*<TableauProjetsHeader/>*/}
+                <TableauProjetsHeader/>
                 {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
             </Table>
         </>
@@ -159,13 +155,11 @@ function LigneTableauProjetsPlaceholder(){
  */
 function TableauProjetsHeader(){
     return (
-        <thead>
-            <tr className='table border-bottom border-3 border-primary'>
-                <th>Nom du projet</th>
-                <th>Etat du Projet</th>
-                <th>Actions possibles</th>
-            </tr>
-        </thead>
+        <tr className='table border-bottom border-3 border-primary'>
+            <th>Nom du projet</th>
+            <th>Etat du Projet</th>
+            <th>Actions possibles</th>
+        </tr>
     );
 }
 
@@ -185,5 +179,6 @@ function AccueilProfil() {
         </div>
     );
 }
+
 
 export default AccueilProfil

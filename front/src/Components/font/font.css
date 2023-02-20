@@ -1,0 +1,5 @@
+@font-face {
+    font-family: "OpenSansLight";   /*Can be any text*/
+    src: local("OpenSans-Light"),
+    url("./OpenSans-Light.ttf") format("truetype");
+}

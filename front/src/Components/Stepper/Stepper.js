@@ -80,7 +80,9 @@ export default function StepperComponent() {
      */
     const handleReset = useCallback(
         () => {
-            navigate("/result")
+            const projectId = sessionStorage.getItem("project")
+            sessionStorage.removeItem("project")
+            navigate(`/result?id=${projectId}`)
         },
         [navigate]
     );
