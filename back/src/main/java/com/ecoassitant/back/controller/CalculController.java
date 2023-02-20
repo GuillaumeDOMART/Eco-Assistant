@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 
 /**
  * Controller for request about calcul
@@ -23,7 +25,7 @@ public class CalculController {
      */
     @Autowired
     public CalculController(CalculService calculService) {
-        this.calculService = calculService;
+        this.calculService = Objects.requireNonNull(calculService);
     }
 
     /**
