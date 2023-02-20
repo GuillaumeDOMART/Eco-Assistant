@@ -1,4 +1,5 @@
 import React from "react";
+import {FormCheck} from "react-bootstrap";
 
 /**
  * A component representing a QCM question
@@ -6,15 +7,22 @@ import React from "react";
  * @returns {JSX.Element}
  * @constructor
  */
-export const QCM = React.forwardRef(({ onChange, name, question }, ref) => {
+export const QCM = React.forwardRef(({ onChange, name, question }) => {
     return (
         <div style={{marginTop: '20px'}}>
             <p>{question.intitule}</p>
-            <select name={name} ref={ref} onChange={onChange}>
+            {/*<input type={"checkbox"} name={name} ref={ref} onChange={onChange}>*/}
                 {question.reponses.map((data) => {
-                    return <option value={data.intitule} key={data.intitule} label={data.intitule}/>
-                })}
-            </select><br/>
+                    return  (
+                        <FormCheck
+                        inline
+                        name={question.intitule}
+                        type={"radio"}
+                        value={data.intitule}
+                        key={data.intitule}
+                        label={data.intitule}/>
+                    )
+                })}<br/>
         </div>
     )
 })

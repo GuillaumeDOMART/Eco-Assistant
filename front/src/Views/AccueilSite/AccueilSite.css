@@ -1,5 +1,5 @@
 .bg {
-    background-image: url("/src/Components/Pictures/accueilSite.png");
+    background-image: url("/src/Components/Pictures/montagne.jpg");
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
@@ -12,13 +12,8 @@ body {
     height: 100%;
 }
 
-a {
-    color: black;
-}
-
 .textfield {
     width : 75%;
-    background: rgba(255, 255, 255, 0.4);
 }
 
 hr {
@@ -26,7 +21,7 @@ hr {
 }
 
 .NB {
-    font-size: x-small;
+    font-size: small;
 }
 
 .Title {
@@ -42,4 +37,8 @@ hr {
     height: 70px;
     margin-bottom: 10px;
     margin-left: -125px;
+}
+
+a {
+    color: black;
 }
