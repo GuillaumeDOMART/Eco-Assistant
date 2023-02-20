@@ -26,6 +26,12 @@ public class ProjetController {
     private final JwtService jwtService;
     private final ProfilRepository profilRepository;
 
+    /**
+     * Constructor for ProjetController
+     * @param projetRepository ProjetRepository
+     * @param jwtService JwtService
+     * @param profilRepository ProfilRepository
+     */
     @Autowired
     public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository) {
         this.projetRepository = Objects.requireNonNull(projetRepository);
@@ -64,6 +70,12 @@ public class ProjetController {
         return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(ProjetDto::new).toList());
     }
 
+    /**
+     * Endpoint to create a project
+     * @param authorizationHeader the token of the user
+     * @param projet the project name
+     * @return the project id
+     */
     @PostMapping("/projet/create")
     public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
         String token = authorizationHeader.substring(7);

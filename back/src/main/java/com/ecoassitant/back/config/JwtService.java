@@ -17,6 +17,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
+/**
+ * Service for implement the jwt token
+ */
 @Service
 public class JwtService {
     private final static String SECRET_KEY = "9nWcIUOcoBTOrAJjkSi3Ltl/OJpEyXvLPZ3R8hF6pZs=";
@@ -116,5 +119,14 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    /**
+     * Function to extract verify claims
+     * @param token the token of the user
+     * @return return verify claims. Return false is the claims verify is not present
+     */
+    public boolean extractVerify(String token){
+        return (boolean) extractClaim(token, claims -> claims.get("verify"));
     }
 }

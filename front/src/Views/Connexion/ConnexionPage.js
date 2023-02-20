@@ -109,7 +109,7 @@ return (
             </Col>
         </Row>
 
-        <a href="/forgotPassword">Mot de passe oublié ?</a>
+        <a href="/ForgotPasswordMail">Mot de passe oublié ?</a>
     </form>
 );
 }
