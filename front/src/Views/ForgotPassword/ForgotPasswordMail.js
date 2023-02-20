@@ -87,7 +87,7 @@ function Form(){
                 <Modal.Header closeButton>
                     <Modal.Title>Modfication mot de passe</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Votre mot de passe a été modifié vous allez être redirigé vers la page d'accueil</Modal.Body>
+                <Modal.Body>Votre mot de passe a été modifié vous allez être redirigé vers la page d&apos;accueil</Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={onClose}>
                         Fermer
