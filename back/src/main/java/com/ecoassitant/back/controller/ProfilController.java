@@ -65,6 +65,11 @@ public class ProfilController {
         }
     }
 
+    /**
+     * Endpoint to create a user admin
+     * @param profilDto profile to create
+     * @return return the id of the profile
+     */
     @PostMapping("profil")
     public ResponseEntity<Integer> createProfil(@RequestBody ProfilSimplDto profilDto){
         var id = profilService.createProfil(profilDto);

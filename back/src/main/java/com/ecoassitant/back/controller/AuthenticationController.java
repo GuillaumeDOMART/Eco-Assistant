@@ -16,6 +16,10 @@ import java.util.Objects;
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
+    /**
+     * Constructor for AuthenticationController
+     * @param authenticationService AuthenticationService
+     */
     @Autowired
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = Objects.requireNonNull(authenticationService);
