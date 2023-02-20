@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class to manage endpoints regarding profiles
@@ -25,11 +26,17 @@ public class ProjetController {
     private final JwtService jwtService;
     private final ProfilRepository profilRepository;
 
+    /**
+     * Constructor for ProjetController
+     * @param projetRepository ProjetRepository
+     * @param jwtService JwtService
+     * @param profilRepository ProfilRepository
+     */
     @Autowired
     public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository) {
-        this.projetRepository = projetRepository;
-        this.jwtService = jwtService;
-        this.profilRepository = profilRepository;
+        this.projetRepository = Objects.requireNonNull(projetRepository);
+        this.jwtService = Objects.requireNonNull(jwtService);
+        this.profilRepository = Objects.requireNonNull(profilRepository);
     }
 
     /**
@@ -63,6 +70,12 @@ public class ProjetController {
         return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(ProjetDto::new).toList());
     }
 
+    /**
+     * Endpoint to create a project
+     * @param authorizationHeader the token of the user
+     * @param projet the project name
+     * @return the project id
+     */
     @PostMapping("/projet/create")
     public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
         String token = authorizationHeader.substring(7);

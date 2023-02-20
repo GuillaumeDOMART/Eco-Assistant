@@ -1,5 +1,6 @@
 package com.ecoassitant.back.config;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -56,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
-        } catch (MalformedJwtException exception) {
+        } catch (MalformedJwtException | ExpiredJwtException exception) {
             filterChain.doFilter(request, response);
         }
     }

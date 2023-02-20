@@ -21,6 +21,7 @@ import Guest from "./Views/guest/Guest";
 import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
 import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
 import ModifyID from "./Views/ModifyID/ModifyID";
+import ForgotPasswordMail from "./Views/ForgotPassword/ForgotPasswordMail";
 
 const router = createBrowserRouter([
     {
@@ -57,8 +58,12 @@ const router = createBrowserRouter([
         element: <ForgotPassword/>
     },
     {
-        path: "/modifyPassword",
-        element: <ModifyPassword/>
+        path:"/forgotPasswordMail",
+        element: <ForgotPasswordMail/>
+    },
+    {
+      path:"/modifyPassword",
+      element: <ModifyPassword/>
     },
     {
         path: "/modifyID",
