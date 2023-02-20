@@ -58,7 +58,7 @@ public class QuestionEntity implements Serializable {
      * @param type type of question
      * @param phase phase of question
      * @param categorie categorie of question
-     * @param b visibility of question
+     * @param qd dependance of question
      */
     public QuestionEntity(long l, String q1, QuestionEntity q, TypeQ type, Phase phase, Categorie categorie, QuestionEntity qd) {
         this.idQuestion = l;
