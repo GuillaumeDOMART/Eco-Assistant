@@ -30,8 +30,8 @@ public class ConstanteController {
      */
     @Autowired
     public ConstanteController(ConstanteService constanteService) {
-
-        this.constanteService = Objects.requireNonNull(constanteService);
+        Objects.requireNonNull(constanteService);
+        this.constanteService = constanteService;
     }
 
 

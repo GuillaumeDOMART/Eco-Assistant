@@ -24,17 +24,19 @@ public class QuestionController {
 
     @Autowired
     public QuestionController(QuestionService questionService) {
-        this.questionService = Objects.requireNonNull(questionService);
+        Objects.requireNonNull(questionService);
+        this.questionService = questionService;
     }
 
     /**
      * Api for get quiz
+     *
      * @return quiz type Map
      */
     @GetMapping("/questions")
-    public ResponseEntity<Map<Phase, List<QuestionUniqueDto>>> testsQuestionnaire(){
+    public ResponseEntity<Map<Phase, List<QuestionUniqueDto>>> testsQuestionnaire() {
         var quiz = questionService.getQuestionnaire();
         System.out.println(quiz);
-        return quiz != null? new ResponseEntity<>(quiz, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
