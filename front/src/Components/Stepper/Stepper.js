@@ -27,7 +27,7 @@ export default function StepperComponent() {
      */
     const isStepSkipped = useCallback(
         (step) => {
-        return skipped.has(step);
+            return skipped.has(step);
         },
         [skipped]
     );
@@ -37,14 +37,14 @@ export default function StepperComponent() {
      */
     const handleNext = useCallback(
         () => {
-        let newSkipped = skipped;
-        if (isStepSkipped(activeStep)) {
-            newSkipped = new Set(newSkipped.values());
-            newSkipped.delete(activeStep);
-        }
+            let newSkipped = skipped;
+            if (isStepSkipped(activeStep)) {
+                newSkipped = new Set(newSkipped.values());
+                newSkipped.delete(activeStep);
+            }
 
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped(newSkipped);
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setSkipped(newSkipped);
         },
         [skipped, activeStep, isStepSkipped]
     );
@@ -54,7 +54,7 @@ export default function StepperComponent() {
      */
     const handleBack = useCallback(
         () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            setActiveStep((prevActiveStep) => prevActiveStep - 1);
         },
         []
     );
@@ -65,12 +65,12 @@ export default function StepperComponent() {
     const handleSkip = useCallback(
         () => {
 
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setSkipped((prevSkipped) => {
-            const newSkipped = new Set(prevSkipped.values());
-            newSkipped.add(activeStep);
-            return newSkipped;
-        });
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setSkipped((prevSkipped) => {
+                const newSkipped = new Set(prevSkipped.values());
+                newSkipped.add(activeStep);
+                return newSkipped;
+            });
         },
         [activeStep]
     );
@@ -89,7 +89,7 @@ export default function StepperComponent() {
 
     return (
         <div>
-            <Box sx={{ width: '100%', pl:'20px', pr:'20px', mt:'20px'}}>
+            <Box sx={{width: '100%', pl: '20px', pr: '20px', mt: '20px'}}>
                 <Stepper activeStep={activeStep} alternativeLabel>
                     {steps.map((label, index) => {
                         const stepProps = {};
@@ -105,31 +105,31 @@ export default function StepperComponent() {
                     })}
                 </Stepper>
             </Box>
-            <Box sx={{ width:'100%', position:'fixed', bottom:'0', mb:'20px', pl:'20px', pr:'20px'}}>
+            <Box sx={{width: '100%', position: 'fixed', bottom: '0', mb: '20px', pl: '20px', pr: '20px'}}>
                 {activeStep === steps.length ? (
                     <>
-                        <Typography sx={{ mt: 2, mb: 1 }}>
+                        <Typography sx={{mt: 2, mb: 1}}>
                             All steps completed - you&apos;re finished
                         </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                            <Box sx={{ flex: '1 1 auto' }} />
+                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                            <Box sx={{flex: '1 1 auto'}}/>
                             <Button onClick={handleReset}>Reset</Button>
                         </Box>
                     </>
                 ) : (
                     <>
-                        <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                        <Typography sx={{mt: 2, mb: 1}}>Step {activeStep + 1}</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
                             <Button
                                 color="inherit"
                                 disabled={activeStep === 0}
                                 onClick={handleBack}
-                                sx={{ mr: 1 }}
+                                sx={{mr: 1}}
                             >
                                 Back
                             </Button>
-                            <Box sx={{ flex: '1 1 auto' }} />
-                            <Button color="success" onClick={handleSkip} sx={{ mr: 1 }}>
+                            <Box sx={{flex: '1 1 auto'}}/>
+                            <Button color="success" onClick={handleSkip} sx={{mr: 1}}>
                                 Skip
                             </Button>
 

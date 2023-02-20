@@ -39,7 +39,9 @@ function Profil() {
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
                 <BarreNavCore/>
-                <InfoProfilContainer {...datas}/>
+                <div className="col-10 p-5">
+                    <InfoProfilContainer {...datas}/>
+                </div>
             </div>);
     } else if (!isLoaded) {
         return (
