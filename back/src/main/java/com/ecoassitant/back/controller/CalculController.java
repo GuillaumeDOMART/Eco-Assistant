@@ -1,6 +1,6 @@
 package com.ecoassitant.back.controller;
 
-import com.ecoassitant.back.service.impl.AuthenticationService;
+import com.ecoassitant.back.dto.resultat.ResultatDto;
 import com.ecoassitant.back.dto.*;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.beans.factory.annotation.Autowired;

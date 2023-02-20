@@ -1,5 +1,6 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.quiz;
 
+import com.ecoassitant.back.dto.quiz.QuestionDto;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 
 /**
@@ -46,10 +47,18 @@ public class ReponsePossibleDto {
         this.constante = constante;
     }
 
+    /**
+     * get the Id
+     * @return id of the response
+     */
     public Long getId() {
         return reponseId;
     }
 
+    /**
+     * ser id
+     * @param id of the response
+     */
     public void setId(Long id) {
         this.reponseId = id;
     }

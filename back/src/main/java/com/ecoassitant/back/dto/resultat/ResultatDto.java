@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.resultat;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.quiz;
 
 import com.ecoassitant.back.entity.QuestionEntity;
 import com.ecoassitant.back.entity.tools.Categorie;

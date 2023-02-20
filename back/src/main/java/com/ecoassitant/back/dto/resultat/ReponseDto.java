@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.resultat;
 
 /**
  * A reponse of a question for a project

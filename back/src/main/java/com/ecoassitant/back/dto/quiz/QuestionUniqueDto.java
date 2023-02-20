@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.quiz;
 
 import com.ecoassitant.back.entity.tools.Categorie;
 import com.ecoassitant.back.entity.tools.Phase;
@@ -56,6 +56,10 @@ public class QuestionUniqueDto {
         return map;
         }
 
+    /**
+     * filled the map with the quiz format tree
+     * @param quiz quiz format tree
+     */
     private static void remplir(QuestionDto quiz) {
         if (quiz == null)
             return;
