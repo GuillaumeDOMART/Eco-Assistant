@@ -62,13 +62,8 @@ const router = createBrowserRouter([
         element: <ForgotPasswordMail/>
     },
     {
-<<<<<<< HEAD
       path:"/modifyPassword",
       element: <ModifyPassword/>
-=======
-        path: "/modifyPassword",
-        element: <ModifyPassword/>
->>>>>>> guillaume-forgot-password
     },
     {
         path: "/modifyID",
