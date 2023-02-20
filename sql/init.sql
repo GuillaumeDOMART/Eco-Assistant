@@ -299,7 +299,7 @@ VALUES
     /*TEST*/
     (22, 23, 'Veuillez entrer un entier', 2),
     (23, 24, 'OUI', 2),
-    (24, 25, 'NON', 2),
+    (23, 25, 'NON', 2),
     (24, 25, 'Veuillez entrer un entier',
      2),
     (25, 26, 'Veuillez entrer un entier',
