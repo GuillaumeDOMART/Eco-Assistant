@@ -46,7 +46,7 @@ function BarNavContent(){
                     setApiError(error);
                 }
             )
-    }, [])
+    }, [pair, localisation.pathname])
 
     if(apiError){
         return (
@@ -67,15 +67,13 @@ function BarNavContent(){
     listeOnglets.push(['Se déconnecter', './logout'])
 
 
-    let listeLiens;
+    let listeLiens = listeOnglets.map(x => (
+        <BarreNavGroupItemPlaceholder key={x[0]}/>
+    ));
 
     if(isLoaded) {
         listeLiens = listeOnglets.map((x) => (
             <BarreNavGroupItem key={x[0]} {...x}/>
-        ));
-    } else {
-        listeLiens = listeOnglets.map(x => (
-            <BarreNavGroupItemPlaceholder key={x[0]}/>
         ));
     }
 
