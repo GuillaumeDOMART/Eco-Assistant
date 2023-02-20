@@ -43,11 +43,20 @@ public class AuthenticationController {
         return authenticationService.authentication(authenticationInputDto);
     }
 
+    /**
+     * Function to create guest profile
+     * @return the token of guest profile
+     */
     @GetMapping("guest")
     public ResponseEntity<TokenDto> guest() {
         return authenticationService.guest();
     }
 
+    /**
+     * Function to send email when the user forgot his password
+     * @param forgotMailInput
+     * @return
+     */
     @PatchMapping("forgotMail")
     public boolean forgotMail(@RequestBody ForgotMailInput forgotMailInput){
         return authenticationService.forgotMail(forgotMailInput.getMail());

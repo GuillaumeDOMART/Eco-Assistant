@@ -90,6 +90,11 @@ public class ProfilController {
         }
     }
 
+    /**
+     * Function to change password when the user click on the link on the email
+     * @param authorizationHeader the token of the mail
+     * @return if the password was change successfully
+     */
     @PostMapping("/profil/forgotMail")
     public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader){
         String token = authorizationHeader.substring(7);
