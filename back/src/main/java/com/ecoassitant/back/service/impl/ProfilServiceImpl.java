@@ -40,16 +40,12 @@ public class ProfilServiceImpl implements ProfilService {
     @Override
     public Integer createProfil(ProfilSimplDto profilDto) {
         var profilEntity = new ProfilEntity();
-        System.out.println("la");
         profilEntity.setMail(profilDto.getMail());
         profilEntity.setNom(profilDto.getLastname());
         profilEntity.setPrenom(profilDto.getFirstname());
-        System.out.println("la la");
         profilEntity.setPassword(profilDto.getMdp());
         profilEntity.setIsAdmin(1);
-        System.out.println(profilEntity.getPassword());
         repository.save(profilEntity);
-        System.out.println("la la la la");
 
         var profil = repository.findByMail(profilDto.getMail()).orElseThrow();
         return profil.getIdProfil();

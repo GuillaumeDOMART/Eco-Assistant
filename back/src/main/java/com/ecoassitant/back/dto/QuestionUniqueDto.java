@@ -60,7 +60,7 @@ public class QuestionUniqueDto {
         if (quiz == null)
             return;
         if (!map.get(quiz.getPhase()).stream().map(QuestionUniqueDto::getQuestionId).toList().contains(quiz.getQuestionId())) {
-            var question = new QuestionUniqueDto(quiz, isVisible);
+            var question = new QuestionUniqueDto(quiz);
             map.compute(question.getPhase(), (k, v) -> {
                 v.add(question);
                 return v;
