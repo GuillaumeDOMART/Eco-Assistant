@@ -8,6 +8,9 @@ import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
+
 /**
  * Class to manage endpoints regarding authentication
  */
@@ -18,7 +21,7 @@ public class AuthenticationController {
 
     @Autowired
     public AuthenticationController(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
+        this.authenticationService = Objects.requireNonNull(authenticationService);
     }
 
     /**

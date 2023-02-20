@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Controller with api linked to Questions
@@ -23,7 +24,7 @@ public class QuestionController {
 
     @Autowired
     public QuestionController(QuestionService questionService) {
-        this.questionService = questionService;
+        this.questionService = Objects.requireNonNull(questionService);
     }
 
     /**

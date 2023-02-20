@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class to manage endpoints regarding profiles
@@ -27,9 +28,9 @@ public class ProjetController {
 
     @Autowired
     public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository) {
-        this.projetRepository = projetRepository;
-        this.jwtService = jwtService;
-        this.profilRepository = profilRepository;
+        this.projetRepository = Objects.requireNonNull(projetRepository);
+        this.jwtService = Objects.requireNonNull(jwtService);
+        this.profilRepository = Objects.requireNonNull(profilRepository);
     }
 
     /**

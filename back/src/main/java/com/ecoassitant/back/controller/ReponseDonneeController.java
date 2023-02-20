@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Objects;
+
 /**
  * Controller for request about ReponseDonnee
  */
@@ -19,7 +22,7 @@ public class ReponseDonneeController {
     private final ReponseDonneesService reponseDonneesService;
     @Autowired
     public ReponseDonneeController(ReponseDonneesService reponseDonneesService) {
-        this.reponseDonneesService = reponseDonneesService;
+        this.reponseDonneesService = Objects.requireNonNull(reponseDonneesService);
     }
 
     /**
