@@ -21,6 +21,10 @@ import java.util.Map;
 public class QuestionController {
     private final QuestionService questionService;
 
+    /**
+     * Constructor for QuestionController
+     * @param questionService QuestionService
+     */
     @Autowired
     public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
