@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 /**
  * Class to manage endpoints regarding profiles
  */
@@ -26,8 +28,8 @@ public class ProfilController {
      */
     @Autowired
     public ProfilController(JwtService jwtService, ProfilService profilService) {
-        this.jwtService = jwtService;
-        this.profilService = profilService;
+        this.jwtService = Objects.requireNonNull(jwtService);
+        this.profilService = Objects.requireNonNull(profilService);
     }
 
 

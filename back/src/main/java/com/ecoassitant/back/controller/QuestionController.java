@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Controller with api linked to Questions
@@ -23,17 +24,19 @@ public class QuestionController {
 
     @Autowired
     public QuestionController(QuestionService questionService) {
+        Objects.requireNonNull(questionService);
         this.questionService = questionService;
     }
 
     /**
      * Api for get quiz
+     *
      * @return quiz type Map
      */
     @GetMapping("/questions")
-    public ResponseEntity<Map<Phase, List<QuestionUniqueDto>>> testsQuestionnaire(){
+    public ResponseEntity<Map<Phase, List<QuestionUniqueDto>>> testsQuestionnaire() {
         var quiz = questionService.getQuestionnaire();
         System.out.println(quiz);
-        return quiz != null? new ResponseEntity<>(quiz, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
