@@ -42,16 +42,16 @@ const Anonyme = () => {
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75">
             <h1 className="Title"><img className="logo" src={require('../../Components/logo/Eco-Assistant_transparent.PNG')}  alt={"logo"}/>
                 Eco-Assistant</h1>
-                <hr className="opacity-100"/>
-                <p className="Text">Envie de connaitre l&lsquo;empreinte<br/>
-                     carbone de ton projet<br/>
-                    informatique ?<br/>
-                    <br/>
-                    Grâce au questionnaire Eco-Assistant,<br/>
-                     calcule l&lsquo;impact environnemental<br/>
-                    de ton projet :</p>
-                <a href="/guest" className="fs-4">Remplir le questionnaire</a>
-                <hr className="opacity-100"/>
+            <hr className="opacity-100"/>
+            <p className="Text">Envie de connaitre l&lsquo;empreinte<br/>
+                carbone de ton projet<br/>
+                informatique ?<br/>
+                <br/>
+                Grâce au questionnaire Eco-Assistant,<br/>
+                calcule l&lsquo;impact environnemental<br/>
+                de ton projet :</p>
+            <a href="/guest" className="fs-4">Remplir le questionnaire</a>
+            <hr className="opacity-100"/>
         </Col>
     )
 }
