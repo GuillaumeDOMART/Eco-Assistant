@@ -67,15 +67,13 @@ function BarNavContent(){
     listeOnglets.push(['Se déconnecter', './logout'])
 
 
-    let listeLiens;
+    let listeLiens = listeOnglets.map(x => (
+        <BarreNavGroupItemPlaceholder key={x[0]}/>
+    ));
 
     if(isLoaded) {
         listeLiens = listeOnglets.map((x) => (
             <BarreNavGroupItem key={x[0]} {...x}/>
-        ));
-    } else {
-        listeLiens = listeOnglets.map(x => (
-            <BarreNavGroupItemPlaceholder key={x[0]}/>
         ));
     }
 
@@ -100,7 +98,7 @@ function BarreNavGroupItem(pair){
         if(pair[0] === localisation.pathname) {
         setActive(true)
         }
-    });
+    }, [pair, localisation]);
 
     if(isActive) {
         return <ListGroup.Item variant="primary" action href={pair[1]}>{pair[0]}</ListGroup.Item>;
