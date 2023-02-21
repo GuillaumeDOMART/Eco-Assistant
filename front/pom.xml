@@ -5,7 +5,7 @@
     <parent>
         <artifactId>Eco-Assistant</artifactId>
         <groupId>com.Eco-Assistant</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>v0.2-alpha</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

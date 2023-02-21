@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.Eco-Assistant</groupId>
     <artifactId>Eco-Assistant</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>v0.2-alpha</version>
     <packaging>pom</packaging>
     <name>Eco-Assistant</name>
     <modules>
