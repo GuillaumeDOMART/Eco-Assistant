@@ -1,7 +1,8 @@
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Row, Button} from "react-bootstrap";
 import {useForm} from "react-hook-form";
-import {Button, TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 
 
@@ -66,8 +67,9 @@ function FormContainer(){
     );
 }
 function Form(){
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();
+    const [paragraphContent, setParagraphContent] = useState("")
 
     /**
      * Create the JSON for connexion and send it to the backend
@@ -85,6 +87,11 @@ function Form(){
         };
 
         const reponse = await fetch("/api/auth/authentication", requestOptions);
+        if(reponse.status === 403){
+            setParagraphContent("Information de connexion non valide, veuillez vérifier les informations renseigner")
+            reset();
+            return;
+        }
         const json = await reponse.json();
         sessionStorage.setItem("token", json.token);
         navigate("/profil");
@@ -96,10 +103,11 @@ return (
             required: 'Email is required',
             pattern: {
                 value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: 'Please enter a valid email',
+                message: 'Entrer un mail valide',
             },
         })}/><br/>
         <TextField label="Mot de passe" type="password" variant="standard" style={{width:"75%"}} required {...register('password')}/><br/>
+        <p className="text-danger">{paragraphContent}</p>
         <Row>
             <Col>
                 <Button href={"/"} style={{}}>Retour</Button><br/>
