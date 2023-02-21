@@ -96,7 +96,7 @@ function Form(){
                     if (response.status === 500) {
                         setParagraphContent("Problème rencontrer pendant envoie du mail")
                     } else if (response.status === 404) {
-                        setParagraphContent("Ce mail n'est pas utilisé pour un profil")
+                        setParagraphContent("Ce mail n&apos;est pas utilisé pour un profil")
                     } else {
                         setShow(true)
                     }
@@ -121,7 +121,7 @@ function Form(){
                 <Modal.Header closeButton>
                     <Modal.Title>Modfication mot de passe</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Un mail pour modifier votre mot de passe vient d'être envoyé</Modal.Body>
+                <Modal.Body>Un mail pour modifier votre mot de passe vient d&apos;être envoyé</Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={onClose}>
                         Fermer
