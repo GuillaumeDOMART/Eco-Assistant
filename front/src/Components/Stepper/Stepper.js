@@ -608,8 +608,45 @@ function StepperComponent() {
     const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();
 
+    /**
+     * Go to the next step
+     */
+    const handleNext = useCallback(
+        () => {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            reset()
+        },
+        [activeStep]
+    );
+
+    /**
+     * Go back to the previous step
+     */
+    const handleBack = useCallback(
+        () => {
+            setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            reset()
+        },
+        []
+    );
+
+    /**
+     * Reset the stepper
+     */
+    const handleReset = useCallback(
+        () => {
+            const projectId = sessionStorage.getItem("project")
+            sessionStorage.removeItem("project")
+            navigate(`/result?id=${projectId}`)
+        },
+        [navigate]
+    );
+
+    /**
+     * Send responses to the backEnd when Next button is pressed
+     * @param dataList
+     */
     const onSubmit = (dataList) => {
-        alert(JSON.stringify(dataList))
         const projectId = sessionStorage.getItem("project")
         sessionStorage.removeItem("project")
         const sendToBack = {}
@@ -645,40 +682,6 @@ function StepperComponent() {
             handleNext();
     }
 
-    /**
-     * Go to the next step
-     */
-    const handleNext = useCallback(
-        () => {
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            reset()
-        },
-        [activeStep]
-    );
-
-    /**
-     * Go back to the previous step
-     */
-    const handleBack = useCallback(
-        () => {
-            setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            reset()
-        },
-        []
-    );
-
-    /**
-     * Reset the stepper
-     */
-    const handleReset = useCallback(
-        () => {
-            const projectId = sessionStorage.getItem("project")
-            sessionStorage.removeItem("project")
-            navigate(`/result?id=${projectId}`)
-        },
-        [navigate]
-    );
-
     useEffect(() => {
         const token = sessionStorage.getItem("token")
         const options = {
@@ -692,7 +695,6 @@ function StepperComponent() {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    console.log(result)
                     setData(result);
                 },
                 (error) => {
@@ -711,61 +713,60 @@ function StepperComponent() {
             </>
         );
     } else {
-    let currentPhase = data.PLANIFICATION;
-    switch (activeStep) {
-        case 0:
-            currentPhase = data.PLANIFICATION
-            break;
-        case 1:
-            currentPhase = data.DEVELOPPEMENT
-            break;
-        case 2:
-            currentPhase = data.TEST
-            break;
-        case 3:
-            currentPhase = data.DEPLOIEMENT
-            break;
-        default:
-            break;
-    }
-    return (
-        <Container fluid>
-            <Row>
-                <Box className="mt-3">
-                    <Stepper activeStep={activeStep} alternativeLabel>
-                        {steps.map((label) => {
-                            const stepProps = {};
-                            const labelProps = {};
-                            return (
-                                <Step key={label} {...stepProps}>
-                                    <StepLabel {...labelProps}>{label}</StepLabel>
-                                </Step>
-                            );
-                        })}
-                    </Stepper>
-                </Box>
-                <Col></Col>
-                <form onSubmit={handleSubmit(onSubmit)}
-                      style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
-                      className="navbar-nav-scroll mt-4 col-8"
-                >
-                    {currentPhase.map(question => <Phase key={question.questionId}
-                                                         register={register}
-                                                         value={question}
-                    />)}
-                    <Box className="">
-                        {activeStep === steps.length ? (
-                            <>
-                                <Typography sx={{mt: 2, mb: 1}}>
-                                    All steps completed - you&apos;re finished
-                                </Typography>
-                                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                    <Box sx={{flex: '1 1 auto'}}/>
-                                    <Button onClick={handleReset}>Reset</Button>
-                                </Box>
-                            </>
-                        ) : (
-                            <>
+        let currentPhase = data.PLANIFICATION;
+        switch (activeStep) {
+            case 0:
+                currentPhase = data.PLANIFICATION
+                break;
+            case 1:
+                currentPhase = data.DEVELOPPEMENT
+                break;
+            case 2:
+                currentPhase = data.TEST
+                break;
+            case 3:
+                currentPhase = data.DEPLOIEMENT
+                break;
+            default:
+                break;
+        }
+        return (
+            <Container fluid>
+                <Row>
+                    <Box className="mt-3">
+                        <Stepper activeStep={activeStep} alternativeLabel>
+                            {steps.map((label) => {
+                                const stepProps = {};
+                                const labelProps = {};
+                                return (
+                                    <Step key={label} {...stepProps}>
+                                        <StepLabel {...labelProps}>{label}</StepLabel>
+                                    </Step>
+                                );
+                            })}
+                        </Stepper>
+                    </Box>
+                    <Col></Col>
+                    <form onSubmit={handleSubmit(onSubmit)}
+                          style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
+                          className="navbar-nav-scroll mt-4 col-8"
+                    >
+                        {currentPhase.map(question => <Phase key={question.questionId}
+                                                             register={register}
+                                                             value={question}
+                        />)}
+                        <Box className="">
+                            {activeStep === steps.length ? (
+                                <>
+                                    <Typography sx={{mt: 2, mb: 1}}>
+                                        All steps completed - you&apos;re finished
+                                    </Typography>
+                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                        <Box sx={{flex: '1 1 auto'}}/>
+                                        <Button onClick={handleReset}>Reset</Button>
+                                    </Box>
+                                </>
+                            ) : (
                                 <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
                                     <Button
                                         color="inherit"
@@ -781,15 +782,14 @@ function StepperComponent() {
                                         {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                                     </Button>
                                 </Box>
-                            </>
-                        )}
-                    </Box>
-                </form>
-                <Col></Col>
-            </Row>
-        </Container>
+                            )}
+                        </Box>
+                    </form>
+                    <Col></Col>
+                </Row>
+            </Container>
 
-    );
+        );
     }
 }
 

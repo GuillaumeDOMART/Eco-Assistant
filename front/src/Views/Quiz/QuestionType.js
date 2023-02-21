@@ -13,7 +13,6 @@ export const QCM = React.forwardRef(({onChange, name, question}, ref) => {
             <h5>{question.intitule}</h5>
             <RadioGroup className="mx-5" defaultValue={question.reponses[0].intitule}>
                 {question.reponses.map((data) => {
-                    console.log(data.intitule)
                     return (
                         <FormControlLabel
                             value={data.intitule}
