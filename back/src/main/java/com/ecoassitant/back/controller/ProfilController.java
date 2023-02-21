@@ -79,7 +79,6 @@ public class ProfilController {
     @PostMapping("profil")
     public ResponseEntity<Integer> createProfil(@RequestBody ProfilSimplDto profilDto){
         var id = profilService.createProfil(profilDto);
-        System.out.println("j'ai id");
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 

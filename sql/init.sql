@@ -229,8 +229,8 @@ VALUES
      39, 'NUMERIC', 'MAINTENANCE', 'FIRST',
      39),
     ('Combien viennent en voiture ?',
-     37, 'NUMERIC', 'MAINTENANCE', 'FIRST',
-     null);
+     40, 'NUMERIC', 'MAINTENANCE', 'FIRST',
+     37);
 --- CREATION DES CONSTANTES
 INSERT INTO constante (constante, tracabilite)
 VALUES (0, 'Constante neutre de l addition et la soustraction'),
@@ -323,12 +323,14 @@ VALUES
     (33, 34, 'Veuillez entrer un entier',
      2),
     (34, 35, 'OUI', 2),
-    (34, 36, 'NON', 2),
-    (35, 36, 'NUCLEAIRE', 2),
-    (35, 36, 'HYDRAULIQUE', 2),
-    (35, 36, 'CHARBON', 2),
-    (35, 36, 'GEOTHERMIQUE', 2),
-    (35, 36, 'ENERGIE RENOUVELABLE', 2),
+    (34, 37, 'NON', 2),
+    (35, 36, 'OUI', 2),
+    (35, 37, 'NON', 2),
+    (36, 37, 'NUCLEAIRE', 2),
+    (36, 37, 'HYDRAULIQUE', 2),
+    (36, 37, 'CHARBON', 2),
+    (36, 37, 'GEOTHERMIQUE', 2),
+    (36, 37, 'ENERGIE RENOUVELABLE', 2),
 
     /*MAINTENANCE*/
     (37, 38, 'OUI', 2),
