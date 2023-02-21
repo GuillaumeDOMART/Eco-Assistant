@@ -79,7 +79,6 @@ public class ProfilController {
     @PostMapping("profil")
     public ResponseEntity<Integer> createProfil(@RequestBody ProfilSimplDto profilDto){
         var id = profilService.createProfil(profilDto);
-        System.out.println("j'ai id");
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
@@ -106,7 +105,7 @@ public class ProfilController {
      * @param authorizationHeader the token of the mail
      * @return if the password was change successfully
      */
-    @PostMapping("/profil/forgotMail")
+    @PatchMapping("/profil/forgotMail")
     public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
         String token = authorizationHeader.substring(7);
         if(!jwtService.extractVerify(token)){

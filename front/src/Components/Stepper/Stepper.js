@@ -1,12 +1,14 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Questionnaire from "../../Views/Quiz/Questionnaire";
 import {useNavigate} from "react-router-dom";
+import {Col, Container, Row, Spinner} from "react-bootstrap";
+import {useForm} from "react-hook-form";
+import Phase from "../../Views/Quiz/Phase";
 
 const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
 
@@ -15,38 +17,23 @@ const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance
  * @returns {JSX.Element}
  * @constructor
  */
-export default function StepperComponent() {
+function StepperComponent() {
     const [activeStep, setActiveStep] = useState(0);
-    const [skipped, setSkipped] = useState(new Set());
-    const navigate = useNavigate()
-
-    /**
-     * Check if the step is in the skipped Set
-     * @param step
-     * @returns {boolean}
-     */
-    const isStepSkipped = useCallback(
-        (step) => {
-            return skipped.has(step);
-        },
-        [skipped]
-    );
+    const [errorApiGetQuestionnaire, setErrorApiGetQuestionnaire] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [data, setData] = useState({})
+    const {register, handleSubmit, reset} = useForm();
+    const navigate = useNavigate();
 
     /**
      * Go to the next step
      */
     const handleNext = useCallback(
         () => {
-            let newSkipped = skipped;
-            if (isStepSkipped(activeStep)) {
-                newSkipped = new Set(newSkipped.values());
-                newSkipped.delete(activeStep);
-            }
-
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            setSkipped(newSkipped);
+            reset()
         },
-        [skipped, activeStep, isStepSkipped]
+        [reset]
     );
 
     /**
@@ -55,24 +42,9 @@ export default function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            reset()
         },
-        []
-    );
-
-    /**
-     * Skip the actual step
-     */
-    const handleSkip = useCallback(
-        () => {
-
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            setSkipped((prevSkipped) => {
-                const newSkipped = new Set(prevSkipped.values());
-                newSkipped.add(activeStep);
-                return newSkipped;
-            });
-        },
-        [activeStep]
+        [reset]
     );
 
     /**
@@ -87,61 +59,155 @@ export default function StepperComponent() {
         [navigate]
     );
 
-    return (
-        <div>
-            <Box sx={{width: '100%', pl: '20px', pr: '20px', mt: '20px'}}>
-                <Stepper activeStep={activeStep} alternativeLabel>
-                    {steps.map((label, index) => {
-                        const stepProps = {};
-                        const labelProps = {};
-                        if (isStepSkipped(index)) {
-                            stepProps.completed = false;
-                        }
-                        return (
-                            <Step key={label} {...stepProps}>
-                                <StepLabel {...labelProps}>{label}</StepLabel>
-                            </Step>
-                        );
-                    })}
-                </Stepper>
-            </Box>
-            <Box sx={{width: '100%', position: 'fixed', bottom: '0', mb: '20px', pl: '20px', pr: '20px'}}>
-                {activeStep === steps.length ? (
-                    <>
-                        <Typography sx={{mt: 2, mb: 1}}>
-                            All steps completed - you&apos;re finished
-                        </Typography>
-                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                            <Box sx={{flex: '1 1 auto'}}/>
-                            <Button onClick={handleReset}>Reset</Button>
-                        </Box>
-                    </>
-                ) : (
-                    <>
-                        <Typography sx={{mt: 2, mb: 1}}>Step {activeStep + 1}</Typography>
-                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                            <Button
-                                color="inherit"
-                                disabled={activeStep === 0}
-                                onClick={handleBack}
-                                sx={{mr: 1}}
-                            >
-                                Back
-                            </Button>
-                            <Box sx={{flex: '1 1 auto'}}/>
-                            <Button color="success" onClick={handleSkip} sx={{mr: 1}}>
-                                Skip
-                            </Button>
+    /**
+     * Send responses to the backEnd when Next button is pressed
+     * @param dataList
+     */
+    const onSubmit = (dataList) => {
+        const projectId = sessionStorage.getItem("project")
+        sessionStorage.removeItem("project")
+        const sendToBack = {}
+        const responses = []
+        for (const [key, value] of Object.entries(dataList)) {
+            const tuple = {}
+            tuple.questionId = key;
+            tuple.entry = value;
+            responses.push(tuple)
+        }
+        sendToBack.projetId = projectId;
+        sendToBack.reponses = responses;
 
-                            <Button onClick={handleNext}>
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
-                        </Box>
-                    </>
-                )}
-            </Box>
-            <Questionnaire activeStep={activeStep}/>
-        </div>
+        const token = sessionStorage.getItem("token")
 
-    );
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify(sendToBack),
+            redirect: 'follow'
+        };
+
+        fetch("/api/reponsesDonnees", requestOptions)
+            .then(response => response.text())
+
+        if (activeStep === steps.length - 1)
+            navigate(`/result?id=${projectId}`)
+        else
+            handleNext();
+    }
+
+    useEffect(() => {
+        const token = sessionStorage.getItem("token")
+        const options = {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        };
+        fetch("/api/questions", options)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setData(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setErrorApiGetQuestionnaire(error);
+                }
+            )
+    }, [])
+
+    if (errorApiGetQuestionnaire) {
+        return <div>Error: {errorApiGetQuestionnaire.message}</div>;
+    } else if (!isLoaded) {
+        return (<>
+                <div>Loading...</div>
+                <Spinner animation="grow" variant="success"/>
+            </>
+        );
+    } else {
+        let currentPhase = data.PLANIFICATION;
+        switch (activeStep) {
+            case 0:
+                currentPhase = data.PLANIFICATION
+                break;
+            case 1:
+                currentPhase = data.DEVELOPPEMENT
+                break;
+            case 2:
+                currentPhase = data.TEST
+                break;
+            case 3:
+                currentPhase = data.DEPLOIEMENT
+                break;
+            default:
+                break;
+        }
+        return (
+            <Container fluid>
+                <Row>
+                    <Box className="mt-3">
+                        <Stepper activeStep={activeStep} alternativeLabel>
+                            {steps.map((label) => {
+                                const stepProps = {};
+                                const labelProps = {};
+                                return (
+                                    <Step key={label} {...stepProps}>
+                                        <StepLabel {...labelProps}>{label}</StepLabel>
+                                    </Step>
+                                );
+                            })}
+                        </Stepper>
+                    </Box>
+                    <Col></Col>
+                    <form onSubmit={handleSubmit(onSubmit)}
+                          style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
+                          className="navbar-nav-scroll mt-4 col-8"
+                    >
+                        {currentPhase.map(question => <Phase key={question.questionId}
+                                                             register={register}
+                                                             value={question}
+                        />)}
+                        <Box className="">
+                            {activeStep === steps.length ? (
+                                <>
+                                    <Typography sx={{mt: 2, mb: 1}}>
+                                        All steps completed - you&apos;re finished
+                                    </Typography>
+                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                        <Box sx={{flex: '1 1 auto'}}/>
+                                        <Button onClick={handleReset}>Reset</Button>
+                                    </Box>
+                                </>
+                            ) : (
+                                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                    <Button
+                                        color="inherit"
+                                        disabled={activeStep === 0}
+                                        onClick={handleBack}
+                                        sx={{mr: 1}}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Box sx={{flex: '1 1 auto'}}/>
+
+                                    <Button type={"submit"}>
+                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                    </Button>
+                                </Box>
+                            )}
+                        </Box>
+                    </form>
+                    <Col></Col>
+                </Row>
+            </Container>
+
+        );
+    }
 }
+
+export default StepperComponent

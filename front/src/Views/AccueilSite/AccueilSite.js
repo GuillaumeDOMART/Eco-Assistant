@@ -17,12 +17,12 @@ const Connexion = ({onSubmit, register}) => {
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
             <h2 className="m-3">Créer un compte</h2>
             <form onSubmit={onSubmit}>
-                <TextField label="Prénom" type="text" variant="standard" className="textfield m-2" {...register("firstname")} required/><br/>
-                <TextField label="Nom" type="text" variant="standard" className="textfield m-2" {...register("lastname")} required/><br/>
-                <TextField label="Adresse Mail" type="email" variant="standard" className="textfield m-2" {...register("mail")} required/><br/>
-                <TextField label="Mot de passe" type="password" variant="standard" className="textfield m-2" {...register("password")} required/><br/>
-                <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield m-2" {...register("passwordConfirmed")} required/><br/>
-                <Button type="submit" className="text-black mb-4">Créer</Button><br/>
+                <TextField label="Prénom" type="text" variant="standard" className="textfield" {...register("firstname")} required/><br/>
+                <TextField label="Nom" type="text" variant="standard" className="textfield " {...register("lastname")} required/><br/>
+                <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...register("mail")} required/><br/>
+                <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...register("password")} required/><br/>
+                <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...register("passwordConfirmed")} required/><br/>
+                <Button type="submit" className="text-black">Créer</Button><br/>
                 <p>Déjà un compte ? <a href="/connexion">Se connecter</a></p>
             </form>
             <p className="NB">Remplir un questionnaire sans être connecté entrainera une perte<br/>
@@ -50,7 +50,7 @@ const Anonyme = () => {
                 Grâce au questionnaire Eco-Assistant,<br/>
                 calcule l&lsquo;impact environnemental<br/>
                 de ton projet :</p>
-            <a href="/guest" className="fs-4">Remplir le questionnaire</a>
+            <a href="/guest" className="fs-5">Remplir le questionnaire</a>
             <hr className="opacity-100"/>
         </Col>
     )

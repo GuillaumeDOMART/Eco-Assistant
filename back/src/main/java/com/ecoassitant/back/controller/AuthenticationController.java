@@ -58,11 +58,12 @@ public class AuthenticationController {
 
     /**
      * Function to send email when the user forgot his password
+     *
      * @param forgotMailInput the mail of the user
-     * @return
+     * @return if the mail was send
      */
     @PatchMapping("forgotMail")
-    public boolean forgotMail(@RequestBody ForgotMailInput forgotMailInput){
+    public ResponseEntity<Boolean> forgotMail(@RequestBody ForgotMailInput forgotMailInput){
         return authenticationService.forgotMail(forgotMailInput.getMail());
     }
 
