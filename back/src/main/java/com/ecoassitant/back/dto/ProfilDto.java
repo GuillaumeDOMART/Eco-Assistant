@@ -21,8 +21,8 @@ public class ProfilDto {
 
         this.id = entity.getIdProfil();
         this.mail = entity.getMail();
-        this.nom = entity.getNom();
-        this.prenom = entity.getPrenom();
+        this.nom = entity.getLastname();
+        this.prenom = entity.getFirstname();
         this.isAdmin = entity.getIsAdmin();
     }
 

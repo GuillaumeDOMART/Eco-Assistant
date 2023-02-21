@@ -1,9 +1,19 @@
 package com.ecoassitant.back.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 public class ProfilSimplDto {
+    @NotBlank
     private String firstname;
+    @NotBlank
     private String lastname;
+    @NotBlank
+    @Email(message = "L'adresse fournit n'est pas conforme")
     private String mail;
+    @NotBlank
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\\d)(?=.*?[#?!@$%^&*\\-]).{8,}$")
     private String mdp;
 
     public ProfilSimplDto(String firstname, String lastname, String mail, String mdp) {
