@@ -20,7 +20,8 @@ export const QCM = React.forwardRef(({ onChange, name, question }) => {
                         type={"radio"}
                         value={data.intitule}
                         key={data.intitule}
-                        label={data.intitule}/>
+                        label={data.intitule}
+                        onChange={onChange}/>
                     )
                 })}<br/>
         </div>
