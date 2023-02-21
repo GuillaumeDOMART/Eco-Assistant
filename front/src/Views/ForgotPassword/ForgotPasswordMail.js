@@ -69,14 +69,38 @@ function FormContainer(){
  */
 function Form(){
     const [show, setShow] = useState(false);
+    const [paragraphContent, setParagraphContent] = useState("")
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate();
 
     /**
      * Function for the form
+     * @param datas data
      */
-    const onSubmit = () => {
-        setShow(true)
+    const onSubmit = (datas) => {
+
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+
+        const requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: JSON.stringify({"mail": datas.mail}),
+            redirect: 'follow'
+        };
+        fetch("/api/auth/forgotMail",requestOptions)
+            .then(response => {
+                if(response.status === 500){
+                    setParagraphContent("Problème rencontrer pendant envoie du mail")
+                }
+                else if(response.status === 404){
+                    setParagraphContent("Ce mail n'est pas utilisé pour un profil")
+                }
+                else {
+                    setShow(true)
+                }
+        })
     }
 
     const onClose = useCallback(() => {
@@ -86,22 +110,24 @@ function Form(){
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <TextField label="Nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPassword")} required/><br/>
-                <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPasswordConfirmed")} required/><br/>
+                <TextField label="Mail" type="password" variant="standard" className="textfield" {...register("mail")} required/><br/>
+                <TextField label="Confirmer le mail" type="password" variant="standard" className="textfield" {...register("confirMail")} required/><br/>
                 <Button href="/">Annuler</Button><Button type="submit">Valider</Button><br/>
+                <p class="text-danger">{paragraphContent}</p>
             </form>
 
             <Modal show={show} size="lg" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Modfication mot de passe</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Votre mot de passe a été modifié vous allez être redirigé vers la page d&apos;accueil</Modal.Body>
+                <Modal.Body>Un mail pour modifier votre mot de passe vient d'être envoyé</Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" onClick={onClose}>
                         Fermer
                     </Button>
                 </Modal.Footer>
             </Modal>
+
         </>
     )
 }

@@ -63,7 +63,7 @@ function ResultPage() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': ``
             },
             body: JSON.stringify({id })
         };
