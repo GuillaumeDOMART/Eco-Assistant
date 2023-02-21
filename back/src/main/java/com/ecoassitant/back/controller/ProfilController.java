@@ -106,10 +106,10 @@ public class ProfilController {
      * @param authorizationHeader the token of the mail
      * @return if the password was change successfully
      */
-    @PostMapping("/profil/forgotMail")
+    @PatchMapping("/profil/forgotMail")
     public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
         String token = authorizationHeader.substring(7);
-        if(jwtService.extractVerify(token)){
+        if(!jwtService.extractVerify(token)){
             return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
         }
         var mail = jwtService.extractMail(token);

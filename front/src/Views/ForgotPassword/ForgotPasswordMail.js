@@ -110,8 +110,8 @@ function Form(){
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <TextField label="Mail" type="password" variant="standard" className="textfield" {...register("mail")} required/><br/>
-                <TextField label="Confirmer le mail" type="password" variant="standard" className="textfield" {...register("confirMail")} required/><br/>
+                <TextField label="Mail" type="password" variant="email" className="textfield" {...register("mail")} required/><br/>
+                <TextField label="Confirmer le mail" type="email" variant="standard" className="textfield" {...register("confirMail")} required/><br/>
                 <Button href="/">Annuler</Button><Button type="submit">Valider</Button><br/>
                 <p class="text-danger">{paragraphContent}</p>
             </form>
