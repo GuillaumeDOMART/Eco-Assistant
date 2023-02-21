@@ -114,7 +114,7 @@ function Form(){
                 <TextField label="Mail" type="email" variant="standard" className="textfield" {...register("mail")} required/><br/>
                 <TextField label="Confirmer le mail" type="email" variant="standard" className="textfield" {...register("confirMail")} required/><br/>
                 <Button href="/">Annuler</Button><Button type="submit">Valider</Button><br/>
-                <p class="text-danger">{paragraphContent}</p>
+                <p className="text-danger">{paragraphContent}</p>
             </form>
 
             <Modal show={show} size="lg" centered>
