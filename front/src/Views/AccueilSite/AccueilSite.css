@@ -6,6 +6,14 @@
     background-size: cover;
 }
 
+.bgQuestionnaire {
+    background-image: url("/src/Components/Pictures/accueilSite.png");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 body {
     font-weight: bold;
     text-align: center;
