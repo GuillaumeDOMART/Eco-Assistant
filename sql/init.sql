@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS calcul
     calculopid        INT         NOT NULL,
     reponsepossibleid INT         NOT NULL,
     nbcalcul          INT         NOT NULL,
+    priorite          INT         NOT NULL,
     phase             VARCHAR(50) NOT NULL,
     CONSTRAINT calculopid FOREIGN KEY (calculopid) REFERENCES calculoperateur (idcalculop),
     CONSTRAINT reponsepossibleid FOREIGN KEY (reponsepossibleid) REFERENCES reponsepossible (idreponsepos)
@@ -351,7 +352,7 @@ VALUES (1, 1, 30),
        (1, 6, 10),
        (1, 7, 15);
 --CREATION CALCUL TEST
-INSERT INTO calcul(calculopid, reponsepossibleid, nbcalcul,
+INSERT INTO calcul(calculopid, reponsepossibleid, nbcalcul,priorite,
                    phase)
 VALUES (5, 11, 1, 'DEVELOPPEMENT'),
        (1, 1, 2, 'DEVELOPPEMENT'),
