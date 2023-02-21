@@ -605,7 +605,7 @@ function StepperComponent() {
     const [errorApiGetQuestionnaire, setErrorApiGetQuestionnaire] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();
 
     const onSubmit = (dataList) => {
@@ -651,6 +651,7 @@ function StepperComponent() {
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            reset()
         },
         [activeStep]
     );
@@ -661,6 +662,7 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            reset()
         },
         []
     );
@@ -685,7 +687,7 @@ function StepperComponent() {
                 'Authorization': `Bearer ${token}`
             },
         };
-        fetch("/api/questions",options)
+        fetch("/api/questions", options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -742,51 +744,48 @@ function StepperComponent() {
                             })}
                         </Stepper>
                     </Box>
-                    <form onSubmit={handleSubmit(onSubmit)}
-                          style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
-                          className="navbar-nav-scroll mt-4"
-                    >
-                        {/*<Questionnaire activeStep={activeStep} register={register} handleSubmit={handleSubmit}/>*/}
-                        <Row>
-                            <Col></Col>
-                            {currentPhase.map(question =>
-                                <Phase key={question.questionId} register={register} value={question}/>
-                            )}
+                    <Row>
+                        <Col></Col>
+                        <form onSubmit={handleSubmit(onSubmit)}
+                              style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
+                              className="navbar-nav-scroll mt-4"
+                        >
+                            {currentPhase.map(question => <Phase key={question.questionId} register={register}
+                                                                 value={question}/>)}
+                            <Box className="">
+                                {activeStep === steps.length ? (
+                                    <>
+                                        <Typography sx={{mt: 2, mb: 1}}>
+                                            All steps completed - you&apos;re finished
+                                        </Typography>
+                                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                            <Box sx={{flex: '1 1 auto'}}/>
+                                            <Button onClick={handleReset}>Reset</Button>
+                                        </Box>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                                            <Button
+                                                color="inherit"
+                                                disabled={activeStep === 0}
+                                                onClick={handleBack}
+                                                sx={{mr: 1}}
+                                            >
+                                                Back
+                                            </Button>
+                                            <Box sx={{flex: '1 1 auto'}}/>
 
-                            <Col></Col>
-                        </Row>
-                        <Box className="">
-                            {activeStep === steps.length ? (
-                                <>
-                                    <Typography sx={{mt: 2, mb: 1}}>
-                                        All steps completed - you&apos;re finished
-                                    </Typography>
-                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                        <Box sx={{flex: '1 1 auto'}}/>
-                                        <Button onClick={handleReset}>Reset</Button>
-                                    </Box>
-                                </>
-                            ) : (
-                                <>
-                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                        <Button
-                                            color="inherit"
-                                            disabled={activeStep === 0}
-                                            onClick={handleBack}
-                                            sx={{mr: 1}}
-                                        >
-                                            Back
-                                        </Button>
-                                        <Box sx={{flex: '1 1 auto'}}/>
-
-                                        <Button type={"submit"}>
-                                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                        </Button>
-                                    </Box>
-                                </>
-                            )}
-                        </Box>
-                    </form>
+                                            <Button type={"submit"}>
+                                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                            </Button>
+                                        </Box>
+                                    </>
+                                )}
+                            </Box>
+                        </form>
+                        <Col></Col>
+                    </Row>
                 </Row>
             </Container>
 
