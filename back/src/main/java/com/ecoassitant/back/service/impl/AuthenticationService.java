@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -121,17 +122,21 @@ public class AuthenticationService {
      * @param mail the mail of the user
      * @return if the mail was send
      */
-    public boolean forgotMail(String mail) {
+    public ResponseEntity<Boolean> forgotMail(String mail) {
         var profile = profilRepository.findByMail(mail);
         if(profile.isEmpty()){
-            return false;
+            return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
         }
         var claims = new HashMap<String,Object>() {{
             put("verify",true);
         }};
         var token = jwtService.generateToken(profile.get(),claims);
-        emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de pass oublié", "Voici le liens pour changer vôtre mot de pass: http://"+domain+"/forgot?token="+token);
-        return true;
+        try {
+            emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de pass oublié", "Voici le liens pour changer vôtre mot de pass: http://"+domain+"/forgotPassword?token="+token);
+        }catch (MailException exception){
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return ResponseEntity.ok(true);
     }
 
     /**

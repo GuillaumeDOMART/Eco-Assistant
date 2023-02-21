@@ -70,13 +70,37 @@ function FormContainer(){
 function Form(){
     const [show, setShow] = useState(false);
     const {register, handleSubmit} = useForm()
+    const [paragraphContent, setParagraphContent] = useState("")
     const navigate = useNavigate();
 
     /**
      * Function for the form
      */
-    const onSubmit = () => {
-        setShow(true)
+    const onSubmit = (datas) => {
+        if(datas.newPassword !== datas.newPasswordConfirmed){
+            setParagraphContent("Les mot de passe fournies ne corresponde pas")
+        }else {
+            const token = new URLSearchParams(window.location.search).get('token');
+
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
+
+            const requestOptions = {
+                method: 'PATCH',
+                headers: myHeaders,
+                body: JSON.stringify({"password": datas.newPassword}),
+                redirect: 'follow'
+            };
+            fetch("/api/profil/forgotMail", requestOptions)
+                .then(response => {
+                    if (response.status === 403) {
+                        setParagraphContent("Le lien n'est plus valide")
+                    } else {
+                        setShow(true)
+                    }
+                })
+        }
     }
 
     const onClose = useCallback(() => {
@@ -89,6 +113,7 @@ function Form(){
                 <TextField label="Nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPassword")} required/><br/>
                 <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPasswordConfirmed")} required/><br/>
                 <Button href="/">Annuler</Button><Button type="submit">Valider</Button><br/>
+                <p className="text-danger">{paragraphContent}</p>
             </form>
 
             <Modal show={show} size="lg" centered>
