@@ -1,9 +1,7 @@
 package com.ecoassitant.back.controller;
 
-
-import com.ecoassitant.back.dto.ConstanteDto;
-import com.ecoassitant.back.entity.QuestionPropose;
-import com.ecoassitant.back.service.ConstanteService;
+import com.ecoassitant.back.dto.QuestionProposeDto;
+import com.ecoassitant.back.service.QuestionProposeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,7 +21,7 @@ import java.util.List;
 @RestController
 public class QuestionProposeController {
 
-    private final QuestionProposeService constanteService;
+    private final QuestionProposeService questionProposeService;
 
     /**
      * Initialize the constanteService
@@ -36,37 +34,37 @@ public class QuestionProposeController {
 
 
     /**
-     *get the constante associated with the id
-     * @param constanteId represents id of constante
-     * @return Constante associated with id
-
-    @GetMapping("/constante/{id}")
-    public ResponseEntity<ConstanteDto> getConstante(@PathVariable("id") Long constanteId){
-        ConstanteDto constante = constanteService.getConstante(constanteId);
+     *get the submitted question associated with the id
+     * @param id represents id of the submitted question
+     * @return submitted question associated with id
+    */
+    @GetMapping("/proposition/{id}")
+    public ResponseEntity<QuestionProposeDto> getProposition(@PathVariable("id") int id){
+        QuestionProposeDto qpdto = questionProposeService.getQuestionProposeByID(id);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        if(constante==null){
+        if(qpdto==null){
             return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
         }else{
-            return new ResponseEntity<>(constante,headers, HttpStatus.OK);
+            return new ResponseEntity<>(qpdto,headers, HttpStatus.OK);
         }
 
     }
 
     /**
-     * Get all constantes in the DB
-     * @return all constantes
+     * Get all submitted questions in the DB
+     * @return all submitted questions
+     */
 
-    @GetMapping("/constantes")
-    public ResponseEntity<List<ConstanteDto>> getAllConstantes(){
-        List<ConstanteDto> constantes = constanteService.findAll();
+    @GetMapping("/propositions")
+    public ResponseEntity<List<QuestionProposeDto>> getAllPropositions(){
+        List<QuestionProposeDto> qps = questionProposeService.findAll();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        if(constantes.isEmpty()){
+        if(qps.isEmpty()){
             return new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);
         }else{
-            return new ResponseEntity<>(constantes,headers,HttpStatus.OK);
+            return new ResponseEntity<>(qps,headers,HttpStatus.OK);
         }
     }
-    */
 }

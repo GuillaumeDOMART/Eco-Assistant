@@ -355,6 +355,3 @@ VALUES (5, 11, 1, 'DEVELOPPEMENT'),
        (5, 4, 2, 'DEVELOPPEMENT'),
        (3, 6, 3, 'DEVELOPPEMENT'),
        (5, 7, 3, 'DEVELOPPEMENT');
-
-INSERT INTO questionpropose (intitule, phase, vote, isapprove)
-VALUES ('Est-ce que vous avez des consoles de jeux en salle de pause ?', 'HORS_PHASE', 0, 0);
