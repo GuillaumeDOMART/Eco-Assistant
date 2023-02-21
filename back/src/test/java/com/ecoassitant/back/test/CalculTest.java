@@ -15,9 +15,9 @@ import java.util.List;
 class CalculTest {
     ProjetEntity projet = new ProjetEntity();
 
-    QuestionEntity q1 = new QuestionEntity(1L, "q1", null, TypeQ.NUMERIC, Phase.HORS_PHASE, Categorie.FIRST, true);
-    QuestionEntity q2 = new QuestionEntity(2L, "q2", q1, TypeQ.QCM, Phase.HORS_PHASE, Categorie.FIRST, true);
-    QuestionEntity q3 = new QuestionEntity(3L, "q3", q2, TypeQ.NUMERIC, Phase.HORS_PHASE, Categorie.FIRST, true);
+    QuestionEntity q1 = new QuestionEntity(1L, "q1", null, TypeQ.NUMERIC, Phase.HORS_PHASE, Categorie.FIRST, null);
+    QuestionEntity q2 = new QuestionEntity(2L, "q2", q1, TypeQ.QCM, Phase.HORS_PHASE, Categorie.FIRST, q1);
+    QuestionEntity q3 = new QuestionEntity(3L, "q3", q2, TypeQ.NUMERIC, Phase.HORS_PHASE, Categorie.FIRST, q2);
 
     ConstanteEntity c1 = new ConstanteEntity(1L, 1, "oui");
     ConstanteEntity c2 = new ConstanteEntity(2L, 20, "jentends");
