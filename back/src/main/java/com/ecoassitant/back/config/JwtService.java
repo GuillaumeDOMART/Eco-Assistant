@@ -42,7 +42,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(profilEntity.getMail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))//set expiration date in 1 day
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

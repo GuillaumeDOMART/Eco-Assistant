@@ -77,27 +77,30 @@ function Form(){
      * Function for the form
      */
     const onSubmit = (datas) => {
-        const token = new URLSearchParams(window.location.search).get('token');
+        if(datas.newPassword !== datas.newPasswordConfirmed){
+            setParagraphContent("Les mot de passe fournies ne corresponde pas")
+        }else {
+            const token = new URLSearchParams(window.location.search).get('token');
 
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", `Bearer ${token}`);
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
 
-        const requestOptions = {
-            method: 'PATCH',
-            headers: myHeaders,
-            body: JSON.stringify({"password": datas.newPassword}),
-            redirect: 'follow'
-        };
-        fetch("/api/profil/forgotMail",requestOptions)
-            .then(response => {
-                if(response.status === 403){
-                    setParagraphContent("Le lien n'est plus valide")
-                }
-                else {
-                    setShow(true)
-                }
-            })
+            const requestOptions = {
+                method: 'PATCH',
+                headers: myHeaders,
+                body: JSON.stringify({"password": datas.newPassword}),
+                redirect: 'follow'
+            };
+            fetch("/api/profil/forgotMail", requestOptions)
+                .then(response => {
+                    if (response.status === 403) {
+                        setParagraphContent("Le lien n'est plus valide")
+                    } else {
+                        setShow(true)
+                    }
+                })
+        }
     }
 
     const onClose = useCallback(() => {

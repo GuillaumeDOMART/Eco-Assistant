@@ -78,29 +78,30 @@ function Form(){
      * @param datas data
      */
     const onSubmit = (datas) => {
+        if(datas.mail !== datas.confirMail){
+            setParagraphContent("Les mails fournies ne corresponde pas")
+        }else {
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
 
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
 
-
-        const requestOptions = {
-            method: 'PATCH',
-            headers: myHeaders,
-            body: JSON.stringify({"mail": datas.mail}),
-            redirect: 'follow'
-        };
-        fetch("/api/auth/forgotMail",requestOptions)
-            .then(response => {
-                if(response.status === 500){
-                    setParagraphContent("Problème rencontrer pendant envoie du mail")
-                }
-                else if(response.status === 404){
-                    setParagraphContent("Ce mail n'est pas utilisé pour un profil")
-                }
-                else {
-                    setShow(true)
-                }
-        })
+            const requestOptions = {
+                method: 'PATCH',
+                headers: myHeaders,
+                body: JSON.stringify({"mail": datas.mail}),
+                redirect: 'follow'
+            };
+            fetch("/api/auth/forgotMail", requestOptions)
+                .then(response => {
+                    if (response.status === 500) {
+                        setParagraphContent("Problème rencontrer pendant envoie du mail")
+                    } else if (response.status === 404) {
+                        setParagraphContent("Ce mail n'est pas utilisé pour un profil")
+                    } else {
+                        setShow(true)
+                    }
+                })
+        }
     }
 
     const onClose = useCallback(() => {
