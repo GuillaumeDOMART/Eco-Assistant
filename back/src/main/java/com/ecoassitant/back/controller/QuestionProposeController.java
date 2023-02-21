@@ -1,15 +1,14 @@
 package com.ecoassitant.back.controller;
 
+import com.ecoassitant.back.dao.QuestionProposeDao;
+import com.ecoassitant.back.dto.IdDto;
 import com.ecoassitant.back.dto.QuestionProposeDto;
 import com.ecoassitant.back.service.QuestionProposeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -65,6 +64,25 @@ public class QuestionProposeController {
             return new ResponseEntity<>(headers,HttpStatus.NOT_FOUND);
         }else{
             return new ResponseEntity<>(qps,headers,HttpStatus.OK);
+        }
+    }
+
+    /**
+     * Create a proposition onto the database
+     * */
+    @PostMapping("/proposition")
+    public ResponseEntity<IdDto> createProposition(@RequestBody QuestionProposeDao qp){
+        var canBeSaved = questionProposeService.saveQuestionPropose(qp);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+
+        if(canBeSaved > 0){
+            var iddto = new IdDto();
+            iddto.setId(canBeSaved);
+           return new ResponseEntity<>(iddto, headers, HttpStatus.OK);
+       } else {
+            return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
     }
 }
