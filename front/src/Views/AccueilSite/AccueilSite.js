@@ -44,20 +44,20 @@ function AccueilSite() {
     /**
      * Display the right part of the home page of the website
      * @param handleSubmit
-     * @param register
+     * @param registerForm
      * @returns {JSX.Element}
      * @constructor
      */
-    const Connexion = ({onSubmit, register}) => {
+    const Connexion = ({onSubmit, registerForm}) => {
         return (
             <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
                 <h2 className="m-3">Créer un compte</h2>
                 <form onSubmit={onSubmit}>
-                    <TextField label="Prénom" type="text" variant="standard" className="textfield" {...register("firstname")} required/><br/>
-                    <TextField label="Nom" type="text" variant="standard" className="textfield " {...register("lastname")} required/><br/>
-                    <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...register("mail")} required/><br/>
-                    <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...register("password")} required/><br/>
-                    <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...register("passwordConfirmed")} required/><br/>
+                    <TextField label="Prénom" type="text" variant="standard" className="textfield" {...registerForm("firstname")} required/><br/>
+                    <TextField label="Nom" type="text" variant="standard" className="textfield " {...registerForm("lastname")} required/><br/>
+                    <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...registerForm("mail")} required/><br/>
+                    <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...registerForm("password")} required/><br/>
+                    <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...registerForm("passwordConfirmed")} required/><br/>
                     <p className="text-danger">{paragraphContent}</p>
                     <Button type="submit" className="text-black">Créer</Button><br/>
                     <p>Déjà un compte ? <a href="/connexion">Se connecter</a></p>
