@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.ReponseDonneesDto;
+import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.tools.TypeQ;
@@ -11,6 +11,7 @@ import com.ecoassitant.back.repository.ReponsePossibleRepository;
 import com.ecoassitant.back.service.ReponseDonneesService;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -23,6 +24,13 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
     private final ProjetRepository projetRepository;
     private final QuestionRepository questionRepository;
 
+    /**
+     * Function to create ReponseDonneesServiceImpl with ReponseDonneeRepository, ReponsePossibleRepository, ProjetRepository and QuestionRepository
+     * @param reponseDonneeRepository the ReponseDonneeRepository
+     * @param reponsePossibleRepository the ReponsePossibleRepository
+     * @param projetRepository the ProjetRepository
+     * @param questionRepository the QuestionRepository
+     */
     public ReponseDonneesServiceImpl(ReponseDonneeRepository reponseDonneeRepository, ReponsePossibleRepository reponsePossibleRepository, ProjetRepository projetRepository, QuestionRepository questionRepository) {
         this.reponseDonneeRepository = reponseDonneeRepository;
         this.reponsePossibleRepository = reponsePossibleRepository;
@@ -58,7 +66,8 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
 
             if (question.get().getTypeQ().equals(TypeQ.NUMERIC)) {
                 responseKey.setReponsePos(reponsePossibles.get(0));
-                reponseEntity.setEntry(Integer.parseInt(reponseDto.getEntry()));
+                if(!Objects.equals(reponseDto.getEntry(), ""))
+                    reponseEntity.setEntry(Integer.parseInt(reponseDto.getEntry()));
             }
             else { //TypeQ.QCM
                 var reponsePossible = reponsePossibles.stream()

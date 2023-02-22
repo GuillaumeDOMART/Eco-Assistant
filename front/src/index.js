@@ -1,39 +1,91 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './Components/scss/custom.scss'
 
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import Questionnaire from "./Quiz/Questionnaire";
 import ErrorPage from "./ErrorPage";
-import ResultPage from "./ResultPage/ResultPage";
+import ResultPage from "./Views/ResultPage/ResultPage";
+import ConnexionPage from "./Views/Connexion/ConnexionPage";
+import AccueilSite from "./Views/AccueilSite/AccueilSite";
+import AccueilProfil from "./Views/AccueilProfil/AccueilProfil";
+import Profil from "./Views/InfoProfil/Profil";
+import StepperComponent from "./Views/Quiz/Quiz";
+import CreateProject from "./Views/Quiz/CreateProject";
+import Deconnection from "./Views/Deconnection/LogOut";
+import Guest from "./Views/guest/Guest";
+import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
+import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
+import ModifyID from "./Views/ModifyID/ModifyID";
+import ForgotPasswordMail from "./Views/ForgotPassword/ForgotPasswordMail";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <AccueilSite/>,
         errorElement: <ErrorPage/>,
     },
     {
-        path:"/questionnaire",
-        element: <Questionnaire />,
+        path: "/profil",
+        element: <AccueilProfil/>,
+    },
+    {
+        path: "/connexion",
+        element: <ConnexionPage/>,
+    },
+    {
+        path: "/questionnaire",
+        element: <StepperComponent/>,
+    },
+    {
+        path: "/newproject",
+        element: <CreateProject/>
     }
-    ,{
-        path:"/result",
+    , {
+        path: "/result",
         element: <ResultPage/>
+    },
+    {
+        path: "/login",
+        element: <ConnexionPage/>
+    },
+    {
+        path: "/forgotPassword",
+        element: <ForgotPassword/>
+    },
+    {
+        path:"/forgotPasswordMail",
+        element: <ForgotPasswordMail/>
+    },
+    {
+      path:"/modifyPassword",
+      element: <ModifyPassword/>
+    },
+    {
+        path: "/modifyID",
+        element: <ModifyID/>
+    },
+    {
+        path: "/infoProfil",
+        element: <Profil/>
+    }, {
+        path: "/logout",
+        element: <Deconnection/>
+    }, {
+        path: "/guest",
+        element: <Guest/>
     }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-      <RouterProvider router={router} />
-  </React.StrictMode>
+    <React.StrictMode>
+        <RouterProvider router={router}/>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

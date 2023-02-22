@@ -8,19 +8,25 @@ import java.util.List;
 /**
  * repository of Project
  */
-public interface ProjetRepository extends JpaRepository<ProjetEntity, Long> {
+public interface ProjetRepository extends JpaRepository<ProjetEntity, Integer> {
     /**
      * Get ProjetEntity associated with the idProjet
      * @param idProjet represents id of project
      * @return ProjetEntity
      */
-    ProjetEntity findByIdProjet(Long idProjet);
+    ProjetEntity findByIdProjet(Integer idProjet);
 
     /**
      * Get List<ProjetEntity> associated with idProfil
      * @param idProfil represents id of project
      * @return List<ProjetEntity>
      */
-    List<ProjetEntity> findByProfil_IdProfil(Long idProfil);
+    List<ProjetEntity> findByProfil_IdProfil(Integer idProfil);
 
+    /**
+     * Get List<ProjectEntity> associated with mail
+     * @param mail the mail
+     * @return List<ProjetEntity>
+     */
+    List<ProjetEntity> findByProfilMail(String mail);
 }

@@ -1,14 +1,12 @@
 package com.ecoassitant.back.dto;
 
+import lombok.Data;
+
+/**
+ * Dto for project with just name
+ */
+@Data
 public class ProjetSimpleDto {
-    String nom;
-    Long profilId;
+    private String nom;
 
-    public String getNom() {
-        return nom;
-    }
-
-    public Long getProfilId() {
-        return profilId;
-    }
 }

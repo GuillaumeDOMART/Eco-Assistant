@@ -1,10 +1,14 @@
 package com.ecoassitant.back.controller;
 
-import com.ecoassitant.back.dto.IdDto;
-import com.ecoassitant.back.dto.ResultatDto;
+import com.ecoassitant.back.dto.resultat.ResultatDto;
+import com.ecoassitant.back.dto.*;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 
 /**
@@ -21,7 +25,7 @@ public class CalculController {
      */
     @Autowired
     public CalculController(CalculService calculService) {
-        this.calculService = calculService;
+        this.calculService = Objects.requireNonNull(calculService);
     }
 
     /**
@@ -30,8 +34,9 @@ public class CalculController {
      * @return list of calculs executed
      */
     @PostMapping("/calculs")
-    public ResultatDto resultatsCalcul(@RequestBody IdDto projectId){
-        return calculService.CalculsForProject(projectId.getId());
+    public ResponseEntity<ResultatsPhaseDto> resultatsCalcul(@RequestBody IdDto projectId){
+        var resultat = calculService.calculsForProject(projectId.getId());
+        return resultat != null? new ResponseEntity<>(resultat, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
 
