@@ -71,7 +71,7 @@ function CreateProject() {
      */
     const handleQuit = useCallback(() => {
         navigate("/profil")
-    },[navigate()]);
+    },[navigate]);
 
     return (
         <Container fluid>

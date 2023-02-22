@@ -62,7 +62,7 @@ function ResultPage() {
         pdf.save('chart.pdf');
         //a finir
 
-    },[])
+    },[A4.w])
 
     /**
      * the function to quit
