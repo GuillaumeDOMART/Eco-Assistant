@@ -44,7 +44,7 @@ function AccueilSite() {
     /**
      * Display the right part of the home page of the website
      * @param handleSubmit
-     * @param registerForm
+     * @param register
      * @returns {JSX.Element}
      * @constructor
      */
@@ -111,7 +111,7 @@ function AccueilSite() {
     return (
            <Container className="bg" fluid>
                <Row className="vh-100 align-items-center">
-                   <Connexion onSubmit={handleSubmit(submitCreation)} register={register}/>
+                   <Connexion onSubmit={handleSubmit(submitCreation)} registerForm={register}/>
                    <Col className="col-1"></Col>
                    <Anonyme/>
                </Row>
