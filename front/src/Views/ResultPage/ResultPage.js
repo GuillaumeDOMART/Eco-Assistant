@@ -40,7 +40,7 @@ function ResultPage() {
         });
     };
 
-    const handleDownloadPDF = () => {
+    function handleDownloadPDF() {
         const canvas = chartContainer.current;
         const imgData = canvas.toDataURL('image/png', 1.0);
         const pdf = new jsPDF("p","mm","a4");
@@ -50,9 +50,9 @@ function ResultPage() {
         pdf.save('chart.pdf');
         //TODO
 
-    };
+    }
 
-    const handleQuit = () => {
+    function handleQuit() {
         navigate("/profil")
     }
 

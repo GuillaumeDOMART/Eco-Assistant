@@ -15,6 +15,11 @@ function Project({onSubmit, register}) {
         </Col>
     )
 }
+
+function handleProjectSubmit(onSubmit, handleSubmit) {
+    return handleSubmit(onSubmit);
+}
+
 function CreateProject() {
     const navigate = useNavigate();
     const {register, handleSubmit} = useForm();
@@ -45,7 +50,7 @@ function CreateProject() {
         <Container fluid>
             <Row className="border border-5 vh-100">
                 <Col>
-                    <Project onSubmit={handleSubmit(onSubmit)} register={register}/>
+                    <Project onSubmit={handleProjectSubmit(onSubmit, handleSubmit)} register={register}/>
                     <Button onClick={handleQuit} type={"button"}>Revenir à l&lsquo;accueil</Button>
                 </Col>
             </Row>
