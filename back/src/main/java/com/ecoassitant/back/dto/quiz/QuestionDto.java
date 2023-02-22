@@ -16,7 +16,6 @@ public class QuestionDto {
     private String intitule;
     private TypeQ type;
     private Phase phase;
-    private Categorie categorie;
     private  List<ReponsePossibleDto> reponses;
     private Long dependance;
 
