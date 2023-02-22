@@ -12,14 +12,28 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Class for the application config
+ */
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
+    /**
+     * Bean for the UserDetail implementation
+     * @param profilRepository profilRepository for the implementation of userDetail
+     * @return the implementation UserDetailsService
+     */
     @Bean
     public UserDetailsService userDetailsService(ProfilRepository profilRepository) {
         return new UserDetailsServiceImpl(profilRepository);
     }
+
+    /**
+     * Bean for the AuthenticationProvider
+     * @param profilRepository profilRepository for the implementation of AuthenticationProvider
+     * @return the implementation of AuthenticationProvider
+     */
     @Bean
     public AuthenticationProvider authenticationProvider(ProfilRepository profilRepository) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -28,11 +42,21 @@ public class ApplicationConfig {
         return authProvider;
     }
 
+    /**
+     * Bean for the AuthenticationManager
+     * @param config the config for the implementation AuthenticationManager
+     * @return the implementation of AuthenticationManager
+     * @throws Exception AuthenticationManager can throw exception
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    /**
+     * Bean for the PasswordEncore
+     * @return the implementation of passwordEncoder
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

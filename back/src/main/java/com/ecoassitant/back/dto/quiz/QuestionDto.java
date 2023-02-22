@@ -18,7 +18,7 @@ public class QuestionDto {
     private Phase phase;
     private Categorie categorie;
     private  List<ReponsePossibleDto> reponses;
-    private boolean isVisible;
+    private Long dependance;
 
 
     /**
@@ -30,30 +30,17 @@ public class QuestionDto {
             return;
         this.questionId = question.getIdQuestion();
         this.intitule = question.getIntitule();
-        this.isVisible = question.isVisibilite();
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
         this.categorie = question.getCategorie();
         this.reponses = new ArrayList<>();
         question.getReponses().forEach(reponse -> reponses.add(new ReponsePossibleDto(reponse)));
-
+        if (question.getDependance() == null)
+            this.dependance = -1L;
+        else
+            this.dependance = question.getDependance().getIdQuestion();
     }
 
-    /**
-     * getter of visible
-     * @return  visivility of question in quiz
-     */
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    /**
-     * setter of visible
-     * @param visible indicate if question visible in quiz
-     */
-    public void setVisible(boolean visible) {
-        isVisible = visible;
-    }
     public String getIntitule() {
         return intitule;
     }
@@ -100,5 +87,13 @@ public class QuestionDto {
 
     public void setQuestionId(Long questionId) {
         this.questionId = questionId;
+    }
+
+    public Long getDependance() {
+        return dependance;
+    }
+
+    public void setDependance(Long dependance) {
+        this.dependance = dependance;
     }
 }

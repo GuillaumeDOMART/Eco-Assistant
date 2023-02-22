@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -148,15 +149,19 @@ public class AuthenticationService {
      */
     public boolean forgotMail(String mail) {
         var profile = profilRepository.findByMail(mail);
-        if (profile.isEmpty()) {
+        if(profile.isEmpty()){
             return false;
         }
         var claims = new HashMap<String, Object>() {{
             put("verify", true);
         }};
-        var token = jwtService.generateToken(profile.get(), claims);
-        emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de passe oublié", "Voici le liens pour changer vôtre mot de pass: https://" + domain + "/forgot?token=" + token);
-        return true;
+        var token = jwtService.generateToken(profile.get(),claims);
+        try {
+            emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de passe oublié", "Voici le liens pour changer vôtre mot de pass: https://"+domain+"/forgotPassword?token="+token);
+        }catch (MailException exception){
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return ResponseEntity.ok(true);
     }
 
     /**

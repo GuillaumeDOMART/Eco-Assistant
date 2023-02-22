@@ -4,6 +4,14 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+/**
+ * Dto for profil
+ */
+@Data
+@AllArgsConstructor
 public class ProfilSimplDto {
     @NotBlank
     private String firstname;

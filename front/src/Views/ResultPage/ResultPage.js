@@ -1,9 +1,14 @@
 import Chart from "chart.js/auto";
-import {useEffect, useRef} from "react";
+import {useCallback, useEffect, useRef} from "react";
 import jsPDF from "jspdf";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
+/**
+ * Page of the result
+ * @returns {JSX.Element} the jsx element
+ * @constructor the constructor
+ */
 function ResultPage() {
     const chartContainer = useRef(null);
     const chartInstance = useRef(null);
@@ -16,6 +21,10 @@ function ResultPage() {
         "w": 210
     }
 
+    /**
+     * Function to create the chart
+     * @param result the result
+     */
     const chart = (result) => {
         if (chartInstance.current) {
             chartInstance.current.destroy();
@@ -40,7 +49,10 @@ function ResultPage() {
         });
     };
 
-    const handleDownloadPDF = () => {
+    /**
+     * Function to create the pdf
+     */
+    const handleDownloadPDF =  useCallback(() => {
         const canvas = chartContainer.current;
         const imgData = canvas.toDataURL('image/png', 1.0);
         const pdf = new jsPDF("p","mm","a4");
@@ -48,13 +60,16 @@ function ResultPage() {
         pdf.text('Hello World!', marginLeft, yText, { fontSize: 36, fontName: 'Helvetica', fontStyle: 'bold', color: '#000000', maxWidth: 170 });
         pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width/diviseur, pdf.getImageProperties(imgData).height/diviseur);
         pdf.save('chart.pdf');
-        //TODO
+        //a finir
 
-    };
+    },[A4.w])
 
-    const handleQuit = () => {
+    /**
+     * the function to quit
+     */
+    const handleQuit = useCallback(() =>  {
         navigate("/profil")
-    }
+    },[navigate])
 
     useEffect(() => {
         const id = new URLSearchParams(window.location.search).get('id');
@@ -91,8 +106,8 @@ function ResultPage() {
                 <canvas ref={chartContainer}/>
 
             </div>
-            <Button onClick={handleDownloadPDF} type={"button"}>Download PDF</Button>
-            <Button onClick={handleQuit} type={"button"}>Retourner au menu</Button>
+            <Button onClick={handleDownloadPDF} type="button">Download PDF</Button>
+            <Button onClick={handleQuit} type="button">Retourner au menu</Button>
         </div>
     );
 }

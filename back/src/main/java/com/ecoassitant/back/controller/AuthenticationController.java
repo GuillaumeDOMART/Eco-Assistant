@@ -3,8 +3,6 @@ package com.ecoassitant.back.controller;
 import com.ecoassitant.back.dto.*;
 import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,7 +65,7 @@ public class AuthenticationController {
      * @return
      */
     @PatchMapping("forgotMail")
-    public boolean forgotMail(@RequestBody ForgotMailInput forgotMailInput) {
+    public ResponseEntity<Boolean> forgotMail(@RequestBody ForgotMailInput forgotMailInput){
         return authenticationService.forgotMail(forgotMailInput.getMail());
     }
 
