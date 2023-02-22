@@ -146,7 +146,7 @@ function AccueilSite() {
         }
         const json = await response.json();
         if (response.status >= 200) {
-            window.alert("oops y'a une bétise\n" + JSON.stringify(json))
+            //TODO gestion d'erreur ALERT
             return;
         }
 

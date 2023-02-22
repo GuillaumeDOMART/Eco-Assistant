@@ -12,15 +12,21 @@ function ModifyID() {
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate()
 
+    /**
+     * Function that will submit the new mail. If the mail is not correct or already used, an error 400 is returned
+     *
+     * @param datas data containing the new mail
+     * @returns {Promise<void>}
+     */
     const onSubmit = async (datas) => {
-        let token = sessionStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
 
         // Token session expired
         if (token === null) {
             navigate("/");
         }
 
-        let myHeaders = new Headers();
+        const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${token}`)
 
@@ -32,11 +38,10 @@ function ModifyID() {
             redirect: 'follow'
         };
 
-        let response = await fetch("api/auth/changeMail", requestOptions);
-        let json = await response.json();
-        console.log(response)
+        const response = await fetch("api/auth/changeMail", requestOptions);
+        const json = await response.json();
         if (response.status >= 400) {
-            window.alert("oops mail incorrect");
+            //TODO gestion d'erreur ALERT
             return;
         }
 

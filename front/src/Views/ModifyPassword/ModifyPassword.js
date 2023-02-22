@@ -12,21 +12,27 @@ function ModifyPassword() {
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate()
 
+    /**
+     * Function that will submit the new password. If the password is not correct, an error 400 is returned
+     *
+     * @param datas data containing the new password
+     * @returns {Promise<void>}
+     */
     const onSubmit = async (datas) => {
-        let token = sessionStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (token === null) {
             navigate("/");
         }
 
-        if(datas.newPassword !== datas.newPasswordConfirmed){
+        if (datas.newPassword !== datas.newPasswordConfirmed) {
             return
         }
 
-        let myHeaders = new Headers();
+        const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${token}`)
 
-        let jsonBody = {newPassword: datas.newPassword }
+        const jsonBody = {newPassword: datas.newPassword}
         const requestOptions = {
             method: 'PATCH',
             headers: myHeaders,
@@ -36,24 +42,32 @@ function ModifyPassword() {
 
         const response = await fetch("api/auth/changePassword", requestOptions);
 
+        if (response >= 200) {
+            //TODO gestion d'erreur ALERT (mot de passe pas bon)
+            return;
+        }
+
 
         navigate("/infoProfil")
     }
 
     return (
-       <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
-           <BarreNavCore/>
-           <div className="col-7 p-5">
-               <h1>Modification du mot de passe</h1>
+        <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
+            <BarreNavCore/>
+            <div className="col-7 p-5">
+                <h1>Modification du mot de passe</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField label="Mot de passe actuel" type="password" variant="standard" className="textfield" {...register("actualPassword")} required/>
-                    <TextField label="Nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPassword")} required/><br/>
-                    <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPasswordConfirmed")} required/><br/>
+                    <TextField label="Mot de passe actuel" type="password" variant="standard"
+                               className="textfield" {...register("actualPassword")} required/>
+                    <TextField label="Nouveau mot de passe" type="password" variant="standard"
+                               className="textfield" {...register("newPassword")} required/><br/>
+                    <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard"
+                               className="textfield" {...register("newPasswordConfirmed")} required/><br/>
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
-           </div>
-       </div>
-   )
+            </div>
+        </div>
+    )
 }
 
 export default ModifyPassword;
