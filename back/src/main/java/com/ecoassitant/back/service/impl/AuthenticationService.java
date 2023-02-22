@@ -147,18 +147,18 @@ public class AuthenticationService {
      * @param mail the mail of the user
      * @return if the mail was send
      */
-    public boolean forgotMail(String mail) {
+    public ResponseEntity<Boolean> forgotMail(String mail) {
         var profile = profilRepository.findByMail(mail);
-        if(profile.isEmpty()){
-            return false;
+        if (profile.isEmpty()) {
+            return ResponseEntity.badRequest().body(false);
         }
         var claims = new HashMap<String, Object>() {{
             put("verify", true);
         }};
-        var token = jwtService.generateToken(profile.get(),claims);
+        var token = jwtService.generateToken(profile.get(), claims);
         try {
-            emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de passe oublié", "Voici le liens pour changer vôtre mot de pass: https://"+domain+"/forgotPassword?token="+token);
-        }catch (MailException exception){
+            emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de passe oublié", "Voici le liens pour changer vôtre mot de pass: https://" + domain + "/forgotPassword?token=" + token);
+        } catch (MailException exception) {
             return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return ResponseEntity.ok(true);
