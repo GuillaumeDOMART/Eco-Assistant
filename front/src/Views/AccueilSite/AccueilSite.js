@@ -12,7 +12,11 @@ import {useCallback, useEffect, useState} from "react";
  * @returns {JSX.Element}
  * @constructor
  */
-const Connexion = ({onSubmit, register}) => {
+const Connexion = ({onSubmit, register, navigate}) => {
+    const handleConnect = () => {
+        navigate("/connexion")
+    }
+
     return (
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
             <h2 className="m-3">Créer un compte</h2>
@@ -22,8 +26,8 @@ const Connexion = ({onSubmit, register}) => {
                 <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...register("mail")} required/><br/>
                 <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...register("password")} required/><br/>
                 <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...register("passwordConfirmed")} required/><br/>
-                <Button type="submit" className="text-black mt-2" variant={"outline-primary"} bsClass="custom-btn">Créer</Button><br/>
-                <p>Déjà un compte ? <a href="/connexion">Se connecter</a></p>
+                <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>
+                <p>Déjà un compte ? <Button onClick={handleConnect} className="text-black text-decoration-underline">Se connecter</Button></p>
             </form>
             <p className="NB">Remplir un questionnaire sans être connecté entrainera une perte<br/>
                 des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
@@ -69,7 +73,7 @@ const Anonyme = ({navigate}) => {
                 Grâce au questionnaire Eco-Assistant,<br/>
                 calcule l&lsquo;impact environnemental<br/>
                 de ton projet :</p>
-            <a onClick={handleShow} className="fs-5" href="#">Remplir le questionnaire</a>
+            <Button onClick={handleShow} className="fs-5 text-black text-decoration-underline">Remplir le questionnaire</Button>
             <hr className="opacity-100"/>
             <Modal show={show} onHide={handleCancel}>
                 <Modal.Header closeButton>
@@ -137,7 +141,7 @@ function AccueilSite() {
     return (
            <Container className="bg" fluid>
                <Row className="vh-100 align-items-center">
-                   <Connexion onSubmit={handleSubmit(submitCreation)} register={register}/>
+                   <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate}/>
                    <Col className="col-1"></Col>
                    <Anonyme navigate={navigate}/>
                </Row>
