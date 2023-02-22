@@ -41,7 +41,7 @@ function ModifyID() {
         const response = await fetch("api/auth/changeMail", requestOptions);
         const json = await response.json();
         if (response.status >= 400) {
-            //TODO gestion d'erreur ALERT
+            //a finir gestion d'erreur ALERT
             return;
         }
 

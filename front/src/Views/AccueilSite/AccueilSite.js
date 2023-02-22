@@ -146,7 +146,7 @@ function AccueilSite() {
         }
         const json = await response.json();
         if (response.status >= 200) {
-            //TODO gestion d'erreur ALERT
+            //a finir  gestion d'erreur ALERT
             return;
         }
 
