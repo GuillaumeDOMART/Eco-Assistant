@@ -13,9 +13,12 @@ import {useCallback, useEffect, useState} from "react";
  * @constructor
  */
 const Connexion = ({onSubmit, register, navigate}) => {
-    const handleConnect = () => {
+    /**
+     * Redirect to the connection page
+     */
+    const handleConnect = useCallback(() => {
         navigate("/connexion")
-    }
+    }, [navigate])
 
     return (
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
@@ -82,7 +85,7 @@ const Anonyme = ({navigate}) => {
                 <Modal.Body>
                     Tu es sur le point de remplir le questionnaire sans être connecté.
                     Si tu quittes, toutes les données remplies seront perdues.<br/>
-                    Il te sera possible d'accéder au résultat du questionnaire et de l'exporter mais plus une fois la page quittée.<br/>
+                    Il te sera possible d&lsquo;accéder au résultat du questionnaire et de l&lsquo;exporter mais plus une fois la page quittée.<br/>
                     Souhaites-tu continuer de manière anonyme ?
                 </Modal.Body>
                 <Modal.Footer>
