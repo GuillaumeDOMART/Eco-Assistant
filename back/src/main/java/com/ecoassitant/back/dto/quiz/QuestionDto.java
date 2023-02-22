@@ -1,6 +1,7 @@
 package com.ecoassitant.back.dto.quiz;
 
 import com.ecoassitant.back.entity.QuestionEntity;
+import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.tools.Categorie;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeQ;
@@ -19,6 +20,7 @@ public class QuestionDto {
     private Categorie categorie;
     private  List<ReponsePossibleDto> reponses;
     private Long dependance;
+    private ReponseDonneeDtoQuiz reponse;
 
 
     /**
@@ -30,6 +32,7 @@ public class QuestionDto {
             return;
         this.questionId = question.getIdQuestion();
         this.intitule = question.getIntitule();
+        this.reponse = null;
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
         this.categorie = question.getCategorie();
@@ -95,5 +98,23 @@ public class QuestionDto {
 
     public void setDependance(Long dependance) {
         this.dependance = dependance;
+    }
+
+    public void addReponses(List<ReponseDonneeEntity> reponses){
+        reponses.forEach(reponseDonneeEntity -> addReponse(this, reponseDonneeEntity));
+    }
+
+    private void addReponse(QuestionDto question, ReponseDonneeEntity reponse){
+        if (question == null)
+            return;
+        if (question.questionId == reponse.getReponseDonneeKey().getReponsePos().getQuestionAsso().getIdQuestion()){
+            question.reponse = new ReponseDonneeDtoQuiz(reponse);
+            return;
+        }
+        question.reponses.forEach(reponsePossibleDto -> addReponse(reponsePossibleDto.getQuestionSuiv(),reponse));
+    }
+
+    public ReponseDonneeDtoQuiz getReponse() {
+        return reponse;
     }
 }

@@ -1,14 +1,13 @@
 package com.ecoassitant.back.controller;
 
+import com.ecoassitant.back.dto.IdDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,12 @@ public class QuestionController {
     @GetMapping("/questions")
     public ResponseEntity<Map<Phase, List<QuestionUniqueDto>>> testsQuestionnaire() {
         var quiz = questionService.getQuestionnaire();
-        System.out.println(quiz);
+        return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/questions")
+    public ResponseEntity <Map<Phase, List<QuestionUniqueDto>>> ModifierQuestionnaire(@RequestBody IdDto idProjet){
+        var quiz = questionService.completQuiz(idProjet.getId());
         return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }

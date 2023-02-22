@@ -21,6 +21,7 @@ public class ReponsePossibleDto {
         this.intitule = reponse.getIntitule();
         this.constante = reponse.getConstante().getConstante();
         this.reponseId = reponse.getIdReponsePos();
+        this.re
     }
 
     public QuestionDto getQuestionSuiv() {

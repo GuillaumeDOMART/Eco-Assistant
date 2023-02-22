@@ -16,4 +16,6 @@ public interface QuestionService {
      * @return first question of quiz
      */
     public Map<Phase, List<QuestionUniqueDto>> getQuestionnaire();
+
+    public Map<Phase, List<QuestionUniqueDto>> completQuiz(Integer id);
 }
