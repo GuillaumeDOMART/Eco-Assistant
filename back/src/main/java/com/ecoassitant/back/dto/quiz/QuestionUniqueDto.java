@@ -20,6 +20,7 @@ public class QuestionUniqueDto {
     private final Categorie categorie;
     private final Long dependance;
     private final List<ReponseUniqueDto> reponses;
+    private final ReponseUniqueDto reponseUniqueDto;
 
     public Long getDependance() {
         return dependance;
@@ -41,6 +42,7 @@ public class QuestionUniqueDto {
         quiz.getReponses().forEach(reponsePossibleDto -> {
             this.reponses.add(new ReponseUniqueDto(reponsePossibleDto));
         });
+        this.reponseUniqueDto = null;
     }
 
     /**
