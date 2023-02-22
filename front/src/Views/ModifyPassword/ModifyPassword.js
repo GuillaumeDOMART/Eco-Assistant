@@ -42,7 +42,7 @@ function ModifyPassword() {
 
         const response = await fetch("api/auth/changePassword", requestOptions);
 
-        if (response >= 200) {
+        if (response > 200) {
             //a finir gestion d'erreur ALERT (mot de passe pas bon)
             return;
         }
