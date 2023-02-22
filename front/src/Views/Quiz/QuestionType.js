@@ -1,5 +1,5 @@
 import React from "react";
-import {FormCheck} from "react-bootstrap";
+import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
 
 /**
  * A component representing a QCM question
@@ -7,22 +7,22 @@ import {FormCheck} from "react-bootstrap";
  * @returns {JSX.Element}
  * @constructor
  */
-export const QCM = React.forwardRef(({ onChange, name, question }) => {
+export const QCM = React.forwardRef(({onChange, name, question}, ref) => {
     return (
-        <div style={{marginTop: '20px'}}>
-            <p>{question.intitule}</p>
-            {/*<input type={"checkbox"} name={name} ref={ref} onChange={onChange}>*/}
+        <div style={{marginTop: '20px'}} className="shadow-lg rounded p-3">
+            <h5>{question.intitule}</h5>
+            <RadioGroup className="mx-5" defaultValue={question.reponses[0].intitule}>
                 {question.reponses.map((data) => {
-                    return  (
-                        <FormCheck
-                        inline
-                        name={question.intitule}
-                        type={"radio"}
-                        value={data.intitule}
-                        key={data.intitule}
-                        label={data.intitule}/>
+                    return (
+                        <FormControlLabel
+                            value={data.intitule}
+                            key={data.intitule}
+                            label={data.intitule}
+                            control={<Radio ref={ref} name={name} onChange={onChange}/>}
+                        />
                     )
                 })}<br/>
+            </RadioGroup>
         </div>
     )
 })
@@ -37,13 +37,15 @@ QCM.displayName = 'QCM';
  */
 export const NUMERIC = ({question, register}) => {
     return (
-        <div style={{marginTop: '20px'}}>
-            <label>{question.intitule}</label><br/>
-            {question.reponses[0].intitule} :<input type={"number"}
-                                               {...register(question.questionId.toString())}
-                                               defaultValue={0}
-                                               min={0}
+        <div style={{marginTop: '20px'}} className="shadow-lg rounded">
+            <div className="mx-5 p-3">
+                <h5>{question.intitule}</h5><br/>
+                {question.reponses[0].intitule} : <input
+                type={"number"}
+                {...register(question.questionId.toString())}
+                min={0}
             /><br/>
+            </div>
         </div>
     )
 }

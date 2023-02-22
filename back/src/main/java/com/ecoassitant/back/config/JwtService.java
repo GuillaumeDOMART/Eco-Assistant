@@ -1,8 +1,7 @@
 package com.ecoassitant.back.config;
 
 import com.ecoassitant.back.entity.ProfilEntity;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
-import io.jsonwebtoken.Jwts;
 
 import java.util.Map;
 import java.util.Objects;
@@ -44,7 +42,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(profilEntity.getMail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))//set expiration date in 1 day
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -127,6 +125,10 @@ public class JwtService {
      * @return return verify claims. Return false is the claims verify is not present
      */
     public boolean extractVerify(String token){
-        return (boolean) extractClaim(token, claims -> claims.get("verify"));
+        try {
+            return (boolean) extractClaim(token, claims -> claims.get("verify"));
+        }catch (JwtException | IllegalArgumentException __){
+            return false;
+        }
     }
 }
