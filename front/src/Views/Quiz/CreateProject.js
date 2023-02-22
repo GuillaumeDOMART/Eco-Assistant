@@ -2,6 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
 import {Col, Container, Row} from "react-bootstrap";
+import {useCallback} from "react";
 
 
 /**
@@ -68,9 +69,9 @@ function CreateProject() {
     /**
      * function to handle quit
      */
-    const handleQuit = () => {
+    const handleQuit = useCallback(() => {
         navigate("/profil")
-    }
+    },[navigate()]);
 
     return (
         <Container fluid>
