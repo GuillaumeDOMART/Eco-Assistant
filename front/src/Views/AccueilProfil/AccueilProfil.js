@@ -62,8 +62,6 @@ function TableauProjets() {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log("result")
-                    console.log(result)
                     setIsLoaded(true);
                     setItems(result);
                 },
@@ -98,7 +96,7 @@ function TableauProjets() {
                     <Row className="p-4 align-items-center">
                         <Container className= "w-50 h-50 align-items-center p-4">
                             <Image className="opacity-75 p-4 se" fluid src={logo} alt="logo eco-assistant" />
-                            <p>Eco-Assistant est là pour toi. Calcule l'empreinte carbone de l'un de tes projets informatiques.</p>
+                            <p>Eco-Assistant est là pour toi. Calcule l&lsquo;empreinte carbone de l&lsquo;un de tes projets informatiques.</p>
                             <Button onClick={handleBegin} variant="secondary"> Commence le questionnaire ici !</Button>
                         </Container>
                     </Row>
