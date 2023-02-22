@@ -50,6 +50,11 @@ function FormContainer(){
     );
 }
 
+/**
+ * Validation buttons of form
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function Buttons() {
     return(
         <Row>
