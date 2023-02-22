@@ -28,11 +28,15 @@ function ModifyPassword() {
             return
         }
 
+        if (datas.actualPassword === datas.newPassword) {
+            return;
+        }
+
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${token}`)
 
-        const jsonBody = {newPassword: datas.newPassword}
+        const jsonBody = {oldPassword: datas.actualPassword, password: datas.newPassword}
         const requestOptions = {
             method: 'PATCH',
             headers: myHeaders,
