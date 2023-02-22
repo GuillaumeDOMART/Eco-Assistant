@@ -23,6 +23,12 @@ function Project({onSubmit, register}) {
     )
 }
 
+/**
+ * Handle project submit
+ * @param onSubmit onSubmit
+ * @param handleSubmit handleSubmit
+ * @returns {*} return the function
+ */
 function handleProjectSubmit(onSubmit, handleSubmit) {
     return handleSubmit(onSubmit);
 }
