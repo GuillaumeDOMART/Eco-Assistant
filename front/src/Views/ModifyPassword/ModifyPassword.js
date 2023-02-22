@@ -3,12 +3,17 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 
+/**
+ * Page for change password
+ * @returns {JSX.Element} the jsx element
+ * @constructor the constructor
+ */
 function ModifyPassword() {
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate()
 
     const onSubmit = () => {
-        //TODO modifyMDP
+        //a finir
         navigate("/profil")
     }
 

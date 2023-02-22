@@ -3,12 +3,17 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 
+/**
+ * Page for change mail
+ * @returns {JSX.Element} the jsx element
+ * @constructor the constructor
+ */
 function ModifyID() {
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate()
 
     const onSubmit = () => {
-        //TODO modifyID
+        //need to be finish
         navigate("/profil")
     }
 
