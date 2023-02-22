@@ -57,7 +57,6 @@ QuestionServiceImpl implements QuestionService {
         var reponses = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
         questionDto.addReponses(reponses);
         var questionUniqueDto = QuestionUniqueDto.Mapper(questionDto);
-
         return questionUniqueDto;
     }
 
