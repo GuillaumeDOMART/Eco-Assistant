@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import {useNavigate} from "react-router-dom";
 import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
-import Phase from "../../Views/Quiz/Phase";
+import Phase from "./Phase";
 
 const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
 
@@ -65,7 +65,6 @@ function StepperComponent() {
      */
     const onSubmit = (dataList) => {
         const projectId = sessionStorage.getItem("project")
-        sessionStorage.removeItem("project")
         const sendToBack = {}
         const responses = []
         for (const [key, value] of Object.entries(dataList)) {

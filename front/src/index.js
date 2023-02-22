@@ -14,7 +14,7 @@ import ConnexionPage from "./Views/Connexion/ConnexionPage";
 import AccueilSite from "./Views/AccueilSite/AccueilSite";
 import AccueilProfil from "./Views/AccueilProfil/AccueilProfil";
 import Profil from "./Views/InfoProfil/Profil";
-import StepperComponent from "./Components/Stepper/Stepper";
+import StepperComponent from "./Views/Quiz/Quiz";
 import CreateProject from "./Views/Quiz/CreateProject";
 import Deconnection from "./Views/Deconnection/LogOut";
 import Guest from "./Views/guest/Guest";

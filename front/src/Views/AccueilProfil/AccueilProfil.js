@@ -25,12 +25,15 @@ import {useNavigate} from "react-router-dom";
     }
  ```
  */
-function LigneTableauProjet(data){
+function LigneTableauProjet(data) {
     return (
         <tr className='table border-bottom border-2 border-secondary'>
             <td align={"center"} valign={"middle"}>{data.nomProjet}</td>
             <td align={"center"} valign={"middle"}>{data.etat}</td>
-            <td align={"center"} valign={"middle"}><Button className="m-3" variant="secondary">Modifier</Button><Button className="m-3" variant="primary">Visionner</Button><Button className="m-3" variant="outline-primary">Exporter</Button><Button className="m-3" variant= "outline-danger">Dissocier</Button></td>
+            <td align={"center"} valign={"middle"}><Button className="m-3" variant="secondary">Modifier</Button><Button
+                className="m-3" variant="primary">Visionner</Button><Button className="m-3"
+                                                                            variant="outline-primary">Exporter</Button><Button
+                className="m-3" variant="outline-danger">Dissocier</Button></td>
         </tr>
     );
 }
@@ -49,7 +52,7 @@ function TableauProjets() {
      */
     const handleBegin = useCallback(() => {
         navigate("/newproject")
-    },[navigate])
+    }, [navigate])
     useEffect(() => {
         const token = sessionStorage.getItem("token")
         const options = {
@@ -58,7 +61,7 @@ function TableauProjets() {
                 'Authorization': `Bearer ${token}`
             },
         };
-        fetch('/api/projet/user',options)
+        fetch('/api/projet/user', options)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -76,11 +79,11 @@ function TableauProjets() {
     if (apiError) {
         return (
             <Alert variant="danger">
-                <Alert.Heading >Error</Alert.Heading>
+                <Alert.Heading>Error</Alert.Heading>
                 {apiError.message}
             </Alert>
         );
-    } else if (!isLoaded){
+    } else if (!isLoaded) {
         return (
             <Table>
                 <TableauProjetsHeader/>
@@ -88,29 +91,31 @@ function TableauProjets() {
             </Table>
         );
     } else {
-        if(items.length === 0){
+        if (items.length === 0) {
             return (
                 <>
                     <h1>Accueil</h1>
                     <br/>
                     <Row className="p-4 align-items-center">
-                        <Container className= "w-50 h-50 align-items-center p-4">
-                            <Image className="opacity-75 p-4 se" fluid src={logo} alt="logo eco-assistant" />
-                            <p>Eco-Assistant est là pour toi. Calcule l&lsquo;empreinte carbone de l&lsquo;un de tes projets informatiques.</p>
+                        <Container className="w-50 h-50 align-items-center p-4">
+                            <Image className="opacity-75 p-4 se" fluid src={logo} alt="logo eco-assistant"/>
+                            <p>Eco-Assistant est là pour toi. Calcule l&lsquo;empreinte carbone de l&lsquo;un de tes
+                                projets informatiques.</p>
                             <Button onClick={handleBegin} variant="secondary"> Commence le questionnaire ici !</Button>
                         </Container>
                     </Row>
                 </>
             );
-        }
-        else {
+        } else {
             return (
                 <>
                     <h1>Accueil</h1>
                     <br/>
                     <Table>
                         <TableauProjetsHeader/>
-                        {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                        <tbody>
+                            {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                        </tbody>
                     </Table>
                 </>
             );
@@ -156,7 +161,9 @@ function MockTableauProjets() {
 
             <Table>
                 <TableauProjetsHeader/>
-                {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                <tbody>
+                    {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                </tbody>
             </Table>
         </>
     );
@@ -165,26 +172,30 @@ function MockTableauProjets() {
 /**
  * Placeholder lines for project listing table
  */
-function LigneTableauProjetsPlaceholder(){
-    return(
+function LigneTableauProjetsPlaceholder() {
+    return (
+        <tbody>
         <tr className='table border-bottom border-3 border-primary'>
-            <td> <Placeholder xs={5}/></td>
+            <td><Placeholder xs={5}/></td>
             <td><Placeholder xs={5}/></td>
             <td><Placeholder xs={2} aria-hidden="true"/></td>
         </tr>
+        </tbody>
     );
 }
 
 /**
  * Header for project listing table with data or placeholder
  */
-function TableauProjetsHeader(){
+function TableauProjetsHeader() {
     return (
+        <thead>
         <tr className='table border-bottom border-3 border-primary'>
             <th>Nom du projet</th>
             <th>Etat du Projet</th>
             <th>Actions possibles</th>
         </tr>
+        </thead>
     );
 }
 
@@ -195,7 +206,7 @@ function TableauProjetsHeader(){
 function AccueilProfil() {
     const mockFront = false;
     let tableToDisplay = <MockTableauProjets/>;
-    if(!mockFront) tableToDisplay = <TableauProjets/>
+    if (!mockFront) tableToDisplay = <TableauProjets/>
 
     return (
         <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
