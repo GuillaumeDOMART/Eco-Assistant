@@ -1,8 +1,8 @@
 import Chart from "chart.js/auto";
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 import jsPDF from "jspdf";
-import {Button} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Page of the result
@@ -17,9 +17,9 @@ function ResultPage() {
     const marginLeft = 15;
     const yText = 25;
     const A4 = {
-        "h": 297,
-        "w": 210
-    }
+        h: 297,
+        w: 210,
+    };
 
     /**
      * Function to create the chart
@@ -31,21 +31,33 @@ function ResultPage() {
         }
 
         chartInstance.current = new Chart(chartContainer.current, {
-            type: 'bar',
+            type: "bar",
             data: {
-                labels: ["Planification", "Développement", "Test", "Déploiement", "Maintenance"],
+                labels: [
+                    "Planification",
+                    "Développement",
+                    "Test",
+                    "Déploiement",
+                    "Maintenance",
+                ],
                 datasets: [
                     {
-                        label: 'Consomation en CO2',
-                        data: [result.planification, result.developpement, result.test, result.deploiement, result.maintenance],
-                        backgroundColor: 'rgba(100, 198, 146, 0.2)',
-                        borderWidth: 1
-                    }
-                ]
+                        label: "Consomation en CO2",
+                        data: [
+                            result.planification,
+                            result.developpement,
+                            result.test,
+                            result.deploiement,
+                            result.maintenance,
+                        ],
+                        backgroundColor: "rgba(100, 198, 146, 0.2)",
+                        borderWidth: 1,
+                    },
+                ],
             },
             options: {
-                maintainAspectRatio: false
-            }
+                maintainAspectRatio: false,
+            },
         });
     };
 
@@ -54,42 +66,63 @@ function ResultPage() {
      */
     const handleDownloadPDF = () => {
         const canvas = chartContainer.current;
-        const imgData = canvas.toDataURL('image/png', 1.0);
-        const pdf = new jsPDF("p","mm","a4");
-        const diviseur = Math.ceil(pdf.getImageProperties(imgData).width/(A4.w-20))
-        pdf.text('Hello World!', marginLeft, yText, { fontSize: 36, fontName: 'Helvetica', fontStyle: 'bold', color: '#000000', maxWidth: 170 });
-        pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width/diviseur, pdf.getImageProperties(imgData).height/diviseur);
-        pdf.save('chart.pdf');
+        const imgData = canvas.toDataURL("image/png", 1.0);
+        const pdf = new jsPDF("p", "mm", "a4");
+        const diviseur = Math.ceil(
+            pdf.getImageProperties(imgData).width / (A4.w - 20)
+        );
+        pdf.text("Hello World!", marginLeft, yText, {
+            fontSize: 36,
+            fontName: "Helvetica",
+            fontStyle: "bold",
+            color: "#000000",
+            maxWidth: 170,
+        });
+        pdf.addImage(
+            imgData,
+            "JPEG",
+            15,
+            40,
+            pdf.getImageProperties(imgData).width / diviseur,
+            pdf.getImageProperties(imgData).height / diviseur
+        );
+        pdf.save("chart.pdf");
         //a finir
-
-    }
+    };
 
     /**
      * the function to quit
      */
-    const handleQuit = () =>  {
-        navigate("/profil")
-    }
+    const handleQuit = () => {
+        navigate("/profil");
+    };
 
     useEffect(() => {
-        const id = new URLSearchParams(window.location.search).get('id');
-        const token = sessionStorage.getItem("token")
+        const id = new URLSearchParams(window.location.search).get("id");
+        const token = sessionStorage.getItem("token");
         const options = {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({id })
+            body: JSON.stringify({ id }),
         };
-        fetch('api/calculs',options)
-            .then(response => response.json())
-            .then(jsonData => {
-                const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
+        fetch("api/calculs", options)
+            .then((response) => response.json())
+            .then((jsonData) => {
+                const arrays = [
+                    "planification",
+                    "developpement",
+                    "test",
+                    "deploiement",
+                    "maintenance",
+                ];
                 const sums = {};
-                arrays.forEach(array => {
+                arrays.forEach((array) => {
                     if (jsonData.mine[array]) {
-                        const results = jsonData.mine[array].map(item => item.result);
+                        const results = jsonData.mine[array].map((item) => item.result);
+
                         sums[array] = results.reduce((acc, current) => acc + current, 0);
                     } else {
                         sums[array] = 0;
@@ -101,13 +134,16 @@ function ResultPage() {
 
     return (
         <div ref={pdfContainer}>
-            <h1>Rapport de consomation de CO2</h1>
+            <h1>Rapport de consommation de CO2</h1>
             <div>
-                <canvas ref={chartContainer}/>
-
+                <canvas ref={chartContainer} />
             </div>
-            <Button onClick={handleDownloadPDF} type="button">Download PDF</Button>
-            <Button onClick={handleQuit} type="button">Retourner au menu</Button>
+            <Button onClick={handleDownloadPDF} type="button">
+                Télécharger PDF
+            </Button>
+            <Button onClick={handleQuit} type="button">
+                Retourner au menu
+            </Button>
         </div>
     );
 }
