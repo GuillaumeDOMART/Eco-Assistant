@@ -100,10 +100,19 @@ public class QuestionDto {
         this.dependance = dependance;
     }
 
+    /**
+     * add all responses in the quiz
+     * @param reponses list of response of th previous quiz
+     */
     public void addReponses(List<ReponseDonneeEntity> reponses){
         reponses.forEach(reponseDonneeEntity -> addReponse(this, reponseDonneeEntity));
     }
 
+    /**
+     * add a response in the quiz
+     * @param question
+     * @param reponse response of th previous quiz
+     */
     private void addReponse(QuestionDto question, ReponseDonneeEntity reponse){
         if (question == null)
             return;
@@ -114,6 +123,10 @@ public class QuestionDto {
         question.reponses.forEach(reponsePossibleDto -> addReponse(reponsePossibleDto.getQuestionSuiv(),reponse));
     }
 
+    /**
+     * get the response of the question complete previously else null
+     * @return response of the previous quiz
+     */
     public ReponseDonneeDtoQuiz getReponse() {
         return reponse;
     }

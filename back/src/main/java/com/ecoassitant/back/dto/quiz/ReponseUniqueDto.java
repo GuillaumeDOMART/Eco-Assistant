@@ -18,6 +18,11 @@ public class ReponseUniqueDto {
         this.intitule = reponsePossibleDto.getIntitule();
         this.questionSuivId = reponsePossibleDto.getQuestionSuiv()!= null?reponsePossibleDto.getQuestionSuiv().getQuestionId(): -1L;
     }
+
+    /**
+     * create reponse without questionSuiv
+     * @param reponsePossible ReponsePossibleEntity
+     */
     public ReponseUniqueDto(ReponsePossibleEntity reponsePossible) {
         this.intitule = reponsePossible.getIntitule();
         this.questionSuivId = reponsePossible.getQuestionSuiv()!= null?reponsePossible.getQuestionSuiv().getIdQuestion(): -1L;

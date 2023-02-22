@@ -26,8 +26,8 @@ QuestionServiceImpl implements QuestionService {
      * Function to create QuestionServiceImpl with QuestionRepository
      *
      * @param questionRepository      the QuestionRepository
-     * @param projetRepository
-     * @param reponseDonneeRepository
+     * @param projetRepository        the ProjetRepository
+     * @param reponseDonneeRepository the ReponseDonneeRepository
      */
     public QuestionServiceImpl(QuestionRepository questionRepository, ProjetRepository projetRepository, ReponseDonneeRepository reponseDonneeRepository) {
         this.questionRepository = questionRepository;
