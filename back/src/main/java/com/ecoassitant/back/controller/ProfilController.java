@@ -112,6 +112,6 @@ public class ProfilController {
             return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
         }
         var mail = jwtService.extractMail(token);
-        return authenticationService.changePassword(mail, forgotPasswordVerifyDto.getPassword());
+        return authenticationService.changePassword(mail, forgotPasswordVerifyDto.getPassword(), forgotPasswordVerifyDto.getOldPassword());
     }
 }

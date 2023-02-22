@@ -165,25 +165,39 @@ public class AuthenticationService {
     }
 
     /**
-     * Function to change password for user
+     * Function to change password for a user with a token authentication
      *
      * @param token    Token of the current uset
      * @param password new password
      * @return if the password was change
      */
-    public ResponseEntity<Boolean> changePassword(String token, String password) {
+    public ResponseEntity<Boolean> changePasswordWithToken(String token, String password, String oldPassword) {
+        token = token.substring(7);
         var mail = jwtService.extractMail(token);
+        return changePassword(mail, password, oldPassword);
+    }
+
+    /**
+     * Function to change password for a user
+     *
+     * @param mail     mail
+     * @param password new password
+     * @return if the password was change
+     */
+    public ResponseEntity<Boolean> changePassword(String mail, String password, String oldPassword) {
         var profil = profilRepository.findByMail(mail);
         if (profil.isEmpty()) {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
         var user = profil.get();
+        var encodedPwd = passwordEncoder.encode(password);
+
         user.setPassword(password);
         var violations = validator.validate(user);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(encodedPwd);
         profilRepository.save(user);
         return ResponseEntity.ok(true);
     }
@@ -191,7 +205,7 @@ public class AuthenticationService {
     /**
      * Method to change the mail of the current user
      *
-     * @param token token of the current user
+     * @param token   token of the current user
      * @param newMail new mail to change
      * @return the new token of the user based on the new mail
      */

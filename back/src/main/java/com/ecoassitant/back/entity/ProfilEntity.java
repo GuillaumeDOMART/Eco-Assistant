@@ -31,7 +31,7 @@ public class ProfilEntity implements Serializable {
     private String mail;
 
     @Column(name = "mdp", nullable = false)
-    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\\d)(?=.*?[#?!@$%^&*\\-]_).{8,}$", message = "Le mot de passe n'est pas conforme")
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\\d)(?=.*?[#?!@$%^&*\\-_]).{8,}$", message = "Le mot de passe n'est pas conforme")
     private String password;
 
     @Column(name = "nom", nullable = false)
