@@ -117,6 +117,7 @@ function AccueilSite() {
         myHeaders.append("Content-Type", "application/json");
 
         if(datas.password !== datas.passwordConfirmed){
+            setParagraphContent("Les mot de passe fournies ne corresponde pas")
             return
         }
         const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.firstname, prenom: datas.lastname}
@@ -128,6 +129,10 @@ function AccueilSite() {
         };
 
         const response = await fetch("api/auth/register", requestOptions);
+        if(response.status === 403){
+            setParagraphContent("Le mail est déjà utilisé pour un compte")
+            return
+        }
         const json = await response.json();
         sessionStorage.setItem("token", json.token);
         navigate("/profil")

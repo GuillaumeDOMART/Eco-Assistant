@@ -1,8 +1,9 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Table} from "@mui/material";
-import Button from "@mui/material/Button";
-import {Alert, Placeholder} from "react-bootstrap";
+import {Alert, Button, Container, Image, Placeholder, Row} from "react-bootstrap";
+import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
+import {useNavigate} from "react-router-dom";
 
 /**
  * This function generate a line containing informations about a project
@@ -27,9 +28,9 @@ import {Alert, Placeholder} from "react-bootstrap";
 function LigneTableauProjet(data){
     return (
         <tr className='table border-bottom border-2 border-secondary'>
-            <td>{data.nomProjet}</td>
-            <td>{data.etat}</td>
-            <td><Button >Modifier</Button><Button>Visionner</Button><Button>Exporter</Button><Button>Dissocier</Button></td>
+            <td align={"center"} valign={"middle"}>{data.nomProjet}</td>
+            <td align={"center"} valign={"middle"}>{data.etat}</td>
+            <td align={"center"} valign={"middle"}><Button className="m-3" variant="secondary">Modifier</Button><Button className="m-3" variant="primary">Visionner</Button><Button className="m-3" variant="outline-primary">Exporter</Button><Button className="m-3" variant= "outline-danger">Dissocier</Button></td>
         </tr>
     );
 }
@@ -41,7 +42,14 @@ function TableauProjets() {
     const [apiError, setApiError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
+    const navigate = useNavigate()
 
+    /**
+     * Navigate to the page to begin the questionnaire
+     */
+    const handleBegin = useCallback(() => {
+        navigate("/newproject")
+    },[navigate])
     useEffect(() => {
         const token = sessionStorage.getItem("token")
         const options = {
@@ -80,16 +88,33 @@ function TableauProjets() {
             </Table>
         );
     } else {
-        return (
-            <>
-                <h1>Accueil</h1>
-                <br/>
-                <Table>
-                    <TableauProjetsHeader/>
-                    {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
-                </Table>
-            </>
-        );
+        if(items.length === 0){
+            return (
+                <>
+                    <h1>Accueil</h1>
+                    <br/>
+                    <Row className="p-4 align-items-center">
+                        <Container className= "w-50 h-50 align-items-center p-4">
+                            <Image className="opacity-75 p-4 se" fluid src={logo} alt="logo eco-assistant" />
+                            <p>Eco-Assistant est là pour toi. Calcule l&lsquo;empreinte carbone de l&lsquo;un de tes projets informatiques.</p>
+                            <Button onClick={handleBegin} variant="secondary"> Commence le questionnaire ici !</Button>
+                        </Container>
+                    </Row>
+                </>
+            );
+        }
+        else {
+            return (
+                <>
+                    <h1>Accueil</h1>
+                    <br/>
+                    <Table>
+                        <TableauProjetsHeader/>
+                        {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                    </Table>
+                </>
+            );
+        }
     }
 }
 
