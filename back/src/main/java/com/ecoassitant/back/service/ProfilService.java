@@ -22,5 +22,10 @@ public interface ProfilService {
      */
     ProfilDto getProfilByMail(String mail);
 
+    /**
+     * Endpoint to create a user admin
+     * @param profilDto profile to create
+     * @return return the id of the profile
+     */
     Integer createProfil(ProfilSimplDto profilDto);
 }
