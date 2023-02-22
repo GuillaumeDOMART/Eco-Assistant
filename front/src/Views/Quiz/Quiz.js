@@ -65,8 +65,6 @@ function StepperComponent() {
      */
     const onSubmit = (dataList) => {
         const projectId = sessionStorage.getItem("project")
-        // sessionStorage.removeItem("project")
-        console.log(projectId)
         const sendToBack = {}
         const responses = []
         for (const [key, value] of Object.entries(dataList)) {
@@ -77,8 +75,6 @@ function StepperComponent() {
         }
         sendToBack.projetId = projectId;
         sendToBack.reponses = responses;
-
-        console.log(sendToBack)
 
         const token = sessionStorage.getItem("token")
 
