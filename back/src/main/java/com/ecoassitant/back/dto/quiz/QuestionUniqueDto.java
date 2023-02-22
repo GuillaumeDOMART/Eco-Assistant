@@ -1,6 +1,5 @@
 package com.ecoassitant.back.dto.quiz;
 
-import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.tools.Categorie;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeQ;
@@ -21,7 +20,7 @@ public class QuestionUniqueDto {
     private final Categorie categorie;
     private final Long dependance;
     private final List<ReponseUniqueDto> reponses;
-    private final ReponseDonneeDtoQuiz reponseDonneeDtoQuiz;
+    private final ReponseDonneeDtoQuiz reponse;
 
     public Long getDependance() {
         return dependance;
@@ -45,7 +44,7 @@ public class QuestionUniqueDto {
         quiz.getReponses().forEach(reponsePossibleDto -> {
             this.reponses.add(new ReponseUniqueDto(reponsePossibleDto));
         });
-        this.reponseDonneeDtoQuiz = quiz.getReponse();
+        this.reponse = quiz.getReponse();
     }
 
     /**
@@ -81,8 +80,8 @@ public class QuestionUniqueDto {
         quiz.getReponses().forEach( reponsePossibleDto -> remplir(reponsePossibleDto.getQuestionSuiv()));
     }
 
-    public ReponseDonneeDtoQuiz getReponseDonneeDtoQuiz() {
-        return reponseDonneeDtoQuiz;
+    public ReponseDonneeDtoQuiz getReponse() {
+        return reponse;
     }
     public Long getQuestionId() {
         return questionId;
