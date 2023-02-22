@@ -37,7 +37,7 @@ const Connexion = ({onSubmit, register}) => {
  * @returns {JSX.Element}
  * @constructor
  */
-const Anonyme = () => {
+const Anonyme = ({navigate}) => {
     const [show, setShow] = useState(false);
     /**
      * Hide pop-up if deletion of profile is refused
@@ -51,6 +51,12 @@ const Anonyme = () => {
     const handleShow = useCallback(() => {
         setShow(true);
     },[setShow])
+
+    const handleAccept = useCallback(() => {
+       setShow(false)
+       navigate("/guest")
+    }, [setShow, navigate])
+
     return (
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75">
             <h1 className="Title"><img className="logo" src={require('../../Components/logo/Eco-Assistant_transparent.PNG')}  alt={"logo"}/>
@@ -76,7 +82,7 @@ const Anonyme = () => {
                     Souhaites-tu continuer de manière anonyme ?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="outline-danger">
+                    <Button variant="outline-danger" onClick={handleAccept}>
                         Remplir le questionnaire
                     </Button>
                 </Modal.Footer>
@@ -133,7 +139,7 @@ function AccueilSite() {
                <Row className="vh-100 align-items-center">
                    <Connexion onSubmit={handleSubmit(submitCreation)} register={register}/>
                    <Col className="col-1"></Col>
-                   <Anonyme/>
+                   <Anonyme navigate={navigate}/>
                </Row>
            </Container>
     )
