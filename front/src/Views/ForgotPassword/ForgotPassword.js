@@ -28,9 +28,7 @@ function ForgotPassword(){
  */
 function Logo(){
     return (
-        <>
-            <img className="logo position-absolute start-0 top-0 m-1" src={require('../../Components/logo/logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
-        </>
+        <img className="logo position-absolute start-0 top-0 m-1" src={require('../../Components/logo/logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
     );
 }
 
@@ -41,13 +39,26 @@ function Logo(){
  */
 function FormContainer(){
     return (
-            <Container className= "d-flex align-items-center justify-content-center col-6 border border-5 border-secondary p-5 shadow-lg">
-                <Col>
-                    <h1 style={{paddingBottom : "8%"}}>Mot de passe Oublié</h1>
-                    <Form/>
-                </Col>
-            </Container>
+        <Container className= "d-flex align-items-center justify-content-center col-6 border border-5 border-secondary p-5 shadow-lg">
+            <Col>
+                <h1 style={{paddingBottom : "8%"}}>Mot de passe oublié</h1>
+                <Form/>
+            </Col>
+        </Container>
     );
+}
+
+function Buttons() {
+    return(
+        <Row>
+            <Col>
+                <Button href="/" variant="outline-danger">Annuler</Button><br/>
+            </Col>
+            <Col>
+                <Button type="submit" variant= "outline-primary">Valider</Button><br/>
+            </Col>
+        </Row>
+    )
 }
 
 /**
@@ -101,14 +112,7 @@ function Form(){
                 <TextField label="Nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPassword")} required/><br/>
                 <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPasswordConfirmed")} required/><br/>
                 <p className="text-danger w-100 h-auto">{paragraphContent}</p>
-                <Row>
-                    <Col>
-                        <Button href="/" variant="outline-danger">Annuler</Button><br/>
-                    </Col>
-                    <Col>
-                        <Button type="submit" variant= "outline-primary">Valider</Button><br/>
-                    </Col>
-                </Row>
+                <Buttons/>
             </form>
 
             <Modal show={show} size="lg" centered>

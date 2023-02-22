@@ -31,9 +31,7 @@ function ConnexionPage(){
  */
 function Logo(){
     return (
-        <>
-            <img className="logo position-absolute top-0 start-0 m-1"  src={require('./logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
-        </>
+        <img className="logo position-absolute top-0 start-0 m-1"  src={require('./logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
     );
 }
 

@@ -43,11 +43,24 @@ function FormContainer(){
     return (
         <Container className= "d-flex align-items-center justify-content-center col-6 border border-5 border-secondary p-5 shadow-lg">
             <Col>
-                <h1 style={{paddingBottom : "8%"}}>Mot de passe Oublié?</h1>
+                <h1 style={{paddingBottom : "8%"}}>Mot de passe oublié?</h1>
                 <Form/>
             </Col>
         </Container>
     );
+}
+
+function Buttons() {
+    return(
+        <Row>
+            <Col>
+                <Button href={"/connexion"} variant="outline-danger">Annuler</Button><br/>
+            </Col>
+            <Col>
+                <Button type={"submit"} variant="outline-primary">Valider</Button><br/>
+            </Col>
+        </Row>
+    )
 }
 
 /**
@@ -102,19 +115,12 @@ function Form(){
                 <TextField label="Mail" type="email" variant="standard" className="textfield" {...register("mail")} required/><br/>
                 <TextField label="Confirmer le mail" type="email" variant="standard" className="textfield" {...register("confirMail")} required/><br/>
                 <p className="text-danger w-100 h-auto">{paragraphContent}</p>
-                <Row>
-                    <Col>
-                        <Button href={"/connexion"} variant="outline-danger">Annuler</Button><br/>
-                    </Col>
-                    <Col>
-                        <Button type={"submit"} variant="outline-primary">Valider</Button><br/>
-                    </Col>
-                </Row>
+                <Buttons/>
             </form>
 
             <Modal show={show} size="lg" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modfication mot de passe</Modal.Title>
+                    <Modal.Title>Modification mot de passe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Un mail pour modifier votre mot de passe vient d&apos;être envoyé</Modal.Body>
                 <Modal.Footer>
