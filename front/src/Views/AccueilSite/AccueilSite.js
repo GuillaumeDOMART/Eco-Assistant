@@ -22,7 +22,7 @@ const Connexion = ({onSubmit, register}) => {
                 <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...register("mail")} required/><br/>
                 <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...register("password")} required/><br/>
                 <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...register("passwordConfirmed")} required/><br/>
-                <Button type="submit" className="text-black">Créer</Button><br/>
+                <Button type="submit" className="text-black mt-2" variant={"outline-primary"} bsClass="custom-btn">Créer</Button><br/>
                 <p>Déjà un compte ? <a href="/connexion">Se connecter</a></p>
             </form>
             <p className="NB">Remplir un questionnaire sans être connecté entrainera une perte<br/>
@@ -61,7 +61,7 @@ const Anonyme = ({navigate}) => {
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75">
             <h1 className="Title"><img className="logo" src={require('../../Components/logo/Eco-Assistant_transparent.PNG')}  alt={"logo"}/>
                 Eco-Assistant</h1>
-            <hr className="opacity-100"/>
+            <hr/>
             <p className="Text">Envie de connaitre l&lsquo;empreinte<br/>
                 carbone de ton projet<br/>
                 informatique ?<br/>
@@ -69,7 +69,7 @@ const Anonyme = ({navigate}) => {
                 Grâce au questionnaire Eco-Assistant,<br/>
                 calcule l&lsquo;impact environnemental<br/>
                 de ton projet :</p>
-            <a onClick={handleShow} className="fs-5">Remplir le questionnaire</a>
+            <a onClick={handleShow} className="fs-5" href="#">Remplir le questionnaire</a>
             <hr className="opacity-100"/>
             <Modal show={show} onHide={handleCancel}>
                 <Modal.Header closeButton>
@@ -82,7 +82,7 @@ const Anonyme = ({navigate}) => {
                     Souhaites-tu continuer de manière anonyme ?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="outline-danger" onClick={handleAccept}>
+                    <Button variant="outline-primary" className="text-black" onClick={handleAccept}>
                         Remplir le questionnaire
                     </Button>
                 </Modal.Footer>
