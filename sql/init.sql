@@ -107,7 +107,7 @@ VALUES
 
     /*HORS_PHASE*/
     ('Votre projet nécessite-t-il des trajets en avion ?',null, 'QCM','HORS_PHASE', null),
-    ('Combien de km en avion sont effectués pour le projet ?',1,'NUMERIC', 'HORS_PHASE', 1),
+    ('Combien de km en avion sont effectués pour le projet ?',1,'NUMERIC', 'HORS_PHASE', 2),
 
     /*PLANIFICATION*/
     ('Veux-tu remplir cette phase?', 2,'QCM', 'PLANIFICATION', null),
@@ -184,7 +184,28 @@ VALUES
 
 --- CREATION DES CONSTANTES
 INSERT INTO constante (constante, tracabilite)
-VALUES (1, 'Constante neutre'),
+VALUES          (0, 'Constante neutre'),
+                (1, 'Constante neutre'),
+                (0.178, 'https://datagir.ademe.fr/apps/mon-impact-transport/ '),
+ /*C*/          (1, 'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langage. C étant la valeur 1'),
+ /*C++*/        (1.34 , 'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langage. C étant la valeur 1'),
+ /*Java*/       (1.98, 'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langage. C étant la valeur 1'),
+ /*Python*/     (75.88, 'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langage. C étant la valeur 1'),
+ /*Moyenne*/    (16.12, 'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langage. C étant la valeur 1'),
+ /*PHP*/        (29.30, 'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langage. C étant la valeur 1'),
+ /*JavaScript*/ (4.45, 'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langage. C étant la valeur 1'),
+ /*TypeScript*/ (21.50, 'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langage. C étant la valeur 1'),
+                (0.2, 'Voiture par kilometre, https://datagir.ademe.fr/apps/mon-impact-transport/'),
+                (0.0168, 'Transport en commun, https://datagir.ademe.fr/apps/mon-impact-transport/'),
+                (7.66, 'Moyenne des transport d un salarié en une journée,https://culture-rh.com/empreinte-carbone-salarie/'),
+                (0.67, 'Empreinte carbonne d un ordinateur fixe pour 1 journée, https://impactco2.fr/usagenumerique '),
+                (0.25, 'Empreinte carbonne d un ordinateur portable pour 1 journée, https://impactco2.fr/usagenumerique '),
+                (0.006, 'Émissions de CO2 (kgCO2e/kWh) du nucleaire, https://climate.selectra.com/fr/empreinte-carbone/energie'),
+                (0.025, 'Émissions de CO2 (kgCO2e/kWh) de energie renouvlable, https://climate.selectra.com/fr/empreinte-carbone/energie'),
+                (0.6515, 'Émissions de CO2 (kgCO2e/kWh) de energie fossile, https://climate.selectra.com/fr/empreinte-carbone/energie');
+
+
+
 
 --- CREATION DES REPONSES POSSIBLE
 INSERT INTO reponsepossible (questionasso, questionsuiv, intitule,
@@ -192,120 +213,260 @@ INSERT INTO reponsepossible (questionasso, questionsuiv, intitule,
 VALUES
 
     /*HORS_PHASE*/
-    (1, 2, 'OUI', 1),
-    (1, 3, 'NON', 1),
-    (2, 3, 'Veuillez entrer un entier', 1),
+    (1, 2, 'OUI', 2),
+    (1, 3, 'NON', 2),
+    (2, 3, 'Veuillez entrer un entier', 3),
 
     /*PLANIFICATION*/
-    (3, 4, 'OUI', 1),
-    (3, 14, 'NON', 1),
-    (4, 5, 'Veuillez entrer un entier', 1),
-    (5, 6, 'Veuillez entrer un entier', 1),
-
+    (3, 4, 'OUI', 2),
+    (3, 14, 'NON', 2),
+    (4, 5, 'Veuillez entrer un entier', 2),
+    (5, 6, 'Veuillez entrer un entier', 14),
     (6, 7, 'Veuillez entrer un entier', 2),
     (7, 8, 'OUI', 2),
     (7, 9, 'NON', 2),
     (8, 9, 'Veuillez entrer un entier', 2),
-    (9, 10, 'Veuillez entrer un entier', 2),
+    (9, 10, 'Veuillez entrer un entier', 12),
     (10, 11, 'Veuillez entrer un entier', 2),
-    (11, 12, 'Veuillez entrer un entier', 2),
-    (12, 13, 'Veuillez entrer un entier', 2),
-    (13, 14, 'Veuillez entrer un entier', 2),
+    (11, 12, 'Veuillez entrer un entier', 13),
+    (12, 13, 'Veuillez entrer un entier', 15),
+    (13, 14, 'Veuillez entrer un entier', 16),
 
     /*DEVELOPPEMENT*/
     (14, 15, 'OUI', 2),
     (14, 29, 'NON', 2),
     (15, 16, 'Veuillez entrer un entier', 2),
-    (16, 17, 'Veuillez entrer un entier', 2),
+    (16, 17, 'Veuillez entrer un entier', 14),
     (17, 18, 'Veuillez entrer un entier', 2),
     (18, 19, 'OUI', 2),
     (18, 19, 'NON', 2),
     (19, 20, 'Veuillez entrer un entier', 2),
-    (20, 21, 'Veuillez entrer un entier', 2),
+    (20, 21, 'Veuillez entrer un entier', 12),
     (21, 22, 'Veuillez entrer un entier', 2),
-    (22, 23, 'Veuillez entrer un entier', 2),
-    (23, 24, 'Veuillez entrer un entier', 2),
-    (24, 25, 'Veuillez entrer un entier', 2),
-    (25, 26, 'C', 2),
-    (25, 26, 'C++', 2),
-    (25, 26, 'Java', 2),
-    (25, 26, 'Python', 2),
-    (25, 26, 'Autre', 2),
+    (22, 23, 'Veuillez entrer un entier', 13),
+    (23, 24, 'Veuillez entrer un entier', 15),
+    (24, 25, 'Veuillez entrer un entier', 16),
+    (25, 26, 'C', 3),
+    (25, 26, 'C++', 4),
+    (25, 26, 'Java', 5),
+    (25, 26, 'Python', 6),
+    (25, 26, 'Autre', 7),
     (26, 27, 'Veuillez entrer un entier', 2),
-    (27, 28, 'PHP', 2),
-    (27, 28, 'JavaScript', 2),
-    (27, 28, 'TypeScript', 2),
-    (27, 28, 'Autre', 2),
+    (27, 28, 'PHP', 8),
+    (27, 28, 'JavaScript', 9),
+    (27, 28, 'TypeScript', 10),
+    (27, 28, 'Autre', 7),
     (28, 29, 'Veuillez entrer un entier', 2),
 
     /*TEST*/
     (29, 30, 'OUI', 2),
     (29, 40, 'NON', 2),
     (30, 31, 'Veuillez entrer un entier', 2),
-    (31, 32, 'Veuillez entrer un entier', 2),
+    (31, 32, 'Veuillez entrer un entier', 14),
     (32, 33, 'Veuillez entrer un entier', 2),
     (33, 34, 'OUI', 2),
     (33, 35, 'NON', 2),
     (34, 35, 'Veuillez entrer un entier', 2),
-    (35, 36, 'Veuillez entrer un entier', 2),
+    (35, 36, 'Veuillez entrer un entier', 12),
     (36, 37, 'Veuillez entrer un entier', 2),
-    (37, 38, 'Veuillez entrer un entier', 2),
-    (38, 39, 'Veuillez entrer un entier', 2),
-    (39, 40, 'Veuillez entrer un entier', 2),
+    (37, 38, 'Veuillez entrer un entier', 13),
+    (38, 39, 'Veuillez entrer un entier', 15),
+    (39, 40, 'Veuillez entrer un entier', 16),
 
     /*DEPLOIEMENT*/
     (40, 41, 'OUI', 2),
     (40, 55, 'NON', 2),
     (41, 42, 'Veuillez entrer un entier', 2),
-    (42, 43, 'Veuillez entrer un entier', 2),
+    (42, 43, 'Veuillez entrer un entier', 14),
     (43, 44, 'Veuillez entrer un entier', 2),
     (44, 45, 'OUI', 2),
     (44, 46, 'NON', 2),
     (45, 46, 'Veuillez entrer un entier', 2),
-    (46, 47, 'Veuillez entrer un entier', 2),
+    (46, 47, 'Veuillez entrer un entier', 12),
     (47, 48, 'Veuillez entrer un entier', 2),
-    (48, 49, 'Veuillez entrer un entier', 2),
-    (49, 50, 'Veuillez entrer un entier', 2),
-    (50, 51, 'Veuillez entrer un entier', 2),
+    (48, 49, 'Veuillez entrer un entier', 13),
+    (49, 50, 'Veuillez entrer un entier', 15),
+    (50, 51, 'Veuillez entrer un entier', 16),
     (51, 52, 'OUI', 2),
     (51, 55, 'NON', 2),
     (52, 53, 'Veuillez entrer un entier', 2),
     (53, 54, 'OUI', 2),
     (53, 55, 'NON', 2),
-    (54, 55, 'NUCLEAIRE', 2),
-    (54, 55, 'HYDRAULIQUE', 2),
-    (54, 55, 'CHARBON', 2),
-    (54, 55, 'GEOTHERMIQUE', 2),
-    (54, 55, 'FIOUL', 2),
-    (54, 55, 'ENERGIE RENOUVELABLE', 2),
+    (54, 55, 'NUCLEAIRE', 17),
+    (54, 55, 'FOSSILE', 19),
+    (54, 55, 'ENERGIE RENOUVELABLE', 18),
 
     /*MAINTENANCE*/
     (55, 56, 'OUI', 2),
     (55, null, 'NON', 2),
     (56, 57, 'Veuillez entrer un entier', 2),
-    (57, 58, 'Veuillez entrer un entier', 2),
+    (57, 58, 'Veuillez entrer un entier', 14),
     (58, 59, 'Veuillez entrer un entier', 2),
     (59, 60, 'OUI', 2),
     (59, 60, 'NON', 2),
     (60, 61, 'Veuillez entrer un entier', 2),
-    (61, 62, 'Veuillez entrer un entier', 2),
+    (61, 62, 'Veuillez entrer un entier', 12),
     (62, 63, 'Veuillez entrer un entier', 2),
-    (63, 64, 'Veuillez entrer un entier', 2),
-    (64, 65, 'Veuillez entrer un entier', 2),
-    (65, null, 'Veuillez entrer un entier', 2),
+    (63, 64, 'Veuillez entrer un entier', 13),
+    (64, 65, 'Veuillez entrer un entier', 15),
+    (65, null, 'Veuillez entrer un entier', 16);
 --CREATION REPONSEDONNEE
-INSERT INTO reponsedonnee
-VALUES (1, 1, 30),
-       (1, 2, 1),
-       (1, 4, 3),
-       (1, 6, 10),
-       (1, 7, 15);
---CREATION CALCUL TEST
+
+--CREATION CALCUL
 INSERT INTO calcul(calculopid, reponsepossibleid, nbcalcul,priorite,
                    phase)
-VALUES (5, 11, 1, 'DEVELOPPEMENT'),
-       (1, 1, 2, 'DEVELOPPEMENT'),
-       (3, 2, 2, 'DEVELOPPEMENT'),
-       (5, 4, 2, 'DEVELOPPEMENT'),
-       (3, 6, 3, 'DEVELOPPEMENT'),
-       (5, 7, 3, 'DEVELOPPEMENT');
+VALUES  (5, 2, 1, 1, 'HORS_PHASE'),
+
+        (3, 9, 2, 1, 'PLANIFICATION'),--a*
+        (3, 8, 2, 1, 'PLANIFICATION'),--y*
+        (1, 4, 2, 1, 'PLANIFICATION'),--z+
+        (3, 11, 2, 1, 'PLANIFICATION'),--c*
+        (3, 8, 2, 1, 'PLANIFICATION'),--y*
+        (2, 4, 2, 1, 'PLANIFICATION'),//z-
+        (3, 6, 2, 1, 'PLANIFICATION'),x*
+        (3, 9, 2, 1, 'PLANIFICATION'),//a*
+        (2, 8, 2, 1, 'PLANIFICATION'),//y-
+        (3, 6, 2, 1, 'PLANIFICATION'),//x*
+        (3, 11, 2, 1, 'PLANIFICATION'),//c*
+        (5, 8, 2, 1, 'PLANIFICATION'),//yf
+
+        (3, 9, 2, 2, 'PLANIFICATION'),//a*
+        (3, 8, 2, 2, 'PLANIFICATION'),//y*
+        (1, 4, 2, 2, 'PLANIFICATION'),//z+
+        (3, 11, 2, 2, 'PLANIFICATION'),//c*
+        (3, 8, 2, 2, 'PLANIFICATION'),//y*
+        (5, 4, 2, 2, 'PLANIFICATION'),//zf
+
+        (3, 5, 2, 3, 'PLANIFICATION'),
+        (5, 4, 2, 3, 'PLANIFICATION'),
+
+        (3, 12, 3, 1, 'PLANIFICATION'),
+        (5, 4, 3, 1, 'PLANIFICATION'),
+
+        (3, 13, 4, 1, 'PLANIFICATION'),
+        (5, 4, 4, 1, 'PLANIFICATION'),
+
+        (3, 20, 5, 1, 'DEVELOPPEMENT'),//a*
+        (3, 19, 5, 1, 'DEVELOPPEMENT'),//y*
+        (1, 15, 5, 1, 'DEVELOPPEMENT'),//z+
+        (3, 22, 5, 1, 'DEVELOPPEMENT'),//c*
+        (3, 19, 5, 1, 'DEVELOPPEMENT'),//y*
+        (2, 15, 5, 1, 'DEVELOPPEMENT'),//z-
+        (3, 17, 5, 1, 'DEVELOPPEMENT'),//x*
+        (3, 20, 5, 1, 'DEVELOPPEMENT'),//a*
+        (2, 19, 5, 1, 'DEVELOPPEMENT'),//y-
+        (3, 17, 5, 1, 'DEVELOPPEMENT'),//x*
+        (3, 22, 5, 1, 'DEVELOPPEMENT'),//c*
+        (5, 19, 5, 1, 'DEVELOPPEMENT'),//yf
+
+        (3, 20, 5, 2, 'DEVELOPPEMENT'),//a*
+        (3, 19, 5, 2, 'DEVELOPPEMENT'),//y*
+        (1, 15, 5, 2, 'DEVELOPPEMENT'),//z+
+        (3, 22, 5, 2, 'DEVELOPPEMENT'),//c*
+        (3, 19, 5, 2, 'DEVELOPPEMENT'),//y*
+        (5, 15, 5, 2, 'DEVELOPPEMENT'),//zf
+
+        (3, 16, 5, 3, 'DEVELOPPEMENT'),
+        (5, 15, 5, 3, 'DEVELOPPEMENT'),
+
+        (3, 23, 6, 1, 'DEVELOPPEMENT'),
+        (5, 15, 6, 1, 'DEVELOPPEMENT'),
+
+        (3, 24, 7, 1, 'DEVELOPPEMENT'),
+        (5, 15, 7, 1, 'DEVELOPPEMENT'),
+
+        (3, 25, 8, 1, 'DEVELOPPEMENT'),
+        (5, 26, 8, 1, 'DEVELOPPEMENT'),
+
+        (3, 27, 9, 1, 'DEVELOPPEMENT'),
+        (5, 28, 9, 1, 'DEVELOPPEMENT'),
+
+        (3, 35, 10, 1, 'TEST'),//a*
+        (3, 34, 10, 1, 'TEST'),//y*
+        (1, 30, 10, 1, 'TEST'),//z+
+        (3, 37, 10, 1, 'TEST'),//c*
+        (3, 34, 10, 1, 'TEST'),//y*
+        (2, 30, 10, 1, 'TEST'),//z-
+        (3, 32, 10, 1, 'TEST'),//x*
+        (3, 35, 10, 1, 'TEST'),//a*
+        (2, 34, 10, 1, 'TEST'),//y-
+        (3, 32, 10, 1, 'TEST'),//x*
+        (3, 37, 10, 1, 'TEST'),//c*
+        (5, 34, 10, 1, 'TEST'),//yf
+
+        (3, 35, 10, 2, 'TEST'),//a*
+        (3, 34, 10, 2, 'TEST'),//y*
+        (1, 30, 10, 2, 'TEST'),//z+
+        (3, 37, 10, 2, 'TEST'),//c*
+        (3, 34, 10, 2, 'TEST'),//y*
+        (5, 30, 10, 2, 'TEST'),//zf
+
+        (3, 31, 10, 3, 'TEST'),
+        (5, 30, 10, 3, 'TEST'),
+
+        (3, 38, 11, 1, 'TEST'),
+        (5, 30, 11, 1, 'TEST'),
+
+        (3, 39, 12, 1, 'TEST'),
+        (5, 30, 12, 1, 'TEST'),
+
+        (3, 46, 13, 1, 'DEPLOIEMENT'),//a*
+        (3, 45, 13, 1, 'DEPLOIEMENT'),//y*
+        (1, 41, 13, 1, 'DEPLOIEMENT'),//z+
+        (3, 48, 13, 1, 'DEPLOIEMENT'),//c*
+        (3, 45, 13, 1, 'DEPLOIEMENT'),//y*
+        (2, 41, 13, 1, 'DEPLOIEMENT'),//z-
+        (3, 43, 13, 1, 'DEPLOIEMENT'),//x*
+        (3, 46, 13, 1, 'DEPLOIEMENT'),//a*
+        (2, 45, 13, 1, 'DEPLOIEMENT'),//y-
+        (3, 43, 13, 1, 'DEPLOIEMENT'),//x*
+        (3, 48, 13, 1, 'DEPLOIEMENT'),//c*
+        (5, 45, 13, 1, 'DEPLOIEMENT'),//yf
+
+        (3, 46, 13, 2, 'DEPLOIEMENT'),//a*
+        (3, 45, 13, 2, 'DEPLOIEMENT'),//y*
+        (1, 41, 13, 2, 'DEPLOIEMENT'),//z+
+        (3, 48, 13, 2, 'DEPLOIEMENT'),//c*
+        (3, 45, 13, 2, 'DEPLOIEMENT'),//y*
+        (5, 41, 13, 2, 'DEPLOIEMENT'),//zf
+
+        (3, 42, 13, 3, 'DEPLOIEMENT'),
+        (5, 41, 13, 3, 'DEPLOIEMENT'),
+
+        (3, 49, 14, 1, 'DEPLOIEMENT'),
+        (5, 41, 14, 1, 'DEPLOIEMENT'),
+
+        (3, 50, 15, 1, 'DEPLOIEMENT'),
+        (5, 41, 15, 1, 'DEPLOIEMENT'),
+
+        (3, 52, 16, 1, 'DEPLOIEMENT'),
+        (5, 54, 16, 1 'DEPLOIEMENT'),
+
+    (3, 61, 17, 1, 'MAINTENANCE'),//a*
+    (3, 60, 17, 1, 'MAINTENANCE'),//y*
+    (1, 56, 17, 1, 'MAINTENANCE'),//z+
+    (3, 63, 17, 1, 'MAINTENANCE'),//c*
+    (3, 60, 17, 1, 'MAINTENANCE'),//y*
+    (2, 56, 17, 1, 'MAINTENANCE'),//z-
+    (3, 58, 17, 1, 'MAINTENANCE'),//x*
+    (3, 61, 17, 1, 'MAINTENANCE'),//a*
+    (2, 60, 17, 1, 'MAINTENANCE'),//y-
+    (3, 58, 17, 1, 'MAINTENANCE'),//x*
+    (3, 63, 17, 1, 'MAINTENANCE'),//c*
+    (5, 60, 17, 1, 'MAINTENANCE'),//yf
+
+    (3, 61, 17, 2, 'MAINTENANCE'),//a*
+    (3, 60, 17, 2, 'MAINTENANCE'),//y*
+    (1, 56, 17, 2, 'MAINTENANCE'),//z+
+    (3, 63, 17, 2, 'MAINTENANCE'),//c*
+    (3, 60, 17, 2, 'MAINTENANCE'),//y*
+    (5, 56, 17, 2, 'MAINTENANCE'),//zf
+
+    (3, 57, 17, 3, 'MAINTENANCE'),
+    (5, 56, 17, 3, 'MAINTENANCE'),
+
+    (3, 64, 18, 1, 'MAINTENANCE'),
+    (5, 56, 18, 1, 'MAINTENANCE'),
+
+    (3, 65, 19, 1, 'MAINTENANCE'),
+    (5, 56, 19, 1, 'MAINTENANCE'),
