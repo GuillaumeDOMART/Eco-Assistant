@@ -80,7 +80,7 @@ function Form(){
 
         const reponse = await fetch("/api/auth/authentication", requestOptions);
         if(reponse.status === 403){
-            setParagraphContent("Information de connexion non valide, veuillez vérifier les informations renseigner")
+            setParagraphContent("Informations de connexion non valide, veuillez vérifier les informations renseignées")
             reset();
             return;
         }

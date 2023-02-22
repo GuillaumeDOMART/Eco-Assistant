@@ -84,7 +84,7 @@ function Form(){
                     if (response.status === 500) {
                         setParagraphContent("Problème rencontré pendant l'envoi du mail")
                     } else if (response.status === 404) {
-                        setParagraphContent("Ce mail n&apos;est pas utilisé pour un profil")
+                        setParagraphContent("Ce mail n'est pas utilisé pour un profil")
                     } else {
                         setShow(true)
                     }
