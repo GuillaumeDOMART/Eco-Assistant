@@ -17,7 +17,6 @@ public class QuestionUniqueDto {
     private final String intitule;
     private final Phase phase;
     private final TypeQ type;
-    private final Categorie categorie;
     private final Long dependance;
     private final List<ReponseUniqueDto> reponses;
 
@@ -31,7 +30,6 @@ public class QuestionUniqueDto {
      * @param quiz format tree
      */
     public QuestionUniqueDto(QuestionDto quiz) {
-        this.categorie = quiz.getCategorie();
         this.intitule = quiz.getIntitule();
         this.phase = quiz.getPhase();
         this.questionId = quiz.getQuestionId();
@@ -86,10 +84,6 @@ public class QuestionUniqueDto {
 
     public Phase getPhase() {
         return phase;
-    }
-
-    public Categorie getCategorie() {
-        return categorie;
     }
 
     public List<ReponseUniqueDto> getReponses() {

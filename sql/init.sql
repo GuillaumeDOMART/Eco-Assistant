@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS question
     phase       VARCHAR(50)  NOT NULL,
     dependance  INT,
     CONSTRAINT questionpre FOREIGN KEY (questionpre) REFERENCES question (idquestion),
-    CONSTRAINT dependance FOREIGN KEY(dependance) REFERENCES question (idquestion)
+    CONSTRAINT dependance FOREIGN KEY(dependance) REFERENCES reponsepossible (idreponsepos)
 );
 CREATE TABLE IF NOT EXISTS constante
 (
@@ -107,15 +107,15 @@ VALUES
 
     /*HORS_PHASE*/
     ('Votre projet nécessite-t-il des trajets en avion ?',null, 'QCM','HORS_PHASE', null),
-    ('Combien de km en avion sont effectués pour le projet ?',1,'NUMERIC', 'HORS_PHASE', 2),
+    ('Combien de km en avion sont effectués pour le projet ?',1,'NUMERIC', 'HORS_PHASE', 1),
 
     /*PLANIFICATION*/
     ('Veux-tu remplir cette phase?', 2,'QCM', 'PLANIFICATION', null),
-    ('Combien de jours dure cette phase ?', 3, 'NUMERIC', 'PLANIFICATION', 3),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 4, 'NUMERIC', 'PLANIFICATION', 3),
-    ('Combien de jours de télétravail par semaine ?',5, 'NUMERIC', 'PLANIFICATION', 3),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 6, 'QCM', 'PLANIFICATION', 3),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 7, 'NUMERIC', 'PLANIFICATION', 7),
+    ('Combien de jours dure cette phase ?', 3, 'NUMERIC', 'PLANIFICATION', 4),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 4, 'NUMERIC', 'PLANIFICATION', 4),
+    ('Combien de jours de télétravail par semaine ?',5, 'NUMERIC', 'PLANIFICATION', 4),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 6, 'QCM', 'PLANIFICATION', 4),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 7, 'NUMERIC', 'PLANIFICATION', 9),
     ('Combien viennent en voiture ?', 8, 'NUMERIC', 'PLANIFICATION', null),
     ('Combien viennent en vélo ou à pied ?', 9, 'NUMERIC', 'PLANIFICATION', null),
     ('Combien viennent en transport en commun ?', 10, 'NUMERIC', 'PLANIFICATION', null),
@@ -124,11 +124,11 @@ VALUES
 
     /*DEVELOPPEMENT*/
     ('Veux-tu remplir cette phase?', 13,'QCM', 'DEVELOPPEMENT', null),
-    ('Combien de jours dure cette phase ?', 14, 'NUMERIC', 'DEVELOPPEMENT', 14),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 15, 'NUMERIC', 'DEVELOPPEMENT', 14),
-    ('Combien de jours de télétravail par semaine ?',16, 'NUMERIC', 'DEVELOPPEMENT', 14),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 17, 'QCM', 'DEVELOPPEMENT', 14),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 18, 'NUMERIC', 'DEVELOPPEMENT', 18),
+    ('Combien de jours dure cette phase ?', 14, 'NUMERIC', 'DEVELOPPEMENT', 17),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 15, 'NUMERIC', 'DEVELOPPEMENT', 17),
+    ('Combien de jours de télétravail par semaine ?',16, 'NUMERIC', 'DEVELOPPEMENT', 17),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 17, 'QCM', 'DEVELOPPEMENT', 17),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 18, 'NUMERIC', 'DEVELOPPEMENT', 23),
     ('Combien viennent en voiture ?', 19, 'NUMERIC', 'DEVELOPPEMENT', null),
     ('Combien viennent en vélo ou à pied ?', 20, 'NUMERIC', 'DEVELOPPEMENT', null),
     ('Combien viennent en transport en commun ?', 21, 'NUMERIC', 'DEVELOPPEMENT', null),
@@ -141,11 +141,11 @@ VALUES
 
     /*TEST*/
     ('Veux-tu remplir cette phase?', 28,'QCM', 'TEST', null),
-    ('Combien de jours dure cette phase ?', 29, 'NUMERIC', 'TEST', 29),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 30, 'NUMERIC', 'TEST', 29),
-    ('Combien de jours de télétravail par semaine ?',31, 'NUMERIC', 'TEST', 29),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 32, 'QCM', 'TEST', 29),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 33, 'NUMERIC', 'TEST', 33),
+    ('Combien de jours dure cette phase ?', 29, 'NUMERIC', 'TEST', 42),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 30, 'NUMERIC', 'TEST', 42),
+    ('Combien de jours de télétravail par semaine ?',31, 'NUMERIC', 'TEST', 42),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 32, 'QCM', 'TEST', 42),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 33, 'NUMERIC', 'TEST', 47),
     ('Combien viennent en voiture ?', 34, 'NUMERIC', 'TEST', null),
     ('Combien viennent en vélo ou à pied ?', 35, 'NUMERIC', 'TEST', null),
     ('Combien viennent en transport en commun ?', 36, 'NUMERIC', 'TEST', null),
@@ -154,28 +154,28 @@ VALUES
 
     /*DEPLOIEMENT*/
     ('Veux-tu remplir cette phase?', 39,'QCM', 'DEPLOIEMENT', null),
-    ('Combien de jours dure cette phase ?', 40, 'NUMERIC', 'DEPLOIEMENT', 40),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 41, 'NUMERIC', 'DEPLOIEMENT', 40),
-    ('Combien de jours de télétravail par semaine ?',42, 'NUMERIC', 'DEPLOIEMENT', 40),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 43, 'QCM', 'DEPLOIEMENT', 40),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 44, 'NUMERIC', 'DEPLOIEMENT', 44),
+    ('Combien de jours dure cette phase ?', 40, 'NUMERIC', 'DEPLOIEMENT', 55),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 41, 'NUMERIC', 'DEPLOIEMENT', 55),
+    ('Combien de jours de télétravail par semaine ?',42, 'NUMERIC', 'DEPLOIEMENT', 55),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 43, 'QCM', 'DEPLOIEMENT', 55),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 44, 'NUMERIC', 'DEPLOIEMENT', 60),
     ('Combien viennent en voiture ?', 45, 'NUMERIC', 'DEPLOIEMENT', null),
     ('Combien viennent en vélo ou à pied ?', 46, 'NUMERIC', 'DEPLOIEMENT', null),
     ('Combien viennent en transport en commun ?', 47, 'NUMERIC', 'DEPLOIEMENT', null),
     ('Combien de PC fixes utilises-tu pour cette phase ?', 48, 'NUMERIC', 'DEPLOIEMENT', null),
     ('Combien de PC portables utilises-tu pour cette phase ?', 49, 'NUMERIC', 'DEPLOIEMENT', null),
     ('Utilise-tu un DataCenter ?', 50, 'QCM', 'DEPLOIEMENT', null),
-    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 51, 'NUMERIC', 'DEPLOIEMENT', 51),
-    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 52, 'QCM', 'DEPLOIEMENT', 51),
-    ('Quelle énergie alimente majoritairement ton DataCenter ?', 53, 'QCM', 'DEPLOIEMENT', 53),
+    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 51, 'NUMERIC', 'DEPLOIEMENT', 68),
+    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 52, 'QCM', 'DEPLOIEMENT', 68),
+    ('Quelle énergie alimente majoritairement ton DataCenter ?', 53, 'QCM', 'DEPLOIEMENT', 71),
 
     /*MAINTENANCE*/
     ('Veux-tu remplir cette phase?', 54,'QCM', 'DEPLOIEMENT', null),
-    ('Combien de jours dure cette phase ?', 55, 'NUMERIC', 'DEPLOIEMENT', 55),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 56, 'NUMERIC', 'DEPLOIEMENT', 55),
-    ('Combien de jours de télétravail par semaine ?',57, 'NUMERIC', 'DEPLOIEMENT', 55),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 58, 'QCM', 'DEPLOIEMENT', 55),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 59, 'NUMERIC', 'DEPLOIEMENT', 59),
+    ('Combien de jours dure cette phase ?', 55, 'NUMERIC', 'DEPLOIEMENT', 76),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 56, 'NUMERIC', 'DEPLOIEMENT', 76),
+    ('Combien de jours de télétravail par semaine ?',57, 'NUMERIC', 'DEPLOIEMENT', 76),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 58, 'QCM', 'DEPLOIEMENT', 76),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 59, 'NUMERIC', 'DEPLOIEMENT', 81),
     ('Combien viennent en voiture ?', 60, 'NUMERIC', 'DEPLOIEMENT', null),
     ('Combien viennent en vélo ou à pied ?', 61, 'NUMERIC', 'DEPLOIEMENT', null),
     ('Combien viennent en transport en commun ?', 62, 'NUMERIC', 'DEPLOIEMENT', null),
