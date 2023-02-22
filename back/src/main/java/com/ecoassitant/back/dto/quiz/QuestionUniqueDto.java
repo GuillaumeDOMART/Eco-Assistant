@@ -28,6 +28,8 @@ public class QuestionUniqueDto {
     }
     private static HashMap<Phase,List<QuestionUniqueDto>> map = new HashMap<>();
 
+
+
     /**
      * create a question with a quiz
      * @param quiz format tree
@@ -79,6 +81,9 @@ public class QuestionUniqueDto {
         quiz.getReponses().forEach( reponsePossibleDto -> remplir(reponsePossibleDto.getQuestionSuiv()));
     }
 
+    public ReponseDonneeDtoQuiz getReponseDonneeDtoQuiz() {
+        return reponseDonneeDtoQuiz;
+    }
     public Long getQuestionId() {
         return questionId;
     }
