@@ -315,158 +315,185 @@ VALUES
 --CREATION CALCUL
 INSERT INTO calcul(calculopid, reponsepossibleid, nbcalcul,priorite,
                    phase)
-VALUES  (5, 2, 1, 1, 'HORS_PHASE'),
+VALUES  (5, 3, 1, 1, 'HORS_PHASE'),
 
-        (3, 9, 2, 1, 'PLANIFICATION'),--a*
-        (3, 8, 2, 1, 'PLANIFICATION'),--y*
-        (1, 4, 2, 1, 'PLANIFICATION'),--z+
-        (3, 11, 2, 1, 'PLANIFICATION'),--c*
-        (3, 8, 2, 1, 'PLANIFICATION'),--y*
-        (2, 4, 2, 1, 'PLANIFICATION'),//z-
-        (3, 6, 2, 1, 'PLANIFICATION'),x*
-        (3, 9, 2, 1, 'PLANIFICATION'),//a*
-        (2, 8, 2, 1, 'PLANIFICATION'),//y-
-        (3, 6, 2, 1, 'PLANIFICATION'),//x*
-        (3, 11, 2, 1, 'PLANIFICATION'),//c*
-        (5, 8, 2, 1, 'PLANIFICATION'),//yf
+        (3, 12, 2, 1, 'PLANIFICATION'),--a*
+        (3, 11, 2, 1, 'PLANIFICATION'),--y*
+        (1, 6, 2, 1, 'PLANIFICATION'),--z+
+        (3, 14, 2, 1, 'PLANIFICATION'),--c*
+        (3, 11, 2, 1, 'PLANIFICATION'),--y*
+        (2, 6, 2, 1, 'PLANIFICATION'),--z-
+        (3, 8, 2, 1, 'PLANIFICATION'),--x*
+        (3, 12, 2, 1, 'PLANIFICATION'),--a*
+        (2, 11, 2, 1, 'PLANIFICATION'),--y-
+        (3, 8, 2, 1, 'PLANIFICATION'),--x*
+        (3, 14, 2, 1, 'PLANIFICATION'),--c*
+        (5, 11, 2, 1, 'PLANIFICATION'),--yf
 
-        (3, 9, 2, 2, 'PLANIFICATION'),//a*
-        (3, 8, 2, 2, 'PLANIFICATION'),//y*
-        (1, 4, 2, 2, 'PLANIFICATION'),//z+
-        (3, 11, 2, 2, 'PLANIFICATION'),//c*
-        (3, 8, 2, 2, 'PLANIFICATION'),//y*
-        (5, 4, 2, 2, 'PLANIFICATION'),//zf
+        (3, 12, 2, 2, 'PLANIFICATION'),--a*
+        (3, 11, 2, 2, 'PLANIFICATION'),--y*
+        (1, 6, 2, 2, 'PLANIFICATION'),--z+
+        (3, 14, 2, 2, 'PLANIFICATION'),--c*
+        (3, 11, 2, 2, 'PLANIFICATION'),--y*
+        (5, 6, 2, 2, 'PLANIFICATION'),--zf
 
-        (3, 5, 2, 3, 'PLANIFICATION'),
-        (5, 4, 2, 3, 'PLANIFICATION'),
+        (3, 7, 2, 3, 'PLANIFICATION'),
+        (5, 6, 2, 3, 'PLANIFICATION'),
 
-        (3, 12, 3, 1, 'PLANIFICATION'),
-        (5, 4, 3, 1, 'PLANIFICATION'),
+        (3, 15, 3, 1, 'PLANIFICATION'),
+        (5, 6, 3, 1, 'PLANIFICATION'),
 
-        (3, 13, 4, 1, 'PLANIFICATION'),
-        (5, 4, 4, 1, 'PLANIFICATION'),
+        (3, 16, 4, 1, 'PLANIFICATION'),
+        (5, 6, 4, 1, 'PLANIFICATION'),
 
-        (3, 20, 5, 1, 'DEVELOPPEMENT'),//a*
-        (3, 19, 5, 1, 'DEVELOPPEMENT'),//y*
-        (1, 15, 5, 1, 'DEVELOPPEMENT'),//z+
-        (3, 22, 5, 1, 'DEVELOPPEMENT'),//c*
-        (3, 19, 5, 1, 'DEVELOPPEMENT'),//y*
-        (2, 15, 5, 1, 'DEVELOPPEMENT'),//z-
-        (3, 17, 5, 1, 'DEVELOPPEMENT'),//x*
-        (3, 20, 5, 1, 'DEVELOPPEMENT'),//a*
-        (2, 19, 5, 1, 'DEVELOPPEMENT'),//y-
-        (3, 17, 5, 1, 'DEVELOPPEMENT'),//x*
-        (3, 22, 5, 1, 'DEVELOPPEMENT'),//c*
-        (5, 19, 5, 1, 'DEVELOPPEMENT'),//yf
+        (3, 26, 5, 1, 'DEVELOPPEMENT'),--a*
+        (3, 25, 5, 1, 'DEVELOPPEMENT'),--y*
+        (1, 19, 5, 1, 'DEVELOPPEMENT'),--z+
+        (3, 28, 5, 1, 'DEVELOPPEMENT'),--c*
+        (3, 25, 5, 1, 'DEVELOPPEMENT'),--y*
+        (2, 19, 5, 1, 'DEVELOPPEMENT'),--z-
+        (3, 21, 5, 1, 'DEVELOPPEMENT'),--x*
+        (3, 26, 5, 1, 'DEVELOPPEMENT'),--a*
+        (2, 25, 5, 1, 'DEVELOPPEMENT'),--y-
+        (3, 21, 5, 1, 'DEVELOPPEMENT'),--x*
+        (3, 28, 5, 1, 'DEVELOPPEMENT'),--c*
+        (5, 25, 5, 1, 'DEVELOPPEMENT'),--yf
 
-        (3, 20, 5, 2, 'DEVELOPPEMENT'),//a*
-        (3, 19, 5, 2, 'DEVELOPPEMENT'),//y*
-        (1, 15, 5, 2, 'DEVELOPPEMENT'),//z+
-        (3, 22, 5, 2, 'DEVELOPPEMENT'),//c*
-        (3, 19, 5, 2, 'DEVELOPPEMENT'),//y*
-        (5, 15, 5, 2, 'DEVELOPPEMENT'),//zf
+        (3, 26, 5, 2, 'DEVELOPPEMENT'),--a*
+        (3, 25, 5, 2, 'DEVELOPPEMENT'),--y*
+        (1, 19, 5, 2, 'DEVELOPPEMENT'),--z+
+        (3, 28, 5, 2, 'DEVELOPPEMENT'),--c*
+        (3, 25, 5, 2, 'DEVELOPPEMENT'),--y*
+        (5, 19, 5, 2, 'DEVELOPPEMENT'),--zf
 
-        (3, 16, 5, 3, 'DEVELOPPEMENT'),
-        (5, 15, 5, 3, 'DEVELOPPEMENT'),
+        (3, 20, 5, 3, 'DEVELOPPEMENT'),
+        (5, 19, 5, 3, 'DEVELOPPEMENT'),
 
-        (3, 23, 6, 1, 'DEVELOPPEMENT'),
-        (5, 15, 6, 1, 'DEVELOPPEMENT'),
+        (3, 29, 6, 1, 'DEVELOPPEMENT'),
+        (5, 19, 6, 1, 'DEVELOPPEMENT'),
 
-        (3, 24, 7, 1, 'DEVELOPPEMENT'),
-        (5, 15, 7, 1, 'DEVELOPPEMENT'),
+        (3, 30, 7, 1, 'DEVELOPPEMENT'),
+        (5, 19, 7, 1, 'DEVELOPPEMENT'),
 
-        (3, 25, 8, 1, 'DEVELOPPEMENT'),
-        (5, 26, 8, 1, 'DEVELOPPEMENT'),
+        (3, 31, 8, 1, 'DEVELOPPEMENT'),
+        (5, 36, 8, 1, 'DEVELOPPEMENT'),
 
-        (3, 27, 9, 1, 'DEVELOPPEMENT'),
-        (5, 28, 9, 1, 'DEVELOPPEMENT'),
+        (3, 32, 9, 1, 'DEVELOPPEMENT'),
+        (5, 36, 9, 1, 'DEVELOPPEMENT'),
 
-        (3, 35, 10, 1, 'TEST'),//a*
-        (3, 34, 10, 1, 'TEST'),//y*
-        (1, 30, 10, 1, 'TEST'),//z+
-        (3, 37, 10, 1, 'TEST'),//c*
-        (3, 34, 10, 1, 'TEST'),//y*
-        (2, 30, 10, 1, 'TEST'),//z-
-        (3, 32, 10, 1, 'TEST'),//x*
-        (3, 35, 10, 1, 'TEST'),//a*
-        (2, 34, 10, 1, 'TEST'),//y-
-        (3, 32, 10, 1, 'TEST'),//x*
-        (3, 37, 10, 1, 'TEST'),//c*
-        (5, 34, 10, 1, 'TEST'),//yf
+        (3, 33, 10, 1, 'DEVELOPPEMENT'),
+        (5, 36, 10, 1, 'DEVELOPPEMENT'),
 
-        (3, 35, 10, 2, 'TEST'),//a*
-        (3, 34, 10, 2, 'TEST'),//y*
-        (1, 30, 10, 2, 'TEST'),//z+
-        (3, 37, 10, 2, 'TEST'),//c*
-        (3, 34, 10, 2, 'TEST'),//y*
-        (5, 30, 10, 2, 'TEST'),//zf
+        (3, 34, 11, 1, 'DEVELOPPEMENT'),
+        (5, 36, 11, 1, 'DEVELOPPEMENT'),
 
-        (3, 31, 10, 3, 'TEST'),
-        (5, 30, 10, 3, 'TEST'),
+        (3, 35, 12, 1, 'DEVELOPPEMENT'),
+        (5, 36, 12, 1, 'DEVELOPPEMENT'),
 
-        (3, 38, 11, 1, 'TEST'),
-        (5, 30, 11, 1, 'TEST'),
+        (3, 37, 13, 1, 'DEVELOPPEMENT'),
+        (5, 41, 13, 1, 'DEVELOPPEMENT'),
 
-        (3, 39, 12, 1, 'TEST'),
-        (5, 30, 12, 1, 'TEST'),
+        (3, 38, 14, 1, 'DEVELOPPEMENT'),
+        (5, 41, 14, 1, 'DEVELOPPEMENT'),
 
-        (3, 46, 13, 1, 'DEPLOIEMENT'),//a*
-        (3, 45, 13, 1, 'DEPLOIEMENT'),//y*
-        (1, 41, 13, 1, 'DEPLOIEMENT'),//z+
-        (3, 48, 13, 1, 'DEPLOIEMENT'),//c*
-        (3, 45, 13, 1, 'DEPLOIEMENT'),//y*
-        (2, 41, 13, 1, 'DEPLOIEMENT'),//z-
-        (3, 43, 13, 1, 'DEPLOIEMENT'),//x*
-        (3, 46, 13, 1, 'DEPLOIEMENT'),//a*
-        (2, 45, 13, 1, 'DEPLOIEMENT'),//y-
-        (3, 43, 13, 1, 'DEPLOIEMENT'),//x*
-        (3, 48, 13, 1, 'DEPLOIEMENT'),//c*
-        (5, 45, 13, 1, 'DEPLOIEMENT'),//yf
+        (3, 39, 15, 1, 'DEVELOPPEMENT'),
+        (5, 41, 15, 1, 'DEVELOPPEMENT'),
 
-        (3, 46, 13, 2, 'DEPLOIEMENT'),//a*
-        (3, 45, 13, 2, 'DEPLOIEMENT'),//y*
-        (1, 41, 13, 2, 'DEPLOIEMENT'),//z+
-        (3, 48, 13, 2, 'DEPLOIEMENT'),//c*
-        (3, 45, 13, 2, 'DEPLOIEMENT'),//y*
-        (5, 41, 13, 2, 'DEPLOIEMENT'),//zf
+        (3, 40, 16, 1, 'DEVELOPPEMENT'),
+        (5, 41, 16, 1, 'DEVELOPPEMENT'),
 
-        (3, 42, 13, 3, 'DEPLOIEMENT'),
-        (5, 41, 13, 3, 'DEPLOIEMENT'),
+        (3, 50, 10, 1, 'TEST'),
+        (3, 49, 10, 1, 'TEST'),
+        (1, 44, 10, 1, 'TEST'),
+        (3, 52, 10, 1, 'TEST'),
+        (3, 49, 10, 1, 'TEST'),
+        (2, 44, 10, 1, 'TEST'),
+        (3, 46, 10, 1, 'TEST'),
+        (3, 50, 10, 1, 'TEST'),
+        (2, 49, 10, 1, 'TEST'),
+        (3, 46, 10, 1, 'TEST'),
+        (3, 52, 10, 1, 'TEST'),
+        (5, 49, 10, 1, 'TEST'),
 
-        (3, 49, 14, 1, 'DEPLOIEMENT'),
-        (5, 41, 14, 1, 'DEPLOIEMENT'),
+        (3, 50, 10, 2, 'TEST'),
+        (3, 49, 10, 2, 'TEST'),
+        (1, 44, 10, 2, 'TEST'),
+        (3, 52, 10, 2, 'TEST'),
+        (3, 49, 10, 2, 'TEST'),
+        (5, 44, 10, 2, 'TEST'),
 
-        (3, 50, 15, 1, 'DEPLOIEMENT'),
-        (5, 41, 15, 1, 'DEPLOIEMENT'),
+        (3, 45, 10, 3, 'TEST'),
+        (5, 44, 10, 3, 'TEST'),
 
-        (3, 52, 16, 1, 'DEPLOIEMENT'),
-        (5, 54, 16, 1 'DEPLOIEMENT'),
+        (3, 53, 11, 1, 'TEST'),
+        (5, 44, 11, 1, 'TEST'),
 
-    (3, 61, 17, 1, 'MAINTENANCE'),//a*
-    (3, 60, 17, 1, 'MAINTENANCE'),//y*
-    (1, 56, 17, 1, 'MAINTENANCE'),//z+
-    (3, 63, 17, 1, 'MAINTENANCE'),//c*
-    (3, 60, 17, 1, 'MAINTENANCE'),//y*
-    (2, 56, 17, 1, 'MAINTENANCE'),//z-
-    (3, 58, 17, 1, 'MAINTENANCE'),//x*
-    (3, 61, 17, 1, 'MAINTENANCE'),//a*
-    (2, 60, 17, 1, 'MAINTENANCE'),//y-
-    (3, 58, 17, 1, 'MAINTENANCE'),//x*
-    (3, 63, 17, 1, 'MAINTENANCE'),//c*
-    (5, 60, 17, 1, 'MAINTENANCE'),//yf
+        (3, 54, 12, 1, 'TEST'),
+        (5, 44, 12, 1, 'TEST'),
 
-    (3, 61, 17, 2, 'MAINTENANCE'),//a*
-    (3, 60, 17, 2, 'MAINTENANCE'),//y*
-    (1, 56, 17, 2, 'MAINTENANCE'),//z+
-    (3, 63, 17, 2, 'MAINTENANCE'),//c*
-    (3, 60, 17, 2, 'MAINTENANCE'),//y*
-    (5, 56, 17, 2, 'MAINTENANCE'),//zf
+        (3, 63, 13, 1, 'DEPLOIEMENT'),
+        (3, 62, 13, 1, 'DEPLOIEMENT'),
+        (1, 57, 13, 1, 'DEPLOIEMENT'),
+        (3, 65, 13, 1, 'DEPLOIEMENT'),
+        (3, 62, 13, 1, 'DEPLOIEMENT'),
+        (2, 57, 13, 1, 'DEPLOIEMENT'),
+        (3, 59, 13, 1, 'DEPLOIEMENT'),
+        (3, 63, 13, 1, 'DEPLOIEMENT'),
+        (2, 62, 13, 1, 'DEPLOIEMENT'),
+        (3, 59, 13, 1, 'DEPLOIEMENT'),
+        (3, 65, 13, 1, 'DEPLOIEMENT'),
+        (5, 62, 13, 1, 'DEPLOIEMENT'),
 
-    (3, 57, 17, 3, 'MAINTENANCE'),
-    (5, 56, 17, 3, 'MAINTENANCE'),
+        (3, 63, 13, 2, 'DEPLOIEMENT'),
+        (3, 62, 13, 2, 'DEPLOIEMENT'),
+        (1, 57, 13, 2, 'DEPLOIEMENT'),
+        (3, 65, 13, 2, 'DEPLOIEMENT'),
+        (3, 62, 13, 2, 'DEPLOIEMENT'),
+        (5, 57, 13, 2, 'DEPLOIEMENT'),
 
-    (3, 64, 18, 1, 'MAINTENANCE'),
-    (5, 56, 18, 1, 'MAINTENANCE'),
+        (3, 58, 13, 3, 'DEPLOIEMENT'),
+        (5, 57, 13, 3, 'DEPLOIEMENT'),
 
-    (3, 65, 19, 1, 'MAINTENANCE'),
-    (5, 56, 19, 1, 'MAINTENANCE'),
+        (3, 66, 14, 1, 'DEPLOIEMENT'),
+        (5, 57, 14, 1, 'DEPLOIEMENT'),
+
+        (3, 67, 15, 1, 'DEPLOIEMENT'),
+        (5, 57, 15, 1, 'DEPLOIEMENT'),
+
+        (3, 58, 16, 1, 'DEPLOIEMENT'),
+        (5, 73, 16, 1 'DEPLOIEMENT'),
+
+        (3, 58, 16, 1, 'DEPLOIEMENT'),
+        (5, 74, 16, 1 'DEPLOIEMENT'),
+
+        (3, 58, 16, 1, 'DEPLOIEMENT'),
+        (5, 75, 16, 1 'DEPLOIEMENT'),
+
+    (3, 84, 17, 1, 'MAINTENANCE'),
+    (3, 83, 17, 1, 'MAINTENANCE'),
+    (1, 78, 17, 1, 'MAINTENANCE'),
+    (3, 86, 17, 1, 'MAINTENANCE'),
+    (3, 83, 17, 1, 'MAINTENANCE'),
+    (2, 78, 17, 1, 'MAINTENANCE'),
+    (3, 80, 17, 1, 'MAINTENANCE'),
+    (3, 84, 17, 1, 'MAINTENANCE'),
+    (2, 83, 17, 1, 'MAINTENANCE'),
+    (3, 80, 17, 1, 'MAINTENANCE'),
+    (3, 86, 17, 1, 'MAINTENANCE'),
+    (5, 83, 17, 1, 'MAINTENANCE'),
+
+    (3, 84, 17, 2, 'MAINTENANCE'),
+    (3, 83, 17, 2, 'MAINTENANCE'),
+    (1, 78, 17, 2, 'MAINTENANCE'),
+    (3, 86, 17, 2, 'MAINTENANCE'),
+    (3, 83, 17, 2, 'MAINTENANCE'),
+    (5, 78, 17, 2, 'MAINTENANCE'),
+
+    (3, 79, 17, 3, 'MAINTENANCE'),
+    (5, 78, 17, 3, 'MAINTENANCE'),
+
+    (3, 87, 18, 1, 'MAINTENANCE'),
+    (5, 78, 18, 1, 'MAINTENANCE'),
+
+    (3, 88, 19, 1, 'MAINTENANCE'),
+    (5, 78, 19, 1, 'MAINTENANCE');
