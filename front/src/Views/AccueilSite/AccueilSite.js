@@ -106,6 +106,7 @@ const Anonyme = ({navigate}) => {
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
+    const [paragraphContent, setParagraphContent] = useState()
 
     /**
      * Send datas to the back
