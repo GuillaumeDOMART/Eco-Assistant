@@ -1,3 +1,7 @@
+/**
+ * Page of reportWebVitals
+ * @param onPerfEntry the perf entry
+ */
 const reportWebVitals = onPerfEntry => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
