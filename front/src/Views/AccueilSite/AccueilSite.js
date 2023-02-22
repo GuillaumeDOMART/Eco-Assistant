@@ -3,34 +3,9 @@ import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
 import "./AccueilSite.css"
 import {useNavigate} from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
-/**
- * Display the right part of the home page of the website
- * @param handleSubmit
- * @param register
- * @returns {JSX.Element}
- * @constructor
- */
-const Connexion = ({onSubmit, register}) => {
-    return (
-        <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
-            <h2 className="m-3">Créer un compte</h2>
-            <form onSubmit={onSubmit}>
-                <TextField label="Prénom" type="text" variant="standard" className="textfield" {...register("firstname")} required/><br/>
-                <TextField label="Nom" type="text" variant="standard" className="textfield " {...register("lastname")} required/><br/>
-                <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...register("mail")} required/><br/>
-                <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...register("password")} required/><br/>
-                <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...register("passwordConfirmed")} required/><br/>
-                <Button type="submit" className="text-black">Créer</Button><br/>
-                <p>Déjà un compte ? <a href="/connexion">Se connecter</a></p>
-            </form>
-            <p className="NB">Remplir un questionnaire sans être connecté entrainera une perte<br/>
-                des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
-                connectez-vous ou créez un compte</p>
-        </Col>
-    )
-}
+
 
 /**
  * Display the left part of the home page of the website
@@ -64,6 +39,35 @@ const Anonyme = () => {
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
+    const [paragraphContent, setParagraphContent] = useState("")
+
+    /**
+     * Display the right part of the home page of the website
+     * @param handleSubmit
+     * @param register
+     * @returns {JSX.Element}
+     * @constructor
+     */
+    const Connexion = ({onSubmit, registerForm}) => {
+        return (
+            <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
+                <h2 className="m-3">Créer un compte</h2>
+                <form onSubmit={onSubmit}>
+                    <TextField label="Prénom" type="text" variant="standard" className="textfield" {...registerForm("firstname")} required/><br/>
+                    <TextField label="Nom" type="text" variant="standard" className="textfield " {...registerForm("lastname")} required/><br/>
+                    <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...registerForm("mail")} required/><br/>
+                    <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...registerForm("password")} required/><br/>
+                    <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...registerForm("passwordConfirmed")} required/><br/>
+                    <p className="text-danger">{paragraphContent}</p>
+                    <Button type="submit" className="text-black">Créer</Button><br/>
+                    <p>Déjà un compte ? <a href="/connexion">Se connecter</a></p>
+                </form>
+                <p className="NB">Remplir un questionnaire sans être connecté entrainera une perte<br/>
+                    des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
+                    connectez-vous ou créez un compte</p>
+            </Col>
+        )
+    }
 
     /**
      * Send datas to the back
@@ -75,6 +79,7 @@ function AccueilSite() {
         myHeaders.append("Content-Type", "application/json");
 
         if(datas.password !== datas.passwordConfirmed){
+            setParagraphContent("Les mot de passe fournies ne corresponde pas")
             return
         }
         const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.firstname, prenom: datas.lastname}
@@ -86,6 +91,10 @@ function AccueilSite() {
         };
 
         const response = await fetch("api/auth/register", requestOptions);
+        if(response.status === 403){
+            setParagraphContent("Le mail est déjà utilisé pour un compte")
+            return
+        }
         const json = await response.json();
         sessionStorage.setItem("token", json.token);
         navigate("/profil")
@@ -102,7 +111,7 @@ function AccueilSite() {
     return (
            <Container className="bg" fluid>
                <Row className="vh-100 align-items-center">
-                   <Connexion onSubmit={handleSubmit(submitCreation)} register={register}/>
+                   <Connexion onSubmit={handleSubmit(submitCreation)} registerForm={register}/>
                    <Col className="col-1"></Col>
                    <Anonyme/>
                </Row>
