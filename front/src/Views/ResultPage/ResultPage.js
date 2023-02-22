@@ -106,8 +106,8 @@ function ResultPage() {
                 <canvas ref={chartContainer}/>
 
             </div>
-            <Button onClick={handleDownloadPDF} type={"button"}>Download PDF</Button>
-            <Button onClick={handleQuit} type={"button"}>Retourner au menu</Button>
+            <Button onClick={() => handleDownloadPDF()} type={"button"}>Download PDF</Button>
+            <Button onClick={() => handleQuit()} type={"button"}>Retourner au menu</Button>
         </div>
     );
 }
