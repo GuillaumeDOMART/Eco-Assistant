@@ -1,9 +1,9 @@
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Modal, Row} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
 import "./AccueilSite.css"
 import {useNavigate} from "react-router-dom";
-import {useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 /**
  * Display the right part of the home page of the website
@@ -38,6 +38,19 @@ const Connexion = ({onSubmit, register}) => {
  * @constructor
  */
 const Anonyme = () => {
+    const [show, setShow] = useState(false);
+    /**
+     * Hide pop-up if deletion of profile is refused
+     */
+    const handleCancel = useCallback(() => {
+        setShow(false);
+    },[setShow])
+    /**
+     * Show the pop-up when you push the button delete profil
+     */
+    const handleShow = useCallback(() => {
+        setShow(true);
+    },[setShow])
     return (
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75">
             <h1 className="Title"><img className="logo" src={require('../../Components/logo/Eco-Assistant_transparent.PNG')}  alt={"logo"}/>
@@ -50,8 +63,24 @@ const Anonyme = () => {
                 Grâce au questionnaire Eco-Assistant,<br/>
                 calcule l&lsquo;impact environnemental<br/>
                 de ton projet :</p>
-            <a href="/guest" className="fs-5">Remplir le questionnaire</a>
+            <a onClick={handleShow} className="fs-5">Remplir le questionnaire</a>
             <hr className="opacity-100"/>
+            <Modal show={show} onHide={handleCancel}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Attention !</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Tu es sur le point de remplir le questionnaire sans être connecté.
+                    Si tu quittes, toutes les données remplies seront perdues.<br/>
+                    Il te sera possible d'accéder au résultat du questionnaire et de l'exporter mais plus une fois la page quittée.<br/>
+                    Souhaites-tu continuer de manière anonyme ?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-danger">
+                        Remplir le questionnaire
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Col>
     )
 }
