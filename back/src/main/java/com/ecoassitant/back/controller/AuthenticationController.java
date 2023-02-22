@@ -3,6 +3,8 @@ package com.ecoassitant.back.controller;
 import com.ecoassitant.back.dto.*;
 import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,9 +71,35 @@ public class AuthenticationController {
         return authenticationService.forgotMail(forgotMailInput.getMail());
     }
 
-    public ResponseEntity<Boolean> changeMail(@RequestHeader("Authorization") String authorizationToken, @RequestBody String newMail) {
+    /**
+     * Method to change the mail of the logged user
+     *
+     * @param authorizationToken Authorization token of the logged user
+     * @param newMail            The new mail of the user
+     * @return True if the mail has been modified, false otherwise
+     */
+    @PatchMapping("changeMail")
+    public ResponseEntity<TokenDto> changeMail(@RequestHeader("Authorization") String authorizationToken, @RequestBody String newMail) {
         var token = authorizationToken.substring(7);
-        return authenticationService.changeMail(token, newMail);
+        var mail = newMail.substring(12, newMail.length() - 2);
+        return authenticationService.changeMail(token, mail);
+    }
+
+    /**
+     * Method to change the password of the logged user
+     *
+     * @param authorizationToken Authorization token of the logged user
+     * @param jsonString         Json containing the password
+     * @return True if the mail has been modified, false otherwise
+     */
+
+    @PatchMapping("changePassword")
+    public ResponseEntity<Boolean> changePassword(@RequestHeader("Authorization") String authorizationToken, @RequestBody String jsonString) {
+        var token = authorizationToken.substring(7);
+        var pwd = jsonString.substring(16, jsonString.length() - 2);
+        System.out.println("jsonString = " + jsonString);
+        System.out.println("pwd = " + pwd);
+        return authenticationService.changePassword(token, pwd);
     }
 
 }

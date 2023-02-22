@@ -10,6 +10,7 @@ import com.ecoassitant.back.entity.ProfilEntity;
 import com.ecoassitant.back.repository.ProfilRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -161,11 +162,12 @@ public class AuthenticationService {
     /**
      * Function to change password for user
      *
-     * @param mail     mail of the user
+     * @param token    Token of the current uset
      * @param password new password
      * @return if the password was change
      */
-    public ResponseEntity<Boolean> changePassword(String mail, String password) {
+    public ResponseEntity<Boolean> changePassword(String token, String password) {
+        var mail = jwtService.extractMail(token);
         var profil = profilRepository.findByMail(mail);
         if (profil.isEmpty()) {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
@@ -181,22 +183,24 @@ public class AuthenticationService {
         return ResponseEntity.ok(true);
     }
 
-    public ResponseEntity<Boolean> changeMail(String token, String newMail){
+    public ResponseEntity<TokenDto> changeMail(String token, String newMail) {
         var mail = jwtService.extractMail(token);
         var profil = profilRepository.findByMail(mail);
-        if (profil.isEmpty()){
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        if (profil.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         var user = profil.get();
+        System.out.println("user = " + user);
         user.setMail(newMail);
         var violations = validator.validate(user);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
-        
         //Envoyer un nouveau mail pour verifier le mail plutôt de le changer ici
+        var newToken = new TokenDto(jwtService.generateToken(user));
         profilRepository.save(user);
-        return ResponseEntity.ok(true);
+
+        return ResponseEntity.ok(newToken);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -206,5 +210,12 @@ public class AuthenticationService {
         var violations = ex.getConstraintViolations().stream()
                 .collect(Collectors.toMap(error -> error.getPropertyPath().toString(), ConstraintViolation::getMessage));
         return Map.of("fieldErrors", violations);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseBody
+    public Map<String, String> handleDataViolationExceptions(DataIntegrityViolationException ex) {
+        return Map.of("newMail", "L'adresse mail est déjà associé à un compte");
     }
 }
