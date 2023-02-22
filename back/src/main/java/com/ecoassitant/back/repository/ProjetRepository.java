@@ -23,5 +23,10 @@ public interface ProjetRepository extends JpaRepository<ProjetEntity, Integer> {
      */
     List<ProjetEntity> findByProfil_IdProfil(Integer idProfil);
 
+    /**
+     * Get List<ProjectEntity> associated with mail
+     * @param mail the mail
+     * @return List<ProjetEntity>
+     */
     List<ProjetEntity> findByProfilMail(String mail);
 }

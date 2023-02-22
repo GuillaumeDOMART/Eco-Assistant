@@ -34,6 +34,11 @@ public class CalculServiceImpl  implements CalculService {
         this.projetRepository = projetRepository;
     }
 
+    /**
+     * Function to get the result for a phase on a project
+     * @param idProject project of wich we want the result
+     * @return the result
+     */
     @Override
     public ResultatsPhaseDto calculsForProject(Integer idProject) {
         var mine = resultatForProject(idProject);
@@ -48,6 +53,11 @@ public class CalculServiceImpl  implements CalculService {
         return resultat;
     }
 
+    /**
+     * Function to get the result for a project
+     * @param idProject the id of the project
+     * @return the result
+     */
     private ResultatDto resultatForProject(Integer idProject){
         var resultat = new ResultatDto();
         var projet = projetRepository.findById(idProject);
