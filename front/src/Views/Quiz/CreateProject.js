@@ -4,6 +4,13 @@ import {Button, TextField} from "@mui/material";
 import {Col, Container, Row} from "react-bootstrap";
 
 
+/**
+ * Page for create project
+ * @param onSubmit the function for the submission
+ * @param register the function for the register
+ * @returns {JSX.Element} the jsx element
+ * @constructor the constructor
+ */
 function Project({onSubmit, register}) {
     return (
         <Col className="">
@@ -20,10 +27,20 @@ function handleProjectSubmit(onSubmit, handleSubmit) {
     return handleSubmit(onSubmit);
 }
 
+/**
+ * Page for create project
+ * @returns {JSX.Element} the jsx element
+ * @constructor the constructor
+ */
 function CreateProject() {
     const navigate = useNavigate();
     const {register, handleSubmit} = useForm();
 
+    /**
+     * Function for the submission of the data
+     * @param datas the datas for the form
+     * @returns {Promise<void>} the promise
+     */
     const onSubmit = async (datas) => {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
@@ -42,6 +59,9 @@ function CreateProject() {
         navigate("/questionnaire")
     }
 
+    /**
+     * function to handle quit
+     */
     const handleQuit = () => {
         navigate("/profil")
     }

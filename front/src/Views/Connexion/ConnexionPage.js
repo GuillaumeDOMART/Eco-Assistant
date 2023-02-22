@@ -66,6 +66,12 @@ function FormContainer(){
         </Row>
     );
 }
+
+/**
+ * The form of the page
+ * @returns {JSX.Element} the jsx element
+ * @constructor the constructor
+ */
 function Form(){
     const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();

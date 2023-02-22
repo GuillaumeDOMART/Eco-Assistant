@@ -18,6 +18,10 @@ public class
 QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
 
+    /**
+     * Function to create QuestionServiceImpl with QuestionRepository
+     * @param questionRepository the QuestionRepository
+     */
     public QuestionServiceImpl(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }

@@ -15,6 +15,10 @@ import java.util.List;
 public class UserDetailsImpl implements UserDetails {
     private final ProfilEntity profilEntity;
 
+    /**
+     * Create a UserDetailsImpl with a profilEntity
+     * @param profilEntity the profilEntity
+     */
     public UserDetailsImpl(ProfilEntity profilEntity) {
         this.profilEntity = profilEntity;
     }

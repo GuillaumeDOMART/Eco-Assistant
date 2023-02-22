@@ -23,6 +23,13 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
     private final ProjetRepository projetRepository;
     private final QuestionRepository questionRepository;
 
+    /**
+     * Function to create ReponseDonneesServiceImpl with ReponseDonneeRepository, ReponsePossibleRepository, ProjetRepository and QuestionRepository
+     * @param reponseDonneeRepository the ReponseDonneeRepository
+     * @param reponsePossibleRepository the ReponsePossibleRepository
+     * @param projetRepository the ProjetRepository
+     * @param questionRepository the QuestionRepository
+     */
     public ReponseDonneesServiceImpl(ReponseDonneeRepository reponseDonneeRepository, ReponsePossibleRepository reponsePossibleRepository, ProjetRepository projetRepository, QuestionRepository questionRepository) {
         this.reponseDonneeRepository = reponseDonneeRepository;
         this.reponsePossibleRepository = reponsePossibleRepository;
