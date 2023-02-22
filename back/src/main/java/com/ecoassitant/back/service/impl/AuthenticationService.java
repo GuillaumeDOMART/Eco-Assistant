@@ -150,7 +150,7 @@ public class AuthenticationService {
     public ResponseEntity<Boolean> forgotMail(String mail) {
         var profile = profilRepository.findByMail(mail);
         if (profile.isEmpty()) {
-            return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
         var claims = new HashMap<String, Object>() {{
             put("verify", true);
@@ -188,6 +188,13 @@ public class AuthenticationService {
         return ResponseEntity.ok(true);
     }
 
+    /**
+     * Method to change the mail of the current user
+     *
+     * @param token token of the current user
+     * @param newMail new mail to change
+     * @return the new token of the user based on the new mail
+     */
     public ResponseEntity<TokenDto> changeMail(String token, String newMail) {
         var mail = jwtService.extractMail(token);
         var profil = profilRepository.findByMail(mail);
@@ -208,6 +215,13 @@ public class AuthenticationService {
         return ResponseEntity.ok(newToken);
     }
 
+    /**
+     * Method to handle ${ConstraintViolationException} into an ${HttpStatus.BAD_REQUEST} When a validator find
+     * violation for the entity and returns the field violated with a message
+     *
+     * @param ex exception
+     * @return Map with the field error and the message
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseBody
@@ -217,6 +231,13 @@ public class AuthenticationService {
         return Map.of("fieldErrors", violations);
     }
 
+    /**
+     * Method to handle DataIntegrityViolationException into an HttpStatus.BAD_REQUEST when you try to modify a
+     * mail into an already existing one
+     *
+     * @param ex exception
+     * @return Map with the field mail and the message
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseBody
