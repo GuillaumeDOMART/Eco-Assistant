@@ -26,6 +26,9 @@ body {
 
 hr {
     border: 2px solid #64C692;
+    opacity: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .NB {
