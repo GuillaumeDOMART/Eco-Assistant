@@ -11,6 +11,7 @@ import com.ecoassitant.back.repository.ReponsePossibleRepository;
 import com.ecoassitant.back.service.ReponseDonneesService;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -58,7 +59,8 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
 
             if (question.get().getTypeQ().equals(TypeQ.NUMERIC)) {
                 responseKey.setReponsePos(reponsePossibles.get(0));
-                reponseEntity.setEntry(Integer.parseInt(reponseDto.getEntry()));
+                if(!Objects.equals(reponseDto.getEntry(), ""))
+                    reponseEntity.setEntry(Integer.parseInt(reponseDto.getEntry()));
             }
             else { //TypeQ.QCM
                 var reponsePossible = reponsePossibles.stream()
