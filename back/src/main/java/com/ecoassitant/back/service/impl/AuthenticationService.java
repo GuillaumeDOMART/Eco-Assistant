@@ -9,7 +9,6 @@ import com.ecoassitant.back.dto.TokenDto;
 import com.ecoassitant.back.entity.ProfilEntity;
 import com.ecoassitant.back.repository.ProfilRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +21,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.validation.*;
-
 import javax.validation.ConstraintViolation;
-import javax.validation.metadata.ConstraintDescriptor;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -93,6 +90,7 @@ public class AuthenticationService {
                 )
         );
         var profile = profilRepository.findByMail(authenticationInputDto.getLogin()).orElseThrow();
+
         var token = jwtService.generateToken(profile);
         return new AuthenticationOutPutDto(profile.getMail(), token);
     }
@@ -156,7 +154,7 @@ public class AuthenticationService {
             put("verify", true);
         }};
         var token = jwtService.generateToken(profile.get(), claims);
-        emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de pass oublié", "Voici le liens pour changer vôtre mot de pass: http://" + domain + "/forgot?token=" + token);
+        emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de passe oublié", "Voici le liens pour changer vôtre mot de pass: https://" + domain + "/forgot?token=" + token);
         return true;
     }
 
@@ -173,7 +171,30 @@ public class AuthenticationService {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
         var user = profil.get();
+        user.setPassword(password);
+        var violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
         user.setPassword(passwordEncoder.encode(password));
+        profilRepository.save(user);
+        return ResponseEntity.ok(true);
+    }
+
+    public ResponseEntity<Boolean> changeMail(String token, String newMail){
+        var mail = jwtService.extractMail(token);
+        var profil = profilRepository.findByMail(mail);
+        if (profil.isEmpty()){
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+        var user = profil.get();
+        user.setMail(newMail);
+        var violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
+        
+        //Envoyer un nouveau mail pour verifier le mail plutôt de le changer ici
         profilRepository.save(user);
         return ResponseEntity.ok(true);
     }

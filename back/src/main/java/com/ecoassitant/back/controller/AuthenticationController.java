@@ -18,6 +18,7 @@ public class AuthenticationController {
 
     /**
      * Constructor for AuthenticationController
+     *
      * @param authenticationService AuthenticationService
      */
     @Autowired
@@ -49,6 +50,7 @@ public class AuthenticationController {
 
     /**
      * Function to create guest profile
+     *
      * @return the token of guest profile
      */
     @GetMapping("guest")
@@ -58,12 +60,18 @@ public class AuthenticationController {
 
     /**
      * Function to send email when the user forgot his password
+     *
      * @param forgotMailInput the mail of the user
      * @return
      */
     @PatchMapping("forgotMail")
-    public boolean forgotMail(@RequestBody ForgotMailInput forgotMailInput){
+    public boolean forgotMail(@RequestBody ForgotMailInput forgotMailInput) {
         return authenticationService.forgotMail(forgotMailInput.getMail());
+    }
+
+    public ResponseEntity<Boolean> changeMail(@RequestHeader("Authorization") String authorizationToken, @RequestBody String newMail) {
+        var token = authorizationToken.substring(7);
+        return authenticationService.changeMail(token, newMail);
     }
 
 }
