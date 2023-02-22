@@ -14,13 +14,13 @@ import {useState} from "react";
  * @constructor
  */
 function ConnexionPage(){
-
-
     return (
-        <Col>
+        <>
             <Logo/>
-            <FormContainer/>
-        </Col>
+            <Container className=" vh-100 vw-100 d-flex align-items-center">
+                <FormContainer/>
+            </Container>
+        </>
     )
 }
 
@@ -31,9 +31,9 @@ function ConnexionPage(){
  */
 function Logo(){
     return (
-        <Row>
-            <img className="logo position-fixed start-0" src={require('./logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
-        </Row>
+        <>
+            <img className="logo position-absolute top-0 start-0 m-1"  src={require('./logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
+        </>
     );
 }
 
@@ -44,26 +44,12 @@ function Logo(){
  */
 function FormContainer(){
     return (
-        <Row>
-            <Container style={{
-                position: 'absolute', left: '75%', top: '50%',
-                transform: 'translate(-50%, -50%)',
-            }}>
-
-                <Col
-                    md={6}
-                    style={{
-                        borderRadius: "5px",
-                        border: "5px solid #aee1c6",
-                        boxShadow: "15px 10px 1px #EAF7F0",
-                        textAlign:"center",
-                        padding:"5%"
-                    }}>
-                    <h1 style={{paddingBottom : "8%"}}>Page de Connexion</h1>
-                    <Form/>
-                </Col>
-            </Container>
-        </Row>
+        <Container className= "d-flex align-items-center justify-content-center col-6 border border-5 border-secondary p-5 shadow-lg">
+            <Col>
+                <h1 style={{paddingBottom : "8%"}}>Page de Connexion</h1>
+                <Form/>
+            </Col>
+        </Container>
     );
 }
 function Form(){
@@ -97,28 +83,22 @@ function Form(){
         navigate("/profil");
     }
 
-return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField label="Adresse Mail" type="email" variant="standard" style={{width:"75%"}} required {...register('login', {
-            required: 'Email is required',
-            pattern: {
-                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: 'Entrer un mail valide',
-            },
-        })}/><br/>
-        <TextField label="Mot de passe" type="password" variant="standard" style={{width:"75%"}} required {...register('password')}/><br/>
-        <p className="text-danger">{paragraphContent}</p>
-        <Row>
-            <Col>
-                <Button href={"/"} style={{}}>Retour</Button><br/>
-            </Col>
-            <Col>
-                <Button type={"submit"} style={{}}>Connexion</Button><br/>
-            </Col>
-        </Row>
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField label="Adresse Mail" type="email" variant="standard" style={{width:"75%"}} required {...register('login')}/><br/>
+            <TextField label="Mot de passe" type="password" variant="standard" style={{width:"75%"}} required {...register('password')}/><br/>
+            <p className="text-danger">{paragraphContent}</p>
+            <Row>
+                <Col>
+                    <Button href={"/"} variant="outline-danger">Retour</Button><br/>
+                </Col>
+                <Col>
+                    <Button type={"submit"} variant="outline-primary">Connexion</Button><br/>
+                </Col>
+            </Row>
 
-        <a href="/ForgotPasswordMail">Mot de passe oublié ?</a>
-    </form>
-);
+            <a href="/ForgotPasswordMail">Mot de passe oublié ?</a>
+        </form>
+    );
 }
 export default ConnexionPage;

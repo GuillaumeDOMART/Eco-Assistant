@@ -11,10 +11,12 @@ import {useNavigate} from "react-router-dom";
  */
 function ForgotPassword(){
     return (
-        <Col>
+        <>
             <Logo/>
-            <FormContainer/>
-        </Col>
+            <Container className="vh-100 vw-100 d-flex align-items-center">
+                <FormContainer/>
+            </Container>
+        </>
 
     )
 }
@@ -26,9 +28,9 @@ function ForgotPassword(){
  */
 function Logo(){
     return (
-        <Row>
-            <img className="logo position-fixed start-0" src={require('../../Components/logo/logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
-        </Row>
+        <>
+            <img className="logo position-absolute start-0 top-0 m-1" src={require('../../Components/logo/logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
+        </>
     );
 }
 
@@ -39,26 +41,12 @@ function Logo(){
  */
 function FormContainer(){
     return (
-        <Row>
-            <Container style={{
-                position: 'absolute', left: '75%', top: '50%',
-                transform: 'translate(-50%, -50%)',
-            }}>
-
-                <Col
-                    md={6}
-                    style={{
-                        borderRadius: "5px",
-                        border: "5px solid #aee1c6",
-                        boxShadow: "15px 10px 1px #EAF7F0",
-                        textAlign:"center",
-                        padding:"5%"
-                    }}>
+            <Container className= "d-flex align-items-center justify-content-center col-6 border border-5 border-secondary p-5 shadow-lg">
+                <Col>
                     <h1 style={{paddingBottom : "8%"}}>Mot de passe Oublié</h1>
                     <Form/>
                 </Col>
             </Container>
-        </Row>
     );
 }
 
@@ -78,7 +66,7 @@ function Form(){
      */
     const onSubmit = (datas) => {
         if(datas.newPassword !== datas.newPasswordConfirmed){
-            setParagraphContent("Les mot de passe fournies ne corresponde pas")
+            setParagraphContent("Les mots de passe fournis ne correspondent pas")
         }else {
             const token = new URLSearchParams(window.location.search).get('token');
 
@@ -112,13 +100,20 @@ function Form(){
             <form onSubmit={handleSubmit(onSubmit)}>
                 <TextField label="Nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPassword")} required/><br/>
                 <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPasswordConfirmed")} required/><br/>
-                <Button href="/">Annuler</Button><Button type="submit">Valider</Button><br/>
                 <p className="text-danger">{paragraphContent}</p>
+                <Row>
+                    <Col>
+                        <Button href="/" variant="outline-danger">Annuler</Button><br/>
+                    </Col>
+                    <Col>
+                        <Button type="submit" variant= "outline-primary">Valider</Button><br/>
+                    </Col>
+                </Row>
             </form>
 
             <Modal show={show} size="lg" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modfication mot de passe</Modal.Title>
+                    <Modal.Title>Modification mot de passe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Votre mot de passe à été modifié vous allez être redirigé vers la page d&apos;accueil</Modal.Body>
                 <Modal.Footer>
