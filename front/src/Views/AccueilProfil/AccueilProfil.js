@@ -1,7 +1,7 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useCallback, useEffect, useState} from "react";
 import {Table} from "@mui/material";
-import {Alert, Button, Container, Image, Placeholder, Row} from "react-bootstrap";
+import {Alert, Button, Container, Image, Modal, Placeholder, Row} from "react-bootstrap";
 import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
 import {useNavigate} from "react-router-dom";
 
@@ -26,17 +26,60 @@ import {useNavigate} from "react-router-dom";
  ```
  */
 function LigneTableauProjet(data) {
+    const [show, setShow] = useState(false);
+    const [deletedProject,setdeletedProject] = useState(-1)
+    /**
+     * Hide pop-up if deletion of profile is refused
+     */
+    const handleCancel = useCallback(() => {
+        setdeletedProject(-1)
+        setShow(false);
+    },[setdeletedProject,setShow])
+    /**
+     * Show the pop-up when you push the button delete profil
+     */
+    const handleShow = useCallback((id) => {
+        console.log("set project")
+        console.log(id)
+        setdeletedProject(id)
+        setShow(true);
+    },[setdeletedProject,setShow])
+
+    const handleDissociate = useCallback((id)=>{
+        console.log("deleted project");
+        console.log(id);
+
+    },[])
+
     return (
-        <tr className='table border-bottom border-2 border-secondary'>
-            <td align={"center"} valign={"middle"}>{data.nomProjet}</td>
-            <td align={"center"} valign={"middle"}>{data.etat}</td>
-            <td align={"center"} valign={"middle"}>
-                <Button className="m-3" variant="secondary">Modifier</Button>
-                <Button className="m-3" variant="primary">Visionner</Button>
-                <Button className="m-3" variant="outline-primary">Créer une copie</Button>
-                <Button className="m-3" variant="outline-danger">Dissocier</Button>
-            </td>
-        </tr>
+        <>
+            <tr className='table border-bottom border-2 border-secondary'>
+                <td align={"center"} valign={"middle"}>{data.nomProjet}</td>
+                <td align={"center"} valign={"middle"}>{data.etat}</td>
+                <td align={"center"} valign={"middle"}>
+                    <Button className="m-3" variant="secondary">Modifier</Button>
+                    <Button className="m-3" variant="primary">Visionner</Button>
+                    <Button className="m-3" variant="outline-primary">Créer une copie</Button>
+                    <Button className="m-3" variant="outline-danger" onClick={()=>handleShow(data.id)}>Dissocier</Button>
+                </td>
+            </tr>
+            <Modal show={show} onHide={handleCancel}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Dissocier le Projet</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Es-tu sûr de vouloir dissocier ce projet ?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCancel}>
+                        Annuler
+                    </Button>
+                    <Button variant="outline-danger" onClick={()=>handleDissociate(deletedProject)}>
+                        Supprimer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+
+
     );
 }
 
@@ -217,6 +260,5 @@ function AccueilProfil() {
         </div>
     );
 }
-
 
 export default AccueilProfil
