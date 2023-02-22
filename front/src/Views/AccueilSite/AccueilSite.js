@@ -24,13 +24,19 @@ const Connexion = ({onSubmit, register, navigate}) => {
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
             <h2 className="m-3">Créer un compte</h2>
             <form onSubmit={onSubmit}>
-                <TextField label="Prénom" type="text" variant="standard" className="textfield" {...register("firstname")} required/><br/>
-                <TextField label="Nom" type="text" variant="standard" className="textfield " {...register("lastname")} required/><br/>
-                <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...register("mail")} required/><br/>
-                <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...register("password")} required/><br/>
-                <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...register("passwordConfirmed")} required/><br/>
+                <TextField label="Prénom" type="text" variant="standard"
+                           className="textfield" {...register("firstname")} required/><br/>
+                <TextField label="Nom" type="text" variant="standard" className="textfield " {...register("lastname")}
+                           required/><br/>
+                <TextField label="Adresse Mail" type="email" variant="standard"
+                           className="textfield " {...register("mail")} required/><br/>
+                <TextField label="Mot de passe" type="password" variant="standard"
+                           className="textfield " {...register("password")} required/><br/>
+                <TextField label="Valider le mot de passe" type="password" variant="standard"
+                           className="textfield " {...register("passwordConfirmed")} required/><br/>
                 <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>
-                <p>Déjà un compte ? <Button onClick={handleConnect} className="text-black text-decoration-underline">Se connecter</Button></p>
+                <p>Déjà un compte ? <Button onClick={handleConnect} className="text-black text-decoration-underline">Se
+                    connecter</Button></p>
             </form>
             <p className="NB">Remplir un questionnaire sans être connecté entrainera une perte<br/>
                 des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
@@ -51,22 +57,24 @@ const Anonyme = ({navigate}) => {
      */
     const handleCancel = useCallback(() => {
         setShow(false);
-    },[setShow])
+    }, [setShow])
     /**
      * Show the pop-up when you push the button delete profil
      */
     const handleShow = useCallback(() => {
         setShow(true);
-    },[setShow])
+    }, [setShow])
 
     const handleAccept = useCallback(() => {
-       setShow(false)
-       navigate("/guest")
+        setShow(false)
+        navigate("/guest")
     }, [setShow, navigate])
 
     return (
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75">
-            <h1 className="Title"><img className="logo" src={require('../../Components/logo/Eco-Assistant_transparent.PNG')}  alt={"logo"}/>
+            <h1 className="Title"><img className="logo"
+                                       src={require('../../Components/logo/Eco-Assistant_transparent.PNG')}
+                                       alt={"logo"}/>
                 Eco-Assistant</h1>
             <hr/>
             <p className="Text">Envie de connaitre l&lsquo;empreinte<br/>
@@ -76,7 +84,8 @@ const Anonyme = ({navigate}) => {
                 Grâce au questionnaire Eco-Assistant,<br/>
                 calcule l&lsquo;impact environnemental<br/>
                 de ton projet :</p>
-            <Button onClick={handleShow} className="fs-5 text-black text-decoration-underline">Remplir le questionnaire</Button>
+            <Button onClick={handleShow} className="fs-5 text-black text-decoration-underline">Remplir le
+                questionnaire</Button>
             <hr className="opacity-100"/>
             <Modal show={show} onHide={handleCancel}>
                 <Modal.Header closeButton>
@@ -85,7 +94,8 @@ const Anonyme = ({navigate}) => {
                 <Modal.Body>
                     Tu es sur le point de remplir le questionnaire sans être connecté.
                     Si tu quittes, toutes les données remplies seront perdues.<br/>
-                    Il te sera possible d&lsquo;accéder au résultat du questionnaire et de l&lsquo;exporter mais plus une fois la page quittée.<br/>
+                    Il te sera possible d&lsquo;accéder au résultat du questionnaire et de l&lsquo;exporter mais plus
+                    une fois la page quittée.<br/>
                     Souhaites-tu continuer de manière anonyme ?
                 </Modal.Body>
                 <Modal.Footer>
@@ -117,7 +127,7 @@ function AccueilSite() {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        if(datas.password !== datas.passwordConfirmed){
+        if (datas.password !== datas.passwordConfirmed) {
             setParagraphContent("Les mot de passe fournies ne corresponde pas")
             return
         }
@@ -130,11 +140,16 @@ function AccueilSite() {
         };
 
         const response = await fetch("api/auth/register", requestOptions);
-        if(response.status === 403){
+        if (response.status === 403) {
             setParagraphContent("Le mail est déjà utilisé pour un compte")
             return
         }
         const json = await response.json();
+        if (response.status >= 200) {
+            window.alert("oops y'a une bétise\n" + JSON.stringify(json))
+            return;
+        }
+
         sessionStorage.setItem("token", json.token);
         navigate("/profil")
     }
@@ -148,13 +163,13 @@ function AccueilSite() {
 
 
     return (
-           <Container className="bg" fluid>
-               <Row className="vh-100 align-items-center">
-                   <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate}/>
-                   <Col className="col-1"></Col>
-                   <Anonyme navigate={navigate}/>
-               </Row>
-           </Container>
+        <Container className="bg" fluid>
+            <Row className="vh-100 align-items-center">
+                <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate}/>
+                <Col className="col-1"></Col>
+                <Anonyme navigate={navigate}/>
+            </Row>
+        </Container>
     )
 }
 
