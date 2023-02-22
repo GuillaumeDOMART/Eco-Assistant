@@ -150,7 +150,7 @@ public class AuthenticationService {
     public ResponseEntity<Boolean> forgotMail(String mail) {
         var profile = profilRepository.findByMail(mail);
         if (profile.isEmpty()) {
-            return ResponseEntity.badRequest().body(false);
+            return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
         }
         var claims = new HashMap<String, Object>() {{
             put("verify", true);
