@@ -100,7 +100,7 @@ function Form(){
             <form onSubmit={handleSubmit(onSubmit)}>
                 <TextField label="Nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPassword")} required/><br/>
                 <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard" className="textfield" {...register("newPasswordConfirmed")} required/><br/>
-                <p className="text-danger">{paragraphContent}</p>
+                <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                 <Row>
                     <Col>
                         <Button href="/" variant="outline-danger">Annuler</Button><br/>

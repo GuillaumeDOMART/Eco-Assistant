@@ -101,7 +101,7 @@ function Form(){
             <form onSubmit={handleSubmit(onSubmit)}>
                 <TextField label="Mail" type="email" variant="standard" className="textfield" {...register("mail")} required/><br/>
                 <TextField label="Confirmer le mail" type="email" variant="standard" className="textfield" {...register("confirMail")} required/><br/>
-                <p className="text-danger">{paragraphContent}</p>
+                <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                 <Row>
                     <Col>
                         <Button href={"/connexion"} variant="outline-danger">Annuler</Button><br/>

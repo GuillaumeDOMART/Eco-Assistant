@@ -93,7 +93,7 @@ function Form(){
         <form onSubmit={handleSubmit(onSubmit)}>
             <TextField label="Adresse Mail" type="email" variant="standard" style={{width:"75%"}} required {...register('login')}/><br/>
             <TextField label="Mot de passe" type="password" variant="standard" style={{width:"75%"}} required {...register('password')}/><br/>
-            <p className="text-danger">{paragraphContent}</p>
+            <p className="text-danger w-100 h-auto">{paragraphContent}</p>
             <Row>
                 <Col>
                     <Button href={"/"} variant="outline-danger">Retour</Button><br/>
