@@ -52,7 +52,7 @@ function ResultPage() {
     /**
      * Function to create the pdf
      */
-    function handleDownloadPDF() {
+    const handleDownloadPDF = () => {
         const canvas = chartContainer.current;
         const imgData = canvas.toDataURL('image/png', 1.0);
         const pdf = new jsPDF("p","mm","a4");
@@ -67,7 +67,7 @@ function ResultPage() {
     /**
      * the function to quit
      */
-    function handleQuit() {
+    const handleQuit = () =>  {
         navigate("/profil")
     }
 
@@ -106,8 +106,8 @@ function ResultPage() {
                 <canvas ref={chartContainer}/>
 
             </div>
-            <Button onClick={() => handleDownloadPDF()} type={"button"}>Download PDF</Button>
-            <Button onClick={() => handleQuit()} type={"button"}>Retourner au menu</Button>
+            <Button onClick={handleDownloadPDF} type="button">Download PDF</Button>
+            <Button onClick={handleQuit} type="button">Retourner au menu</Button>
         </div>
     );
 }
