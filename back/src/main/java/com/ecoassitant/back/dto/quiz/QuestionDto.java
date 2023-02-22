@@ -110,7 +110,7 @@ public class QuestionDto {
 
     /**
      * add a response in the quiz
-     * @param question
+     * @param question a question
      * @param reponse response of th previous quiz
      */
     private void addReponse(QuestionDto question, ReponseDonneeEntity reponse){
