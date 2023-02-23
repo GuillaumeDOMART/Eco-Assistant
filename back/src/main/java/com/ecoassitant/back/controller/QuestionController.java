@@ -44,12 +44,13 @@ public class QuestionController {
 
     /**
      * Api for get quiz with the response of the project complete previously
-     * @param idProjet id of the project
+     * @param id id of the project
      * @return quiz type Map
      */
     @PostMapping("/questions")
-    public ResponseEntity <Map<Phase, List<QuestionUniqueDto>>> ModifierQuestionnaire(@RequestBody IdDto idProjet){
-        var quiz = questionService.completQuiz(idProjet.getId());
+    public ResponseEntity <Map<Phase, List<QuestionUniqueDto>>> modifierQuestionnaire(@RequestBody  IdDto id){
+        System.out.println(id.getId());
+        var quiz = questionService.completQuiz(id.getId());
         return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }

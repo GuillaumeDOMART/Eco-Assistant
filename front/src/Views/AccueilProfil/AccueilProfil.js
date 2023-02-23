@@ -26,6 +26,12 @@ import {useNavigate} from "react-router-dom";
  ```
  */
 function LigneTableauProjet(data) {
+    const navigate = useNavigate();
+    const handleClick = React.useCallback(() => {
+        sessionStorage.setItem("project",data.id)
+        navigate("/questionnaire")
+
+    }, [navigate, data.id])
     return (
         <tr className='table border-bottom border-2 border-secondary'>
             <td align={"center"} valign={"middle"}>{data.nomProjet}</td>
@@ -33,6 +39,8 @@ function LigneTableauProjet(data) {
             <td align={"center"} valign={"middle"}>
                 {data.etat === "INPROGRESS" && <Button className="m-3" variant="secondary">Modifier</Button>}
                 <Button className="m-3" href={`/result?id=${data.id}`} variant="primary">Visionner</Button>
+                <Button className="m-3" variant="secondary" onClick={handleClick}>Modifier</Button>
+                <Button className="m-3" variant="primary">Visionner</Button>
                 <Button className="m-3" variant="outline-primary">Créer une copie</Button>
                 <Button className="m-3" variant="outline-danger">Dissocier</Button>
             </td>
