@@ -19,16 +19,17 @@ import java.util.concurrent.atomic.AtomicReference;
  * Implementation of calculService
  */
 @Service
-public class CalculServiceImpl  implements CalculService {
+public class CalculServiceImpl implements CalculService {
     private final CalculRepository calculRepository;
     private final ReponseDonneeRepository reponseDonneeRepository;
     private final ProjetRepository projetRepository;
 
     /**
      * Constructor of CalculService
-     * @param calculRepository calculRepository composite for using Service methode
+     *
+     * @param calculRepository        calculRepository composite for using Service methode
      * @param reponseDonneeRepository reponseDonneeRepository composite for using Service methode
-     * @param projetRepository projetRepository composite for using Service methode
+     * @param projetRepository        projetRepository composite for using Service methode
      */
     public CalculServiceImpl(CalculRepository calculRepository, ReponseDonneeRepository reponseDonneeRepository, ProjetRepository projetRepository) {
         this.calculRepository = calculRepository;
@@ -38,6 +39,7 @@ public class CalculServiceImpl  implements CalculService {
 
     /**
      * Function to get the result for a phase on a project
+     *
      * @param idProject project of wich we want the result
      * @return the result
      */
@@ -57,10 +59,11 @@ public class CalculServiceImpl  implements CalculService {
 
     /**
      * Function to get the result for a project
+     *
      * @param idProject the id of the project
      * @return the result
      */
-    private ResultatDto resultatForProject(Integer idProject){
+    private ResultatDto resultatForProject(Integer idProject) {
         var resultat = new ResultatDto();
         var projet = projetRepository.findById(idProject);
         if (projet.isEmpty())
@@ -81,28 +84,30 @@ public class CalculServiceImpl  implements CalculService {
             map.put(calculEntity.getNbCalcul(), priorite);
         });
 
-        map.forEach((k, calculsPriorite)->{
-            AtomicReference<Optional<Double>> executer = null;
-            AtomicReference<Phase> phase = null;
-            calculsPriorite.forEach((key, calcul) ->{
-                var calculEntier = new CalculEntier(calcul,reponseDonnee);
-                executer.set(calculEntier.execute());
-                if (executer.get().isPresent()) {
-                    phase.set(calculEntier.getPhase());
-                    return;
+        map.forEach((k, calculsPriorite) -> {
+            Optional<Double> executer = Optional.empty();
+            Optional<Phase> phase = Optional.empty();
+            for (var calcul : calculsPriorite.values()) {
+                var calculEntier = new CalculEntier(calcul, reponseDonnee);
+                executer = calculEntier.execute();
+                if (executer.isPresent()) {
+                    phase = Optional.ofNullable(calculEntier.getPhase());
+                    break;
                 }
-            });
+            }
+
             var intitule = "test" + k;
-            executer.get().ifPresent(aDouble -> {
-                switch (phase.get()){
+            if (executer.isPresent() && phase.isPresent()) {
+                var aDouble = executer.get();
+                switch (phase.get()) {
                     case PLANIFICATION -> resultat.addPlanification(new CalculDto(intitule, aDouble));
                     case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(intitule, aDouble));
                     case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(intitule, aDouble));
                     case TEST -> resultat.addTest(new CalculDto(intitule, aDouble));
                     case MAINTENANCE -> resultat.addMaintenance(new CalculDto(intitule, aDouble));
-                    default -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
+                    case HORS_PHASE -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
                 }
-            });
+            }
         });
         return resultat;
     }
