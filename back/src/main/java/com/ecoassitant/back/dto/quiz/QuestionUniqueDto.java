@@ -67,6 +67,7 @@ public class QuestionUniqueDto {
     /**
      * filled the map with the quiz format tree
      * @param quiz quiz format tree
+     * @param map map whose put for return it
      */
     private static void remplir(QuestionDto quiz, HashMap<Phase,List<QuestionUniqueDto>> map) {
         if (quiz == null)
