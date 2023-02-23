@@ -48,6 +48,19 @@ public class CalculServiceImpl implements CalculService {
      */
     @Override
     public Optional<ResultatsPhaseDto> calculsForProject(Integer idProject, String mail) {
+        var project = projetRepository.findById(idProject);
+        if (project.isEmpty())
+            return Optional.empty();
+
+        var profil = profilRepository.findByMail(mail);
+        if (profil.isEmpty())
+            return Optional.empty();
+
+        var currentIdProfil = project.get().getProfil().getIdProfil();
+        var projectIdProfil = profil.get().getIdProfil();
+        if (!currentIdProfil.equals(projectIdProfil))
+            return Optional.empty();
+
         var mine = resultatForProject(idProject);
         if (mine.isEmpty()) {
             return Optional.empty();

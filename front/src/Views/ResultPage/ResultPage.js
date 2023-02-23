@@ -52,24 +52,30 @@ function ResultPage() {
     /**
      * Function to create the pdf
      */
-    const handleDownloadPDF =  useCallback(() => {
+    const handleDownloadPDF = useCallback(() => {
         const canvas = chartContainer.current;
         const imgData = canvas.toDataURL('image/png', 1.0);
-        const pdf = new jsPDF("p","mm","a4");
-        const diviseur = Math.ceil(pdf.getImageProperties(imgData).width/(A4.w-20))
-        pdf.text('Hello World!', marginLeft, yText, { fontSize: 36, fontName: 'Helvetica', fontStyle: 'bold', color: '#000000', maxWidth: 170 });
-        pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width/diviseur, pdf.getImageProperties(imgData).height/diviseur);
+        const pdf = new jsPDF("p", "mm", "a4");
+        const diviseur = Math.ceil(pdf.getImageProperties(imgData).width / (A4.w - 20))
+        pdf.text('Hello World!', marginLeft, yText, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
         pdf.save('chart.pdf');
         //a finir
 
-    },[A4.w])
+    }, [A4.w])
 
     /**
      * the function to quit
      */
-    const handleQuit = useCallback(() =>  {
+    const handleQuit = useCallback(() => {
         navigate("/profil")
-    },[navigate])
+    }, [navigate])
 
     useEffect(() => {
         const id = new URLSearchParams(window.location.search).get('id');
@@ -82,8 +88,11 @@ function ResultPage() {
             },
             body: JSON.stringify({"id": id})
         };
-        fetch('api/calculs',options)
+        fetch('api/calculs', options)
             .then(response => response.json())
+            .catch((error) => {
+                navigate("/profil")
+            })
             .then(jsonData => {
                 const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
                 const sums = {};
@@ -97,7 +106,7 @@ function ResultPage() {
                 });
                 chart(sums);
             });
-    }, []);
+    }, [navigate]);
 
     return (
         <div ref={pdfContainer}>
