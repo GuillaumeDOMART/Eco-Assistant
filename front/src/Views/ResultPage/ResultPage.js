@@ -1,5 +1,5 @@
 import Chart from "chart.js/auto";
-import {useEffect, useRef} from "react";
+import {useCallback, useEffect, useRef} from "react";
 import jsPDF from "jspdf";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
@@ -52,7 +52,7 @@ function ResultPage() {
     /**
      * Function to create the pdf
      */
-    const handleDownloadPDF = () => {
+    const handleDownloadPDF =  useCallback(() => {
         const canvas = chartContainer.current;
         const imgData = canvas.toDataURL('image/png', 1.0);
         const pdf = new jsPDF("p","mm","a4");
@@ -62,14 +62,14 @@ function ResultPage() {
         pdf.save('chart.pdf');
         //a finir
 
-    }
+    },[A4.w])
 
     /**
      * the function to quit
      */
-    const handleQuit = () =>  {
+    const handleQuit = useCallback(() =>  {
         navigate("/profil")
-    }
+    },[navigate])
 
     useEffect(() => {
         const id = new URLSearchParams(window.location.search).get('id');
