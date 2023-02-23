@@ -12,6 +12,8 @@ function Profil() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [apiError, setApiError] = useState(null);
     const [datas, setDatas] = useState([]);
+    const navigate = useNavigate()
+
     useEffect(() => {
         const token = sessionStorage.getItem("token")
         const options = {
@@ -23,7 +25,14 @@ function Profil() {
             }
         };
         fetch(`/api/profil/user`, options)
-            .then(res => res.json())
+            .then(res => {
+                if(res.status === 403){
+                    navigate("/logout")
+                }
+                else {
+                    res.json()
+                }
+            })
             .then(
                 (result) => {
                     setIsLoaded(true);
@@ -34,7 +43,7 @@ function Profil() {
                     setApiError(error);
                 }
             )
-    }, [])
+    }, [navigate])
     if (apiError) {
         return (
             <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
