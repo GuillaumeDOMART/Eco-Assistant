@@ -20,11 +20,14 @@ public class QuestionUniqueDto {
     private final Categorie categorie;
     private final Long dependance;
     private final List<ReponseUniqueDto> reponses;
+    private final ReponseDonneeDtoQuiz reponse;
 
     public Long getDependance() {
         return dependance;
     }
     private static HashMap<Phase,List<QuestionUniqueDto>> map = new HashMap<>();
+
+
 
     /**
      * create a question with a quiz
@@ -41,6 +44,7 @@ public class QuestionUniqueDto {
         quiz.getReponses().forEach(reponsePossibleDto -> {
             this.reponses.add(new ReponseUniqueDto(reponsePossibleDto));
         });
+        this.reponse = quiz.getReponse();
     }
 
     /**
@@ -76,6 +80,9 @@ public class QuestionUniqueDto {
         quiz.getReponses().forEach( reponsePossibleDto -> remplir(reponsePossibleDto.getQuestionSuiv()));
     }
 
+    public ReponseDonneeDtoQuiz getReponse() {
+        return reponse;
+    }
     public Long getQuestionId() {
         return questionId;
     }
@@ -99,4 +106,5 @@ public class QuestionUniqueDto {
     public TypeQ getType() {
         return type;
     }
+
 }
