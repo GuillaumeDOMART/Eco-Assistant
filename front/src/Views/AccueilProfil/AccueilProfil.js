@@ -26,11 +26,12 @@ import {useNavigate} from "react-router-dom";
  ```
  */
 function LigneTableauProjet(data) {
-    const handleClick = () => {
-        fetch("/api/questions", options)
-            .then(response => response.json())
-            .then(data => this.setState({ id: data.id }));
-    }
+    const navigate = useNavigate();
+    const handleClick = React.useCallback(() => {
+        sessionStorage.setItem("project",data.id)
+        navigate("/questionnaire")
+
+    }, [navigate, data.id])
     return (
         <tr className='table border-bottom border-2 border-secondary'>
             <td align={"center"} valign={"middle"}>{data.nomProjet}</td>
