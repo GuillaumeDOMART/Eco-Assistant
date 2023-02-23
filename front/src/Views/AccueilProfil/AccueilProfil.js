@@ -30,10 +30,12 @@ function LigneTableauProjet(data) {
         <tr className='table border-bottom border-2 border-secondary'>
             <td align={"center"} valign={"middle"}>{data.nomProjet}</td>
             <td align={"center"} valign={"middle"}>{data.etat}</td>
-            <td align={"center"} valign={"middle"}><Button className="m-3" variant="secondary">Modifier</Button><Button
-                className="m-3" variant="primary">Visionner</Button><Button className="m-3"
-                                                                            variant="outline-primary">Exporter</Button><Button
-                className="m-3" variant="outline-danger">Dissocier</Button></td>
+            <td align={"center"} valign={"middle"}>
+                <Button className="m-3" variant="secondary">Modifier</Button>
+                <Button className="m-3" variant="primary">Visionner</Button>
+                <Button className="m-3" variant="outline-primary">Créer une copie</Button>
+                <Button className="m-3" variant="outline-danger">Dissocier</Button>
+            </td>
         </tr>
     );
 }

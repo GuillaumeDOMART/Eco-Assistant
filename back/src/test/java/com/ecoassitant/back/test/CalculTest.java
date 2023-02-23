@@ -34,22 +34,22 @@ class CalculTest {
     CalculOperateurEntity stop = new CalculOperateurEntity(5L, Operator.NOTHING);
     List<ReponseDonneeEntity> listRd = new ArrayList<>();
     ReponseDonneeKey rdk1 = new ReponseDonneeKey();
-    ReponseDonneeEntity rd1 = new ReponseDonneeEntity(rdk1, 10);
+    ReponseDonneeEntity rd1 = new ReponseDonneeEntity(rdk1,r1, 10);
     ReponseDonneeKey rdk2 = new ReponseDonneeKey();
-    ReponseDonneeEntity rd2 = new ReponseDonneeEntity(rdk2, 5);
+    ReponseDonneeEntity rd2 = new ReponseDonneeEntity(rdk2, r3, 5);
     ReponseDonneeKey rdk3 = new ReponseDonneeKey();
     List<CalculEntity> listCalcul = new ArrayList<>();
     @Test
     void creationCalculEntier() {
         rdk1.setProjet(projet);
-        rdk1.setReponsePos(r1);
+        rdk1.setQuestion(q1);
 
         rdk2.setProjet(projet);
-        rdk2.setReponsePos(r3);
+        rdk2.setQuestion(q2);
 
         rdk3.setProjet(projet);
-        rdk3.setReponsePos(r4);
-        ReponseDonneeEntity rd3 = new ReponseDonneeEntity(rdk3, 1);
+        rdk3.setQuestion(q3);
+        ReponseDonneeEntity rd3 = new ReponseDonneeEntity(rdk3, r4, 1);
 
         listRd.add(rd1);
         listRd.add(rd2);

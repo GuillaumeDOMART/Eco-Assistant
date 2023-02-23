@@ -11,10 +11,12 @@ import {useNavigate} from "react-router-dom";
  */
 function ForgotPasswordMail(){
     return (
-        <Col>
+        <>
             <Logo/>
-            <FormContainer/>
-        </Col>
+            <Container className=" vh-100 vw-100 d-flex align-items-center">
+                <FormContainer/>
+            </Container>
+        </>
 
     )
 }
@@ -27,7 +29,7 @@ function ForgotPasswordMail(){
 function Logo(){
     return (
         <Row>
-            <img className="logo position-fixed start-0" src={require('../../Components/logo/logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
+            <img className="logo position-absolute start-0 top-0 m-1" src={require('../../Components/logo/logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
         </Row>
     );
 }
@@ -39,27 +41,31 @@ function Logo(){
  */
 function FormContainer(){
     return (
-        <Row>
-            <Container style={{
-                position: 'absolute', left: '75%', top: '50%',
-                transform: 'translate(-50%, -50%)',
-            }}>
-
-                <Col
-                    md={6}
-                    style={{
-                        borderRadius: "5px",
-                        border: "5px solid #aee1c6",
-                        boxShadow: "15px 10px 1px #EAF7F0",
-                        textAlign:"center",
-                        padding:"5%"
-                    }}>
-                    <h1 style={{paddingBottom : "8%"}}>Mot de passe Oublié</h1>
-                    <Form/>
-                </Col>
-            </Container>
-        </Row>
+        <Container className= "d-flex align-items-center justify-content-center col-6 border border-5 border-secondary p-5 shadow-lg">
+            <Col>
+                <h1 style={{paddingBottom : "8%"}}>Mot de passe oublié?</h1>
+                <Form/>
+            </Col>
+        </Container>
     );
+}
+
+/**
+ * Validation buttons of form
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function Buttons() {
+    return(
+        <Row>
+            <Col>
+                <Button href={"/connexion"} variant="outline-danger">Annuler</Button><br/>
+            </Col>
+            <Col>
+                <Button type={"submit"} variant="outline-primary">Valider</Button><br/>
+            </Col>
+        </Row>
+    )
 }
 
 /**
@@ -79,7 +85,7 @@ function Form(){
      */
     const onSubmit = (datas) => {
         if(datas.mail !== datas.confirMail){
-            setParagraphContent("Les mails fournies ne corresponde pas")
+            setParagraphContent("Les mails fournis ne correspondent pas")
         }else {
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -94,9 +100,9 @@ function Form(){
             fetch("/api/auth/forgotMail", requestOptions)
                 .then(response => {
                     if (response.status === 500) {
-                        setParagraphContent("Problème rencontrer pendant envoie du mail")
+                        setParagraphContent("Problème rencontré pendant l'envoi du mail")
                     } else if (response.status === 404) {
-                        setParagraphContent("Ce mail n&apos;est pas utilisé pour un profil")
+                        setParagraphContent("Ce mail n'est pas utilisé pour un profil")
                     } else {
                         setShow(true)
                     }
@@ -113,13 +119,13 @@ function Form(){
             <form onSubmit={handleSubmit(onSubmit)}>
                 <TextField label="Mail" type="email" variant="standard" className="textfield" {...register("mail")} required/><br/>
                 <TextField label="Confirmer le mail" type="email" variant="standard" className="textfield" {...register("confirMail")} required/><br/>
-                <Button href="/">Annuler</Button><Button type="submit">Valider</Button><br/>
-                <p className="text-danger">{paragraphContent}</p>
+                <p className="text-danger w-100 h-auto">{paragraphContent}</p>
+                <Buttons/>
             </form>
 
             <Modal show={show} size="lg" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modfication mot de passe</Modal.Title>
+                    <Modal.Title>Modification mot de passe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Un mail pour modifier votre mot de passe vient d&apos;être envoyé</Modal.Body>
                 <Modal.Footer>
