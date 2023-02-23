@@ -31,8 +31,9 @@ public class ProjetController {
 
     /**
      * Constructor for ProjetController
+     *
      * @param projetRepository ProjetRepository
-     * @param jwtService JwtService
+     * @param jwtService       JwtService
      * @param profilRepository ProfilRepository
      */
     @Autowired
@@ -47,7 +48,7 @@ public class ProjetController {
      */
     @GetMapping("/projets")
     @ResponseBody
-    public List<ProjetDto> listerLesProjets(){
+    public List<ProjetDto> listerLesProjets() {
         return projetRepository.findAll().stream().map(ProjetDto::new).toList();
     }
 
@@ -56,10 +57,10 @@ public class ProjetController {
      */
     @GetMapping("/projet/{id}")
     @ResponseBody
-    public ResponseEntity<ProjetDto> recupererProjetAvecId(@PathVariable("id") Integer id){
+    public ResponseEntity<ProjetDto> recupererProjetAvecId(@PathVariable("id") Integer id) {
         var entity = projetRepository.findById(id);
         var dto = entity.map(ProjetDto::new).orElse(null);
-        return dto!= null? new ResponseEntity<>(dto, HttpStatus.OK): new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
+        return dto != null ? new ResponseEntity<>(dto, HttpStatus.OK) : new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -67,7 +68,7 @@ public class ProjetController {
      */
     @GetMapping("/projet/user")
     @ResponseBody
-    public ResponseEntity<List<ProjetDto>> recupererProjetAvecToken(@RequestHeader("Authorization") String authorizationHeader){
+    public ResponseEntity<List<ProjetDto>> recupererProjetAvecToken(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(ProjetDto::new).toList());
@@ -76,16 +77,16 @@ public class ProjetController {
     /**
      * Endpoint to create a project
      * @param authorizationHeader the token of the user
-     * @param projet the project name
+     * @param projet              the project name
      * @return the project id
      */
     @PostMapping("/projet/create")
-    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
+    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
-        if(profilEntityOptional.isEmpty()){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        if (profilEntityOptional.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         var profil = profilEntityOptional.get();
         var projetEntity = ProjetEntity.builder()
@@ -99,43 +100,43 @@ public class ProjetController {
 
     /**
      * Method to dissociate a project from a user and associate it to a default anonymous
+     *
      * @param authorizationHeader the token of the user
-     * @param projetDto the project name
+     * @param projetDto           the project name
      * @return
      */
     @PutMapping("/projet/delete")
-    public ResponseEntity<ProjectIdDto> delete(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetDto projetDto){
+    public ResponseEntity<ProjectIdDto> delete(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
-        if(profilEntityOptional.isEmpty()){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        if (profilEntityOptional.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         var projet = projetRepository.findByIdProjet(projetDto.getId());
         var mailOwner = projet.getProfil().getMail();
-        if (!mailOwner.equals(mail)){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        if (!mailOwner.equals(mail)) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         var profil = profilEntityOptional.get();
         var anoProfilOptional = profilRepository.findByMail("anonyme@demo.fr");
-        if (anoProfilOptional.isEmpty()){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        if (anoProfilOptional.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        var projetEntity = ProjetEntity.builder()
-                .nomProjet(generateRandomString(8))
-                .profil(anoProfilOptional.get())
-                .etat(projet.getEtat())
-                .build();
-        projetRepository.save(projetEntity);
-        return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()),HttpStatus.OK);
+        projet.setNomProjet(generateRandomString(8));
+        projet.setProfil(anoProfilOptional.get());
+        projetRepository.save(projet);
+        return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
 
     }
+
     /**
      * Function to generate a random string
+     *
      * @param length the length of the random string
      * @return the random string
      */
-    private static String generateRandomString(int length){
+    private static String generateRandomString(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         var random = new Random();
         var sb = new StringBuilder();

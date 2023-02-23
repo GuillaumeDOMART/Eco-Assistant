@@ -90,10 +90,10 @@ VALUES ('ADD'),
 INSERT INTO profil(mail, mdp, nom, prenom, isadmin)
 VALUES ('admin@demo.fr', '$2a$10$b8qqjDh64vjz2/KsV9Yc8uYKMDTatn3cL6Bp7Uuhcwg/N0lKPxf2m',
         'DEMO', 'Admin', 1),
-       ('anonyme@demo.fr', 'anonyme',
-        'DEMO', 'Ano', 0),
        ('salarie@demo.fr', '$2a$10$5FQSn68f5IddpjRlc0nxguBSRCLpnMfEsbzqhlK5UPP.GHngu8ADe',
-        'DEMO', 'Salarie', 0);
+        'DEMO', 'Salarie', 0),
+       ('anonyme@demo.fr', 'anonyme',
+        'DEMO', 'Ano', 0);
 -- CREATION DES PROJETS DEVS ET SUPPORT
 INSERT INTO projet(profilid, nomprojet, etat)
 VALUES (1, 'QUESTIONAIRE POUR Administrateur',
