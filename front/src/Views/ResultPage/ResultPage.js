@@ -158,12 +158,12 @@ function ResultPage() {
 
                 arrays.forEach(array => {
                     const values = []
-                    const mineTime = jsonData.mine["duration"+ array.charAt(0).toUpperCase() + array.slice(1)]
+                    const mineTime = jsonData.mine[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
                     const mineTimeValue = mineTime === null ? 0 : mineTime;
                    jsonData.others.forEach(other => {
                        const results = other[array].map(item => item.result);
                        const sum = results.reduce((acc, current) => acc + current, 0);
-                       const time = other["duration"+ array.charAt(0).toUpperCase() + array.slice(1)]
+                       const time = other[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
                        const timeValue = time === null ? 0 : time;
                        values.push({x: sum,y: timeValue})
                    })
@@ -185,7 +185,6 @@ function ResultPage() {
                             borderWidth: 1
                         }
                     ];
-                    console.log(data)
                     chartbulet(array, data)
                 });
             });
