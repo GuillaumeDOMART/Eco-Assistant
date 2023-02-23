@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -185,10 +186,22 @@ public class AuthenticationService {
      * @return if the password was change
      */
     public ResponseEntity<Boolean> changePassword(String mail, String password, String oldPassword) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            mail,
+                            oldPassword
+                    )
+            );
+        } catch (AuthenticationException e) {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+
         var profil = profilRepository.findByMail(mail);
         if (profil.isEmpty()) {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
+
         var user = profil.get();
         var encodedPwd = passwordEncoder.encode(password);
 
