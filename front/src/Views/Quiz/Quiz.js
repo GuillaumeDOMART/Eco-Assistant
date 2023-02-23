@@ -59,6 +59,13 @@ function StepperComponent() {
         [navigate]
     );
 
+    const handleQuit = useCallback(
+        () => {
+            navigate("/profil");
+        },
+        [navigate]
+    )
+
     /**
      * Send responses to the backEnd when Next button is pressed
      * @param dataList
@@ -201,7 +208,9 @@ function StepperComponent() {
                             )}
                         </Box>
                     </form>
-                    <Col></Col>
+                    <Col>
+                        <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
+                    </Col>
                 </Row>
             </Container>
 
