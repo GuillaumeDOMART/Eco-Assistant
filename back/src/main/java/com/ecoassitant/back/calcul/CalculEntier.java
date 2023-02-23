@@ -68,8 +68,7 @@ public class CalculEntier {
     private boolean isPossible(){
         AtomicBoolean possible = new AtomicBoolean(true);
         dependances.forEach(dependance ->{
-            var str = repDon.stream().map(ReponseDonneeEntity::getReponseDonneeKey)
-                    .map(ReponseDonneeKey::getReponsePos)
+            var str = repDon.stream().map(ReponseDonneeEntity::getReponsePos)
                     .map(ReponsePossibleEntity::getIdReponsePos).toList();
             if(!str.contains(dependance.getIdReponsePos())){
                 possible.set(false);
@@ -85,7 +84,7 @@ public class CalculEntier {
     private Map<Long,Integer> join(){
         var map = new HashMap<Long, Integer>();
         dependances.forEach(rP ->{
-            var rD = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponseDonneeKey().getReponsePos().equals(rP)).findFirst();
+            var rD = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponsePos().equals(rP)).findFirst();
             if (rD.isEmpty())
                 throw new IllegalStateException();
             map.put(rP.getIdReponsePos(),(rP.getConstante().getConstante() * rD.get().getEntry()));

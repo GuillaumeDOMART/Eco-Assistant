@@ -16,7 +16,7 @@ public class ReponseDonneeDtoQuiz {
      */
     public ReponseDonneeDtoQuiz(ReponseDonneeEntity reponse) {
         entry = reponse.getEntry();
-        this.reponse = new ReponseUniqueDto(reponse.getReponseDonneeKey().getReponsePos());
+        this.reponse = new ReponseUniqueDto(reponse.getReponsePos());
     }
 
     public int getEntry() {

@@ -116,7 +116,7 @@ public class QuestionDto {
     private void addReponse(QuestionDto question, ReponseDonneeEntity reponse){
         if (question == null)
             return;
-        if (question.questionId == reponse.getReponseDonneeKey().getReponsePos().getQuestionAsso().getIdQuestion()){
+        if (question.questionId == reponse.getReponseDonneeKey().getQuestion().getIdQuestion()){
             question.reponse = new ReponseDonneeDtoQuiz(reponse);
             return;
         }
