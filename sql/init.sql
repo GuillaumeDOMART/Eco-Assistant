@@ -28,8 +28,7 @@ CREATE TABLE IF NOT EXISTS question
     typeq       VARCHAR(140) NOT NULL,
     phase       VARCHAR(50)  NOT NULL,
     dependance  INT,
-    CONSTRAINT questionpre FOREIGN KEY (questionpre) REFERENCES question (idquestion),
-    CONSTRAINT dependance FOREIGN KEY(dependance) REFERENCES reponsepossible (idreponsepos)
+    CONSTRAINT questionpre FOREIGN KEY (questionpre) REFERENCES question (idquestion)
 );
 CREATE TABLE IF NOT EXISTS constante
 (
@@ -47,6 +46,12 @@ CREATE TABLE IF NOT EXISTS reponsepossible
     CONSTRAINT questionasso FOREIGN KEY (questionasso) REFERENCES question (idquestion),
     CONSTRAINT questionsuiv FOREIGN KEY (questionsuiv) REFERENCES question (idquestion)
 );
+
+--ALTER QUESTION
+
+ALTER TABLE question
+    ADD CONSTRAINT dependance FOREIGN KEY(dependance) REFERENCES reponsepossible (idreponsepos);
+
 CREATE TABLE IF NOT EXISTS reponsedonnee
 (
     projetid     INT NOT NULL,
@@ -101,86 +106,85 @@ VALUES (1, 'QUESTIONAIRE POUR Administrateur',
        (2, 'QUESTIONAIRE POUR Salarie 2',
         'INPROGRESS');
 -- CREATION DES QUESTIONS
-INSERT INTO question (intitule, questionpre, typeq, phase,
-                      dependance)
+INSERT INTO question (intitule, questionpre, typeq, phase)
 VALUES
 
     /*HORS_PHASE*/
-    ('Votre projet nécessite-t-il des trajets en avion ?',null, 'QCM','HORS_PHASE', null),
-    ('Combien de km en avion sont effectués pour le projet ?',1,'NUMERIC', 'HORS_PHASE', 1),
+    ('Votre projet nécessite-t-il des trajets en avion ?',null, 'QCM','HORS_PHASE'),
+    ('Combien de km en avion sont effectués pour le projet ?',1,'NUMERIC', 'HORS_PHASE'),
 
     /*PLANIFICATION*/
-    ('Veux-tu remplir cette phase?', 2,'QCM', 'PLANIFICATION', null),
-    ('Combien de jours dure cette phase ?', 3, 'NUMERIC', 'PLANIFICATION', 4),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 4, 'NUMERIC', 'PLANIFICATION', 4),
-    ('Combien de jours de télétravail par semaine ?',5, 'NUMERIC', 'PLANIFICATION', 4),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 6, 'QCM', 'PLANIFICATION', 4),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 7, 'NUMERIC', 'PLANIFICATION', 9),
-    ('Combien viennent en voiture ?', 8, 'NUMERIC', 'PLANIFICATION', null),
-    ('Combien viennent en vélo ou à pied ?', 9, 'NUMERIC', 'PLANIFICATION', null),
-    ('Combien viennent en transport en commun ?', 10, 'NUMERIC', 'PLANIFICATION', null),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 11, 'NUMERIC', 'PLANIFICATION', null),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 12, 'NUMERIC', 'PLANIFICATION', null),
+    ('Veux-tu remplir cette phase?', 2,'QCM', 'PLANIFICATION'),
+    ('Combien de jours dure cette phase ?', 3, 'NUMERIC', 'PLANIFICATION'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 4, 'NUMERIC', 'PLANIFICATION'),
+    ('Combien de jours de télétravail par semaine ?',5, 'NUMERIC', 'PLANIFICATION'),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 6, 'QCM', 'PLANIFICATION'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 7, 'NUMERIC', 'PLANIFICATION'),
+    ('Combien viennent en voiture ?', 8, 'NUMERIC', 'PLANIFICATION'),
+    ('Combien viennent en vélo ou à pied ?', 9, 'NUMERIC', 'PLANIFICATION'),
+    ('Combien viennent en transport en commun ?', 10, 'NUMERIC', 'PLANIFICATION'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 11, 'NUMERIC', 'PLANIFICATION'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 12, 'NUMERIC', 'PLANIFICATION'),
 
     /*DEVELOPPEMENT*/
-    ('Veux-tu remplir cette phase?', 13,'QCM', 'DEVELOPPEMENT', null),
-    ('Combien de jours dure cette phase ?', 14, 'NUMERIC', 'DEVELOPPEMENT', 17),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 15, 'NUMERIC', 'DEVELOPPEMENT', 17),
-    ('Combien de jours de télétravail par semaine ?',16, 'NUMERIC', 'DEVELOPPEMENT', 17),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 17, 'QCM', 'DEVELOPPEMENT', 17),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 18, 'NUMERIC', 'DEVELOPPEMENT', 23),
-    ('Combien viennent en voiture ?', 19, 'NUMERIC', 'DEVELOPPEMENT', null),
-    ('Combien viennent en vélo ou à pied ?', 20, 'NUMERIC', 'DEVELOPPEMENT', null),
-    ('Combien viennent en transport en commun ?', 21, 'NUMERIC', 'DEVELOPPEMENT', null),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 22, 'NUMERIC', 'DEVELOPPEMENT', null),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 23, 'NUMERIC', 'DEVELOPPEMENT', null),
-    ('Quel langage utilise tu majoritairement pour le back ?', 24, 'QCM', 'DEVELOPPEMENT', null),
-    ('Combien de lignes de code ?', 25, 'NUMERIC', 'DEVELOPPEMENT', 25),
-    ('Quel langage utilise tu majoritairement pour le front ?', 26, 'QCM', 'DEVELOPPEMENT', null),
-    ('Combien de lignes de code ?', 27, 'NUMERIC', 'DEVELOPPEMENT', 27),
+    ('Veux-tu remplir cette phase?', 13,'QCM', 'DEVELOPPEMENT'),
+    ('Combien de jours dure cette phase ?', 14, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 15, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien de jours de télétravail par semaine ?',16, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 17, 'QCM', 'DEVELOPPEMENT'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 18, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien viennent en voiture ?', 19, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien viennent en vélo ou à pied ?', 20, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien viennent en transport en commun ?', 21, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 22, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 23, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Quel langage utilise tu majoritairement pour le back ?', 24, 'QCM', 'DEVELOPPEMENT'),
+    ('Combien de lignes de code ?', 25, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Quel langage utilise tu majoritairement pour le front ?', 26, 'QCM', 'DEVELOPPEMENT'),
+    ('Combien de lignes de code ?', 27, 'NUMERIC', 'DEVELOPPEMENT'),
 
     /*TEST*/
-    ('Veux-tu remplir cette phase?', 28,'QCM', 'TEST', null),
-    ('Combien de jours dure cette phase ?', 29, 'NUMERIC', 'TEST', 42),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 30, 'NUMERIC', 'TEST', 42),
-    ('Combien de jours de télétravail par semaine ?',31, 'NUMERIC', 'TEST', 42),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 32, 'QCM', 'TEST', 42),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 33, 'NUMERIC', 'TEST', 47),
-    ('Combien viennent en voiture ?', 34, 'NUMERIC', 'TEST', null),
-    ('Combien viennent en vélo ou à pied ?', 35, 'NUMERIC', 'TEST', null),
-    ('Combien viennent en transport en commun ?', 36, 'NUMERIC', 'TEST', null),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 37, 'NUMERIC', 'TEST', null),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 38, 'NUMERIC', 'TEST', null),
+    ('Veux-tu remplir cette phase?', 28,'QCM', 'TEST'),
+    ('Combien de jours dure cette phase ?', 29, 'NUMERIC', 'TEST'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 30, 'NUMERIC', 'TEST'),
+    ('Combien de jours de télétravail par semaine ?',31, 'NUMERIC', 'TEST'),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 32, 'QCM', 'TEST'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 33, 'NUMERIC', 'TEST'),
+    ('Combien viennent en voiture ?', 34, 'NUMERIC', 'TEST'),
+    ('Combien viennent en vélo ou à pied ?', 35, 'NUMERIC', 'TEST'),
+    ('Combien viennent en transport en commun ?', 36, 'NUMERIC', 'TEST'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 37, 'NUMERIC', 'TEST'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 38, 'NUMERIC', 'TEST'),
 
     /*DEPLOIEMENT*/
-    ('Veux-tu remplir cette phase?', 39,'QCM', 'DEPLOIEMENT', null),
-    ('Combien de jours dure cette phase ?', 40, 'NUMERIC', 'DEPLOIEMENT', 55),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 41, 'NUMERIC', 'DEPLOIEMENT', 55),
-    ('Combien de jours de télétravail par semaine ?',42, 'NUMERIC', 'DEPLOIEMENT', 55),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 43, 'QCM', 'DEPLOIEMENT', 55),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 44, 'NUMERIC', 'DEPLOIEMENT', 60),
-    ('Combien viennent en voiture ?', 45, 'NUMERIC', 'DEPLOIEMENT', null),
-    ('Combien viennent en vélo ou à pied ?', 46, 'NUMERIC', 'DEPLOIEMENT', null),
-    ('Combien viennent en transport en commun ?', 47, 'NUMERIC', 'DEPLOIEMENT', null),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 48, 'NUMERIC', 'DEPLOIEMENT', null),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 49, 'NUMERIC', 'DEPLOIEMENT', null),
-    ('Utilise-tu un DataCenter ?', 50, 'QCM', 'DEPLOIEMENT', null),
-    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 51, 'NUMERIC', 'DEPLOIEMENT', 68),
-    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 52, 'QCM', 'DEPLOIEMENT', 68),
-    ('Quelle énergie alimente majoritairement ton DataCenter ?', 53, 'QCM', 'DEPLOIEMENT', 71),
+    ('Veux-tu remplir cette phase?', 39,'QCM', 'DEPLOIEMENT'),
+    ('Combien de jours dure cette phase ?', 40, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 41, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de jours de télétravail par semaine ?',42, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 43, 'QCM', 'DEPLOIEMENT'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 44, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien viennent en voiture ?', 45, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien viennent en vélo ou à pied ?', 46, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien viennent en transport en commun ?', 47, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 48, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 49, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Utilise-tu un DataCenter ?', 50, 'QCM', 'DEPLOIEMENT'),
+    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 51, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 52, 'QCM', 'DEPLOIEMENT'),
+    ('Quelle énergie alimente majoritairement ton DataCenter ?', 53, 'QCM', 'DEPLOIEMENT'),
 
     /*MAINTENANCE*/
-    ('Veux-tu remplir cette phase?', 54,'QCM', 'DEPLOIEMENT', null),
-    ('Combien de jours dure cette phase ?', 55, 'NUMERIC', 'DEPLOIEMENT', 76),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 56, 'NUMERIC', 'DEPLOIEMENT', 76),
-    ('Combien de jours de télétravail par semaine ?',57, 'NUMERIC', 'DEPLOIEMENT', 76),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 58, 'QCM', 'DEPLOIEMENT', 76),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 59, 'NUMERIC', 'DEPLOIEMENT', 81),
-    ('Combien viennent en voiture ?', 60, 'NUMERIC', 'DEPLOIEMENT', null),
-    ('Combien viennent en vélo ou à pied ?', 61, 'NUMERIC', 'DEPLOIEMENT', null),
-    ('Combien viennent en transport en commun ?', 62, 'NUMERIC', 'DEPLOIEMENT', null),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 63, 'NUMERIC', 'DEPLOIEMENT', null),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 64, 'NUMERIC', 'DEPLOIEMENT', null);
+    ('Veux-tu remplir cette phase?', 54,'QCM', 'DEPLOIEMENT'),
+    ('Combien de jours dure cette phase ?', 55, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 56, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de jours de télétravail par semaine ?',57, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 58, 'QCM', 'DEPLOIEMENT'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 59, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien viennent en voiture ?', 60, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien viennent en vélo ou à pied ?', 61, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien viennent en transport en commun ?', 62, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 63, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 64, 'NUMERIC', 'DEPLOIEMENT');
 
 --- CREATION DES CONSTANTES
 INSERT INTO constante (constante, tracabilite)
@@ -310,7 +314,7 @@ VALUES
     (63, 64, 'Veuillez entrer un entier', 13),
     (64, 65, 'Veuillez entrer un entier', 15),
     (65, null, 'Veuillez entrer un entier', 16);
---CREATION REPONSEDONNEE
+
 
 --CREATION CALCUL
 INSERT INTO calcul(calculopid, reponsepossibleid, nbcalcul,priorite,
@@ -461,39 +465,240 @@ VALUES  (5, 3, 1, 1, 'HORS_PHASE'),
         (5, 57, 15, 1, 'DEPLOIEMENT'),
 
         (3, 58, 16, 1, 'DEPLOIEMENT'),
-        (5, 73, 16, 1 'DEPLOIEMENT'),
+        (5, 73, 16, 1, 'DEPLOIEMENT'),
 
         (3, 58, 16, 1, 'DEPLOIEMENT'),
-        (5, 74, 16, 1 'DEPLOIEMENT'),
+        (5, 74, 16, 1, 'DEPLOIEMENT'),
 
         (3, 58, 16, 1, 'DEPLOIEMENT'),
-        (5, 75, 16, 1 'DEPLOIEMENT'),
+        (5, 75, 16, 1, 'DEPLOIEMENT'),
 
-    (3, 84, 17, 1, 'MAINTENANCE'),
-    (3, 83, 17, 1, 'MAINTENANCE'),
-    (1, 78, 17, 1, 'MAINTENANCE'),
-    (3, 86, 17, 1, 'MAINTENANCE'),
-    (3, 83, 17, 1, 'MAINTENANCE'),
-    (2, 78, 17, 1, 'MAINTENANCE'),
-    (3, 80, 17, 1, 'MAINTENANCE'),
-    (3, 84, 17, 1, 'MAINTENANCE'),
-    (2, 83, 17, 1, 'MAINTENANCE'),
-    (3, 80, 17, 1, 'MAINTENANCE'),
-    (3, 86, 17, 1, 'MAINTENANCE'),
-    (5, 83, 17, 1, 'MAINTENANCE'),
+        (3, 82, 17, 1, 'MAINTENANCE'),
+        (3, 81, 17, 1, 'MAINTENANCE'),
+        (1, 76, 17, 1, 'MAINTENANCE'),
+        (3, 84, 17, 1, 'MAINTENANCE'),
+        (3, 81, 17, 1, 'MAINTENANCE'),
+        (2, 76, 17, 1, 'MAINTENANCE'),
+        (3, 78, 17, 1, 'MAINTENANCE'),
+        (3, 82, 17, 1, 'MAINTENANCE'),
+        (2, 81, 17, 1, 'MAINTENANCE'),
+        (3, 76, 17, 1, 'MAINTENANCE'),
+        (3, 84, 17, 1, 'MAINTENANCE'),
+        (5, 81, 17, 1, 'MAINTENANCE'),
 
-    (3, 84, 17, 2, 'MAINTENANCE'),
-    (3, 83, 17, 2, 'MAINTENANCE'),
-    (1, 78, 17, 2, 'MAINTENANCE'),
-    (3, 86, 17, 2, 'MAINTENANCE'),
-    (3, 83, 17, 2, 'MAINTENANCE'),
-    (5, 78, 17, 2, 'MAINTENANCE'),
+        (3, 82, 17, 2, 'MAINTENANCE'),
+        (3, 81, 17, 2, 'MAINTENANCE'),
+        (1, 76, 17, 2, 'MAINTENANCE'),
+        (3, 84, 17, 2, 'MAINTENANCE'),
+        (3, 81, 17, 2, 'MAINTENANCE'),
+        (5, 76, 17, 2, 'MAINTENANCE'),
 
-    (3, 79, 17, 3, 'MAINTENANCE'),
-    (5, 78, 17, 3, 'MAINTENANCE'),
+        (3, 77, 17, 3, 'MAINTENANCE'),
+        (5, 76, 17, 3, 'MAINTENANCE'),
 
-    (3, 87, 18, 1, 'MAINTENANCE'),
-    (5, 78, 18, 1, 'MAINTENANCE'),
+        (3, 85, 18, 1, 'MAINTENANCE'),
+        (5, 76, 18, 1, 'MAINTENANCE'),
 
-    (3, 88, 19, 1, 'MAINTENANCE'),
-    (5, 78, 19, 1, 'MAINTENANCE');
+        (3, 86, 19, 1, 'MAINTENANCE'),
+        (5, 76, 19, 1, 'MAINTENANCE');
+
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 1;
+UPDATE question
+SET dependance = 1
+    WHERE idquestion = 2;
+
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 3;
+UPDATE question
+SET dependance = 4
+    WHERE idquestion = 4;
+UPDATE question
+SET dependance = 4
+    WHERE idquestion = 5;
+UPDATE question
+SET dependance = 4
+    WHERE idquestion = 6;
+UPDATE question
+SET dependance = 9
+    WHERE idquestion = 7;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 8;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 9;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 10;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 11;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 12;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 13;
+
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 14;
+UPDATE question
+SET dependance = 17
+    WHERE idquestion = 15;
+UPDATE question
+SET dependance = 17
+    WHERE idquestion = 16;
+UPDATE question
+SET dependance = 17
+    WHERE idquestion = 17;
+UPDATE question
+SET dependance = 17
+    WHERE idquestion = 18;
+UPDATE question
+SET dependance = 23
+    WHERE idquestion = 19;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 20;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 21;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 22;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 23;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 24;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 25;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 26;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 27;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 28;
+
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 29;
+UPDATE question
+SET dependance = 42
+    WHERE idquestion = 30;
+UPDATE question
+SET dependance = 42
+    WHERE idquestion = 31;
+UPDATE question
+SET dependance = 42
+    WHERE idquestion = 32;
+UPDATE question
+SET dependance = 42
+    WHERE idquestion = 33;
+UPDATE question
+SET dependance = 47
+    WHERE idquestion = 34;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 35;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 36;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 37;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 38;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 39;
+
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 40;
+UPDATE question
+SET dependance = 55
+    WHERE idquestion = 41;
+UPDATE question
+SET dependance = 55
+    WHERE idquestion = 42;
+UPDATE question
+SET dependance = 55
+    WHERE idquestion = 43;
+UPDATE question
+SET dependance = 55
+    WHERE idquestion = 44;
+UPDATE question
+SET dependance = 60
+    WHERE idquestion = 45;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 46;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 47;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 48;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 49;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 50;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 51;
+UPDATE question
+SET dependance = 68
+    WHERE idquestion = 52;
+UPDATE question
+SET dependance = 68
+    WHERE idquestion = 53;
+UPDATE question
+SET dependance = 71
+    WHERE idquestion = 54;
+
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 55;
+UPDATE question
+SET dependance = 76
+    WHERE idquestion = 56;
+UPDATE question
+SET dependance = 76
+    WHERE idquestion = 57;
+UPDATE question
+SET dependance = 76
+    WHERE idquestion = 58;
+UPDATE question
+SET dependance = 76
+    WHERE idquestion = 59;
+UPDATE question
+SET dependance = 81
+    WHERE idquestion = 60;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 61;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 62;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 63;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 64;
+UPDATE question
+SET dependance = null
+    WHERE idquestion = 65;
