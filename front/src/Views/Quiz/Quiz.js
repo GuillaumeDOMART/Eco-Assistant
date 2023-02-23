@@ -114,6 +114,7 @@ function StepperComponent() {
             .then(
                 (result) => {
                     setIsLoaded(true);
+                    console.log(result)
                     setData(result);
                 },
                 (error) => {
