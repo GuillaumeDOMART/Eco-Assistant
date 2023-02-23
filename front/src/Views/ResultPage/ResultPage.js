@@ -145,11 +145,11 @@ function ResultPage() {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({"id": id})
+            body: JSON.stringify({id})
         };
         fetch('api/calculs', options)
             .then(response => response.json())
-            .catch((error) => {
+            .catch((_) => {
                 navigate("/profil")
             })
             .then(jsonData => {

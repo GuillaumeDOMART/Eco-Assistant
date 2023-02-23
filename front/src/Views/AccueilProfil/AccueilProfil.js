@@ -32,7 +32,7 @@ function LigneTableauProjet(data) {
             <td align={"center"} valign={"middle"}>{data.etat}</td>
             <td align={"center"} valign={"middle"}>
                 {data.etat === "INPROGRESS" && <Button className="m-3" variant="secondary">Modifier</Button>}
-                <Button className="m-3" href={"/result?id=" + data.id} variant="primary">Visionner</Button>
+                <Button className="m-3" href={`/result?id=${data.id}`} variant="primary">Visionner</Button>
                 <Button className="m-3" variant="outline-primary">Créer une copie</Button>
                 <Button className="m-3" variant="outline-danger">Dissocier</Button>
             </td>
