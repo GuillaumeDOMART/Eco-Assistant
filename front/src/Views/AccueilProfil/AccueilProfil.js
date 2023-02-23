@@ -5,83 +5,7 @@ import {Alert, Button, Container, Image, Modal, Placeholder, Row} from "react-bo
 import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
 import {useNavigate} from "react-router-dom";
 
-/**
- * This function generate a line containing informations about a project
- *
- * @param data a json object of this type :
- *
- ```json
- {
-        "id": 1,
-        "profil": {
-            "id": 2,
-            "mail": "createur-dev@demo.fr",
-            "nom": "DEMO",
-            "prenom": "Createur Dev",
-            "admin": false
-        },
-        "nomProjet": "QUESTIONAIRE POUR DEVELOPPEURS",
-        "etat": "INPROGRESS"
-    }
- ```
- */
-function LigneTableauProjet(data) {
-    const [show, setShow] = useState(false);
-    const [deletedProject,setdeletedProject] = useState(-1)
-    /**
-     * Hide pop-up if deletion of profile is refused
-     */
-    const handleCancel = useCallback(() => {
-        setdeletedProject(-1)
-        setShow(false);
-    },[setdeletedProject,setShow])
-    /**
-     * Show the pop-up when you push the button delete profil
-     */
-    const handleShow = useCallback((id) => {
-        console.log("set project")
-        console.log(id)
-        setdeletedProject(id)
-        setShow(true);
-    },[setdeletedProject,setShow])
 
-    const handleDissociate = useCallback((id)=>{
-        console.log("deleted project");
-        console.log(id);
-
-    },[])
-
-    return (
-        <>
-            <tr className='table border-bottom border-2 border-secondary'>
-                <td align={"center"} valign={"middle"}>{data.nomProjet}</td>
-                <td align={"center"} valign={"middle"}>{data.etat}</td>
-                <td align={"center"} valign={"middle"}>
-                    <Button className="m-3" variant="secondary">Modifier</Button>
-                    <Button className="m-3" variant="primary">Visionner</Button>
-                    <Button className="m-3" variant="outline-primary">Créer une copie</Button>
-                    <Button className="m-3" variant="outline-danger" onClick={()=>handleShow(data.id)}>Dissocier</Button>
-                </td>
-            </tr>
-            <Modal show={show} onHide={handleCancel}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Dissocier le Projet</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Es-tu sûr de vouloir dissocier ce projet ?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCancel}>
-                        Annuler
-                    </Button>
-                    <Button variant="outline-danger" onClick={()=>handleDissociate(deletedProject)}>
-                        Supprimer
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-
-
-    );
-}
 
 /**
  * Generate a project listing table with data from API, use placeholder while loading
@@ -90,7 +14,49 @@ function TableauProjets() {
     const [apiError, setApiError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
+    const [show, setShow] = useState(false);
     const navigate = useNavigate()
+
+    /**
+     * Hide pop-up if deletion of profile is refused
+     */
+    const handleCancel = useCallback(() => {
+        setShow(false);
+    },[setShow])
+
+    /**
+     * Show the pop-up when you push the button delete profil
+     */
+    const handleShow = useCallback(() => {
+        setShow(true);
+    },[setShow])
+
+    /**
+     * Dissociate the project describe by the id
+     * @type {(function(*=): void)|*}
+     */
+    const handleDissociate = useCallback((id,itemsList,itemSelected)=>{
+        const token = sessionStorage.getItem("token");
+        const jsonBody = {id : id}
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(jsonBody)
+        };
+        fetch('/api/projet/delete', options)
+            .then(res => res.json())
+            .then(()=>{
+                const copyItems = [...itemsList];
+                copyItems.splice(itemsList.indexOf(itemSelected), 1);
+                setItems(copyItems);
+                setShow(false);
+            })
+
+
+    },[setShow,setItems])
 
     /**
      * Navigate to the page to begin the questionnaire
@@ -104,7 +70,7 @@ function TableauProjets() {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
-            },
+            }
         };
         fetch('/api/projet/user', options)
             .then(res => res.json())
@@ -159,7 +125,7 @@ function TableauProjets() {
                     <Table>
                         <TableauProjetsHeader/>
                         <tbody>
-                            {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                            {items.map((item) => <LigneTableauProjet key={item.id} {...item} itemsList={items} itemSelected={item} showVar={show} handleShow={handleShow} handleCancel={handleCancel} handleDissociate={handleDissociate} />)}
                         </tbody>
                     </Table>
                 </>
@@ -167,7 +133,69 @@ function TableauProjets() {
         }
     }
 }
+/**
+ * This function generate a line containing informations about a project
+ *
+ *
+ ```json
+ {
+        "id": 1,
+        "profil": {
+            "id": 2,
+            "mail": "createur-dev@demo.fr",
+            "nom": "DEMO",
+            "prenom": "Createur Dev",
+            "admin": false
+        },
+        "nomProjet": "QUESTIONAIRE POUR DEVELOPPEURS",
+        "etat": "INPROGRESS"
+    }
+ ```
+ * @param datas
+ */
+function LigneTableauProjet(datas) {
 
+
+    const executeHandleShow = ()=>{
+        datas.handleShow()
+    }
+    const executeHandleDissociate = ()=>{
+        datas.handleDissociate(datas.id,datas.itemsList,datas.itemSelected)
+    }
+
+
+
+    return (
+        <>
+            <tr className='table border-bottom border-2 border-secondary'>
+                <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
+                <td align={"center"} valign={"middle"}>{datas.etat}</td>
+                <td align={"center"} valign={"middle"}>
+                    <Button className="m-3" variant="secondary">Modifier</Button>
+                    <Button className="m-3" variant="primary">Visionner</Button>
+                    <Button className="m-3" variant="outline-primary">Créer une copie</Button>
+                    <Button className="m-3" variant="outline-danger" onClick={executeHandleShow}>Dissocier</Button>
+                </td>
+            </tr>
+            <Modal show={datas.showVar} onHide={datas.handleCancel}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Dissocier le Projet</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Es-tu sûr de vouloir dissocier ce projet ?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={datas.handleCancel}>
+                        Annuler
+                    </Button>
+                    <Button variant="outline-danger" onClick={executeHandleDissociate}>
+                        Supprimer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+
+
+    );
+}
 /**
  * Generate a project listing table with Mock data
  */
