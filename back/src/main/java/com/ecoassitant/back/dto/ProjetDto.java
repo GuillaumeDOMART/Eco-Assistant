@@ -13,7 +13,7 @@ import java.util.Objects;
 @Data
 @AllArgsConstructor
 public class ProjetDto {
-    private Long id;
+    private Integer id;
     private ProfilDto profil;
     private String nomProjet;
     private Etat etat;

@@ -14,13 +14,14 @@ import ConnexionPage from "./Views/Connexion/ConnexionPage";
 import AccueilSite from "./Views/AccueilSite/AccueilSite";
 import AccueilProfil from "./Views/AccueilProfil/AccueilProfil";
 import Profil from "./Views/InfoProfil/Profil";
-import StepperComponent from "./Components/Stepper/Stepper";
+import StepperComponent from "./Views/Quiz/Quiz";
 import CreateProject from "./Views/Quiz/CreateProject";
 import Deconnection from "./Views/Deconnection/LogOut";
 import Guest from "./Views/guest/Guest";
 import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
 import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
 import ModifyID from "./Views/ModifyID/ModifyID";
+import ForgotPasswordMail from "./Views/ForgotPassword/ForgotPasswordMail";
 
 const router = createBrowserRouter([
     {
@@ -33,54 +34,58 @@ const router = createBrowserRouter([
         element: <AccueilProfil/>,
     },
     {
-      path: "/connexion",
-      element: <ConnexionPage/>,
+        path: "/connexion",
+        element: <ConnexionPage/>,
     },
     {
-        path:"/questionnaire",
+        path: "/questionnaire",
         element: <StepperComponent/>,
     },
     {
-      path:"/newproject",
-      element: <CreateProject/>
+        path: "/newproject",
+        element: <CreateProject/>
     }
-    ,{
-        path:"/result",
+    , {
+        path: "/result",
         element: <ResultPage/>
     },
     {
-        path:"/login",
+        path: "/login",
         element: <ConnexionPage/>
     },
     {
-        path:"/forgotPassword",
+        path: "/forgotPassword",
         element: <ForgotPassword/>
+    },
+    {
+        path:"/forgotPasswordMail",
+        element: <ForgotPasswordMail/>
     },
     {
       path:"/modifyPassword",
       element: <ModifyPassword/>
     },
     {
-        path:"/modifyID",
+        path: "/modifyID",
         element: <ModifyID/>
     },
     {
         path: "/infoProfil",
         element: <Profil/>
-    },{
-        path:"/logout",
+    }, {
+        path: "/logout",
         element: <Deconnection/>
-    },{
-        path:"/guest",
+    }, {
+        path: "/guest",
         element: <Guest/>
     }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-      <RouterProvider router={router} />
-  </React.StrictMode>
+    <React.StrictMode>
+        <RouterProvider router={router}/>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

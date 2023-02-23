@@ -1,5 +1,23 @@
+.bg {
+    background-image: url("/src/Components/Pictures/montagne.jpg");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bgQuestionnaire {
+    background-image: url("/src/Components/Pictures/accueilSite.png");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 body {
+    font-weight: bold;
     text-align: center;
+    height: 100%;
 }
 
 .textfield {
@@ -7,9 +25,31 @@ body {
 }
 
 hr {
-    border: 2px solid #64c692;
+    border: 2px solid #64C692;
+    opacity: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
-.leaves {
-    height:5%;
+.NB {
+    font-size: small;
+}
+
+.Title {
+    font-size: xxx-large;
+    margin-bottom: -20px;
+}
+
+.Text {
+    font-size: 120%;
+}
+
+.logo {
+    height: 70px;
+    margin-bottom: 10px;
+    margin-left: -125px;
+}
+
+a {
+    color: black;
 }

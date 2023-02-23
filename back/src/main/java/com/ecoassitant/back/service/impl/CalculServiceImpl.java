@@ -1,9 +1,9 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.calcul.CalculEntier;
-import com.ecoassitant.back.dto.CalculDto;
-import com.ecoassitant.back.dto.ResultatDto;
 import com.ecoassitant.back.dto.ResultatsPhaseDto;
+import com.ecoassitant.back.dto.resultat.CalculDto;
+import com.ecoassitant.back.dto.resultat.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.repository.CalculRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -34,8 +34,13 @@ public class CalculServiceImpl  implements CalculService {
         this.projetRepository = projetRepository;
     }
 
+    /**
+     * Function to get the result for a phase on a project
+     * @param idProject project of wich we want the result
+     * @return the result
+     */
     @Override
-    public ResultatsPhaseDto calculsForProject(Long idProject) {
+    public ResultatsPhaseDto calculsForProject(Integer idProject) {
         var mine = resultatForProject(idProject);
         if (mine == null)
             return null;
@@ -48,7 +53,12 @@ public class CalculServiceImpl  implements CalculService {
         return resultat;
     }
 
-    private ResultatDto resultatForProject(Long idProject){
+    /**
+     * Function to get the result for a project
+     * @param idProject the id of the project
+     * @return the result
+     */
+    private ResultatDto resultatForProject(Integer idProject){
         var resultat = new ResultatDto();
         var projet = projetRepository.findById(idProject);
         if (projet.isEmpty())

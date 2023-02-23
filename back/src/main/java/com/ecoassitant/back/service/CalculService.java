@@ -1,6 +1,5 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.ResultatDto;
 import com.ecoassitant.back.dto.ResultatsPhaseDto;
 
 /**
@@ -12,5 +11,5 @@ public interface CalculService {
      * @param idProject project of wich we want the result
      * @return list of results
      */
-    public ResultatsPhaseDto calculsForProject(Long idProject);
+    public ResultatsPhaseDto calculsForProject(Integer idProject);
 }

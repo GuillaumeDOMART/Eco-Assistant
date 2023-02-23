@@ -1,5 +1,10 @@
 import { useRouteError } from "react-router-dom";
 
+/**
+ * The error page
+ * @returns {JSX.Element} the jsx element
+ * @constructor the constructor
+ */
 export default function ErrorPage() {
     const error = useRouteError();
     console.error(error);

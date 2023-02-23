@@ -1,7 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.QuestionDto;
-import com.ecoassitant.back.dto.QuestionUniqueDto;
+import com.ecoassitant.back.dto.quiz.QuestionDto;
+import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.repository.QuestionRepository;
 import com.ecoassitant.back.service.QuestionService;
@@ -18,6 +18,10 @@ public class
 QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
 
+    /**
+     * Function to create QuestionServiceImpl with QuestionRepository
+     * @param questionRepository the QuestionRepository
+     */
     public QuestionServiceImpl(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
     }
