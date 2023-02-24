@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
 import {Col, Container, Row} from "react-bootstrap";
-import {useCallback} from "react";
+import {useCallback, useState} from "react";
 
 
 /**
@@ -42,6 +42,7 @@ function handleProjectSubmit(onSubmit, handleSubmit) {
 function CreateProject() {
     const navigate = useNavigate();
     const {register, handleSubmit} = useForm();
+    const [paragraphContent, setParagraphContent] = useState("")
 
     /**
      * Function for the submission of the data
@@ -64,6 +65,9 @@ function CreateProject() {
         if(response.status === 403){
             navigate("/logout")
         }
+        else if(response.status === 400){
+            setParagraphContent("Le nom du projet doit avoir une taille inférieur à 50")
+        }
         const json = await response.json();
         sessionStorage.setItem("project",json.id)
         navigate("/questionnaire")
@@ -73,7 +77,12 @@ function CreateProject() {
      * function to handle quit
      */
     const handleQuit = useCallback(() => {
-        navigate("/profil")
+        if(sessionStorage.getItem("guest")){
+            navigate("/logout")
+        }
+        else {
+            navigate("/profil")
+        }
     },[navigate]);
 
     return (
@@ -81,6 +90,7 @@ function CreateProject() {
             <Row className="border border-5 vh-100">
                 <Col>
                     <Project onSubmit={handleProjectSubmit(onSubmit, handleSubmit)} register={register}/>
+                    <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                     <Button onClick={handleQuit} type={"button"}>Revenir à l&lsquo;accueil</Button>
                 </Col>
             </Row>
