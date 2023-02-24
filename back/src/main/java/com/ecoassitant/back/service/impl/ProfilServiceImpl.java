@@ -41,8 +41,8 @@ public class ProfilServiceImpl implements ProfilService {
     public Integer createProfil(ProfilSimplDto profilDto) {
         var profilEntity = new ProfilEntity();
         profilEntity.setMail(profilDto.getMail());
-        profilEntity.setNom(profilDto.getLastname());
-        profilEntity.setPrenom(profilDto.getFirstname());
+        profilEntity.setLastname(profilDto.getLastname());
+        profilEntity.setFirstname(profilDto.getFirstname());
         profilEntity.setPassword(profilDto.getMdp());
         profilEntity.setIsAdmin(1);
         repository.save(profilEntity);
