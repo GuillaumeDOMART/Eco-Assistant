@@ -117,7 +117,7 @@ const Anonyme = ({navigate}) => {
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
-    const [paragraphContent, setParagraphContent] = useState("")
+    const [paragraphContent, setParagraphContent] = useState("");
 
     /**
      * Send datas to the back
@@ -147,7 +147,6 @@ function AccueilSite() {
             return
         }
         const json = await response.json();
-        console.log(json);
         if (response.status === 400) {
             setParagraphContent("Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)");
             return;
