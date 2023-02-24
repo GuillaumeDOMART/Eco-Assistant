@@ -75,6 +75,11 @@ public class CalculServiceImpl implements CalculService {
         return Optional.of(resultat);
     }
 
+    /**
+     * Create a map for sort calculs
+     * @param calculs list of calculs entity
+     * @return map
+     */
     private Map<Integer, Map<Integer, List<CalculEntity>>> creationResultat(List<CalculEntity> calculs) {
         var map = new HashMap<Integer, Map<Integer, List<CalculEntity>>>();
         calculs.forEach(calculEntity -> {
