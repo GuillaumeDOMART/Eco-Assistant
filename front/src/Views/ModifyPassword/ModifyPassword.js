@@ -26,12 +26,12 @@ function ModifyPassword() {
         }
 
         if (datas.newPassword !== datas.newPasswordConfirmed) {
-            setParagraphContent("Les mot de passe fournies ne correspondent pas")
+            setParagraphContent("Les mot de passe fournis ne correspondent pas")
             return
         }
 
         if (datas.actualPassword === datas.newPassword) {
-            setParagraphContent("Le nouveau mot de passe ne peut être le même que l'ancien")
+            setParagraphContent("Le nouveau mot de passe ne peut pas être le même que l'ancien")
             return;
         }
 

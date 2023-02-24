@@ -44,6 +44,7 @@ export const NUMERIC = ({question, register}) => {
                 type={"number"}
                 {...register(question.questionId.toString())}
                 min={0}
+                defaultValue={question.reponse}
             /><br/>
             </div>
         </div>

@@ -66,7 +66,7 @@ function CreateProject() {
             navigate("/logout")
         }
         else if(response.status === 400){
-            setParagraphContent("Le nom du projet doit avoir une taille inférieur à 50")
+            setParagraphContent("Le nom du projet doit avoir une taille inférieur à 50 caractères")
         }
         const json = await response.json();
         sessionStorage.setItem("project",json.id)

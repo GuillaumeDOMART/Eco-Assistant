@@ -47,7 +47,7 @@ function ModifyID() {
                 setParagraphContent("Le mail n'est pas conforme ou est attribué à un compte déjà existant");
                 return;
             } else {
-                setParagraphContent("Une erreur innatendue est survenue, veuillez réessayer plus tard");
+                setParagraphContent("Une erreur inattendue est survenue, veuillez réessayer plus tard");
             }
             return;
         }
