@@ -113,6 +113,11 @@ public class ProfilController {
         return authenticationService.changePassword(mail, forgotPasswordVerifyDto.getPassword(), forgotPasswordVerifyDto.getOldPassword());
     }
 
+    /**
+     * Function to delete the profile of the user currently connected
+     * @param authorizationHeader
+     * @return ResponseEntity of ProfilIdDto of profile deleted
+     */
     @PutMapping("/profil/delete")
     public ResponseEntity<ProfilIdDto> deleteProfil(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);

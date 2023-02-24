@@ -32,5 +32,10 @@ public interface ProfilService {
      */
     Integer createProfil(ProfilSimplDto profilDto);
 
+    /**
+     * Endpoint to anonymize a profile
+     * @param mail is the mail of the user connected
+     * @return optional the id of the profile dissociated
+     */
     Optional<ProfilIdDto> deleteProfil(String mail);
 }
