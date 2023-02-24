@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS question
 CREATE TABLE IF NOT EXISTS constante
 (
     idconstante serial PRIMARY KEY,
-    constante   INT,
+    constante   FLOAT,
     tracabilite VARCHAR(255)
 );
 CREATE TABLE IF NOT EXISTS reponsepossible

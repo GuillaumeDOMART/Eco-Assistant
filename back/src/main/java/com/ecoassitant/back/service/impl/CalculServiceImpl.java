@@ -121,7 +121,6 @@ public class CalculServiceImpl implements CalculService {
                 executer = calculEntier.execute();
                 if (executer.isPresent()) {
                     phase = Optional.ofNullable(calculEntier.getPhase());
-                    break;
                 }
                 var intitule = "test" + k;
                 executer.ifPresent(aDouble -> {
@@ -136,6 +135,7 @@ public class CalculServiceImpl implements CalculService {
                 });
             }
         });
+        System.out.println(resultat);
             return Optional.of(resultat);
     }
 }
