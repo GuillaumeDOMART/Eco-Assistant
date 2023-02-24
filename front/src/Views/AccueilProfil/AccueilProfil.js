@@ -15,19 +15,22 @@ function TableauProjets() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const [show, setShow] = useState(false);
+    const [deletedProject,setDeletedProject] = useState(null);
     const navigate = useNavigate()
 
     /**
      * Hide pop-up if deletion of profile is refused
      */
     const handleCancel = useCallback(() => {
+        setDeletedProject(null)
         setShow(false);
-    },[setShow])
+    },[setShow,setDeletedProject])
 
     /**
      * Show the pop-up when you push the button delete profil
      */
-    const handleShow = useCallback(() => {
+    const handleShow = useCallback((itemSelected) => {
+        setDeletedProject(itemSelected)
         setShow(true);
     },[setShow])
 
@@ -35,9 +38,9 @@ function TableauProjets() {
      * Dissociate the project describe by the id
      * @type {(function(*=): void)|*}
      */
-    const handleDissociate = useCallback((id,itemsList,itemSelected)=>{
+    const handleDissociate = useCallback((itemsList)=>{
         const token = sessionStorage.getItem("token");
-        const jsonBody = {id : id}
+        const jsonBody = {id : deletedProject.id}
         const options = {
             method: 'PUT',
             headers: {
@@ -50,13 +53,13 @@ function TableauProjets() {
             .then(res => res.json())
             .then(()=>{
                 const copyItems = [...itemsList];
-                copyItems.splice(itemsList.indexOf(itemSelected), 1);
+                copyItems.splice(itemsList.indexOf(deletedProject), 1);
                 setItems(copyItems);
                 setShow(false);
             })
 
 
-    },[setShow,setItems])
+    },[setShow,setItems,deletedProject])
 
     /**
      * Navigate to the page to begin the questionnaire
@@ -156,16 +159,16 @@ function TableauProjets() {
 function LigneTableauProjet(datas) {
     const navigate = useNavigate();
     const handleClick = React.useCallback(() => {
-        sessionStorage.setItem("project",data.id)
+        sessionStorage.setItem("project",datas.id)
         navigate("/questionnaire")
 
-    }, [navigate, data.id])
+    }, [navigate, datas.id])
 
     const executeHandleShow = ()=>{
-        datas.handleShow()
+        datas.handleShow(datas.itemSelected)
     }
     const executeHandleDissociate = ()=>{
-        datas.handleDissociate(datas.id,datas.itemsList,datas.itemSelected)
+        datas.handleDissociate(datas.itemsList)
     }
 
 
@@ -177,7 +180,7 @@ function LigneTableauProjet(datas) {
                 <td align={"center"} valign={"middle"}>{datas.etat}</td>
                 <td align={"center"} valign={"middle"}>
                     <Button className="m-3" variant="secondary" onClick={handleClick}>Modifier</Button>
-                    <Button className="m-3" variant="primary" href={`/result?id=${data.id}`}>Visionner</Button>
+                    <Button className="m-3" variant="primary" href={`/result?id=${datas.id}`}>Visionner</Button>
                     <Button className="m-3" variant="outline-primary">Créer une copie</Button>
                     <Button className="m-3" variant="outline-danger" onClick={executeHandleShow}>Dissocier</Button>
                 </td>
