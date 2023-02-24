@@ -78,6 +78,9 @@ public class ProjetController {
      */
     @PostMapping("/projet/create")
     public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
+        if(projet.getNom().length() >= 50){
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
