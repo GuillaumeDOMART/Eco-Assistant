@@ -163,18 +163,20 @@ function TableauProjets() {
  */
 function LigneTableauProjet(datas) {
     const navigate = useNavigate();
+
     const handleClick = React.useCallback(() => {
         sessionStorage.setItem("project",datas.id)
         navigate("/questionnaire")
 
     }, [navigate, datas.id])
 
-    const executeHandleShow = ()=>{
+
+    const executeHandleShow = useCallback( ()=>{
         datas.handleShow(datas.itemSelected)
-    }
-    const executeHandleDissociate = ()=>{
+    },[datas])
+    const executeHandleDissociate = useCallback(()=>{
         datas.handleDissociate(datas.itemsList)
-    }
+    },[datas])
 
 
 
