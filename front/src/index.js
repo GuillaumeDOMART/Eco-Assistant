@@ -17,7 +17,7 @@ import Profil from "./Views/InfoProfil/Profil";
 import StepperComponent from "./Views/Quiz/Quiz";
 import CreateProject from "./Views/Quiz/CreateProject";
 import Deconnection from "./Views/Deconnection/LogOut";
-import Guest from "./Views/guest/Guest";
+import Guest from "./Views/Guest/Guest";
 import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
 import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
 import ModifyID from "./Views/ModifyID/ModifyID";
