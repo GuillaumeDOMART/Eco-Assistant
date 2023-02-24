@@ -67,9 +67,9 @@ public class ProfilServiceImpl implements ProfilService {
             return Optional.empty();
         }
        var profilOwner = profilOwnerOpt.get();
-        profilOwner.setPrenom(generateRandomString(8));
-        profilOwner.setMail(generateRandomString(8));
-        profilOwner.setNom(generateRandomString(8));
+        profilOwner.setFirstname(generateRandomString(8));
+        profilOwner.setMail("guest"+generateRandomString(8)+"@eco-assistant-esipe.fr");
+        profilOwner.setLastname(generateRandomString(8));
         profilOwner.setPassword(generateRandomString(8));
         profilOwner.setIsAdmin(0);
         var savedEntity = repository.save(profilOwner);
