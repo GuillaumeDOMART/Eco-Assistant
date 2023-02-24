@@ -30,7 +30,7 @@ function ModifyID() {
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${token}`)
 
-        const jsonBody = {newMail: datas.newMail}
+        const jsonBody = {mail: datas.newMail}
         const requestOptions = {
             method: 'PATCH',
             headers: myHeaders,
