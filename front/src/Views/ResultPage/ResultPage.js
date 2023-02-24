@@ -161,12 +161,9 @@ function ResultPage() {
                     response.json();
                 }
             })
-<<<<<<< HEAD
             .catch((_) => {
                 navigate("/profil")
             })
-=======
->>>>>>> guillaume-error-v2
             .then(jsonData => {
                 const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
                 const sums = {};
@@ -213,12 +210,6 @@ function ResultPage() {
                 });
             });
     }, [navigate]);
-<<<<<<< HEAD
-
-
-=======
->>>>>>> guillaume-error-v2
-
     return (
         <div ref={pdfContainer}>
             <h1>Rapport de consomation de CO2</h1>
