@@ -154,12 +154,10 @@ function ResultPage() {
         };
         fetch('api/calculs',options)
             .then(response => {
-                if(response.status === 403){
+                if(response.status === 403) {
                     navigate("/")
                 }
-                else {
-                    return response.json();
-                }
+                return response.json();
             })
             .catch((_) => {
                 navigate("/profil")
@@ -167,7 +165,6 @@ function ResultPage() {
             .then(jsonData => {
                 const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
                 const sums = {};
-                console.log(jsonData)
                 arrays.forEach(array => {
                     if (jsonData.mine[array]) {
                         const results = jsonData.mine[array].map(item => item.result);
