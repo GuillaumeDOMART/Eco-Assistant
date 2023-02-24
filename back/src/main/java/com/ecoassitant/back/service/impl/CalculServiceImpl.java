@@ -135,7 +135,6 @@ public class CalculServiceImpl implements CalculService {
                 });
             }
         });
-        System.out.println(resultat);
             return Optional.of(resultat);
     }
 }
