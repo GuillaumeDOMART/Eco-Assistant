@@ -113,7 +113,6 @@ public class CalculServiceImpl implements CalculService {
         var calculs = calculRepository.findAll();
         var map = creationResultat(calculs);
 
-
         map.forEach((k, calculsPriorite) -> {
             Optional<Double> executer = Optional.empty();
             Optional<Phase> phase = Optional.empty();
@@ -122,7 +121,6 @@ public class CalculServiceImpl implements CalculService {
                 executer = calculEntier.execute();
                 if (executer.isPresent()) {
                     phase = Optional.ofNullable(calculEntier.getPhase());
-                    break;
                 }
                 var intitule = "test" + k;
                 executer.ifPresent(aDouble -> {

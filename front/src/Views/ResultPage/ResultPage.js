@@ -154,12 +154,10 @@ function ResultPage() {
         };
         fetch('api/calculs',options)
             .then(response => {
-                if(response.status === 403){
+                if(response.status === 403) {
                     navigate("/")
                 }
-                else {
-                    response.json();
-                }
+                return response.json();
             })
             .catch((_) => {
                 navigate("/profil")
@@ -186,13 +184,13 @@ function ResultPage() {
                        const sum = results.reduce((acc, current) => acc + current, 0);
                        const time = other[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
                        const timeValue = time === null ? 0 : time;
-                       values.push({x: sum,y: timeValue})
+                       values.push({y: sum,x: timeValue})
                    })
                     const data =  [
                         {
                             label: 'Votre projet',
                             data: [
-                                { x: sums[array], y: mineTimeValue }
+                                { y: sums[array], x: mineTimeValue }
                             ],
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             borderColor: 'rgba(255, 99, 132, 1)',

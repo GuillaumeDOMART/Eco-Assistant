@@ -2,12 +2,10 @@ package com.ecoassitant.back.calcul;
 
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
-import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * calcul create with part of calcul(calculEntity) and ReponseDonne for a project
@@ -86,8 +84,8 @@ public class CalculEntier {
      * link the RepPoss with the value for this response
      * @return a map with un idRepPos for key and a value of the response donne for this id
      */
-    private Map<Long,Integer> join(){
-        var map = new HashMap<Long, Integer>();
+    private Map<Long,Double> join(){
+        var map = new HashMap<Long, Double>();
         dependances.forEach(rP ->{
             var rD = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponsePos().equals(rP)).findFirst();
             if (rD.isEmpty())
@@ -101,7 +99,7 @@ public class CalculEntier {
      * insert the calcul in the stack in the order of polish calculator inverse
      * @param val map create with join()
      */
-    private void poloniser(Map<Long, Integer> val){
+    private void poloniser(Map<Long, Double> val){
         var iterateur =  calculs.iterator();
         var calcul = iterateur.next();
         if(val.size() == 1){
@@ -129,16 +127,16 @@ public class CalculEntier {
             }
             else {
                 var operateur2 = stack.pop();
-                assert operateur != null;
-                if (operateur.level() > operateur2.level()){
-                    stack.push(operande2);
-                    stack.push(operateur);
-                    stack.push(operateur2);
-                }
-                else{
-                    stack.push(operateur2);
-                    stack.push(operande2);
-                    stack.push(operateur);
+                if (operateur != null) {
+                    if (operateur.level() > operateur2.level()) {
+                        stack.push(operande2);
+                        stack.push(operateur);
+                        stack.push(operateur2);
+                    } else {
+                        stack.push(operateur2);
+                        stack.push(operande2);
+                        stack.push(operateur);
+                    }
                 }
             }
         }
