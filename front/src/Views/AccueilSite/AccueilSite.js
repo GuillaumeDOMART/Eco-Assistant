@@ -12,7 +12,7 @@ import {useCallback, useEffect, useState} from "react";
  * @returns {JSX.Element}
  * @constructor
  */
-const Connexion = ({onSubmit, register, navigate}) => {
+const Connexion = ({onSubmit, register, navigate, paragraphContent}) => {
     /**
      * Redirect to the connection page
      */
@@ -29,6 +29,7 @@ const Connexion = ({onSubmit, register, navigate}) => {
                 <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...register("mail")} required/><br/>
                 <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...register("password")} required/><br/>
                 <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...register("passwordConfirmed")} required/><br/>
+                <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                 <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>
                 <p>Déjà un compte ? <Button onClick={handleConnect} className="text-black text-decoration-underline">Se connecter</Button></p>
             </form>
@@ -106,7 +107,7 @@ const Anonyme = ({navigate}) => {
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
-    const [setParagraphContent] = useState()
+    const [paragraphContent, setParagraphContent] = useState()
 
     /**
      * Send datas to the back
@@ -150,7 +151,7 @@ function AccueilSite() {
     return (
            <Container className="bg" fluid>
                <Row className="vh-100 align-items-center">
-                   <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate}/>
+                   <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate} paragraphContent={paragraphContent}/>
                    <Col className="col-1"></Col>
                    <Anonyme navigate={navigate}/>
                </Row>
