@@ -1,7 +1,6 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
-import com.ecoassitant.back.dto.ForgotMailInput;
 import com.ecoassitant.back.dto.ProjectIdDto;
 import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.dto.ProjetSimpleDto;
@@ -9,7 +8,6 @@ import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
-import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,7 +101,7 @@ public class ProjetController {
      *
      * @param authorizationHeader the token of the user
      * @param projetDto           the project name
-     * @return
+     * @return the project dto id
      */
     @PutMapping("/projet/delete")
     public ResponseEntity<ProjectIdDto> delete(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
@@ -118,7 +116,6 @@ public class ProjetController {
         if (!mailOwner.equals(mail)) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        var profil = profilEntityOptional.get();
         var anoProfilOptional = profilRepository.findByMail("anonyme@demo.fr");
         if (anoProfilOptional.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
