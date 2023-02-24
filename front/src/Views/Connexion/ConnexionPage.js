@@ -2,7 +2,7 @@ import {Col, Container, Row, Button} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {TextField} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 
@@ -14,6 +14,15 @@ import {useState} from "react";
  * @constructor
  */
 function ConnexionPage(){
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const value = sessionStorage.getItem('token');
+        if (value) {
+            navigate("/profil")
+        }
+    }, [navigate]);
+
     return (
         <>
             <Logo/>

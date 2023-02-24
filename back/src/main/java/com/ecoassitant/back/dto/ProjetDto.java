@@ -25,7 +25,6 @@ public class ProjetDto {
      */
     public ProjetDto(ProjetEntity entity){
         Objects.requireNonNull(entity);
-
         this.id = entity.getIdProjet();
         this.profil = new ProfilDto(entity.getProfil());
         this.nomProjet = entity.getNomProjet();

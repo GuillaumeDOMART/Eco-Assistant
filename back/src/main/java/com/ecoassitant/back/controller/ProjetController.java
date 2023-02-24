@@ -1,6 +1,7 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
+import com.ecoassitant.back.dto.ForgotMailInput;
 import com.ecoassitant.back.dto.ProjectIdDto;
 import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.dto.ProjetSimpleDto;
@@ -8,6 +9,7 @@ import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
+import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Class to manage endpoints regarding profiles
@@ -28,8 +31,9 @@ public class ProjetController {
 
     /**
      * Constructor for ProjetController
+     *
      * @param projetRepository ProjetRepository
-     * @param jwtService JwtService
+     * @param jwtService       JwtService
      * @param profilRepository ProfilRepository
      */
     @Autowired
@@ -44,7 +48,7 @@ public class ProjetController {
      */
     @GetMapping("/projets")
     @ResponseBody
-    public List<ProjetDto> listerLesProjets(){
+    public List<ProjetDto> listerLesProjets() {
         return projetRepository.findAll().stream().map(ProjetDto::new).toList();
     }
 
@@ -53,10 +57,10 @@ public class ProjetController {
      */
     @GetMapping("/projet/{id}")
     @ResponseBody
-    public ResponseEntity<ProjetDto> recupererProjetAvecId(@PathVariable("id") Integer id){
+    public ResponseEntity<ProjetDto> recupererProjetAvecId(@PathVariable("id") Integer id) {
         var entity = projetRepository.findById(id);
         var dto = entity.map(ProjetDto::new).orElse(null);
-        return dto!= null? new ResponseEntity<>(dto, HttpStatus.OK): new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
+        return dto != null ? new ResponseEntity<>(dto, HttpStatus.OK) : new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -64,7 +68,7 @@ public class ProjetController {
      */
     @GetMapping("/projet/user")
     @ResponseBody
-    public ResponseEntity<List<ProjetDto>> recupererProjetAvecToken(@RequestHeader("Authorization") String authorizationHeader){
+    public ResponseEntity<List<ProjetDto>> recupererProjetAvecToken(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(ProjetDto::new).toList());
@@ -73,16 +77,16 @@ public class ProjetController {
     /**
      * Endpoint to create a project
      * @param authorizationHeader the token of the user
-     * @param projet the project name
+     * @param projet              the project name
      * @return the project id
      */
     @PostMapping("/projet/create")
-    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
+    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
-        if(profilEntityOptional.isEmpty()){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        if (profilEntityOptional.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         var profil = profilEntityOptional.get();
         var projetEntity = ProjetEntity.builder()
@@ -94,4 +98,53 @@ public class ProjetController {
         return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()), HttpStatus.OK);
     }
 
+    /**
+     * Method to dissociate a project from a user and associate it to a default anonymous
+     *
+     * @param authorizationHeader the token of the user
+     * @param projetDto           the project name
+     * @return
+     */
+    @PutMapping("/projet/delete")
+    public ResponseEntity<ProjectIdDto> delete(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        var profilEntityOptional = profilRepository.findByMail(mail);
+        if (profilEntityOptional.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        var projet = projetRepository.findByIdProjet(projetDto.getId());
+        var mailOwner = projet.getProfil().getMail();
+        if (!mailOwner.equals(mail)) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        var profil = profilEntityOptional.get();
+        var anoProfilOptional = profilRepository.findByMail("anonyme@demo.fr");
+        if (anoProfilOptional.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        projet.setNomProjet(generateRandomString(8));
+        projet.setProfil(anoProfilOptional.get());
+        projetRepository.save(projet);
+        return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
+
+    }
+
+    /**
+     * Function to generate a random string
+     *
+     * @param length the length of the random string
+     * @return the random string
+     */
+    private static String generateRandomString(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var random = new Random();
+        var sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(chars.length());
+            char randomChar = chars.charAt(index);
+            sb.append(randomChar);
+        }
+        return sb.toString();
+    }
 }
