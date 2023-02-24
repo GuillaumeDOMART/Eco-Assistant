@@ -75,7 +75,7 @@ function TableauProjets() {
                     navigate("/logout")
                 }
                 else {
-                    res.json()
+                    return res.json()
                 }
             })
             .then(
