@@ -7,13 +7,13 @@ import com.ecoassitant.back.dto.resultat.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.repository.CalculRepository;
+import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.repository.ReponseDonneeRepository;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Implementation of calculService
@@ -24,17 +24,20 @@ public class CalculServiceImpl implements CalculService {
     private final ReponseDonneeRepository reponseDonneeRepository;
     private final ProjetRepository projetRepository;
 
+    private final ProfilRepository profilRepository;
+
     /**
      * Constructor of CalculService
      *
      * @param calculRepository        calculRepository composite for using Service methode
      * @param reponseDonneeRepository reponseDonneeRepository composite for using Service methode
-     * @param projetRepository        projetRepository composite for using Service methode
+     * @param projetRepository projetRepository composite for using Service methode
      */
-    public CalculServiceImpl(CalculRepository calculRepository, ReponseDonneeRepository reponseDonneeRepository, ProjetRepository projetRepository) {
+    public CalculServiceImpl(CalculRepository calculRepository, ReponseDonneeRepository reponseDonneeRepository, ProjetRepository projetRepository, ProfilRepository profilRepository) {
         this.calculRepository = calculRepository;
         this.reponseDonneeRepository = reponseDonneeRepository;
         this.projetRepository = projetRepository;
+        this.profilRepository = profilRepository;
     }
 
     /**
@@ -44,17 +47,32 @@ public class CalculServiceImpl implements CalculService {
      * @return the result
      */
     @Override
-    public ResultatsPhaseDto calculsForProject(Integer idProject) {
-        var mine = resultatForProject(idProject);
-        if (mine == null)
-            return null;
-        var resultat = new ResultatsPhaseDto(mine);
+    public Optional<ResultatsPhaseDto> calculsForProject(Integer idProject, String mail) {
+        var project = projetRepository.findById(idProject);
+        if (project.isEmpty())
+            return Optional.empty();
 
+        var profil = profilRepository.findByMail(mail);
+        if (profil.isEmpty())
+            return Optional.empty();
+
+        var currentIdProfil = project.get().getProfil().getIdProfil();
+        var projectIdProfil = profil.get().getIdProfil();
+        if (!currentIdProfil.equals(projectIdProfil))
+            return Optional.empty();
+
+        var mine = resultatForProject(idProject);
+        if (mine.isEmpty()) {
+            return Optional.empty();
+        }
+
+        var resultat = new ResultatsPhaseDto(mine.get());
         var projects = projetRepository.findAll();
-        if (projects.isEmpty())
-            return null;
+        if (projects.isEmpty()) {
+            return Optional.empty();
+        }
         projects.forEach(projetEntity -> resultat.addOther(resultatForProject(projetEntity.getIdProjet())));
-        return resultat;
+        return Optional.of(resultat);
     }
 
     private Map<Integer, Map<Integer, List<CalculEntity>>> creationResultat(List<CalculEntity> calculs){
@@ -79,11 +97,11 @@ public class CalculServiceImpl implements CalculService {
      * @param idProject the id of the project
      * @return the result
      */
-    private ResultatDto resultatForProject(Integer idProject) {
+    private Optional<ResultatDto> resultatForProject(Integer idProject) {
         var resultat = new ResultatDto();
         var projet = projetRepository.findById(idProject);
         if (projet.isEmpty())
-            return null;
+            return Optional.empty();
         var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
         if (reponseDonnee.isEmpty())
             return resultat;
@@ -102,6 +120,8 @@ public class CalculServiceImpl implements CalculService {
             }
 
             var intitule = "test" + k;
+            executer.ifPresent(aDouble -> {
+                switch (calculEntier.getPhase()) {
             if (executer.isPresent() && phase.isPresent()) {
                 var aDouble = executer.get();
                 switch (phase.get()) {
@@ -110,10 +130,10 @@ public class CalculServiceImpl implements CalculService {
                     case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(intitule, aDouble));
                     case TEST -> resultat.addTest(new CalculDto(intitule, aDouble));
                     case MAINTENANCE -> resultat.addMaintenance(new CalculDto(intitule, aDouble));
-                    case HORS_PHASE -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
+                    default -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
                 }
             }
         });
-        return resultat;
+        return Optional.of(resultat);
     }
 }

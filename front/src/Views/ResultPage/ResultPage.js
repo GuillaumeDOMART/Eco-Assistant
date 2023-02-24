@@ -114,20 +114,31 @@ function ResultPage() {
     const handleDownloadPDF =  useCallback(() => {
         const canvas = chartContainerAll.current;
         const imgData = canvas.toDataURL('image/png', 1.0);
-        const pdf = new jsPDF("p","mm","a4");
-        const diviseur = Math.ceil(pdf.getImageProperties(imgData).width/(A4.w-20))
-        pdf.text('Hello World!', marginLeft, yText, { fontSize: 36, fontName: 'Helvetica', fontStyle: 'bold', color: '#000000', maxWidth: 170 });
-        pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width/diviseur, pdf.getImageProperties(imgData).height/diviseur);
+        const pdf = new jsPDF("p", "mm", "a4");
+        const diviseur = Math.ceil(pdf.getImageProperties(imgData).width / (A4.w - 20))
+        pdf.text('Hello World!', marginLeft, yText, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
         pdf.save('chart.pdf');
         //a finir
 
-    },[A4.w])
+    }, [A4.w])
 
     /**
      * the function to quit
      */
     const handleQuit = useCallback(() =>  {
-        navigate("/profil")
+        if(sessionStorage.getItem("guest")){
+            navigate("/logout")
+        }
+        else {
+            navigate("/profil")
+        }
     },[navigate])
 
     useEffect(() => {
@@ -139,10 +150,20 @@ function ResultPage() {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({id })
+            body: JSON.stringify({id})
         };
         fetch('api/calculs',options)
-            .then(response => response.json())
+            .then(response => {
+                if(response.status === 403){
+                    navigate("/")
+                }
+                else {
+                    response.json();
+                }
+            })
+            .catch((_) => {
+                navigate("/profil")
+            })
             .then(jsonData => {
                 const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
                 const sums = {};
@@ -188,10 +209,7 @@ function ResultPage() {
                     chartbulet(array, data)
                 });
             });
-    }, []);
-
-
-
+    }, [navigate]);
     return (
         <div ref={pdfContainer}>
             <h1>Rapport de consomation de CO2</h1>
