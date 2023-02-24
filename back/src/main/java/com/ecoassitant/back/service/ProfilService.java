@@ -1,7 +1,10 @@
 package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.ProfilDto;
+import com.ecoassitant.back.dto.ProfilIdDto;
 import com.ecoassitant.back.dto.ProfilSimplDto;
+
+import java.util.Optional;
 
 /**
  * Service for ProfilController
@@ -28,4 +31,11 @@ public interface ProfilService {
      * @return return the id of the profile
      */
     Integer createProfil(ProfilSimplDto profilDto);
+
+    /**
+     * Endpoint to anonymize a profile
+     * @param mail is the mail of the user connected
+     * @return optional the id of the profile dissociated
+     */
+    Optional<ProfilIdDto> deleteProfil(String mail);
 }
