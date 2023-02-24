@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS profil
     mdp      VARCHAR(140) NOT NULL,
     nom      VARCHAR(50)  NOT NULL,
     prenom   VARCHAR(50)  NOT NULL,
-    isadmin  INT          NOT NULL
+    isadmin  INT          NOT NULL,
+    UNIQUE(mail)
 );
 CREATE SEQUENCE project_sequence START WITH 1;
 CREATE TABLE IF NOT EXISTS projet

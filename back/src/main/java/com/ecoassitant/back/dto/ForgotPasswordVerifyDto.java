@@ -7,5 +7,7 @@ import lombok.Data;
  */
 @Data
 public class ForgotPasswordVerifyDto {
+    private String oldPassword;
+
     private String password;
 }
