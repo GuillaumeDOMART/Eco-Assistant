@@ -7,13 +7,13 @@ import com.ecoassitant.back.dto.resultat.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.repository.CalculRepository;
-import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.repository.ReponseDonneeRepository;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Implementation of calculService
@@ -75,7 +75,7 @@ public class CalculServiceImpl implements CalculService {
         return Optional.of(resultat);
     }
 
-    private Map<Integer, Map<Integer, List<CalculEntity>>> creationResultat(List<CalculEntity> calculs){
+    private Map<Integer, Map<Integer, List<CalculEntity>>> creationResultat(List<CalculEntity> calculs) {
         var map = new HashMap<Integer, Map<Integer, List<CalculEntity>>>();
         calculs.forEach(calculEntity -> {
             if (!map.containsKey(calculEntity.getNbCalcul()))
@@ -104,9 +104,11 @@ public class CalculServiceImpl implements CalculService {
             return Optional.empty();
         var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
         if (reponseDonnee.isEmpty())
-            return resultat;
+            return Optional.of(resultat);
         var calculs = calculRepository.findAll();
         var map = creationResultat(calculs);
+
+
         map.forEach((k, calculsPriorite) -> {
             Optional<Double> executer = Optional.empty();
             Optional<Phase> phase = Optional.empty();
@@ -117,23 +119,19 @@ public class CalculServiceImpl implements CalculService {
                     phase = Optional.ofNullable(calculEntier.getPhase());
                     break;
                 }
-            }
-
-            var intitule = "test" + k;
-            executer.ifPresent(aDouble -> {
-                switch (calculEntier.getPhase()) {
-            if (executer.isPresent() && phase.isPresent()) {
-                var aDouble = executer.get();
-                switch (phase.get()) {
-                    case PLANIFICATION -> resultat.addPlanification(new CalculDto(intitule, aDouble));
-                    case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(intitule, aDouble));
-                    case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(intitule, aDouble));
-                    case TEST -> resultat.addTest(new CalculDto(intitule, aDouble));
-                    case MAINTENANCE -> resultat.addMaintenance(new CalculDto(intitule, aDouble));
-                    default -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
-                }
+                var intitule = "test" + k;
+                executer.ifPresent(aDouble -> {
+                    switch (calculEntier.getPhase()) {
+                        case PLANIFICATION -> resultat.addPlanification(new CalculDto(intitule, aDouble));
+                        case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(intitule, aDouble));
+                        case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(intitule, aDouble));
+                        case TEST -> resultat.addTest(new CalculDto(intitule, aDouble));
+                        case MAINTENANCE -> resultat.addMaintenance(new CalculDto(intitule, aDouble));
+                        default -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
+                    }
+                });
             }
         });
-        return Optional.of(resultat);
+            return Optional.of(resultat);
     }
 }
