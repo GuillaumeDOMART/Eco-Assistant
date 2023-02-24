@@ -1,6 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
+import com.ecoassitant.back.dto.resultat.ReponseDto;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.tools.TypeQ;
@@ -11,8 +12,8 @@ import com.ecoassitant.back.repository.ReponsePossibleRepository;
 import com.ecoassitant.back.service.ReponseDonneesService;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Implementation of ReponseDonnees Service
@@ -46,25 +47,26 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
             //throw new IllegalArgumentException();
 
         var list = responses.getReponses();
-        AtomicBoolean result = new AtomicBoolean(true);
-        list.forEach(reponseDto -> {
-            System.out.println(reponseDto.getEntry());
+        boolean result = true;
+        Iterator<ReponseDto> reponseDtoIterator = list.iterator();
+
+        while (result && reponseDtoIterator.hasNext()){
+            var reponseDto = reponseDtoIterator.next();
             if (!Objects.equals(reponseDto.getEntry(), "")){
-                System.out.println("oui");
                 var reponseEntity = new ReponseDonneeEntity();
                 var responseKey = new ReponseDonneeKey();
 
                 responseKey.setProjet(project.get());
                 var question = questionRepository.findById(reponseDto.getQuestionId());
                 if (question.isEmpty()) {
-                    result.set(false);
-                    return;
+                    result = false;
+                    break;
                 }
                 responseKey.setQuestion(question.get());
                 var reponsePossibles = reponsePossibleRepository.findByQuestionAsso(question.get());
                 if (reponsePossibles.isEmpty()) {
-                    result.set(false);
-                    return;
+                    result = false;
+                    break;
                     //throw new IllegalArgumentException();
                 }
 
@@ -76,8 +78,8 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                     var reponsePossible = reponsePossibles.stream()
                             .filter(reponse -> reponse.getIntitule().equals(reponseDto.getEntry())).findFirst();
                     if (reponsePossible.isEmpty()) {
-                        result.set(false);
-                        return;
+                        result = false;
+                        break;
                     }
                     reponseEntity.setReponsePos(reponsePossible.get());
                     reponseEntity.setEntry(1);
@@ -87,7 +89,7 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                 reponseDonneeRepository.delete(reponseEntity);
                 reponseDonneeRepository.save(reponseEntity);
             }
-        });
-        return result.get();
+        };
+        return result;
     }
 }

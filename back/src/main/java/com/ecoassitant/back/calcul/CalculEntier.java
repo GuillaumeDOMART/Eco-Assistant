@@ -2,12 +2,10 @@ package com.ecoassitant.back.calcul;
 
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
-import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * calcul create with part of calcul(calculEntity) and ReponseDonne for a project
@@ -38,8 +36,10 @@ public class CalculEntier {
      * @return the result of the calcul if possible
      */
     public Optional<Double> execute(){
+        System.out.println("c partie");
         if(!isPossible())
             return Optional.empty();
+        System.out.println("ça passe");
         poloniser(join());
         var stack2 = new Stack<Double>();
         var stack3 = new Stack<OperationElem>();
