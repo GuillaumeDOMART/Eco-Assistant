@@ -114,10 +114,12 @@ public class ProfilController {
     }
 
     @PutMapping("/profil/delete")
-    public ResponseEntity<ProfilIdDto> deleteProfil(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProfilIdDto profilDto) {
+    public ResponseEntity<ProfilIdDto> deleteProfil(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
-        var profil = profilService.deleteProfil(profilDto,authorizationHeader);
+        var profil = profilService.deleteProfil(mail);
         if(profil.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

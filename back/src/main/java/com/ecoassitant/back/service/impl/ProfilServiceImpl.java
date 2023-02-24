@@ -61,22 +61,12 @@ public class ProfilServiceImpl implements ProfilService {
     }
 
     @Override
-    public Optional<ProfilIdDto> deleteProfil(ProfilIdDto profil, String authorizationHeader) {
-        String token = authorizationHeader.substring(7);
-        var mail = jwtService.extractMail(token);
-        var profilEntityOptional = repository.findByMail(mail);
-        if (profilEntityOptional.isEmpty()) {
-            //return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    public Optional<ProfilIdDto> deleteProfil(String mail) {
+        var profilOwnerOpt = repository.findByMail(mail);
+        if (profilOwnerOpt.isEmpty()) {
             return Optional.empty();
         }
-        var profilOwner = repository.findByIdProfil(profil.getId());
-        if(profilOwner==null){
-            return Optional.empty();
-        }
-        var mailOwner = profilOwner.getMail();
-        if (!mailOwner.equals(mail)) {
-            return Optional.empty();
-        }
+       var profilOwner = profilOwnerOpt.get();
         profilOwner.setPrenom(generateRandomString(8));
         profilOwner.setMail(generateRandomString(8));
         profilOwner.setNom(generateRandomString(8));

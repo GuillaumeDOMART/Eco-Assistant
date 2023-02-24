@@ -32,5 +32,5 @@ public interface ProfilService {
      */
     Integer createProfil(ProfilSimplDto profilDto);
 
-    Optional<ProfilIdDto> deleteProfil(ProfilIdDto profil, String authorizationHeader);
+    Optional<ProfilIdDto> deleteProfil(String mail);
 }
