@@ -90,7 +90,7 @@ const Anonyme = ({navigate}) => {
                 <Modal.Body>
                     Tu es sur le point de remplir le questionnaire sans être connecté.
                     Si tu quittes, toutes les données remplies seront perdues.<br/>
-                    Il te sera possible d&lsquo;accéder au résultat du questionnaire et de l&lsquo;exporter mais tu perdras l'accès
+                    Il te sera possible d&lsquo;accéder au résultat du questionnaire et de l&lsquo;exporter mais tu perdras l&lsquo;accès
                     une fois la page quittée.<br/>
                     Souhaites-tu continuer de manière anonyme ?
                 </Modal.Body>
