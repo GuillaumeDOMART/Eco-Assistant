@@ -61,6 +61,9 @@ function CreateProject() {
         };
 
         const response = await fetch("/api/projet/create", requestOptions)
+        if(response.status === 403){
+            navigate("/logout")
+        }
         const json = await response.json();
         sessionStorage.setItem("project",json.id)
         navigate("/questionnaire")

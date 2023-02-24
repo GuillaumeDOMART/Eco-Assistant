@@ -70,7 +70,12 @@ function TableauProjets() {
             },
         };
         fetch('/api/projet/user', options)
-            .then(res => res.json())
+            .then(res => {
+                if(res.status === 403){
+                    navigate("/logout")
+                }
+                return res.json()
+            })
             .then(
                 (result) => {
                     setIsLoaded(true);
@@ -82,7 +87,7 @@ function TableauProjets() {
                     setApiError(error);
                 }
             )
-    }, [])
+    }, [navigate])
 
     if (apiError) {
         return (

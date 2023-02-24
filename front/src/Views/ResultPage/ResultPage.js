@@ -132,9 +132,14 @@ function ResultPage() {
     /**
      * the function to quit
      */
-    const handleQuit = useCallback(() => {
-        navigate("/profil")
-    }, [navigate])
+    const handleQuit = useCallback(() =>  {
+        if(sessionStorage.getItem("guest")){
+            navigate("/logout")
+        }
+        else {
+            navigate("/profil")
+        }
+    },[navigate])
 
     useEffect(() => {
         const id = new URLSearchParams(window.location.search).get('id');
@@ -147,8 +152,15 @@ function ResultPage() {
             },
             body: JSON.stringify({id})
         };
-        fetch('api/calculs', options)
-            .then(response => response.json())
+        fetch('api/calculs',options)
+            .then(response => {
+                if(response.status === 403){
+                    navigate("/")
+                }
+                else {
+                    response.json();
+                }
+            })
             .catch((_) => {
                 navigate("/profil")
             })
@@ -198,9 +210,6 @@ function ResultPage() {
                 });
             });
     }, [navigate]);
-
-
-
     return (
         <div ref={pdfContainer}>
             <h1>Rapport de consomation de CO2</h1>
