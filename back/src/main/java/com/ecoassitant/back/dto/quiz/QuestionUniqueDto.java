@@ -17,7 +17,6 @@ public class QuestionUniqueDto {
     private final String intitule;
     private final Phase phase;
     private final TypeQ type;
-    private final Categorie categorie;
     private final Long dependance;
     private final List<ReponseUniqueDto> reponses;
     private final ReponseDonneeDtoQuiz reponse;
@@ -25,7 +24,7 @@ public class QuestionUniqueDto {
     public Long getDependance() {
         return dependance;
     }
-    private static HashMap<Phase,List<QuestionUniqueDto>> map = new HashMap<>();
+
 
 
 
@@ -34,7 +33,6 @@ public class QuestionUniqueDto {
      * @param quiz format tree
      */
     public QuestionUniqueDto(QuestionDto quiz) {
-        this.categorie = quiz.getCategorie();
         this.intitule = quiz.getIntitule();
         this.phase = quiz.getPhase();
         this.questionId = quiz.getQuestionId();
@@ -53,21 +51,23 @@ public class QuestionUniqueDto {
      * @return quiz format map
      */
     public static Map<Phase, List<QuestionUniqueDto>> Mapper(QuestionDto quiz){
+        HashMap<Phase,List<QuestionUniqueDto>> map = new HashMap<>();
         map.put(Phase.DEPLOIEMENT, new ArrayList<QuestionUniqueDto>());
         map.put(Phase.DEVELOPPEMENT, new ArrayList<QuestionUniqueDto>());
         map.put(Phase.MAINTENANCE, new ArrayList<QuestionUniqueDto>());
         map.put(Phase.PLANIFICATION, new ArrayList<QuestionUniqueDto>());
         map.put(Phase.TEST, new ArrayList<QuestionUniqueDto>());
         map.put(Phase.HORS_PHASE, new ArrayList<QuestionUniqueDto>());
-        remplir(quiz);
+        remplir(quiz, map);
         return map;
         }
 
     /**
      * filled the map with the quiz format tree
      * @param quiz quiz format tree
+     * @param map map whose put for return it
      */
-    private static void remplir(QuestionDto quiz) {
+    private static void remplir(QuestionDto quiz, HashMap<Phase,List<QuestionUniqueDto>> map) {
         if (quiz == null)
             return;
         if (!map.get(quiz.getPhase()).stream().map(QuestionUniqueDto::getQuestionId).toList().contains(quiz.getQuestionId())) {
@@ -77,7 +77,7 @@ public class QuestionUniqueDto {
                 return v;
             });
         }
-        quiz.getReponses().forEach( reponsePossibleDto -> remplir(reponsePossibleDto.getQuestionSuiv()));
+        quiz.getReponses().forEach( reponsePossibleDto -> remplir(reponsePossibleDto.getQuestionSuiv(), map));
     }
 
     public ReponseDonneeDtoQuiz getReponse() {
@@ -93,10 +93,6 @@ public class QuestionUniqueDto {
 
     public Phase getPhase() {
         return phase;
-    }
-
-    public Categorie getCategorie() {
-        return categorie;
     }
 
     public List<ReponseUniqueDto> getReponses() {
