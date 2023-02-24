@@ -12,7 +12,7 @@ import {useCallback, useEffect, useState} from "react";
  * @returns {JSX.Element}
  * @constructor
  */
-const Connexion = ({onSubmit, register, navigate}) => {
+const Connexion = ({onSubmit, register, navigate, paragraphContent}) => {
     /**
      * Redirect to the connection page
      */
@@ -34,6 +34,7 @@ const Connexion = ({onSubmit, register, navigate}) => {
                            className="textfield " {...register("password")} required/><br/>
                 <TextField label="Valider le mot de passe" type="password" variant="standard"
                            className="textfield " {...register("passwordConfirmed")} required/><br/>
+                <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                 <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>
                 <p>Déjà un compte ? <Button onClick={handleConnect} className="text-black text-decoration-underline">Se
                     connecter</Button></p>
@@ -116,7 +117,7 @@ const Anonyme = ({navigate}) => {
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
-    const [setParagraphContent] = useState()
+    const [paragraphContent, setParagraphContent] = useState("")
 
     /**
      * Send datas to the back
@@ -128,7 +129,7 @@ function AccueilSite() {
         myHeaders.append("Content-Type", "application/json");
 
         if (datas.password !== datas.passwordConfirmed) {
-            setParagraphContent("Les mot de passe fournies ne corresponde pas")
+            setParagraphContent("Les mot de passe fournies ne correspondent pas")
             return
         }
         const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.firstname, prenom: datas.lastname}
@@ -140,13 +141,15 @@ function AccueilSite() {
         };
 
         const response = await fetch("api/auth/register", requestOptions);
+
         if (response.status === 403) {
             setParagraphContent("Le mail est déjà utilisé pour un compte")
             return
         }
         const json = await response.json();
-        if (response.status > 200) {
-            //a finir  gestion d'erreur ALERT
+        console.log(json);
+        if (response.status === 400) {
+            setParagraphContent("Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)");
             return;
         }
 
@@ -165,7 +168,8 @@ function AccueilSite() {
     return (
         <Container className="bg" fluid>
             <Row className="vh-100 align-items-center">
-                <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate}/>
+                <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate}
+                           paragraphContent={paragraphContent}/>
                 <Col className="col-1"></Col>
                 <Anonyme navigate={navigate}/>
             </Row>
