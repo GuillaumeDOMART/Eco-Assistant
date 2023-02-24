@@ -13,7 +13,7 @@ function BarreNavCore() {
                 <BarNavContent/>
             </div>
             <div className="col-2 fixed-bottom mb-2">
-                v0.2-alpha
+                v1.0-beta
             </div>
         </nav>
     );
