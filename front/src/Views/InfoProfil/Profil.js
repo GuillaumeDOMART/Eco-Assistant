@@ -29,9 +29,7 @@ function Profil() {
                 if(res.status === 403){
                     navigate("/logout")
                 }
-                else {
-                    return res.json()
-                }
+                return res.json()
             })
             .then(
                 (result) => {
