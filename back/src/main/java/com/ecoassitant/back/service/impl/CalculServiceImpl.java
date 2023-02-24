@@ -50,7 +50,6 @@ public class CalculServiceImpl implements CalculService {
             return null;
         var resultat = new ResultatsPhaseDto(mine);
 
-        System.out.println(resultat);
         var projects = projetRepository.findAll();
         if (projects.isEmpty())
             return null;
@@ -90,7 +89,6 @@ public class CalculServiceImpl implements CalculService {
             return resultat;
         var calculs = calculRepository.findAll();
         var map = creationResultat(calculs);
-        System.out.println("hello");
         map.forEach((k, calculsPriorite) -> {
             Optional<Double> executer = Optional.empty();
             Optional<Phase> phase = Optional.empty();
