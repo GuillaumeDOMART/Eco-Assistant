@@ -49,7 +49,6 @@ public class QuestionController {
      */
     @PostMapping("/questions")
     public ResponseEntity <Map<Phase, List<QuestionUniqueDto>>> modifierQuestionnaire(@RequestBody  IdDto id){
-        System.out.println(id.getId());
         var quiz = questionService.completQuiz(id.getId());
         return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }

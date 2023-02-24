@@ -5,6 +5,7 @@ import com.ecoassitant.back.dto.ResultatsPhaseDto;
 import com.ecoassitant.back.dto.resultat.CalculDto;
 import com.ecoassitant.back.dto.resultat.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;
+import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.repository.CalculRepository;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -30,8 +31,7 @@ public class CalculServiceImpl implements CalculService {
      *
      * @param calculRepository        calculRepository composite for using Service methode
      * @param reponseDonneeRepository reponseDonneeRepository composite for using Service methode
-     * @param projetRepository        projetRepository composite for using Service methode
-     * @param profilRepository        profilRepository composite for using Service methods
+     * @param projetRepository projetRepository composite for using Service methode
      */
     public CalculServiceImpl(CalculRepository calculRepository, ReponseDonneeRepository reponseDonneeRepository, ProjetRepository projetRepository, ProfilRepository profilRepository) {
         this.calculRepository = calculRepository;
@@ -76,6 +76,27 @@ public class CalculServiceImpl implements CalculService {
     }
 
     /**
+     * Create a map for sort calculs
+     * @param calculs list of calculs entity
+     * @return map
+     */
+    private Map<Integer, Map<Integer, List<CalculEntity>>> creationResultat(List<CalculEntity> calculs) {
+        var map = new HashMap<Integer, Map<Integer, List<CalculEntity>>>();
+        calculs.forEach(calculEntity -> {
+            if (!map.containsKey(calculEntity.getNbCalcul()))
+                map.put(calculEntity.getNbCalcul(), new HashMap<>());
+            var priorite = map.get(calculEntity.getNbCalcul());
+            if (!priorite.containsKey(calculEntity.getPriorite()))
+                priorite.put(calculEntity.getPriorite(), new ArrayList<>());
+            var list = priorite.get(calculEntity.getPriorite());
+            list.add(calculEntity);
+            priorite.put(calculEntity.getPriorite(), list);
+            map.put(calculEntity.getNbCalcul(), priorite);
+        });
+        return map;
+    }
+
+    /**
      * Function to get the result for a project
      *
      * @param idProject the id of the project
@@ -87,32 +108,35 @@ public class CalculServiceImpl implements CalculService {
         if (projet.isEmpty())
             return Optional.empty();
         var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
+        if (reponseDonnee.isEmpty())
+            return Optional.of(resultat);
         var calculs = calculRepository.findAll();
+        var map = creationResultat(calculs);
 
-        var map = new HashMap<Integer, List<CalculEntity>>();
-        calculs.forEach(calculEntity -> {
-            if (!map.containsKey(calculEntity.getNbCalcul()))
-                map.put(calculEntity.getNbCalcul(), new ArrayList<>());
-            var list = map.get(calculEntity.getNbCalcul());
-            list.add(calculEntity);
-            map.put(calculEntity.getNbCalcul(), list);
-        });
 
-        map.forEach((k, calcul) -> {
-            var calculEntier = new CalculEntier(calcul, reponseDonnee);
-            var executer = calculEntier.execute();
-            var intitule = "test" + k;
-            executer.ifPresent(aDouble -> {
-                switch (calculEntier.getPhase()) {
-                    case PLANIFICATION -> resultat.addPlanification(new CalculDto(intitule, aDouble));
-                    case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(intitule, aDouble));
-                    case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(intitule, aDouble));
-                    case TEST -> resultat.addTest(new CalculDto(intitule, aDouble));
-                    case MAINTENANCE -> resultat.addMaintenance(new CalculDto(intitule, aDouble));
-                    default -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
+        map.forEach((k, calculsPriorite) -> {
+            Optional<Double> executer = Optional.empty();
+            Optional<Phase> phase = Optional.empty();
+            for (var calcul : calculsPriorite.values()) {
+                var calculEntier = new CalculEntier(calcul, reponseDonnee);
+                executer = calculEntier.execute();
+                if (executer.isPresent()) {
+                    phase = Optional.ofNullable(calculEntier.getPhase());
+                    break;
                 }
-            });
+                var intitule = "test" + k;
+                executer.ifPresent(aDouble -> {
+                    switch (calculEntier.getPhase()) {
+                        case PLANIFICATION -> resultat.addPlanification(new CalculDto(intitule, aDouble));
+                        case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(intitule, aDouble));
+                        case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(intitule, aDouble));
+                        case TEST -> resultat.addTest(new CalculDto(intitule, aDouble));
+                        case MAINTENANCE -> resultat.addMaintenance(new CalculDto(intitule, aDouble));
+                        default -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
+                    }
+                });
+            }
         });
-        return Optional.of(resultat);
+            return Optional.of(resultat);
     }
 }
