@@ -13,7 +13,14 @@ public interface QuestionService {
     /**
      * set quiz
      *
-     * @return first question of quiz
+     * @return map of question by sort by phase
      */
     public Map<Phase, List<QuestionUniqueDto>> getQuestionnaire();
+
+    /**
+     * set quiz with response of the previous quiz
+     * @param id id of project
+     * @return map of question by sort by phase
+     */
+    public Map<Phase, List<QuestionUniqueDto>> completQuiz(Integer id);
 }

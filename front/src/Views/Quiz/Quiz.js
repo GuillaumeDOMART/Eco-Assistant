@@ -98,12 +98,15 @@ function StepperComponent() {
             handleNext();
     }
 
-    useEffect(() => {
+    useEffect( () => {
         const token = sessionStorage.getItem("token")
+        const id = sessionStorage.getItem("project")
         const options = {
-            method: 'GET',
+            method: 'POST',
+            body: JSON.stringify({id}),
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': "application/json"
             },
         };
         fetch("/api/questions", options)
