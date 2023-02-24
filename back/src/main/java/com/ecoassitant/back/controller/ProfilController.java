@@ -115,7 +115,7 @@ public class ProfilController {
 
     /**
      * Function to delete the profile of the user currently connected
-     * @param authorizationHeader
+     * @param authorizationHeader the token of the user
      * @return ResponseEntity of ProfilIdDto of profile deleted
      */
     @PutMapping("/profil/delete")
