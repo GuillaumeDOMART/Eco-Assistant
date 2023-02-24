@@ -1,9 +1,7 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
-import com.ecoassitant.back.dto.ForgotPasswordVerifyDto;
-import com.ecoassitant.back.dto.ProfilDto;
-import com.ecoassitant.back.dto.ProfilSimplDto;
+import com.ecoassitant.back.dto.*;
 import com.ecoassitant.back.service.ProfilService;
 import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +110,27 @@ public class ProfilController {
             return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
         }
         var mail = jwtService.extractMail(token);
-        return authenticationService.changePassword(mail, forgotPasswordVerifyDto.getPassword());
+        return authenticationService.changePassword(mail, forgotPasswordVerifyDto.getPassword(), forgotPasswordVerifyDto.getOldPassword());
+    }
+
+    /**
+     * Function to delete the profile of the user currently connected
+     * @param authorizationHeader the token of the user
+     * @return ResponseEntity of ProfilIdDto of profile deleted
+     */
+    @PutMapping("/profil/delete")
+    public ResponseEntity<ProfilIdDto> deleteProfil(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        var profil = profilService.deleteProfil(mail);
+        if(profil.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else{
+            return new ResponseEntity<>(profil.get(), HttpStatus.OK);
+        }
+
     }
 }

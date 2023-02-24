@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Data
@@ -23,17 +26,23 @@ public class ProfilEntity implements Serializable {
     private Integer idProfil;
 
     @Column(name = "mail")
+    @NotBlank(message = "Ne doit pas être vide")
+    @Email(message = "L'adresse fournit n'est pas conforme")
     private String mail;
 
     @Column(name = "mdp", nullable = false)
+    //@Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\\d)(?=.*?[#?!@$%^&*\\-_]).{8,}$", message = "Le mot de passe n'est pas conforme")
     private String password;
 
     @Column(name = "nom", nullable = false)
-    private String nom;
+    @NotBlank(message = "Ne doit pas être vide")
+    private String lastname;
 
     @Column(name = "prenom", nullable = false)
-    private String prenom;
+    @NotBlank(message = "Ne doit pas être vide")
+    private String firstname;
 
     @Column(name = "isadmin", nullable = false)
     private Integer isAdmin;
+
 }

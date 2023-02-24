@@ -13,14 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CalculTest {
-    ProjetEntity projet = new ProjetEntity();
-
-    QuestionEntity q1 = new QuestionEntity(1L, "q1", null, TypeQ.NUMERIC, Phase.HORS_PHASE, Categorie.FIRST, null);
-    QuestionEntity q2 = new QuestionEntity(2L, "q2", q1, TypeQ.QCM, Phase.HORS_PHASE, Categorie.FIRST, q1);
-    QuestionEntity q3 = new QuestionEntity(3L, "q3", q2, TypeQ.NUMERIC, Phase.HORS_PHASE, Categorie.FIRST, q2);
 
     ConstanteEntity c1 = new ConstanteEntity(1L, 1, "oui");
     ConstanteEntity c2 = new ConstanteEntity(2L, 20, "jentends");
+    ProjetEntity projet = new ProjetEntity();
+
+    QuestionEntity q1 = new QuestionEntity(1L, "q1", null, TypeQ.NUMERIC, Phase.HORS_PHASE, null);
+    QuestionEntity q2 = new QuestionEntity(2L, "q2", q1, TypeQ.QCM, Phase.HORS_PHASE, null);
+    QuestionEntity q3 = new QuestionEntity(3L, "q3", q2, TypeQ.NUMERIC, Phase.HORS_PHASE, null);
+
+
 
     ReponsePossibleEntity r1 = new ReponsePossibleEntity(1L, q1, q2, "rentre une valeur", c1);
     ReponsePossibleEntity r2 = new ReponsePossibleEntity(2L, q2, q3, "oui", c1);
@@ -34,22 +36,22 @@ class CalculTest {
     CalculOperateurEntity stop = new CalculOperateurEntity(5L, Operator.NOTHING);
     List<ReponseDonneeEntity> listRd = new ArrayList<>();
     ReponseDonneeKey rdk1 = new ReponseDonneeKey();
-    ReponseDonneeEntity rd1 = new ReponseDonneeEntity(rdk1, 10);
+    ReponseDonneeEntity rd1 = new ReponseDonneeEntity(rdk1,r1, 10);
     ReponseDonneeKey rdk2 = new ReponseDonneeKey();
-    ReponseDonneeEntity rd2 = new ReponseDonneeEntity(rdk2, 5);
+    ReponseDonneeEntity rd2 = new ReponseDonneeEntity(rdk2, r3, 5);
     ReponseDonneeKey rdk3 = new ReponseDonneeKey();
     List<CalculEntity> listCalcul = new ArrayList<>();
     @Test
     void creationCalculEntier() {
         rdk1.setProjet(projet);
-        rdk1.setReponsePos(r1);
+        rdk1.setQuestion(q1);
 
         rdk2.setProjet(projet);
-        rdk2.setReponsePos(r3);
+        rdk2.setQuestion(q2);
 
         rdk3.setProjet(projet);
-        rdk3.setReponsePos(r4);
-        ReponseDonneeEntity rd3 = new ReponseDonneeEntity(rdk3, 1);
+        rdk3.setQuestion(q3);
+        ReponseDonneeEntity rd3 = new ReponseDonneeEntity(rdk3, r4, 1);
 
         listRd.add(rd1);
         listRd.add(rd2);

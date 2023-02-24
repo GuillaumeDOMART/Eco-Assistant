@@ -10,7 +10,7 @@ import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import Phase from "./Phase";
 
-const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
+const steps = ["Planification", "Developpement", "Test", "Déploiement", "Maintenance"];
 
 /**
  * The component representing the Stepper
@@ -59,6 +59,13 @@ function StepperComponent() {
         [navigate]
     );
 
+    const handleQuit = useCallback(
+        () => {
+            navigate("/profil");
+        },
+        [navigate]
+    )
+
     /**
      * Send responses to the backEnd when Next button is pressed
      * @param dataList
@@ -98,12 +105,15 @@ function StepperComponent() {
             handleNext();
     }
 
-    useEffect(() => {
+    useEffect( () => {
         const token = sessionStorage.getItem("token")
+        const id = sessionStorage.getItem("project")
         const options = {
-            method: 'GET',
+            method: 'POST',
+            body: JSON.stringify({id}),
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': "application/json"
             },
         };
         fetch("/api/questions", options)
@@ -201,7 +211,9 @@ function StepperComponent() {
                             )}
                         </Box>
                     </form>
-                    <Col></Col>
+                    <Col>
+                        <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
+                    </Col>
                 </Row>
             </Container>
 
