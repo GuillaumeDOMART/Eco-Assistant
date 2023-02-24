@@ -66,15 +66,20 @@ public class CalculEntier {
      * @return true if all depandances has a response
      */
     private boolean isPossible(){
-        AtomicBoolean possible = new AtomicBoolean(true);
-        dependances.forEach(dependance ->{
+        var list = dependances.stream().filter(dependance -> {
+            return repDon.stream().map(ReponseDonneeEntity::getReponsePos)
+                    .map(ReponsePossibleEntity::getIdReponsePos).toList()
+                    .contains(dependance.getIdReponsePos());
+        }).toList();
+        return list.size() == dependances.size();
+        /*dependances.forEach(dependance ->{
             var str = repDon.stream().map(ReponseDonneeEntity::getReponsePos)
                     .map(ReponsePossibleEntity::getIdReponsePos).toList();
             if(!str.contains(dependance.getIdReponsePos())){
-                possible.set(false);
+
             }
         });
-       return possible.get();
+       return true;*/
     }
 
     /**

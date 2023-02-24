@@ -1,5 +1,9 @@
 package com.ecoassitant.back.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,9 +13,15 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ProfilSimplDto {
+    @NotBlank
     private String firstname;
+    @NotBlank
     private String lastname;
+    @NotBlank
+    @Email(message = "L'adresse fournit n'est pas conforme")
     private String mail;
+    @NotBlank
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?\\d)(?=.*?[#?!@$%^&*\\-]).{8,}$")
     private String mdp;
 
 }

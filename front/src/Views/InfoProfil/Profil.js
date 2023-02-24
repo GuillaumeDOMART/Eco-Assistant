@@ -80,7 +80,7 @@ function Profil() {
 function InfoProfil(datas) {
     const prenom = `Prénom : ${datas.prenom}`
     const nom = `Nom : ${datas.nom}`
-    const email = `Identifiant : ${datas.mail}`
+    const email = `Mail : ${datas.mail}`
     const navigate = useNavigate()
     const [show, setShow] = useState(false);
 

@@ -33,6 +33,8 @@ public class CalculEntity implements Serializable {
 
     @Column(name = "nbcalcul", nullable = false)
     private int nbCalcul;
+    @Column(name = "priorite", nullable = false)
+    private int priorite;
     @Enumerated(EnumType.STRING)
     @Column(name = "phase")
     private Phase phase;
