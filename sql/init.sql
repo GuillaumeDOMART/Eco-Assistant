@@ -55,10 +55,12 @@ ALTER TABLE question
 CREATE TABLE IF NOT EXISTS reponsedonnee
 (
     projetid     INT NOT NULL,
+    questionid   INT NOT NULL,
     reponseposid INT NOT NULL,
     entry        INT NOT NULL,
-    CONSTRAINT projetid PRIMARY KEY (projetid, reponseposid),
+    CONSTRAINT projetid PRIMARY KEY (projetid, questionid),
     CONSTRAINT fk_projetid FOREIGN KEY (projetid) REFERENCES projet (idprojet),
+    CONSTRAINT questionid FOREIGN KEY (questionid) REFERENCES question (idquestion),
     CONSTRAINT reponseposid FOREIGN KEY (reponseposid) REFERENCES reponsepossible (idreponsepos)
 );
 CREATE TABLE IF NOT EXISTS calculoperateur

@@ -50,11 +50,28 @@ public class CalculServiceImpl implements CalculService {
             return null;
         var resultat = new ResultatsPhaseDto(mine);
 
+        System.out.println(resultat);
         var projects = projetRepository.findAll();
         if (projects.isEmpty())
             return null;
         projects.forEach(projetEntity -> resultat.addOther(resultatForProject(projetEntity.getIdProjet())));
         return resultat;
+    }
+
+    private Map<Integer, Map<Integer, List<CalculEntity>>> creationResultat(List<CalculEntity> calculs){
+        var map = new HashMap<Integer, Map<Integer, List<CalculEntity>>>();
+        calculs.forEach(calculEntity -> {
+            if (!map.containsKey(calculEntity.getNbCalcul()))
+                map.put(calculEntity.getNbCalcul(), new HashMap<>());
+            var priorite = map.get(calculEntity.getNbCalcul());
+            if (!priorite.containsKey(calculEntity.getPriorite()))
+                priorite.put(calculEntity.getPriorite(), new ArrayList<>());
+            var list = priorite.get(calculEntity.getPriorite());
+            list.add(calculEntity);
+            priorite.put(calculEntity.getPriorite(), list);
+            map.put(calculEntity.getNbCalcul(), priorite);
+        });
+        return map;
     }
 
     /**
@@ -69,21 +86,11 @@ public class CalculServiceImpl implements CalculService {
         if (projet.isEmpty())
             return null;
         var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
+        if (reponseDonnee.isEmpty())
+            return resultat;
         var calculs = calculRepository.findAll();
-
-        var map = new HashMap<Integer, Map<Integer, List<CalculEntity>>>();
-        calculs.forEach(calculEntity -> {
-            if (!map.containsKey(calculEntity.getNbCalcul()))
-                map.put(calculEntity.getNbCalcul(), new HashMap<>());
-            var priorite = map.get(calculEntity.getNbCalcul());
-            if (!priorite.containsKey(calculEntity.getPriorite()))
-                priorite.put(calculEntity.getPriorite(), new ArrayList<>());
-            var list = priorite.get(calculEntity.getPriorite());
-            list.add(calculEntity);
-            priorite.put(calculEntity.getPriorite(), list);
-            map.put(calculEntity.getNbCalcul(), priorite);
-        });
-
+        var map = creationResultat(calculs);
+        System.out.println("hello");
         map.forEach((k, calculsPriorite) -> {
             Optional<Double> executer = Optional.empty();
             Optional<Phase> phase = Optional.empty();
