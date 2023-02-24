@@ -84,6 +84,7 @@ function InfoProfil(datas) {
     const navigate = useNavigate()
     const [show, setShow] = useState(false);
 
+
     /**
      * Hide pop-up if deletion of profile is refused
      */
@@ -103,6 +104,22 @@ function InfoProfil(datas) {
 
     const handlePassword = useCallback(() => {
         navigate("/modifyPassword");
+    }, [navigate])
+
+    const handleDelete = useCallback(() => {
+        const token = sessionStorage.getItem("token");
+
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        };
+        fetch('/api/profil/delete', options)
+            .then(res => res.json())
+
+        navigate("/logout");
     }, [navigate])
     return (
         <>
@@ -134,7 +151,7 @@ function InfoProfil(datas) {
                     <Button variant="secondary" onClick={handleCancel}>
                         Annuler
                     </Button>
-                    <Button variant="outline-danger">
+                    <Button variant="outline-danger" onClick={handleDelete}>
                         Supprimer
                     </Button>
                 </Modal.Footer>
