@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Dto for result of a phase
@@ -16,6 +17,7 @@ public class ResultatsPhaseDto {
 
     /**
      * Builder of ResultatsPhaseDto
+     *
      * @param mine the result Dto
      */
     public ResultatsPhaseDto(ResultatDto mine) {
@@ -24,9 +26,11 @@ public class ResultatsPhaseDto {
 
     /**
      * Function to add another Dto
+     *
      * @param resultatDto the other Dto
      */
-    public void addOther(ResultatDto resultatDto){
-        others.add(resultatDto);
+    public void addOther(Optional<ResultatDto> resultatDto) {
+        resultatDto.ifPresent(others::add);
+
     }
 }

@@ -57,6 +57,7 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                 result.set(false);
                 return;
             }
+            responseKey.setQuestion(question.get());
             var reponsePossibles = reponsePossibleRepository.findByQuestionAsso(question.get());
             if (reponsePossibles.isEmpty()) {
                 result.set(false);
@@ -65,7 +66,7 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
             }
 
             if (question.get().getTypeQ().equals(TypeQ.NUMERIC)) {
-                responseKey.setReponsePos(reponsePossibles.get(0));
+                reponseEntity.setReponsePos(reponsePossibles.get(0));
                 if(!Objects.equals(reponseDto.getEntry(), ""))
                     reponseEntity.setEntry(Integer.parseInt(reponseDto.getEntry()));
             }
@@ -76,12 +77,12 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                     result.set(false);
                     return;
                 }
-                responseKey.setReponsePos(reponsePossible.get());
+                reponseEntity.setReponsePos(reponsePossible.get());
                 reponseEntity.setEntry(1);
             }
 
             reponseEntity.setReponseDonneeKey(responseKey);
-
+            reponseDonneeRepository.delete(reponseEntity);
             reponseDonneeRepository.save(reponseEntity);
         });
         return result.get();

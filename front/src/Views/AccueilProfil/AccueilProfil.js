@@ -154,7 +154,12 @@ function TableauProjets() {
  * @param datas
  */
 function LigneTableauProjet(datas) {
+    const navigate = useNavigate();
+    const handleClick = React.useCallback(() => {
+        sessionStorage.setItem("project",data.id)
+        navigate("/questionnaire")
 
+    }, [navigate, data.id])
 
     const executeHandleShow = ()=>{
         datas.handleShow()
@@ -171,8 +176,8 @@ function LigneTableauProjet(datas) {
                 <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
                 <td align={"center"} valign={"middle"}>{datas.etat}</td>
                 <td align={"center"} valign={"middle"}>
-                    <Button className="m-3" variant="secondary">Modifier</Button>
-                    <Button className="m-3" variant="primary">Visionner</Button>
+                    <Button className="m-3" variant="secondary" onClick={handleClick}>Modifier</Button>
+                    <Button className="m-3" variant="primary" href={`/result?id=${data.id}`}>Visionner</Button>
                     <Button className="m-3" variant="outline-primary">Créer une copie</Button>
                     <Button className="m-3" variant="outline-danger" onClick={executeHandleShow}>Dissocier</Button>
                 </td>
@@ -235,7 +240,7 @@ function MockTableauProjets() {
             <Table>
                 <TableauProjetsHeader/>
                 <tbody>
-                    {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
+                {items.map((item) => <LigneTableauProjet key={item.id} {...item}/>)}
                 </tbody>
             </Table>
         </>

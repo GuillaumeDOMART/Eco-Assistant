@@ -51,10 +51,12 @@ CREATE TABLE IF NOT EXISTS reponsepossible
 CREATE TABLE IF NOT EXISTS reponsedonnee
 (
     projetid     INT NOT NULL,
+    questionid   INT NOT NULL,
     reponseposid INT NOT NULL,
     entry        INT NOT NULL,
-    CONSTRAINT projetid PRIMARY KEY (projetid, reponseposid),
+    CONSTRAINT projetid PRIMARY KEY (projetid, questionid),
     CONSTRAINT fk_projetid FOREIGN KEY (projetid) REFERENCES projet (idprojet),
+    CONSTRAINT questionid FOREIGN KEY (questionid) REFERENCES question (idquestion),
     CONSTRAINT reponseposid FOREIGN KEY (reponseposid) REFERENCES reponsepossible (idreponsepos)
 );
 CREATE TABLE IF NOT EXISTS calculoperateur
@@ -346,12 +348,7 @@ VALUES
     (41, null, 'Veuillez entrer un entier',
      2);
 --CREATION REPONSEDONNEE
-INSERT INTO reponsedonnee
-VALUES (1, 1, 30),
-       (1, 2, 1),
-       (1, 4, 3),
-       (1, 6, 10),
-       (1, 7, 15);
+
 --CREATION CALCUL TEST
 INSERT INTO calcul(calculopid, reponsepossibleid, nbcalcul,
                    phase)

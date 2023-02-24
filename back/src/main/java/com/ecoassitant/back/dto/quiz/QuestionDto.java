@@ -1,6 +1,7 @@
 package com.ecoassitant.back.dto.quiz;
 
 import com.ecoassitant.back.entity.QuestionEntity;
+import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.tools.Categorie;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeQ;
@@ -19,6 +20,7 @@ public class QuestionDto {
     private Categorie categorie;
     private  List<ReponsePossibleDto> reponses;
     private Long dependance;
+    private ReponseDonneeDtoQuiz reponse;
 
 
     /**
@@ -30,6 +32,7 @@ public class QuestionDto {
             return;
         this.questionId = question.getIdQuestion();
         this.intitule = question.getIntitule();
+        this.reponse = null;
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
         this.categorie = question.getCategorie();
@@ -95,5 +98,36 @@ public class QuestionDto {
 
     public void setDependance(Long dependance) {
         this.dependance = dependance;
+    }
+
+    /**
+     * add all responses in the quiz
+     * @param reponses list of response of th previous quiz
+     */
+    public void addReponses(List<ReponseDonneeEntity> reponses){
+        reponses.forEach(reponseDonneeEntity -> addReponse(this, reponseDonneeEntity));
+    }
+
+    /**
+     * add a response in the quiz
+     * @param question a question
+     * @param reponse response of th previous quiz
+     */
+    private void addReponse(QuestionDto question, ReponseDonneeEntity reponse){
+        if (question == null)
+            return;
+        if (question.questionId == reponse.getReponseDonneeKey().getQuestion().getIdQuestion()){
+            question.reponse = new ReponseDonneeDtoQuiz(reponse);
+            return;
+        }
+        question.reponses.forEach(reponsePossibleDto -> addReponse(reponsePossibleDto.getQuestionSuiv(),reponse));
+    }
+
+    /**
+     * get the response of the question complete previously else null
+     * @return response of the previous quiz
+     */
+    public ReponseDonneeDtoQuiz getReponse() {
+        return reponse;
     }
 }
