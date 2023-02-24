@@ -2,6 +2,7 @@ import {Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
+import {useState} from "react";
 
 /**
  * Page for change mail
@@ -11,6 +12,7 @@ import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 function ModifyID() {
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate()
+    const [paragraphContent, setParagraphContent] = useState("");
 
     /**
      * Function that will submit the new mail. If the mail is not correct or already used, an error 400 is returned
@@ -41,7 +43,12 @@ function ModifyID() {
         const response = await fetch("api/auth/changeMail", requestOptions);
         const json = await response.json();
         if (response.status > 200) {
-            //a finir gestion d'erreur ALERT
+            if (response.status === 400) {
+                setParagraphContent("Le mail n'est pas conforme ou est attribué à un compte déjà existant");
+                return;
+            } else {
+                setParagraphContent("Une erreur innatendue est survenue, veuillez réessayer plus tard");
+            }
             return;
         }
 
@@ -60,6 +67,7 @@ function ModifyID() {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField label="Nouvel adresse mail" type="email" variant="standard"
                                className="textfield" {...register("newMail")} required/><br/>
+                    <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
             </div>

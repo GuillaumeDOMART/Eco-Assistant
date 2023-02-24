@@ -228,6 +228,11 @@ public class AuthenticationService {
         if (profil.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+
+        if (profilRepository.findByMail(newMail).isPresent()) {
+            throw new DataIntegrityViolationException("L'adresse mail est déjà associé à un compte");
+        }
+
         var user = profil.get();
         System.out.println("user = " + user);
         user.setMail(newMail);

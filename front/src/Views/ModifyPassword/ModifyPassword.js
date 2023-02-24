@@ -2,6 +2,7 @@ import {Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
+import {useState} from "react";
 
 /**
  * Page for change password
@@ -11,7 +12,7 @@ import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 function ModifyPassword() {
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate()
-
+    const [paragraphContent, setParagraphContent] = useState("");
     /**
      * Function that will submit the new password. If the password is not correct, an error 400 is returned
      *
@@ -25,10 +26,12 @@ function ModifyPassword() {
         }
 
         if (datas.newPassword !== datas.newPasswordConfirmed) {
+            setParagraphContent("Les mot de passe fournies ne correspondent pas")
             return
         }
 
         if (datas.actualPassword === datas.newPassword) {
+            setParagraphContent("Le nouveau mot de passe ne peut être le même que l'ancien")
             return;
         }
 
@@ -47,7 +50,12 @@ function ModifyPassword() {
         const response = await fetch("api/auth/changePassword", requestOptions);
 
         if (response.status > 200) {
-            //a finir gestion d'erreur ALERT (mot de passe pas bon)
+            if (response.status === 400) {
+                setParagraphContent("Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)");
+                return;
+            } else {
+                setParagraphContent("Une erreur innatendue est survenue, veuillez réessayer plus tard");
+            }
             return;
         }
 
@@ -67,6 +75,7 @@ function ModifyPassword() {
                                className="textfield" {...register("newPassword")} required/><br/>
                     <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard"
                                className="textfield" {...register("newPasswordConfirmed")} required/><br/>
+                    <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
             </div>
