@@ -68,7 +68,12 @@ function ResultPage() {
      * the function to quit
      */
     const handleQuit = useCallback(() =>  {
-        navigate("/profil")
+        if(sessionStorage.getItem("guest")){
+            navigate("/logout")
+        }
+        else {
+            navigate("/profil")
+        }
     },[navigate])
 
     useEffect(() => {
@@ -83,7 +88,14 @@ function ResultPage() {
             body: JSON.stringify({id })
         };
         fetch('api/calculs',options)
-            .then(response => response.json())
+            .then(response => {
+                if(response.status === 403){
+                    navigate("/")
+                }
+                else {
+                    response.json();
+                }
+            })
             .then(jsonData => {
                 const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
                 const sums = {};
@@ -97,7 +109,7 @@ function ResultPage() {
                 });
                 chart(sums);
             });
-    }, []);
+    }, [navigate]);
 
     return (
         <div ref={pdfContainer}>
