@@ -36,7 +36,7 @@ const Connexion = ({onSubmit, register, navigate, paragraphContent}) => {
             </form>
             <p className="NB">Remplir un questionnaire sans être connecté entrainera une perte<br/>
                 des données en cas d&lsquo;abandon. Pour conserver l&lsquo;avancement<br/>
-                connectez-vous ou créez un compte</p>
+                connecte-toi ou créez un compte</p>
         </Col>
     )
 }
@@ -90,7 +90,7 @@ const Anonyme = ({navigate}) => {
                 <Modal.Body>
                     Tu es sur le point de remplir le questionnaire sans être connecté.
                     Si tu quittes, toutes les données remplies seront perdues.<br/>
-                    Il te sera possible d&lsquo;accéder au résultat du questionnaire et de l&lsquo;exporter mais plus
+                    Il te sera possible d&lsquo;accéder au résultat du questionnaire et de l&lsquo;exporter mais tu perdras l'accès
                     une fois la page quittée.<br/>
                     Souhaites-tu continuer de manière anonyme ?
                 </Modal.Body>

@@ -10,7 +10,7 @@ import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import Phase from "./Phase";
 
-const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
+const steps = ["Planification", "Developpement", "Test", "Déploiement", "Maintenance"];
 
 /**
  * The component representing the Stepper

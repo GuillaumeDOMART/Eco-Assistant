@@ -50,7 +50,7 @@ function ResultPage() {
                 labels: ["Planification", "Développement", "Test", "Déploiement", "Maintenance"],
                 datasets: [
                     {
-                        label: 'Consomation en CO2',
+                        label: 'Consommation en CO2',
                         data: [result.planification, result.developpement, result.test, result.deploiement, result.maintenance],
                         backgroundColor: 'rgba(100, 198, 146, 0.2)',
                         borderWidth: 1
@@ -65,7 +65,6 @@ function ResultPage() {
 
     /**
      * Function to create the chart
-     * @param result the result
      * @param phase the phase
      * @param data the data
      */
@@ -220,27 +219,27 @@ function ResultPage() {
             <Button onClick={handleDownloadPDF} type="button">Download PDF</Button>
             <Button onClick={handleQuit} type="button">Retourner au menu</Button>
 
-            <h1>Rapport de consomation de CO2 pour la planification</h1>
+            <h1>Rapport de consommation de CO2 pour la phase de planification</h1>
             <div>
                 <canvas ref={chartContainerPlanification}/>
 
             </div>
-            <h1>Rapport de consomation de CO2 pour le dévlopement</h1>
+            <h1>Rapport de consommation de CO2 pour la phase de dévelopement</h1>
             <div>
                 <canvas ref={chartContainerDeveloppement}/>
 
             </div>
-            <h1>Rapport de consomation de CO2 pour le test</h1>
+            <h1>Rapport de consommation de CO2 pour la phase de test</h1>
             <div>
                 <canvas ref={chartContainerTest}/>
 
             </div>
-            <h1>Rapport de consomation de CO2 pour le deploiment </h1>
+            <h1>Rapport de consommation de CO2 pour la phase de deploiement </h1>
             <div>
                 <canvas ref={chartContainerDeploiment}/>
 
             </div>
-            <h1>Rapport de consomation de CO2 pour la maintenace</h1>
+            <h1>Rapport de consommation de CO2 pour la phase de maintenance</h1>
             <div>
                 <canvas ref={chartContainerMaintenance}/>
 
