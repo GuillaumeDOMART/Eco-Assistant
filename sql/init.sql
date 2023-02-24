@@ -178,17 +178,17 @@ VALUES
     ('Quelle énergie alimente majoritairement ton DataCenter ?', 53, 'QCM', 'DEPLOIEMENT'),
 
     /*MAINTENANCE*/
-    ('Veux-tu remplir cette phase?', 54,'QCM', 'DEPLOIEMENT'),
-    ('Combien de jours dure cette phase ?', 55, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 56, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de jours de télétravail vos collaborateur ont pour cette phase ?',57, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 58, 'QCM', 'DEPLOIEMENT'),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 59, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien viennent en voiture ?', 60, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien viennent en vélo ou à pied ?', 61, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien viennent en transport en commun ?', 62, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 63, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 64, 'NUMERIC', 'DEPLOIEMENT');
+    ('Veux-tu remplir cette phase?', 54,'QCM', 'MAINTENANCE'),
+    ('Combien de jours dure cette phase ?', 55, 'NUMERIC', 'MAINTENANCE'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 56, 'NUMERIC', 'MAINTENANCE'),
+    ('Combien de jours de télétravail vos collaborateur ont pour cette phase ?',57, 'NUMERIC', 'MAINTENANCE'),
+    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 58, 'QCM', 'MAINTENANCE'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 59, 'NUMERIC', 'MAINTENANCE'),
+    ('Combien viennent en voiture ?', 60, 'NUMERIC', 'MAINTENANCE'),
+    ('Combien viennent en vélo ou à pied ?', 61, 'NUMERIC', 'MAINTENANCE'),
+    ('Combien viennent en transport en commun ?', 62, 'NUMERIC', 'MAINTENANCE'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 63, 'NUMERIC', 'MAINTENANCE'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 64, 'NUMERIC', 'MAINTENANCE');
 
 --- CREATION DES CONSTANTES
 INSERT INTO constante (constante, tracabilite)
