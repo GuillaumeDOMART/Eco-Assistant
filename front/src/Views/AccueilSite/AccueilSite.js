@@ -24,16 +24,11 @@ const Connexion = ({onSubmit, register, navigate, paragraphContent}) => {
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
             <h2 className="m-3">Créer un compte</h2>
             <form onSubmit={onSubmit}>
-                <TextField label="Prénom" type="text" variant="standard"
-                           className="textfield" {...register("firstname")} required/><br/>
-                <TextField label="Nom" type="text" variant="standard" className="textfield " {...register("lastname")}
-                           required/><br/>
-                <TextField label="Adresse Mail" type="email" variant="standard"
-                           className="textfield " {...register("mail")} required/><br/>
-                <TextField label="Mot de passe" type="password" variant="standard"
-                           className="textfield " {...register("password")} required/><br/>
-                <TextField label="Valider le mot de passe" type="password" variant="standard"
-                           className="textfield " {...register("passwordConfirmed")} required/><br/>
+                <TextField label="Prénom" type="text" variant="standard" className="textfield" {...register("firstname")} required/><br/>
+                <TextField label="Nom" type="text" variant="standard" className="textfield " {...register("lastname")} required/><br/>
+                <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...register("mail")} required/><br/>
+                <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...register("password")} required/><br/>
+                <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...register("passwordConfirmed")} required/><br/>
                 <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                 <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>
                 <p>Déjà un compte ? <Button onClick={handleConnect} className="text-black text-decoration-underline">Se
@@ -117,7 +112,7 @@ const Anonyme = ({navigate}) => {
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
-    const [paragraphContent, setParagraphContent] = useState("");
+    const [paragraphContent, setParagraphContent] = useState()
 
     /**
      * Send datas to the back
@@ -165,14 +160,13 @@ function AccueilSite() {
 
 
     return (
-        <Container className="bg" fluid>
-            <Row className="vh-100 align-items-center">
-                <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate}
-                           paragraphContent={paragraphContent}/>
-                <Col className="col-1"></Col>
-                <Anonyme navigate={navigate}/>
-            </Row>
-        </Container>
+           <Container className="bg" fluid>
+               <Row className="vh-100 align-items-center">
+                   <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate} paragraphContent={paragraphContent}/>
+                   <Col className="col-1"></Col>
+                   <Anonyme navigate={navigate}/>
+               </Row>
+           </Container>
     )
 }
 

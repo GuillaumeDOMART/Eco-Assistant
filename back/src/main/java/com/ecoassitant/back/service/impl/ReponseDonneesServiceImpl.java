@@ -48,41 +48,45 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
         var list = responses.getReponses();
         AtomicBoolean result = new AtomicBoolean(true);
         list.forEach(reponseDto -> {
-            var reponseEntity = new ReponseDonneeEntity();
-            var responseKey = new ReponseDonneeKey();
+            System.out.println(reponseDto.getEntry());
+            if (!Objects.equals(reponseDto.getEntry(), "")){
+                System.out.println("oui");
+                var reponseEntity = new ReponseDonneeEntity();
+                var responseKey = new ReponseDonneeKey();
 
-            responseKey.setProjet(project.get());
-            var question = questionRepository.findById(reponseDto.getQuestionId());
-            if (question.isEmpty()){
-                result.set(false);
-                return;
-            }
-            var reponsePossibles = reponsePossibleRepository.findByQuestionAsso(question.get());
-            if (reponsePossibles.isEmpty()) {
-                result.set(false);
-                return;
-                //throw new IllegalArgumentException();
-            }
-
-            if (question.get().getTypeQ().equals(TypeQ.NUMERIC)) {
-                responseKey.setReponsePos(reponsePossibles.get(0));
-                if(!Objects.equals(reponseDto.getEntry(), ""))
-                    reponseEntity.setEntry(Integer.parseInt(reponseDto.getEntry()));
-            }
-            else { //TypeQ.QCM
-                var reponsePossible = reponsePossibles.stream()
-                        .filter( reponse -> reponse.getIntitule().equals(reponseDto.getEntry())).findFirst();
-                if (reponsePossible.isEmpty()){
+                responseKey.setProjet(project.get());
+                var question = questionRepository.findById(reponseDto.getQuestionId());
+                if (question.isEmpty()) {
                     result.set(false);
                     return;
                 }
-                responseKey.setReponsePos(reponsePossible.get());
-                reponseEntity.setEntry(1);
+                responseKey.setQuestion(question.get());
+                var reponsePossibles = reponsePossibleRepository.findByQuestionAsso(question.get());
+                if (reponsePossibles.isEmpty()) {
+                    result.set(false);
+                    return;
+                    //throw new IllegalArgumentException();
+                }
+
+                if (question.get().getTypeQ().equals(TypeQ.NUMERIC)) { //NUMERIC
+                    reponseEntity.setReponsePos(reponsePossibles.get(0));
+                    if (!Objects.equals(reponseDto.getEntry(), ""))
+                        reponseEntity.setEntry(Integer.parseInt(reponseDto.getEntry()));
+                } else { //TypeQ.QCM
+                    var reponsePossible = reponsePossibles.stream()
+                            .filter(reponse -> reponse.getIntitule().equals(reponseDto.getEntry())).findFirst();
+                    if (reponsePossible.isEmpty()) {
+                        result.set(false);
+                        return;
+                    }
+                    reponseEntity.setReponsePos(reponsePossible.get());
+                    reponseEntity.setEntry(1);
+                }
+
+                reponseEntity.setReponseDonneeKey(responseKey);
+                reponseDonneeRepository.delete(reponseEntity);
+                reponseDonneeRepository.save(reponseEntity);
             }
-
-            reponseEntity.setReponseDonneeKey(responseKey);
-
-            reponseDonneeRepository.save(reponseEntity);
         });
         return result.get();
     }

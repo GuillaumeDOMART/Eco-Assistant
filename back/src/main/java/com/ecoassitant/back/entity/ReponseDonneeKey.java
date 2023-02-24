@@ -3,6 +3,7 @@ package com.ecoassitant.back.entity;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 
 /**
@@ -15,23 +16,23 @@ public class ReponseDonneeKey implements Serializable {
     @JoinColumn(name = "projetid", nullable = false)
     private ProjetEntity projet;
 
-    @ManyToOne
-    @JoinColumn(name = "reponseposid", nullable = false)
-    private ReponsePossibleEntity reponsePos;
+    @OneToOne
+    @JoinColumn(name = "questionid", nullable = false)
+    private QuestionEntity question;
 
     public ProjetEntity getProjet() {
         return projet;
-    }
-
-    public ReponsePossibleEntity getReponsePos() {
-        return reponsePos;
     }
 
     public void setProjet(ProjetEntity projet) {
         this.projet = projet;
     }
 
-    public void setReponsePos(ReponsePossibleEntity reponsePos) {
-        this.reponsePos = reponsePos;
+    public QuestionEntity getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(QuestionEntity question) {
+        this.question = question;
     }
 }
