@@ -299,8 +299,6 @@ VALUES
     (41, 42, 'Veuillez entrer un entier', 13),
     (42, 43, 'Veuillez entrer un entier', 15),
     (43, 44, 'Veuillez entrer un entier', 16),
-
-
     (44, 45, 'OUI', 2),
     (44, 48, 'NON', 2),
     (45, 46, 'Veuillez entrer un entier', 2),
@@ -339,9 +337,9 @@ VALUES
     (64, 65, 'Veuillez entrer un entier', 2),
     (65, 66, 'Veuillez entrer un entier', 14),
     (66, 67, 'Veuillez entrer un entier', 2),
-    (67, 69, 'OUI', 2),
+    (67, 68, 'OUI', 2),
     (67, 72, 'NON', 2),
-    (69, 69, 'Veuillez entrer un entier', 2),
+    (68, 69, 'Veuillez entrer un entier', 2),
     (69, 70, 'Veuillez entrer un entier', 12),
     (70, 71, 'Veuillez entrer un entier', 2),
     (71, 72, 'Veuillez entrer un entier', 13),
