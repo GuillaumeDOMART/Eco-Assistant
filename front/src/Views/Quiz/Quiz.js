@@ -9,7 +9,7 @@ import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import Phase from "./Phase";
 
-const steps = ["Planification", "Developpement", "Test", "Déploiement", "Maintenance"];
+const steps = ["Hors Phase", "Planification", "Développement", "Test", "Déploiement", "Maintenance"];
 
 /**
  * The component representing the Stepper
@@ -146,18 +146,21 @@ function StepperComponent() {
         let currentPhase = data.PLANIFICATION;
         switch (activeStep) {
             case 0:
-                currentPhase = data.PLANIFICATION
+                currentPhase = data.HORS_PHASE
                 break;
             case 1:
-                currentPhase = data.DEVELOPPEMENT
+                currentPhase = data.PLANIFICATION
                 break;
             case 2:
-                currentPhase = data.TEST
+                currentPhase = data.DEVELOPPEMENT
                 break;
             case 3:
-                currentPhase = data.DEPLOIEMENT
+                currentPhase = data.TEST
                 break;
             case 4:
+                currentPhase = data.DEPLOIEMENT
+                break;
+            case 5:
                 currentPhase = data.MAINTENANCE
                 break;
             default:
@@ -196,6 +199,10 @@ function StepperComponent() {
                                                onChange={handleChange}
                                         />)
                                 }
+                                return (
+                                    <>
+                                    </>
+                                );
                             }
                         )}
                         <Box className="">
