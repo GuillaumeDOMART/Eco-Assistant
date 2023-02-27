@@ -3,6 +3,7 @@ import {useCallback, useEffect, useRef} from "react";
 import jsPDF from "jspdf";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
+import "./ResultPage.css"
 
 /**
  * Page of the result
@@ -90,16 +91,32 @@ function ResultPage() {
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                legend: {
+                    position: 'top',
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback(value, __, ___) {
+                                return  `${value}kg CO2e`;
+                            }
                         },
-                        x:{
-                            beginAtZero: true
+                        title: {
+                            display: true,
+                            text: 'Consomation de la phase en kg CO2e'
+                        }
+                    },
+                    x:{
+                        beginAtZero: true,
+                        ticks: {
+                            callback(value, __, ___) {
+                                return `${value}j`;
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Durée de la phase en jour'
                         }
                     }
                 }
@@ -115,7 +132,7 @@ function ResultPage() {
         const imgData = canvas.toDataURL('image/png', 1.0);
         const pdf = new jsPDF("p", "mm", "a4");
         const diviseur = Math.ceil(pdf.getImageProperties(imgData).width / (A4.w - 20))
-        pdf.text('Hello World!', marginLeft, yText, {
+        pdf.text('Rapport de consommation de CO2', marginLeft, yText, {
             fontSize: 36,
             fontName: 'Helvetica',
             fontStyle: 'bold',
@@ -123,9 +140,64 @@ function ResultPage() {
             maxWidth: 170
         });
         pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
-        pdf.save('chart.pdf');
-        //a finir
 
+        const canvasP = chartContainerPlanification.current;
+        const imgDataP = canvasP.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de planification!', 15, 66, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataP, 'JPEG',15,70, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+
+        const canvasD = chartContainerDeveloppement.current;
+        const imgDataD = canvasD.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de dévelopement', 15, 106, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataD, 'JPEG',15, 110,  pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+
+        const canvasT = chartContainerTest.current;
+        const imgDataT = canvasT.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de test', 15, 146, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataT, 'JPEG', 15, 150, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+
+        const canvasDE = chartContainerDeploiment.current;
+        const imgDataDE = canvasDE.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de déploiment!', 15, 186, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataDE, 'JPEG', 15, 190,pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+
+        const canvasM = chartContainerMaintenance.current;
+        const imgDataM = canvasM.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de maintenance!', 15, 226, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataM, 'JPEG', 15,230, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+
+
+        pdf.save('chart.pdf');
     }, [A4.w])
 
     /**
@@ -218,27 +290,27 @@ function ResultPage() {
             <Button onClick={handleQuit} type="button">Retourner au menu</Button>
 
             <h1>Rapport de consommation de CO2 pour la phase de planification</h1>
-            <div>
+            <div className="divcanvas">
                 <canvas ref={chartContainerPlanification}/>
 
             </div>
             <h1>Rapport de consommation de CO2 pour la phase de dévelopement</h1>
-            <div>
+            <div className="divcanvas">
                 <canvas ref={chartContainerDeveloppement}/>
 
             </div>
             <h1>Rapport de consommation de CO2 pour la phase de test</h1>
-            <div>
+            <div className="divcanvas">
                 <canvas ref={chartContainerTest}/>
 
             </div>
             <h1>Rapport de consommation de CO2 pour la phase de deploiement </h1>
-            <div>
+            <div className="divcanvas">
                 <canvas ref={chartContainerDeploiment}/>
 
             </div>
             <h1>Rapport de consommation de CO2 pour la phase de maintenance</h1>
-            <div>
+            <div className="divcanvas">
                 <canvas ref={chartContainerMaintenance}/>
 
             </div>
