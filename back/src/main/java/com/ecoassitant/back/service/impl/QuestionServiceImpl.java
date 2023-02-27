@@ -1,8 +1,8 @@
 package com.ecoassitant.back.service.impl;
 
+import com.ecoassitant.back.dto.PhaseDto;
 import com.ecoassitant.back.dto.quiz.QuestionDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
-import com.ecoassitant.back.entity.QuestionEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.repository.QuestionRepository;
@@ -62,4 +62,7 @@ QuestionServiceImpl implements QuestionService {
         return questionUniqueDto;
     }
 
+    public List<QuestionUniqueDto> completPhase(PhaseDto phaseDto) {
+        return completQuiz(phaseDto.getProjetId()).get(Phase.valueOf(phaseDto.getPhase()));
+    }
 }

@@ -1,5 +1,6 @@
 package com.ecoassitant.back.service;
 
+import com.ecoassitant.back.dto.PhaseDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
 import com.ecoassitant.back.entity.tools.Phase;
 
@@ -15,12 +16,14 @@ public interface QuestionService {
      *
      * @return map of question by sort by phase
      */
-    public Map<Phase, List<QuestionUniqueDto>> getQuestionnaire();
+    Map<Phase, List<QuestionUniqueDto>> getQuestionnaire();
 
     /**
      * set quiz with response of the previous quiz
      * @param id id of project
      * @return map of question by sort by phase
      */
-    public Map<Phase, List<QuestionUniqueDto>> completQuiz(Integer id);
+    Map<Phase, List<QuestionUniqueDto>> completQuiz(Integer id);
+
+    List<QuestionUniqueDto> completPhase(PhaseDto phaseDto);
 }

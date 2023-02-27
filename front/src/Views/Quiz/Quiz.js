@@ -9,7 +9,7 @@ import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import Phase from "./Phase";
 
-const steps = ["Hors Phase", "Planification", "Développement", "Test", "Déploiement", "Maintenance"];
+const steps = ["Hors_Phase", "Planification", "Développement", "Test", "Déploiement", "Maintenance"];
 
 /**
  * The component representing the Stepper
@@ -23,7 +23,39 @@ function StepperComponent() {
     const [data, setData] = useState({})
     const [selectedAnswers, setSelectedAnswers] = useState([])
     const {register, handleSubmit, reset} = useForm();
+    const [phase, setPhase] = useState("HORS_PHASE");
     const navigate = useNavigate();
+
+
+    const handlePhase = useCallback(() => {
+        setPhase(steps[activeStep])
+        const token = sessionStorage.getItem("token")
+        const id = sessionStorage.getItem("project")
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({
+                "phase": phase,
+                "id": id
+            }),
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': "application/json"
+            },
+        };
+        fetch("/api/questions/phase", options)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    console.log(result)
+                    setData(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setErrorApiGetQuestionnaire(error);
+                }
+            )
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, setPhase, activeStep, phase])
 
     /**
      * Go to the next step
@@ -31,9 +63,10 @@ function StepperComponent() {
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            handlePhase()
             reset()
         },
-        [reset]
+        [reset, handlePhase]
     );
 
     /**
@@ -42,9 +75,10 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            handlePhase()
             reset()
         },
-        [reset]
+        [reset, handlePhase]
     );
 
     const handleQuit = useCallback(
@@ -67,7 +101,6 @@ function StepperComponent() {
         })
         setSelectedAnswers([...selectedAnswers, answer])
     }, [selectedAnswers])
-
 
     /**
      * Send responses to the backEnd when Next button is pressed
@@ -109,30 +142,8 @@ function StepperComponent() {
     }
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token")
-        const id = sessionStorage.getItem("project")
-        const options = {
-            method: 'POST',
-            body: JSON.stringify({id}),
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': "application/json"
-            },
-        };
-        fetch("/api/questions", options)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    console.log(result)
-                    setData(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setErrorApiGetQuestionnaire(error);
-                }
-            )
-    }, [])
+        handlePhase()
+    }, [handlePhase])
 
     if (errorApiGetQuestionnaire) {
         return <div>Error: {errorApiGetQuestionnaire.message}</div>;

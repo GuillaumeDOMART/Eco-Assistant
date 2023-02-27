@@ -1,6 +1,7 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.dto.IdDto;
+import com.ecoassitant.back.dto.PhaseDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.service.QuestionService;
@@ -50,6 +51,12 @@ public class QuestionController {
     @PostMapping("/questions")
     public ResponseEntity <Map<Phase, List<QuestionUniqueDto>>> modifierQuestionnaire(@RequestBody  IdDto id){
         var quiz = questionService.completQuiz(id.getId());
+        return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/questions/phase")
+    public ResponseEntity<List<QuestionUniqueDto>> getPhaseProjet(@RequestBody PhaseDto phaseDto) {
+        var quiz = questionService.completPhase(phaseDto);
         return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
