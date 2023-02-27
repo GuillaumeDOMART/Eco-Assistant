@@ -412,8 +412,8 @@ VALUES  (5, 3, 1, 1, 'HORS_PHASE'),
         (3, 39, 17, 1, 'DEVELOPPEMENT'),
         (5, 41, 17, 1, 'DEVELOPPEMENT'),
 
-        (3, 40, 18, 1, 'DEVELOPPEMENT'),
-        (5, 41, 18, 1, 'DEVELOPPEMENT'),
+        (3, 39, 18, 1, 'DEVELOPPEMENT'),
+        (5, 40, 18, 1, 'DEVELOPPEMENT'),
 
         (5, 44, 19, 1, 'TEST'),
 
