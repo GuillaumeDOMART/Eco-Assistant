@@ -98,7 +98,7 @@ function ResultPage() {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            callback: function(value, index, values) {
+                            callback: function(value, __, ___) {
                                 return  value + "kg CO2e";
                             }
                         },
@@ -110,7 +110,7 @@ function ResultPage() {
                     x:{
                         beginAtZero: true,
                         ticks: {
-                            callback: function(value, index, values) {
+                            callback: function(value, __, ___) {
                                 return value + "j";
                             }
                         },
