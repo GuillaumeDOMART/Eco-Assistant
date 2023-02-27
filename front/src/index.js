@@ -14,13 +14,14 @@ import ConnexionPage from "./Views/Connexion/ConnexionPage";
 import AccueilSite from "./Views/AccueilSite/AccueilSite";
 import AccueilProfil from "./Views/AccueilProfil/AccueilProfil";
 import Profil from "./Views/InfoProfil/Profil";
-import StepperComponent from "./Components/Stepper/Stepper";
+import StepperComponent from "./Views/Quiz/Quiz";
 import CreateProject from "./Views/Quiz/CreateProject";
 import Deconnection from "./Views/Deconnection/LogOut";
-import Guest from "./Views/guest/Guest";
+import Guest from "./Views/Guest/Guest";
 import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
 import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
 import ModifyID from "./Views/ModifyID/ModifyID";
+import ForgotPasswordMail from "./Views/ForgotPassword/ForgotPasswordMail";
 import QuestionProposee from "./Views/QuestionProposée/QuestionProposee";
 
 const router = createBrowserRouter([
@@ -58,8 +59,12 @@ const router = createBrowserRouter([
         element: <ForgotPassword/>
     },
     {
-        path: "/modifyPassword",
-        element: <ModifyPassword/>
+        path:"/forgotPasswordMail",
+        element: <ForgotPasswordMail/>
+    },
+    {
+      path:"/modifyPassword",
+      element: <ModifyPassword/>
     },
     {
         path: "/modifyID",

@@ -16,6 +16,9 @@ public class ReponseDonneeEntity implements Serializable {
 
     @EmbeddedId
     private ReponseDonneeKey reponseDonneeKey;
+    @OneToOne
+    @JoinColumn(name = "reponseposid", nullable = false)
+    private ReponsePossibleEntity reponsePos;
 
     @Column(name = "entry", nullable = false)
     private int entry;

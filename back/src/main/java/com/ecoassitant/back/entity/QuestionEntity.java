@@ -39,13 +39,10 @@ public class QuestionEntity implements Serializable {
     @Column(name = "phase")
     private Phase phase;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "categorie")
-    private Categorie categorie;
 
-    @Column(name = "visibilite")
-    @Type(type="boolean")
-    private boolean visibilite;
+    @ManyToOne
+    @JoinColumn(name = "dependance")
+    private ReponsePossibleEntity dependance;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionAsso")
     private List<ReponsePossibleEntity> reponses;
@@ -57,16 +54,14 @@ public class QuestionEntity implements Serializable {
      * @param q previous question
      * @param type type of question
      * @param phase phase of question
-     * @param categorie categorie of question
-     * @param b visibility of question
+     * @param dep dependance of question
      */
-    public QuestionEntity(long l, String q1, QuestionEntity q, TypeQ type, Phase phase, Categorie categorie, boolean b) {
+    public QuestionEntity(long l, String q1, QuestionEntity q, TypeQ type, Phase phase, ReponsePossibleEntity dep) {
         this.idQuestion = l;
         this.intitule = q1;
         this.questionPre = q;
         this.typeQ = type;
         this.phase = phase;
-        this.categorie = categorie;
-        this.visibilite = b;
+        this.dependance = dep;
     }
 }

@@ -12,6 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final ProfilRepository profilRepository;
 
+    /**
+     * Create a UserDetailsServiceImpl with a ProfilRepository
+     * @param profilRepository the ProfilRepository
+     */
     public UserDetailsServiceImpl(ProfilRepository profilRepository) {
         this.profilRepository = profilRepository;
     }

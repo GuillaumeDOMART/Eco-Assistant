@@ -1,12 +1,29 @@
 import Chart from "chart.js/auto";
-import {useEffect, useRef} from "react";
+import {useCallback, useEffect, useRef} from "react";
 import jsPDF from "jspdf";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
+/**
+ * Page of the result
+ * @returns {JSX.Element} the jsx element
+ * @constructor the constructor
+ */
 function ResultPage() {
-    const chartContainer = useRef(null);
-    const chartInstance = useRef(null);
+    const chartContainerAll = useRef(null);
+    const chartInstanceAll = useRef(null);
+
+    const chartContainerPlanification = useRef(null);
+    const chartInstancePlanification = useRef(null);
+    const chartContainerDeveloppement = useRef(null);
+    const chartInstanceDeveloppement = useRef(null);
+    const chartContainerTest = useRef(null);
+    const chartInstanceTest = useRef(null);
+    const chartContainerDeploiment = useRef(null);
+    const chartInstanceDeploiement = useRef(null);
+    const chartContainerMaintenance = useRef(null);
+    const chartInstanceMaintenance = useRef(null);
+
     const pdfContainer = useRef(null);
     const navigate = useNavigate();
     const marginLeft = 15;
@@ -16,7 +33,13 @@ function ResultPage() {
         "w": 210
     }
 
-    const chart = (result) => {
+    /**
+     * Function to create the chart
+     * @param result the result
+     * @param chartContainer chartContainer
+     * @param chartInstance chartInstance
+     */
+    const chart = (result, chartContainer, chartInstance) => {
         if (chartInstance.current) {
             chartInstance.current.destroy();
         }
@@ -27,7 +50,7 @@ function ResultPage() {
                 labels: ["Planification", "Développement", "Test", "Déploiement", "Maintenance"],
                 datasets: [
                     {
-                        label: 'Consomation en CO2',
+                        label: 'Consommation en CO2',
                         data: [result.planification, result.developpement, result.test, result.deploiement, result.maintenance],
                         backgroundColor: 'rgba(100, 198, 146, 0.2)',
                         borderWidth: 1
@@ -40,21 +63,82 @@ function ResultPage() {
         });
     };
 
-    const handleDownloadPDF = () => {
-        const canvas = chartContainer.current;
-        const imgData = canvas.toDataURL('image/png', 1.0);
-        const pdf = new jsPDF("p","mm","a4");
-        const diviseur = Math.ceil(pdf.getImageProperties(imgData).width/(A4.w-20))
-        pdf.text('Hello World!', marginLeft, yText, { fontSize: 36, fontName: 'Helvetica', fontStyle: 'bold', color: '#000000', maxWidth: 170 });
-        pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width/diviseur, pdf.getImageProperties(imgData).height/diviseur);
-        pdf.save('chart.pdf');
-        //TODO
+    /**
+     * Function to create the chart
+     * @param phase the phase
+     * @param data the data
+     */
+    const chartbulet = (phase, data) => {
+        const instance = {
+            planification: [chartContainerPlanification, chartInstancePlanification],
+            developpement: [chartContainerDeveloppement, chartInstanceDeveloppement],
+            test: [chartContainerTest, chartInstanceTest],
+            deploiement: [chartContainerDeploiment, chartInstanceDeploiement],
+            maintenance: [chartContainerMaintenance, chartInstanceMaintenance]
+        }
 
+        const chartContainer = instance[phase][0]
+        const chartInstance = instance[phase][1]
+        if (chartInstance.current) {
+            chartInstance.current.destroy();
+        }
+
+        chartInstance.current = new Chart(chartContainer.current, {
+            type: 'scatter',
+            data: {
+                datasets: data
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        },
+                        x:{
+                            beginAtZero: true
+                        }
+                    }
+                }
+            }
+        });
     };
 
-    const handleQuit = () => {
-        navigate("/profil")
-    }
+    /**
+     * Function to create the pdf
+     */
+    const handleDownloadPDF =  useCallback(() => {
+        const canvas = chartContainerAll.current;
+        const imgData = canvas.toDataURL('image/png', 1.0);
+        const pdf = new jsPDF("p", "mm", "a4");
+        const diviseur = Math.ceil(pdf.getImageProperties(imgData).width / (A4.w - 20))
+        pdf.text('Hello World!', marginLeft, yText, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
+        pdf.save('chart.pdf');
+        //a finir
+
+    }, [A4.w])
+
+    /**
+     * the function to quit
+     */
+    const handleQuit = useCallback(() =>  {
+        if(sessionStorage.getItem("guest")){
+            navigate("/logout")
+        }
+        else {
+            navigate("/profil")
+        }
+    },[navigate])
 
     useEffect(() => {
         const id = new URLSearchParams(window.location.search).get('id');
@@ -65,10 +149,18 @@ function ResultPage() {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({id })
+            body: JSON.stringify({id})
         };
         fetch('api/calculs',options)
-            .then(response => response.json())
+            .then(response => {
+                if(response.status === 403) {
+                    navigate("/")
+                }
+                return response.json();
+            })
+            .catch((_) => {
+                navigate("/profil")
+            })
             .then(jsonData => {
                 const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
                 const sums = {};
@@ -80,19 +172,76 @@ function ResultPage() {
                         sums[array] = 0;
                     }
                 });
-                chart(sums);
-            });
-    }, []);
+                chart(sums, chartContainerAll, chartInstanceAll);
 
+                arrays.forEach(array => {
+                    const values = []
+                    const mineTime = jsonData.mine[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
+                    const mineTimeValue = mineTime === null ? 0 : mineTime;
+                   jsonData.others.forEach(other => {
+                       const results = other[array].map(item => item.result);
+                       const sum = results.reduce((acc, current) => acc + current, 0);
+                       const time = other[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
+                       const timeValue = time === null ? 0 : time;
+                       values.push({y: sum,x: timeValue})
+                   })
+                    const data =  [
+                        {
+                            label: 'Votre projet',
+                            data: [
+                                { y: sums[array], x: mineTimeValue }
+                            ],
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Autre projet',
+                            data: values,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }
+                    ];
+                    chartbulet(array, data)
+                });
+            });
+    }, [navigate]);
     return (
         <div ref={pdfContainer}>
             <h1>Rapport de consomation de CO2</h1>
             <div>
-                <canvas ref={chartContainer}/>
+                <canvas ref={chartContainerAll}/>
 
             </div>
-            <Button onClick={handleDownloadPDF} type={"button"}>Download PDF</Button>
-            <Button onClick={handleQuit} type={"button"}>Retourner au menu</Button>
+            <Button onClick={handleDownloadPDF} type="button">Download PDF</Button>
+            <Button onClick={handleQuit} type="button">Retourner au menu</Button>
+
+            <h1>Rapport de consommation de CO2 pour la phase de planification</h1>
+            <div>
+                <canvas ref={chartContainerPlanification}/>
+
+            </div>
+            <h1>Rapport de consommation de CO2 pour la phase de dévelopement</h1>
+            <div>
+                <canvas ref={chartContainerDeveloppement}/>
+
+            </div>
+            <h1>Rapport de consommation de CO2 pour la phase de test</h1>
+            <div>
+                <canvas ref={chartContainerTest}/>
+
+            </div>
+            <h1>Rapport de consommation de CO2 pour la phase de deploiement </h1>
+            <div>
+                <canvas ref={chartContainerDeploiment}/>
+
+            </div>
+            <h1>Rapport de consommation de CO2 pour la phase de maintenance</h1>
+            <div>
+                <canvas ref={chartContainerMaintenance}/>
+
+            </div>
         </div>
     );
 }

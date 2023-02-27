@@ -1,7 +1,8 @@
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Row, Button} from "react-bootstrap";
 import {useForm} from "react-hook-form";
-import {Button, TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 
 
@@ -13,13 +14,22 @@ import {useNavigate} from "react-router-dom";
  * @constructor
  */
 function ConnexionPage(){
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        const value = sessionStorage.getItem('token');
+        if (value) {
+            navigate("/profil")
+        }
+    }, [navigate]);
 
     return (
-        <Col>
+        <>
             <Logo/>
-            <FormContainer/>
-        </Col>
+            <Container className=" vh-100 vw-100 d-flex align-items-center">
+                <FormContainer/>
+            </Container>
+        </>
     )
 }
 
@@ -30,9 +40,7 @@ function ConnexionPage(){
  */
 function Logo(){
     return (
-        <Row>
-            <img className="logo position-fixed start-0" src={require('./logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
-        </Row>
+        <img className="logo position-absolute top-0 start-0 m-1"  src={require('./logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
     );
 }
 
@@ -43,31 +51,24 @@ function Logo(){
  */
 function FormContainer(){
     return (
-        <Row>
-            <Container style={{
-                position: 'absolute', left: '75%', top: '50%',
-                transform: 'translate(-50%, -50%)',
-            }}>
-
-                <Col
-                    md={6}
-                    style={{
-                        borderRadius: "5px",
-                        border: "5px solid #aee1c6",
-                        boxShadow: "15px 10px 1px #EAF7F0",
-                        textAlign:"center",
-                        padding:"5%"
-                    }}>
-                    <h1 style={{paddingBottom : "8%"}}>Page de Connexion</h1>
-                    <Form/>
-                </Col>
-            </Container>
-        </Row>
+        <Container className= "d-flex align-items-center justify-content-center col-6 border border-5 border-secondary p-5 shadow-lg">
+            <Col>
+                <h1 style={{paddingBottom : "8%"}}>Page de Connexion</h1>
+                <Form/>
+            </Col>
+        </Container>
     );
 }
+
+/**
+ * The form of the page
+ * @returns {JSX.Element} the jsx element
+ * @constructor the constructor
+ */
 function Form(){
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();
+    const [paragraphContent, setParagraphContent] = useState("")
 
     /**
      * Create the JSON for connexion and send it to the backend
@@ -85,32 +86,32 @@ function Form(){
         };
 
         const reponse = await fetch("/api/auth/authentication", requestOptions);
+        if(reponse.status === 403){
+            setParagraphContent("Informations de connexion non valide, veuillez vérifier les informations renseignées")
+            reset();
+            return;
+        }
         const json = await reponse.json();
         sessionStorage.setItem("token", json.token);
         navigate("/profil");
     }
 
-return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField label="Adresse Mail" type="email" variant="standard" style={{width:"75%"}} required {...register('login', {
-            required: 'Email is required',
-            pattern: {
-                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: 'Please enter a valid email',
-            },
-        })}/><br/>
-        <TextField label="Mot de passe" type="password" variant="standard" style={{width:"75%"}} required {...register('password')}/><br/>
-        <Row>
-            <Col>
-                <Button href={"/"} style={{}}>Retour</Button><br/>
-            </Col>
-            <Col>
-                <Button type={"submit"} style={{}}>Connexion</Button><br/>
-            </Col>
-        </Row>
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField label="Adresse Mail" type="email" variant="standard" style={{width:"75%"}} required {...register('login')}/><br/>
+            <TextField label="Mot de passe" type="password" variant="standard" style={{width:"75%"}} required {...register('password')}/><br/>
+            <p className="text-danger w-100 h-auto">{paragraphContent}</p>
+            <Row>
+                <Col>
+                    <Button href={"/"} variant="outline-danger">Retour</Button><br/>
+                </Col>
+                <Col>
+                    <Button type={"submit"} variant="outline-primary">Connexion</Button><br/>
+                </Col>
+            </Row>
 
-        <a href="/forgotPassword">Mot de passe oublié ?</a>
-    </form>
-);
+            <a href="/ForgotPasswordMail">Mot de passe oublié ?</a>
+        </form>
+    );
 }
 export default ConnexionPage;
