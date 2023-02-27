@@ -443,114 +443,127 @@ VALUES  (5, 3, 1, 1, 'HORS_PHASE'),
         (3, 39, 18, 1, 'DEVELOPPEMENT'),
         (5, 40, 18, 1, 'DEVELOPPEMENT'),
 
-            (3, 69, 29, 1, 'DEVELOPPEMENT'),
-            (5, 74, 29, 1, 'DEVELOPPEMENT'),
+        (3, 43, 19, 1, 'DEVELOPPEMENT'),
+        (5, 46, 19, 1, 'DEVELOPPEMENT'),
 
-        (5, 43, 19, 1, 'TEST'),
+        (3, 43, 20, 1, 'DEVELOPPEMENT'),
+        (5, 47, 20, 1, 'DEVELOPPEMENT'),
 
-        (3, 49, 20, 1, 'TEST'),
-        (3, 48, 20, 1, 'TEST'),
-        (1, 43, 20, 1, 'TEST'),
-        (3, 51, 20, 1, 'TEST'),
-        (3, 48, 20, 1, 'TEST'),
-        (2, 43, 20, 1, 'TEST'),
-        (3, 45, 20, 1, 'TEST'),
-        (3, 49, 20, 1, 'TEST'),
-        (2, 48, 20, 1, 'TEST'),
-        (3, 45, 20, 1, 'TEST'),
-        (3, 51, 20, 1, 'TEST'),
-        (5, 48, 20, 1, 'TEST'),
+        (3, 43, 21, 1, 'DEVELOPPEMENT'),
+        (5, 48, 21, 1, 'DEVELOPPEMENT'),
 
-        (3, 49, 20, 2, 'TEST'),
-        (3, 48, 20, 2, 'TEST'),
-        (1, 43, 20, 2, 'TEST'),
-        (3, 51, 20, 2, 'TEST'),
-        (3, 48, 20, 2, 'TEST'),
-        (5, 43, 20, 2, 'TEST'),
+        (5, 51, 22, 1, 'TEST'),
 
-        (3, 44, 20, 3, 'TEST'),
-        (5, 43, 20, 3, 'TEST'),
+        (3, 57, 23, 1, 'TEST'),
+        (3, 56, 23, 1, 'TEST'),
+        (1, 51, 23, 1, 'TEST'),
+        (3, 59, 23, 1, 'TEST'),
+        (3, 56, 23, 1, 'TEST'),
+        (2, 51, 23, 1, 'TEST'),
+        (3, 53, 23, 1, 'TEST'),
+        (3, 57, 23, 1, 'TEST'),
+        (2, 56, 23, 1, 'TEST'),
+        (3, 53, 23, 1, 'TEST'),
+        (3, 59, 23, 1, 'TEST'),
+        (5, 56, 23, 1, 'TEST'),
 
-        (3, 52, 21, 1, 'TEST'),
-        (5, 43, 21, 1, 'TEST'),
+        (3, 57, 23, 2, 'TEST'),
+        (3, 56, 23, 2, 'TEST'),
+        (1, 51, 23, 2, 'TEST'),
+        (3, 59, 23, 2, 'TEST'),
+        (3, 56, 23, 2, 'TEST'),
+        (5, 51, 23, 2, 'TEST'),
 
-        (3, 53, 22, 1, 'TEST'),
-        (5, 43, 22, 1, 'TEST'),
+        (3, 52, 23, 3, 'TEST'),
+        (5, 51, 23, 3, 'TEST'),
 
-            (3, 69, 29, 1, 'DEPLOIEMENT'),
-            (5, 74, 29, 1, 'DEPLOIEMENT'),
+        (3, 60, 24, 1, 'TEST'),
+        (5, 51, 24, 1, 'TEST'),
 
-        (5, 56, 23, 1, 'DEPLOIEMENT'),
+        (3, 61, 25, 1, 'TEST'),
+        (5, 51, 25, 1, 'TEST'),
 
-        (3, 62, 24, 1, 'DEPLOIEMENT'),
-        (3, 61, 24, 1, 'DEPLOIEMENT'),
-        (1, 56, 24, 1, 'DEPLOIEMENT'),
-        (3, 64, 24, 1, 'DEPLOIEMENT'),
-        (3, 61, 24, 1, 'DEPLOIEMENT'),
-        (2, 56, 24, 1, 'DEPLOIEMENT'),
-        (3, 58, 24, 1, 'DEPLOIEMENT'),
-        (3, 62, 24, 1, 'DEPLOIEMENT'),
-        (2, 61, 24, 1, 'DEPLOIEMENT'),
-        (3, 58, 24, 1, 'DEPLOIEMENT'),
-        (3, 64, 24, 1, 'DEPLOIEMENT'),
-        (5, 61, 24, 1, 'DEPLOIEMENT'),
+        (3, 64, 26, 1, 'TEST'),
+        (5, 67, 26, 1, 'TEST'),
 
-        (3, 62, 24, 2, 'DEPLOIEMENT'),
-        (3, 61, 24, 2, 'DEPLOIEMENT'),
-        (1, 56, 24, 2, 'DEPLOIEMENT'),
-        (3, 64, 24, 2, 'DEPLOIEMENT'),
-        (3, 61, 24, 2, 'DEPLOIEMENT'),
-        (5, 56, 24, 2, 'DEPLOIEMENT'),
+        (3, 64, 27, 1, 'TEST'),
+        (5, 68, 27, 1, 'TEST'),
 
-        (3, 57, 24, 3, 'DEPLOIEMENT'),
-        (5, 56, 24, 3, 'DEPLOIEMENT'),
+        (3, 64, 28, 1, 'TEST'),
+        (5, 69, 28, 1, 'TEST'),
 
-        (3, 65, 25, 1, 'DEPLOIEMENT'),
-        (5, 56, 25, 1, 'DEPLOIEMENT'),
+        (5, 72, 29, 1, 'DEPLOIEMENT'),
 
-        (3, 66, 26, 1, 'DEPLOIEMENT'),
-        (5, 56, 26, 1, 'DEPLOIEMENT'),
+        (3, 78, 30, 1, 'DEPLOIEMENT'),
+        (3, 77, 30, 1, 'DEPLOIEMENT'),
+        (1, 72, 30, 1, 'DEPLOIEMENT'),
+        (3, 80, 30, 1, 'DEPLOIEMENT'),
+        (3, 77, 30, 1, 'DEPLOIEMENT'),
+        (2, 72, 30, 1, 'DEPLOIEMENT'),
+        (3, 74, 30, 1, 'DEPLOIEMENT'),
+        (3, 78, 30, 1, 'DEPLOIEMENT'),
+        (2, 77, 30, 1, 'DEPLOIEMENT'),
+        (3, 74, 30, 1, 'DEPLOIEMENT'),
+        (3, 80, 30, 1, 'DEPLOIEMENT'),
+        (5, 77, 30, 1, 'DEPLOIEMENT'),
 
-        (3, 69, 27, 1, 'DEPLOIEMENT'),
-        (5, 72, 27, 1, 'DEPLOIEMENT'),
+        (3, 78, 30, 2, 'DEPLOIEMENT'),
+        (3, 77, 30, 2, 'DEPLOIEMENT'),
+        (1, 72, 30, 2, 'DEPLOIEMENT'),
+        (3, 80, 30, 2, 'DEPLOIEMENT'),
+        (3, 77, 30, 2, 'DEPLOIEMENT'),
+        (5, 72, 30, 2, 'DEPLOIEMENT'),
 
-        (3, 69, 28, 1, 'DEPLOIEMENT'),
-        (5, 73, 28, 1, 'DEPLOIEMENT'),
+        (3, 73, 30, 3, 'DEPLOIEMENT'),
+        (5, 72, 30, 3, 'DEPLOIEMENT'),
 
-        (3, 69, 29, 1, 'DEPLOIEMENT'),
-        (5, 74, 29, 1, 'DEPLOIEMENT'),
+        (3, 81, 31, 1, 'DEPLOIEMENT'),
+        (5, 72, 31, 1, 'DEPLOIEMENT'),
 
-        (5, 77, 30, 1, 'MAINTENANCE'),
+        (3, 82, 32, 1, 'DEPLOIEMENT'),
+        (5, 72, 32, 1, 'DEPLOIEMENT'),
 
-        (3, 83, 31, 1, 'MAINTENANCE'),
-        (3, 82, 31, 1, 'MAINTENANCE'),
-        (1, 77, 31, 1, 'MAINTENANCE'),
-        (3, 85, 31, 1, 'MAINTENANCE'),
-        (3, 82, 31, 1, 'MAINTENANCE'),
-        (2, 77, 31, 1, 'MAINTENANCE'),
-        (3, 79, 31, 1, 'MAINTENANCE'),
-        (3, 83, 31, 1, 'MAINTENANCE'),
-        (2, 82, 31, 1, 'MAINTENANCE'),
-        (3, 77, 31, 1, 'MAINTENANCE'),
-        (3, 85, 31, 1, 'MAINTENANCE'),
-        (5, 82, 31, 1, 'MAINTENANCE'),
+        (3, 85, 33, 1, 'DEPLOIEMENT'),
+        (5, 88, 33, 1, 'DEPLOIEMENT'),
 
-        (3, 83, 31, 2, 'MAINTENANCE'),
-        (3, 82, 31, 2, 'MAINTENANCE'),
-        (1, 77, 31, 2, 'MAINTENANCE'),
-        (3, 85, 31, 2, 'MAINTENANCE'),
-        (3, 82, 31, 2, 'MAINTENANCE'),
-        (5, 77, 31, 2, 'MAINTENANCE'),
+        (3, 85, 34, 1, 'DEPLOIEMENT'),
+        (5, 89, 34, 1, 'DEPLOIEMENT'),
 
-        (3, 78, 31, 3, 'MAINTENANCE'),
-        (5, 77, 31, 3, 'MAINTENANCE'),
+        (3, 85, 35, 1, 'DEPLOIEMENT'),
+        (5, 90, 35, 1, 'DEPLOIEMENT'),
 
-        (3, 86, 32, 1, 'MAINTENANCE'),
-        (5, 77, 32, 1, 'MAINTENANCE'),
+        (5, 93, 36, 1, 'MAINTENANCE'),
 
-        (3, 87, 33, 1, 'MAINTENANCE'),
-        (5, 77, 33, 1, 'MAINTENANCE');
+        (3, 99, 37, 1, 'MAINTENANCE'),
+        (3, 98, 37, 1, 'MAINTENANCE'),
+        (1, 93, 37, 1, 'MAINTENANCE'),
+        (3, 101, 37, 1, 'MAINTENANCE'),
+        (3, 98, 37, 1, 'MAINTENANCE'),
+        (2, 93, 37, 1, 'MAINTENANCE'),
+        (3, 95, 37, 1, 'MAINTENANCE'),
+        (3, 99, 37, 1, 'MAINTENANCE'),
+        (2, 98, 37, 1, 'MAINTENANCE'),
+        (3, 93, 37, 1, 'MAINTENANCE'),
+        (3, 101, 37, 1, 'MAINTENANCE'),
+        (5, 98, 37, 1, 'MAINTENANCE'),
 
+        (3, 99, 37, 2, 'MAINTENANCE'),
+        (3, 98, 37, 2, 'MAINTENANCE'),
+        (1, 93, 37, 2, 'MAINTENANCE'),
+        (3, 101, 37, 2, 'MAINTENANCE'),
+        (3, 98, 37, 2, 'MAINTENANCE'),
+        (5, 93, 37, 2, 'MAINTENANCE'),
+
+        (3, 94, 37, 3, 'MAINTENANCE'),
+        (5, 93, 37, 3, 'MAINTENANCE'),
+
+        (3, 102, 38, 1, 'MAINTENANCE'),
+        (5, 93, 38, 1, 'MAINTENANCE'),
+
+        (3, 103, 39, 1, 'MAINTENANCE'),
+        (5, 93, 39, 1, 'MAINTENANCE');
+
+/*HORS_PHASE*/
 UPDATE question
 SET dependance = null
     WHERE idquestion = 1;
@@ -558,6 +571,7 @@ UPDATE question
 SET dependance = 1
     WHERE idquestion = 2;
 
+/*PLANIFICATION*/
 UPDATE question
 SET dependance = null
     WHERE idquestion = 3;
@@ -571,27 +585,28 @@ UPDATE question
 SET dependance = 4
     WHERE idquestion = 6;
 UPDATE question
-SET dependance = 9
+SET dependance = 4
     WHERE idquestion = 7;
 UPDATE question
-SET dependance = null
+SET dependance = 9
     WHERE idquestion = 8;
 UPDATE question
-SET dependance = null
+SET dependance = 9
     WHERE idquestion = 9;
 UPDATE question
-SET dependance = null
+SET dependance = 9
     WHERE idquestion = 10;
 UPDATE question
-SET dependance = null
+SET dependance = 9
     WHERE idquestion = 11;
 UPDATE question
-SET dependance = null
+SET dependance = 4
     WHERE idquestion = 12;
 UPDATE question
-SET dependance = null
+SET dependance = 4
     WHERE idquestion = 13;
 
+/*DEVELOPPEMENT*/
 UPDATE question
 SET dependance = null
     WHERE idquestion = 14;
@@ -637,7 +652,6 @@ SET dependance = null
 UPDATE question
 SET dependance = null
     WHERE idquestion = 28;
-
 UPDATE question
 SET dependance = null
     WHERE idquestion = 29;
@@ -650,6 +664,8 @@ SET dependance = 42
 UPDATE question
 SET dependance = 42
     WHERE idquestion = 32;
+
+/*TEST*/
 UPDATE question
 SET dependance = 42
     WHERE idquestion = 33;
@@ -671,7 +687,6 @@ SET dependance = null
 UPDATE question
 SET dependance = null
     WHERE idquestion = 39;
-
 UPDATE question
 SET dependance = null
     WHERE idquestion = 40;
@@ -684,6 +699,8 @@ SET dependance = 55
 UPDATE question
 SET dependance = 55
     WHERE idquestion = 43;
+
+/*DEPLOIEMENT*/
 UPDATE question
 SET dependance = 55
     WHERE idquestion = 44;
@@ -717,7 +734,6 @@ SET dependance = 68
 UPDATE question
 SET dependance = 71
     WHERE idquestion = 54;
-
 UPDATE question
 SET dependance = null
     WHERE idquestion = 55;
@@ -742,6 +758,8 @@ SET dependance = null
 UPDATE question
 SET dependance = null
     WHERE idquestion = 62;
+
+/*MAITENANCE*/
 UPDATE question
 SET dependance = null
     WHERE idquestion = 63;
@@ -751,3 +769,27 @@ SET dependance = null
 UPDATE question
 SET dependance = null
     WHERE idquestion = 65;
+UPDATE question
+SET dependance = null
+WHERE idquestion = 66;
+UPDATE question
+SET dependance = null
+WHERE idquestion = 67;
+UPDATE question
+SET dependance = null
+WHERE idquestion = 68;
+UPDATE question
+SET dependance = null
+WHERE idquestion = 69;
+UPDATE question
+SET dependance = null
+WHERE idquestion = 70;
+UPDATE question
+SET dependance = null
+WHERE idquestion = 71;
+UPDATE question
+SET dependance = null
+WHERE idquestion = 72;
+UPDATE question
+SET dependance = null
+WHERE idquestion = 73;
