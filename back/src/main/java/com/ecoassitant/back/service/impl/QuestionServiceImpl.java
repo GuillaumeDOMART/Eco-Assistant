@@ -2,6 +2,7 @@ package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.quiz.QuestionDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
+import com.ecoassitant.back.entity.QuestionEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.repository.QuestionRepository;
@@ -49,7 +50,8 @@ QuestionServiceImpl implements QuestionService {
 
     @Override
     public Map<Phase, List<QuestionUniqueDto>> completQuiz(Integer id) {
-        var questionEntity = questionRepository.findAll().stream().findFirst();
+        var questionEntity = questionRepository.findAll().stream()
+                .filter(questionEntity1 -> questionEntity1.getIdQuestion() == 1).findFirst();
         var questionDto = questionEntity.map(QuestionDto::new).orElse(null);
         var projet = projetRepository.findById(id);
         if (projet.isEmpty())
