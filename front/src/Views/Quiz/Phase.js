@@ -9,24 +9,18 @@ import React from "react";
  * @returns {JSX.Element|null}
  * @constructor
  */
-export default function Phase({value, register, handleChange}) {
+export default function Phase({value, register, onChange}) {
 
     switch (value.type) {
         case 'QCM' :
-            const onChange = (target) => {
-                const select = value.reponses.find(value => value.intitule === target.target.value)
-                let answer = {
-                    "question": target.target.name,
-                    "reponseId": select.reponseId
-                }
-                handleChange(answer)
+            const handleChange = (target) => {
+                onChange(target, value)
             }
-
             return (
                 <QCM key={value.intitule}
                      question={value}
                      {...register(value.questionId.toString())}
-                     onChange={onChange}
+                     onChange={handleChange}
                 />
             )
         case 'NUMERIC' :
