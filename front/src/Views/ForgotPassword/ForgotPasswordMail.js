@@ -78,6 +78,7 @@ function Form(){
     const [paragraphContent, setParagraphContent] = useState("")
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate();
+    const [functiondDlay, setFunctionDelay] = useState(false);
 
     /**
      * Function for the form
@@ -86,7 +87,9 @@ function Form(){
     const onSubmit = (datas) => {
         if(datas.mail !== datas.confirMail){
             setParagraphContent("Les mails fournis ne correspondent pas")
-        }else {
+        }
+        else if(!functiondDlay) {
+            setFunctionDelay(true)
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
@@ -98,6 +101,7 @@ function Form(){
             };
             fetch("/api/auth/forgotMail", requestOptions)
                 .then(response => {
+                    setFunctionDelay(false)
                     if (response.status === 500) {
                         setParagraphContent("Problème rencontré pendant l'envoi du mail")
                     } else if (response.status === 404) {

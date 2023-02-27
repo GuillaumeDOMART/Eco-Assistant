@@ -90,16 +90,32 @@ function ResultPage() {
             },
             options: {
                 responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                legend: {
+                    position: 'top',
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return  value + "kg CO2e";
+                            }
                         },
-                        x:{
-                            beginAtZero: true
+                        title: {
+                            display: true,
+                            text: 'Consomation de la phase en kg CO2e'
+                        }
+                    },
+                    x:{
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return value + "j";
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Durée de la phase en jour'
                         }
                     }
                 }
@@ -123,9 +139,64 @@ function ResultPage() {
             maxWidth: 170
         });
         pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
-        pdf.save('chart.pdf');
-        //a finir
 
+        const canvasP = chartContainerPlanification.current;
+        const imgDataP = canvasP.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de planification!', 15, 75, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataP, 'JPEG',15,80, pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
+
+        const canvasD = chartContainerDeveloppement.current;
+        const imgDataD = canvasD.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de dévelopement', 15, 115, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataD, 'JPEG',15, 120,  pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
+
+        const canvasT = chartContainerTest.current;
+        const imgDataT = canvasT.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de test', 15, 155, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataT, 'JPEG', 15, 160, pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
+
+        const canvasDE = chartContainerDeploiment.current;
+        const imgDataDE = canvasDE.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de déploiment!', 15, 195, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataDE, 'JPEG', 15, 200,pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
+
+        const canvasM = chartContainerMaintenance.current;
+        const imgDataM = canvasM.toDataURL('image/png', 1.0);
+        pdf.text('Rapport de consommation de CO2 pour la phase de maintenance!', 15, 235, {
+            fontSize: 36,
+            fontName: 'Helvetica',
+            fontStyle: 'bold',
+            color: '#000000',
+            maxWidth: 170
+        });
+        pdf.addImage(imgDataM, 'JPEG', 15,240, pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
+
+
+        pdf.save('chart.pdf');
     }, [A4.w])
 
     /**
