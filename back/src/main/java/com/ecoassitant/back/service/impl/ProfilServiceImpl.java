@@ -7,6 +7,7 @@ import com.ecoassitant.back.dto.ProfilSimplDto;
 import com.ecoassitant.back.entity.ProfilEntity;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.service.ProfilService;
+import com.ecoassitant.back.utils.StringGeneratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -82,14 +83,6 @@ public class ProfilServiceImpl implements ProfilService {
      * @return the random string
      */
     private static String generateRandomString(int length) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var random = new Random();
-        var sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(chars.length());
-            char randomChar = chars.charAt(index);
-            sb.append(randomChar);
-        }
-        return sb.toString();
+        return StringGeneratorUtils.generateRandomString(length);
     }
 }
