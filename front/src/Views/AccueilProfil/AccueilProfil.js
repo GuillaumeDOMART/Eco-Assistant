@@ -199,6 +199,9 @@ function LigneTableauProjet(datas) {
         datas.handleDissociate(datas.itemsList)
     },[datas])
 
+    const handleCopy = useCallback(() => {
+        //empty because reason
+    }, [])
 
 
     return (

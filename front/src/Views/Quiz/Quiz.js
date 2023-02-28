@@ -4,13 +4,94 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import {useNavigate} from "react-router-dom";
 import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import Phase from "./Phase";
 
-const steps = ["Planification", "Developpement", "Test", "Déploiement", "Maintenance"];
+const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiement", "Maintenance"];
+
+/**
+ * FormConponnents
+ * @param activeStep activeStep
+ * @param data data
+ * @param selectedAnswers selectedAnswers
+ * @param handleSubmit handleSubmit
+ * @param handleChange handleChange
+ * @param handleBack handleBack
+ * @param register register
+ * @param onSubmit onSubmit
+ * @returns {JSX.Element} oui
+ * @constructor
+ */
+function StepForm({activeStep, data, selectedAnswers, handleSubmit, handleChange, handleBack, register, onSubmit}) {
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}
+              className="navbar-nav-scroll mt-4 col-8"
+              style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
+        >
+            {data.map(question => {
+                    const check = selectedAnswers.find(answer => {
+                        return question.dependance === answer.reponseId;
+                    })
+                    if (question.dependance === -1 || check) {
+                        return (
+                            <Phase key={question.questionId}
+                                   register={register}
+                                   value={question}
+                                   onChange={handleChange}
+                            />)
+                    }
+                    return (
+                        <>
+                        </>
+                    );
+                }
+            )}
+            <Box className="">
+                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                    <Button
+                        color="inherit"
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        sx={{mr: 1}}
+                    >
+                        Back
+                    </Button>
+                    <Box sx={{flex: '1 1 auto'}}/>
+
+                    <Button type={"submit"}>
+                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                </Box>
+            </Box>
+        </form>
+    );
+}
+
+/**
+ * components
+ * @param activeStep activeStep
+ * @returns {JSX.Element} truc
+ * @constructor
+ */
+function StepBox(activeStep) {
+    return (
+        <Box className="mt-3">
+            <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map((label) => {
+                    const stepProps = {};
+                    const labelProps = {};
+                    return (
+                        <Step key={label} {...stepProps}>
+                            <StepLabel {...labelProps}>{label}</StepLabel>
+                        </Step>
+                    );
+                })}
+            </Stepper>
+        </Box>
+    );
+}
 
 /**
  * The component representing the Stepper
@@ -22,8 +103,46 @@ function StepperComponent() {
     const [errorApiGetQuestionnaire, setErrorApiGetQuestionnaire] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
+    const [selectedAnswers, setSelectedAnswers] = useState([])
     const {register, handleSubmit, reset} = useForm();
+    const [phase, setPhase] = useState("HORS_PHASE");
     const navigate = useNavigate();
+
+
+    const handlePhase = useCallback(() => {
+        setPhase(steps[activeStep])
+        setSelectedAnswers([])
+        const token = sessionStorage.getItem("token")
+        const id = sessionStorage.getItem("project")
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify({
+            "phase": phase.toUpperCase(),
+            id
+        });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("/api/questions/phase", requestOptions)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setData(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setErrorApiGetQuestionnaire(error);
+                }
+            )
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, setPhase, activeStep, phase])
 
     /**
      * Go to the next step
@@ -31,9 +150,10 @@ function StepperComponent() {
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            handlePhase()
             reset()
         },
-        [reset]
+        [reset, handlePhase]
     );
 
     /**
@@ -42,21 +162,10 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            handlePhase()
             reset()
         },
-        [reset]
-    );
-
-    /**
-     * Reset the stepper
-     */
-    const handleReset = useCallback(
-        () => {
-            const projectId = sessionStorage.getItem("project")
-            sessionStorage.removeItem("project")
-            navigate(`/result?id=${projectId}`)
-        },
-        [navigate]
+        [reset, handlePhase]
     );
 
     const handleQuit = useCallback(
@@ -66,11 +175,26 @@ function StepperComponent() {
         [navigate]
     )
 
+    const handleChange = useCallback((target, value) => {
+        const select = value.reponses.find(val => val.intitule === target.target.value)
+        const answer = {
+            "question": target.target.name,
+            "reponseId": select.reponseId
+        }
+
+        selectedAnswers.forEach(val => {
+            if (val.question === answer.question)
+                selectedAnswers.splice(selectedAnswers.indexOf(val), 1)
+        })
+        setSelectedAnswers([...selectedAnswers, answer])
+    }, [selectedAnswers])
+
     /**
      * Send responses to the backEnd when Next button is pressed
      * @param dataList
      */
-    const onSubmit = (dataList) => {
+    const onSubmit = useCallback(
+    (dataList) => {
         const projectId = sessionStorage.getItem("project")
         const sendToBack = {}
         const responses = []
@@ -127,33 +251,12 @@ function StepperComponent() {
         else{
             handleNext();
         }
+    }, [handleNext, activeStep, navigate]
+    )
 
-    }
-
-    useEffect( () => {
-        const token = sessionStorage.getItem("token")
-        const id = sessionStorage.getItem("project")
-        const options = {
-            method: 'POST',
-            body: JSON.stringify({id}),
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': "application/json"
-            },
-        };
-        fetch("/api/questions", options)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setData(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setErrorApiGetQuestionnaire(error);
-                }
-            )
-    }, [])
+    useEffect(() => {
+        handlePhase()
+    }, [handlePhase])
 
     if (errorApiGetQuestionnaire) {
         return <div>Error: {errorApiGetQuestionnaire.message}</div>;
@@ -163,87 +266,21 @@ function StepperComponent() {
                 <Spinner animation="grow" variant="success"/>
             </>
         );
-    } else {
-        let currentPhase = data.PLANIFICATION;
-        switch (activeStep) {
-            case 0:
-                currentPhase = data.PLANIFICATION
-                break;
-            case 1:
-                currentPhase = data.DEVELOPPEMENT
-                break;
-            case 2:
-                currentPhase = data.TEST
-                break;
-            case 3:
-                currentPhase = data.DEPLOIEMENT
-                break;
-            default:
-                break;
-        }
-        return (
-            <Container fluid>
-                <Row>
-                    <Box className="mt-3">
-                        <Stepper activeStep={activeStep} alternativeLabel>
-                            {steps.map((label) => {
-                                const stepProps = {};
-                                const labelProps = {};
-                                return (
-                                    <Step key={label} {...stepProps}>
-                                        <StepLabel {...labelProps}>{label}</StepLabel>
-                                    </Step>
-                                );
-                            })}
-                        </Stepper>
-                    </Box>
-                    <Col></Col>
-                    <form onSubmit={handleSubmit(onSubmit)}
-                          style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
-                          className="navbar-nav-scroll mt-4 col-8"
-                    >
-                        {currentPhase.map(question => <Phase key={question.questionId}
-                                                             register={register}
-                                                             value={question}
-                        />)}
-                        <Box className="">
-                            {activeStep === steps.length ? (
-                                <>
-                                    <Typography sx={{mt: 2, mb: 1}}>
-                                        All steps completed - you&apos;re finished
-                                    </Typography>
-                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                        <Box sx={{flex: '1 1 auto'}}/>
-                                        <Button onClick={handleReset}>Reset</Button>
-                                    </Box>
-                                </>
-                            ) : (
-                                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                    <Button
-                                        color="inherit"
-                                        disabled={activeStep === 0}
-                                        onClick={handleBack}
-                                        sx={{mr: 1}}
-                                    >
-                                        Back
-                                    </Button>
-                                    <Box sx={{flex: '1 1 auto'}}/>
-
-                                    <Button type={"submit"}>
-                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                    </Button>
-                                </Box>
-                            )}
-                        </Box>
-                    </form>
-                    <Col>
-                        <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
-                    </Col>
-                </Row>
-            </Container>
-
-        );
     }
+    return (
+        <Container fluid>
+            <Row>
+                <StepBox activeStep={activeStep}/>
+                <Col></Col>
+                <StepForm activeStep={activeStep} data={data} selectedAnswers={selectedAnswers}
+                          handleSubmit={handleSubmit} handleChange={handleChange} handleBack={handleBack}
+                          register={register} onSubmit={onSubmit}/>
+                <Col>
+                    <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
+                </Col>
+            </Row>
+        </Container>
+    );
 }
 
 export default StepperComponent
