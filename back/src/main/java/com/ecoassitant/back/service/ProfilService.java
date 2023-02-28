@@ -1,8 +1,8 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.ProfilDto;
-import com.ecoassitant.back.dto.ProfilIdDto;
-import com.ecoassitant.back.dto.ProfilSimplDto;
+import com.ecoassitant.back.dto.profil.ProfilDto;
+import com.ecoassitant.back.dto.profil.ProfilIdDto;
+import com.ecoassitant.back.dto.profil.ProfilSimplDto;
 
 import java.util.Optional;
 

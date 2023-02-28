@@ -1,7 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.calcul.CalculEntier;
-import com.ecoassitant.back.dto.ResultatsPhaseDto;
+import com.ecoassitant.back.dto.resultat.ResultatsPhaseDto;
 import com.ecoassitant.back.dto.resultat.CalculDto;
 import com.ecoassitant.back.dto.resultat.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;

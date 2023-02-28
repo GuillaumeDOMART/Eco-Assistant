@@ -1,5 +1,6 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.project;
 
+import com.ecoassitant.back.dto.profil.ProfilDto;
 import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import lombok.AllArgsConstructor;

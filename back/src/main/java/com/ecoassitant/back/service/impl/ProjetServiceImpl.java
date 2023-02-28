@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.ProjetDto;
+import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.service.ProjetService;
 import org.springframework.beans.factory.annotation.Autowired;
