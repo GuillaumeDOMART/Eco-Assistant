@@ -4,8 +4,13 @@ import com.ecoassitant.back.entity.ProfilEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.security.Key;
 import java.util.Date;
@@ -125,10 +130,19 @@ public class JwtService {
      * @return return verify claims. Return false is the claims verify is not present
      */
     public boolean extractVerify(String token){
-        try {
-            return (boolean) extractClaim(token, claims -> claims.get("verify"));
-        }catch (JwtException | IllegalArgumentException __){
-            return false;
-        }
+        return (boolean) extractClaim(token, claims -> claims.get("verify"));
+    }
+
+    /**
+     * Method to handle JwtException into an HttpStatus.FORBIDDEN on bad token
+     *
+     * @param ex exception
+     * @return Map with the field mail and the message
+     */
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler({JwtException.class, IllegalArgumentException.class})
+    @ResponseBody
+    public Map<String, String> handleDataViolationExceptions(DataIntegrityViolationException ex) {
+        return Map.of("error", "invalid token");
     }
 }

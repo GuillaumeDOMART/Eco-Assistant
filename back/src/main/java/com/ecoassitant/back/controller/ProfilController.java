@@ -25,8 +25,8 @@ public class ProfilController {
     /**
      * Constructor of ProfilController
      *
-     * @param jwtService for decipher the token
-     * @param profilService Service of Profil
+     * @param jwtService            for decipher the token
+     * @param profilService         Service of Profil
      * @param authenticationService AuthenticationService
      */
     @Autowired
@@ -71,11 +71,12 @@ public class ProfilController {
 
     /**
      * Endpoint to create a user admin
+     *
      * @param profilDto profile to create
      * @return return the id of the profile
      */
     @PostMapping("profil")
-    public ResponseEntity<Integer> createProfil(@RequestBody ProfilSimplDto profilDto){
+    public ResponseEntity<Integer> createProfil(@RequestBody ProfilSimplDto profilDto) {
         var id = profilService.createProfil(profilDto);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
@@ -85,7 +86,7 @@ public class ProfilController {
      */
     @GetMapping("/profil/user")
     @ResponseBody
-    public ResponseEntity<ProfilDto> recupererProfilAvecToken(@RequestHeader("Authorization") String authorizationHeader){
+    public ResponseEntity<ProfilDto> recupererProfilAvecToken(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         HttpHeaders headers = new HttpHeaders();
@@ -100,13 +101,14 @@ public class ProfilController {
 
     /**
      * Function to change password when the user click on the link on the email
+     *
      * @param authorizationHeader the token of the mail
      * @return if the password was change successfully
      */
     @PatchMapping("/profil/forgotMail")
-    public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
+    public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto) {
         String token = authorizationHeader.substring(7);
-        if(!jwtService.extractVerify(token)){
+        if (!jwtService.extractVerify(token)) {
             return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
         }
         var mail = jwtService.extractMail(token);
@@ -115,6 +117,7 @@ public class ProfilController {
 
     /**
      * Function to delete the profile of the user currently connected
+     *
      * @param authorizationHeader the token of the user
      * @return ResponseEntity of ProfilIdDto of profile deleted
      */
@@ -125,12 +128,17 @@ public class ProfilController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         var profil = profilService.deleteProfil(mail);
-        if(profil.isEmpty()){
+        if (profil.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(profil.get(), HttpStatus.OK);
         }
 
+
+    }
+
+    @PatchMapping("profil/register")
+    public ResponseEntity<Boolean> register(@RequestHeader("Authorization") String authorizationHeader) {
+        return profilService.register(authorizationHeader.substring(7));
     }
 }

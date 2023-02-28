@@ -55,9 +55,9 @@ public class AuthenticationService {
      * @param registerInputDto input that represent the profile to create
      * @return Token authentication
      */
-    public ResponseEntity<TokenDto> register(RegisterInputDto registerInputDto) {
+    public ResponseEntity<Boolean> register(RegisterInputDto registerInputDto) {
         if (profilRepository.findByMail(registerInputDto.getMail()).isPresent()) {
-            return ResponseEntity.status(403).body(null);
+            return ResponseEntity.status(403).body(false);
         }
         String encodedPassword = passwordEncoder.encode(registerInputDto.getPassword());
         var profile = ProfilEntity.builder()
@@ -65,7 +65,7 @@ public class AuthenticationService {
                 .password(registerInputDto.getPassword())
                 .lastname(registerInputDto.getNom())
                 .firstname(registerInputDto.getPrenom())
-                .isAdmin(0)
+                .isAdmin(-2)
                 .build();
 
         var violations = validator.validate(profile);
@@ -76,7 +76,8 @@ public class AuthenticationService {
 
         profilRepository.save(profile);
         var token = jwtService.generateToken(profile);
-        return ResponseEntity.ok(new TokenDto(token));
+        emailSenderService.sendEmail(registerInputDto.getMail(), "Eco-Assistant: Création de compte", "Voici le liens pour crée votre compte: https://" + domain + "/verifyMail?token=" + token);
+        return ResponseEntity.ok(true);
     }
 
     /**

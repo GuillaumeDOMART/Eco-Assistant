@@ -3,6 +3,7 @@ package com.ecoassitant.back.service;
 import com.ecoassitant.back.dto.ProfilDto;
 import com.ecoassitant.back.dto.ProfilIdDto;
 import com.ecoassitant.back.dto.ProfilSimplDto;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
@@ -38,4 +39,6 @@ public interface ProfilService {
      * @return optional the id of the profile dissociated
      */
     Optional<ProfilIdDto> deleteProfil(String mail);
+
+    ResponseEntity<Boolean> register(String token);
 }

@@ -92,4 +92,17 @@ public class ProfilServiceImpl implements ProfilService {
         }
         return sb.toString();
     }
+
+    @Override
+    public ResponseEntity<Boolean> register(String token) {
+        var mail = jwtService.extractMail(token);
+        var profil = repository.findByMail(mail);
+        if (profil.isPresent() && profil.get().getIsAdmin() == -2){
+            var profilValue = profil.get();
+            profilValue.setIsAdmin(0);
+            repository.save(profilValue);
+            ResponseEntity.ok(true);
+        }
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+    }
 }
