@@ -20,11 +20,12 @@ const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiem
  * @param handleChange handleChange
  * @param handleBack handleBack
  * @param register register
+ * @param onSubmit onSubmit
  * @returns {JSX.Element} oui
  * @constructor
  */
-function StepForm(activeStep, data, selectedAnswers, handleSubmit, handleChange, handleBack, register) {
-    return (<form onSubmit={handleSubmit}
+function StepForm({activeStep, data, selectedAnswers, handleSubmit, handleChange, handleBack, register, onSubmit}) {
+    return (<form onSubmit={handleSubmit(onSubmit)}
                   className="navbar-nav-scroll mt-4 col-8"
                   style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
     >
@@ -244,8 +245,8 @@ function StepperComponent() {
                 <StepBox activeStep={activeStep}/>
                 <Col></Col>
                 <StepForm activeStep={activeStep} data={data} selectedAnswers={selectedAnswers}
-                          handleSubmit={handleSubmit(onSubmit)} handleChange={handleChange()} handleBack={handleBack()}
-                          register={register()}/>
+                          handleSubmit={handleSubmit()} handleChange={handleChange()} handleBack={handleBack()}
+                          register={register()} onSubmit={ onSubmit()}/>
                 <Col>
                     <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
                 </Col>
