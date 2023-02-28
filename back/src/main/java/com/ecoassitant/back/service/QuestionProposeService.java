@@ -5,6 +5,9 @@ import com.ecoassitant.back.dto.QuestionProposeDto;
 
 import java.util.List;
 
+/**
+ * Service for QuestionProposeController
+ */
 public interface QuestionProposeService {
     /**
      * Retrieve a question proposée by it id
@@ -24,6 +27,6 @@ public interface QuestionProposeService {
      * @param qpdao A question proposée
      * @return the ID of thr newly created resources if save in bdd is successed, -1 otherwhise
      */
-    public Integer saveQuestionPropose(QuestionProposeDao qpdao);
+    Integer saveQuestionPropose(QuestionProposeDao qpdao);
 
 }

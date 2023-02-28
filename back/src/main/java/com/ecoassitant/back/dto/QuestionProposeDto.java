@@ -4,6 +4,9 @@ import com.ecoassitant.back.entity.QuestionProposeEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import lombok.Data;
 
+/**
+ * DTO for QuestionPropose
+ */
 @Data
 public class QuestionProposeDto {
     private Long idQuestion;
@@ -13,7 +16,10 @@ public class QuestionProposeDto {
     private int vote;
     private boolean isApprove;
 
-
+    /**
+     * Constructor to create QuestionProposeDto with a QuestionProposeEntity
+     * @param qp the entity
+     */
     public QuestionProposeDto(QuestionProposeEntity qp){
         this.idQuestion = qp.getIdQuestion();
         this.intitule = qp.getIntitule();

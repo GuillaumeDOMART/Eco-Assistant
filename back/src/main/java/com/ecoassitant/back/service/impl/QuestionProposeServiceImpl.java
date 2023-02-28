@@ -15,6 +15,10 @@ public class QuestionProposeServiceImpl implements QuestionProposeService {
 
     private final QuestionProposeRepository repository;
 
+    /**
+     * Constructor of ConstanteService
+     * @param repository A repository for QuestionPropose
+     */
     @Autowired
     public QuestionProposeServiceImpl(QuestionProposeRepository repository) {
         this.repository = repository;
