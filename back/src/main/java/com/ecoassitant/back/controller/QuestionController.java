@@ -32,27 +32,6 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-    /**
-     * Api for get quiz
-     *
-     * @return quiz type Map
-     */
-    @GetMapping("/questions")
-    public ResponseEntity<Map<Phase, List<QuestionUniqueDto>>> testsQuestionnaire() {
-        var quiz = questionService.getQuestionnaire();
-        return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    }
-
-    /**
-     * Api for get quiz with the response of the project complete previously
-     * @param id id of the project
-     * @return quiz type Map
-     */
-    @PostMapping("/questions")
-    public ResponseEntity <Map<Phase, List<QuestionUniqueDto>>> modifierQuestionnaire(@RequestBody  IdDto id){
-        var quiz = questionService.completQuiz(id.getId());
-        return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    }
 
     @PostMapping("/questions/phase")
     public ResponseEntity<List<QuestionUniqueDto>> getPhaseProjet(@RequestBody PhaseDto phaseDto) {

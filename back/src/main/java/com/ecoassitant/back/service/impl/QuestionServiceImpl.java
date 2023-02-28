@@ -36,33 +36,21 @@ QuestionServiceImpl implements QuestionService {
         this.reponseDonneeRepository = reponseDonneeRepository;
     }
 
-    /**
-     * Set 1st question of questionary, all the questionnary is accessible with responses.questionSuiv
-     *
-     * @return 1st question of questionary
-     */
     @Override
-    public Map<Phase, List<QuestionUniqueDto>> getQuestionnaire() {
-        var questionEntity = questionRepository.findAll().stream().findFirst();
-        var questionDto = questionEntity.map(QuestionDto::new).orElse(null);
-        return QuestionUniqueDto.Mapper(questionDto);
-    }
-
-    @Override
-    public Map<Phase, List<QuestionUniqueDto>> completQuiz(Integer id) {
-        var questionEntity = questionRepository.findAll().stream()
-                .filter(questionEntity1 -> questionEntity1.getIdQuestion() == 1).findFirst();
-        var questionDto = questionEntity.map(QuestionDto::new).orElse(null);
-        var projet = projetRepository.findById(id);
+    public List<QuestionUniqueDto> completQuiz(List<QuestionUniqueDto> questions, Integer idProject) {
+        var projet = projetRepository.findById(idProject);
         if (projet.isEmpty())
             return null;
         var reponses = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
-        questionDto.addReponses(reponses);
-        var questionUniqueDto = QuestionUniqueDto.Mapper(questionDto);
-        return questionUniqueDto;
+        reponses.forEach(reponse ->{
+            questions.forEach(question -> question.remplir(reponse));
+        });
+        return questions;
     }
 
     public List<QuestionUniqueDto> completPhase(PhaseDto phaseDto) {
-        return completQuiz(phaseDto.getProjetId()).get(Phase.valueOf(phaseDto.getPhase()));
+        var questionsEntity = questionRepository.findQuestionEntityByPhaseSOrderByIdQuestion(phaseDto.getPhase());
+        var questionsUniqueDto = questionsEntity.stream().map(QuestionUniqueDto::new).toList();
+        return completQuiz(questionsUniqueDto, phaseDto.getId());
     }
 }

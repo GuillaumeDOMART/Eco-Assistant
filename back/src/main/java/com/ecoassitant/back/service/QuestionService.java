@@ -11,19 +11,15 @@ import java.util.Map;
  * Service for QuestionController
  */
 public interface QuestionService {
-    /**
-     * set quiz
-     *
-     * @return map of question by sort by phase
-     */
-    Map<Phase, List<QuestionUniqueDto>> getQuestionnaire();
+
+
 
     /**
      * set quiz with response of the previous quiz
      * @param id id of project
      * @return map of question by sort by phase
      */
-    Map<Phase, List<QuestionUniqueDto>> completQuiz(Integer id);
+    public List<QuestionUniqueDto> completQuiz(List<QuestionUniqueDto> questions, Integer idProject);
 
     List<QuestionUniqueDto> completPhase(PhaseDto phaseDto);
 }

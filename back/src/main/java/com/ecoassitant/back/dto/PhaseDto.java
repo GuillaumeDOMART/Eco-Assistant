@@ -1,5 +1,6 @@
 package com.ecoassitant.back.dto;
 
+import com.ecoassitant.back.entity.tools.Phase;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -11,8 +12,8 @@ public class PhaseDto {
     @NotBlank
     private Integer id;
 
-    public String getPhase() {
-        return phase;
+    public Phase getPhase() {
+        return Phase.valueOf(phase);
     }
 
     public void setPhase(String phase) {
