@@ -32,10 +32,14 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-
+    /**
+     * Api for get a Quiz by phase
+     * @param phaseDto phase of the project
+     * @return list of question of the phase
+     */
     @PostMapping("/questions/phase")
     public ResponseEntity<List<QuestionUniqueDto>> getPhaseProjet(@RequestBody PhaseDto phaseDto) {
         var quiz = questionService.completPhase(phaseDto);
-        return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return quiz.isEmpty() ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }

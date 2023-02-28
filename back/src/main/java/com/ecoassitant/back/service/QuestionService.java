@@ -12,14 +12,10 @@ import java.util.Map;
  */
 public interface QuestionService {
 
-
-
     /**
-     * set quiz with response of the previous quiz
-     * @param id id of project
-     * @return map of question by sort by phase
+     * Return list of QUiz for a Phase
+     * @param phaseDto phase of the quiz
+     * @return quiz of this phase
      */
-    public List<QuestionUniqueDto> completQuiz(List<QuestionUniqueDto> questions, Integer idProject);
-
     List<QuestionUniqueDto> completPhase(PhaseDto phaseDto);
 }

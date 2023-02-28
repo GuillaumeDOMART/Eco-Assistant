@@ -5,6 +5,9 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Phase with id of project, demand for obtain a Quiz by phase
+ */
 @Data
 public class PhaseDto {
     @NotBlank

@@ -10,6 +10,11 @@ import java.util.List;
  * repository of Question
  */
 public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> {
+    /**
+     * list of question for a phase sort by ID
+     * @param phase phase of the quiz
+     * @return list of question
+     */
     List<QuestionEntity> findQuestionEntityByPhaseOrderByIdQuestion(Phase phase);
 
 }
