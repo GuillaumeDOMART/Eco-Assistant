@@ -38,6 +38,12 @@ QuestionServiceImpl implements QuestionService {
         this.reponseDonneeRepository = reponseDonneeRepository;
     }
 
+    /**
+     * add reponse of previous quiz to the currently quiz
+     * @param questions list of question
+     * @param idProject idProject of the previous quiz
+     * @return questions with the response of the previous quiz
+     */
     private List<QuestionUniqueDto> completQuiz(List<QuestionUniqueDto> questions, Integer idProject) {
         var projet = projetRepository.findById(idProject);
         if (projet.isEmpty())
@@ -49,6 +55,11 @@ QuestionServiceImpl implements QuestionService {
         return questions;
     }
 
+    /**
+     * Return list of QUiz for a Phase
+     * @param phaseDto phase of the quiz
+     * @return quiz of this phase
+     */
     public List<QuestionUniqueDto> completPhase(PhaseDto phaseDto) {
         var questionsEntity = questionRepository.findQuestionEntityByPhaseOrderByIdQuestion(phaseDto.getPhase());
         var questionsUniqueDto = questionsEntity.stream().map(QuestionUniqueDto::new).toList();
