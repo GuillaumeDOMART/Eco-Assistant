@@ -6,6 +6,27 @@ import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
 import {useNavigate} from "react-router-dom";
 
 
+function ButtonSet(datas){
+    console.log(datas.etat)
+    if(datas.etat === "INPROGRESS"){
+        return(
+            <>
+                <Button className="m-3" variant="secondary" onClick={datas.handleClick}>Modifier</Button>
+                <Button className="m-3" variant="outline-primary">Créer une copie</Button>
+                <Button className="m-3" variant="outline-danger" onClick={datas.executeHandleShow}>Dissocier</Button>
+            </>
+        );
+    }else{
+        return(
+            <>
+                <Button className="m-3" variant="primary" href={`/result?id=${datas.id}`}>Visionner</Button>
+                <Button className="m-3" variant="outline-primary">Créer une copie</Button>
+                <Button className="m-3" variant="outline-danger" onClick={datas.executeHandleShow}>Dissocier</Button>
+            </>
+        );
+    }
+
+}
 
 /**
  * Generate a project listing table with data from API, use placeholder while loading
@@ -186,10 +207,7 @@ function LigneTableauProjet(datas) {
                 <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
                 <td align={"center"} valign={"middle"}>{datas.etat}</td>
                 <td align={"center"} valign={"middle"}>
-                    <Button className="m-3" variant="secondary" onClick={handleClick}>Modifier</Button>
-                    <Button className="m-3" variant="primary" href={`/result?id=${datas.id}`}>Visionner</Button>
-                    <Button className="m-3" variant="outline-primary">Créer une copie</Button>
-                    <Button className="m-3" variant="outline-danger" onClick={executeHandleShow}>Dissocier</Button>
+                    <ButtonSet etat={datas.etat} handleClick={handleClick} executeHandleShow={executeHandleShow}/>
                 </td>
             </tr>
             <Modal show={datas.showVar} onHide={datas.handleCancel}>
