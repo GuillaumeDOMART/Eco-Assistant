@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation for QuestionProposeService
+ */
 @Service
 public class QuestionProposeServiceImpl implements QuestionProposeService {
 
