@@ -8,6 +8,7 @@ import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
+import com.ecoassitant.back.service.ProjetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,9 @@ public class ProjetController {
     private final ProjetRepository projetRepository;
     private final JwtService jwtService;
     private final ProfilRepository profilRepository;
+    private final ProjetService projetService;
+
+
 
     /**
      * Constructor for ProjetController
@@ -35,10 +39,11 @@ public class ProjetController {
      * @param profilRepository ProfilRepository
      */
     @Autowired
-    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository) {
+    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository, ProjetService projetService) {
         this.projetRepository = Objects.requireNonNull(projetRepository);
         this.jwtService = Objects.requireNonNull(jwtService);
         this.profilRepository = Objects.requireNonNull(profilRepository);
+        this.projetService = Objects.requireNonNull(projetService);
     }
 
     /**
@@ -133,18 +138,14 @@ public class ProjetController {
     public ResponseEntity<ProjectIdDto> finish(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
-        var profilEntityOptional = profilRepository.findByMail(mail);
-        if (profilEntityOptional.isEmpty()) {
+        var optionalProjet = projetService.finish(mail,projetDto);
+        if(optionalProjet.isEmpty()){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }else{
+            var projet = optionalProjet.get();
+            return new ResponseEntity<>(new ProjectIdDto(projet.getId()), HttpStatus.OK);
         }
-        var projet = projetRepository.findByIdProjet(projetDto.getId());
-        var mailOwner = projet.getProfil().getMail();
-        if (!mailOwner.equals(mail)) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        projet.setEtat(Etat.FINISH);
-        projetRepository.save(projet);
-        return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
+
     }
 
     /**
