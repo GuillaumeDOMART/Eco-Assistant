@@ -1,5 +1,5 @@
 import {NUMERIC, QCM} from "./QuestionType";
-import React from "react";
+import React, {useCallback} from "react";
 
 /**
  * gestion affuchage d'une question
@@ -14,9 +14,11 @@ export default function Phase({value, register, onChange}) {
      * doc
      * @param target because
      */
-    const handleChange = (target) => {
+    const handleChange = useCallback(
+        (target) => {
         onChange(target, value)
-    };
+    }, []
+    );
     switch (value.type) {
         case 'QCM' :
             /**
