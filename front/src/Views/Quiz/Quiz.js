@@ -11,29 +11,73 @@ import Phase from "./Phase";
 
 const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiement", "Maintenance"];
 
+function StepForm(activeStep, data, selectedAnswers, handleSubmit, handleChange, handleBack, register) {
+    return (<form onSubmit={handleSubmit}
+                  className="navbar-nav-scroll mt-4 col-8"
+                  style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
+    >
+        {data.map(question => {
+                const check = selectedAnswers.find(answer => {
+                    return question.dependance === answer.reponseId;
+                })
+                if (question.dependance === -1 || check) {
+                    return (
+                        <Phase key={question.questionId}
+                               register={register}
+                               value={question}
+                               onChange={handleChange}
+                        />)
+                }
+                return (
+                    <>
+                    </>
+                );
+            }
+        )}
+        <Box className="">
+            <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                <Button
+                    color="inherit"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    sx={{mr: 1}}
+                >
+                    Back
+                </Button>
+                <Box sx={{flex: '1 1 auto'}}/>
+
+                <Button type={"submit"}>
+                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
+            </Box>
+        </Box>
+    </form>);
+}
+
 /**
  * components
  * @param activeStep activeStep
  * @returns {JSX.Element} truc
  * @constructor
  */
-function StepBox(activeStep){
+function StepBox(activeStep) {
     return (
-    <Box className="mt-3">
-        <Stepper activeStep={activeStep} alternativeLabel>
-            {steps.map((label) => {
-                const stepProps = {};
-                const labelProps = {};
-                return (
-                    <Step key={label} {...stepProps}>
-                        <StepLabel {...labelProps}>{label}</StepLabel>
-                    </Step>
-                );
-            })}
-        </Stepper>
-    </Box>
+        <Box className="mt-3">
+            <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map((label) => {
+                    const stepProps = {};
+                    const labelProps = {};
+                    return (
+                        <Step key={label} {...stepProps}>
+                            <StepLabel {...labelProps}>{label}</StepLabel>
+                        </Step>
+                    );
+                })}
+            </Stepper>
+        </Box>
     );
 }
+
 /**
  * The component representing the Stepper
  * @returns {JSX.Element}
@@ -187,46 +231,9 @@ function StepperComponent() {
             <Row>
                 <StepBox activeStep={activeStep}/>
                 <Col></Col>
-                <form onSubmit={handleSubmit(onSubmit)}
-                      className="navbar-nav-scroll mt-4 col-8"
-                      style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
-                >
-                    {data.map(question => {
-                            const check = selectedAnswers.find(answer => {
-                                return question.dependance === answer.reponseId;
-                            })
-                            if (question.dependance === -1 || check) {
-                                return (
-                                    <Phase key={question.questionId}
-                                           register={register}
-                                           value={question}
-                                           onChange={handleChange}
-                                    />)
-                            }
-                            return (
-                                <>
-                                </>
-                            );
-                        }
-                    )}
-                    <Box className="">
-                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                            <Button
-                                color="inherit"
-                                disabled={activeStep === 0}
-                                onClick={handleBack}
-                                sx={{mr: 1}}
-                            >
-                                Back
-                            </Button>
-                            <Box sx={{flex: '1 1 auto'}}/>
-
-                            <Button type={"submit"}>
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
-                        </Box>
-                    </Box>
-                </form>
+                <StepForm activeStep={activeStep} data={data} selectedAnswers={selectedAnswers}
+                          handleSubmit={handleSubmit(onSubmit)} handleChange={handleChange()} handleBack={handleBack()}
+                          register={register()}/>
                 <Col>
                     <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
                 </Col>
