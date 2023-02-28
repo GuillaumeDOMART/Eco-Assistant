@@ -9,7 +9,7 @@ import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import Phase from "./Phase";
 
-const steps = ["Hors_Phase", "Planification", "Développement", "Test", "Déploiement", "Maintenance"];
+const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiement", "Maintenance"];
 
 /**
  * The component representing the Stepper
@@ -31,18 +31,23 @@ function StepperComponent() {
         setPhase(steps[activeStep])
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
-        const options = {
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify({
+            "phase": phase.toUpperCase(),
+            "id": id
+        });
+
+        const requestOptions = {
             method: 'POST',
-            body: JSON.stringify({
-                "phase": phase,
-                "id": id
-            }),
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': "application/json"
-            },
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
         };
-        fetch("/api/questions/phase", options)
+
+        fetch("/api/questions/phase", requestOptions)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -195,10 +200,10 @@ function StepperComponent() {
                     </Box>
                     <Col></Col>
                     <form onSubmit={handleSubmit(onSubmit)}
-                          style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
                           className="navbar-nav-scroll mt-4 col-8"
+                          style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
                     >
-                        {currentPhase.map(question => {
+                        {data.map(question => {
                                 const check = selectedAnswers.find(answer => {
                                     return question.dependance === answer.reponseId;
                                 })
