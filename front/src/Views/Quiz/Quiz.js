@@ -25,46 +25,48 @@ const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiem
  * @constructor
  */
 function StepForm({activeStep, data, selectedAnswers, handleSubmit, handleChange, handleBack, register, onSubmit}) {
-    return (<form onSubmit={handleSubmit(onSubmit)}
-                  className="navbar-nav-scroll mt-4 col-8"
-                  style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
-    >
-        {data.map(question => {
-                const check = selectedAnswers.find(answer => {
-                    return question.dependance === answer.reponseId;
-                })
-                if (question.dependance === -1 || check) {
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}
+              className="navbar-nav-scroll mt-4 col-8"
+              style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
+        >
+            {data.map(question => {
+                    const check = selectedAnswers.find(answer => {
+                        return question.dependance === answer.reponseId;
+                    })
+                    if (question.dependance === -1 || check) {
+                        return (
+                            <Phase key={question.questionId}
+                                   register={register}
+                                   value={question}
+                                   onChange={handleChange}
+                            />)
+                    }
                     return (
-                        <Phase key={question.questionId}
-                               register={register}
-                               value={question}
-                               onChange={handleChange}
-                        />)
+                        <>
+                        </>
+                    );
                 }
-                return (
-                    <>
-                    </>
-                );
-            }
-        )}
-        <Box className="">
-            <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                <Button
-                    color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    sx={{mr: 1}}
-                >
-                    Back
-                </Button>
-                <Box sx={{flex: '1 1 auto'}}/>
+            )}
+            <Box className="">
+                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                    <Button
+                        color="inherit"
+                        disabled={activeStep === 0}
+                        onClick={handleBack}
+                        sx={{mr: 1}}
+                    >
+                        Back
+                    </Button>
+                    <Box sx={{flex: '1 1 auto'}}/>
 
-                <Button type={"submit"}>
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
+                    <Button type={"submit"}>
+                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                </Box>
             </Box>
-        </Box>
-    </form>);
+        </form>
+    );
 }
 
 /**
@@ -202,7 +204,7 @@ function StepperComponent() {
             responses.push(tuple)
         }
         sendToBack.projetId = projectId;
-        //sendToBack.reponses = responses;
+        sendToBack.reponses = responses;
 
         const token = sessionStorage.getItem("token")
 
@@ -245,8 +247,8 @@ function StepperComponent() {
                 <StepBox activeStep={activeStep}/>
                 <Col></Col>
                 <StepForm activeStep={activeStep} data={data} selectedAnswers={selectedAnswers}
-                          handleSubmit={handleSubmit()} handleChange={handleChange()} handleBack={handleBack()}
-                          register={register()} onSubmit={ onSubmit()}/>
+                          handleSubmit={handleSubmit} handleChange={handleChange} handleBack={handleBack}
+                          register={register} onSubmit={onSubmit}/>
                 <Col>
                     <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
                 </Col>
