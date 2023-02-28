@@ -6,6 +6,7 @@ import com.ecoassitant.back.dto.resultat.CalculDto;
 import com.ecoassitant.back.dto.resultat.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.tools.Phase;
+import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.CalculRepository;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -67,7 +68,7 @@ public class CalculServiceImpl implements CalculService {
         }
 
         var resultat = new ResultatsPhaseDto(mine.get());
-        var projects = projetRepository.findAll();
+        var projects = projetRepository.findByType(TypeP.PROJET);
         if (projects.isEmpty()) {
             return Optional.empty();
         }
