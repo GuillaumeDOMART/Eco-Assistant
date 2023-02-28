@@ -49,7 +49,7 @@ QuestionServiceImpl implements QuestionService {
     }
 
     public List<QuestionUniqueDto> completPhase(PhaseDto phaseDto) {
-        var questionsEntity = questionRepository.findQuestionEntityByPhaseSOrderByIdQuestion(phaseDto.getPhase());
+        var questionsEntity = questionRepository.findQuestionEntityByPhaseOrderByIdQuestion(phaseDto.getPhase());
         var questionsUniqueDto = questionsEntity.stream().map(QuestionUniqueDto::new).toList();
         return completQuiz(questionsUniqueDto, phaseDto.getId());
     }

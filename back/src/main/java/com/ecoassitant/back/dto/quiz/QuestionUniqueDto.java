@@ -37,7 +37,7 @@ public class QuestionUniqueDto {
         this.intitule = quiz.getIntitule();
         this.phase = quiz.getPhase();
         this.questionId = quiz.getIdQuestion();
-        this.dependance = quiz.getDependance().getIdReponsePos();
+        this.dependance = quiz.getDependance()!= null? quiz.getDependance().getIdReponsePos(): -1;
         this.type = quiz.getTypeQ();
         this.reponses = new ArrayList<>();
         quiz.getReponses().forEach(reponsePossibleEntity -> reponses.add(new ReponseUniqueDto(reponsePossibleEntity)));
