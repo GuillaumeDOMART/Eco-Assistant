@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import "./AccueilSite.css";
-import {TextField} from "@mui/material";
+import {TextField, Tooltip} from "@mui/material";
 
 const StrengthMeter = ({register}) => {
 
@@ -40,13 +40,18 @@ const StrengthMeter = ({register}) => {
                 setProgress({strength: 0, val: "", pwdCheck: pwdCheck});
         }
         setPassword(passwd);
-    }, [password]);
+    }, []);
 
     return (
         <>
-            <TextField label="Mot de passe" type="password" variant="standard"
-                       className="textfield " {...register("password")} value={password} onChange={pwdChecker}
-                       required/><br/>
+            <Tooltip
+                title={"\"Le mot de passe doit être composé de 8 caractères minimum dont au moins 1 minuscule, 1 MAJUSCULE, 1 chiffre et 1 caractère spécial"}
+                arrow>
+                <TextField label="Mot de passe" type="password" variant="standard"
+                           className="textfield " {...register("password")} value={password} onChange={pwdChecker}
+                           required/>
+            </Tooltip><br/>
+
             <progress
                 className={`pwd-checker-bar strength-${progress.val}`}
                 value={progress.strength}
