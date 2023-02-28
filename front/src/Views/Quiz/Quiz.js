@@ -11,6 +11,12 @@ import Phase from "./Phase";
 
 const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiement", "Maintenance"];
 
+/**
+ * components
+ * @param activeStep activeStep
+ * @returns {JSX.Element} truc
+ * @constructor
+ */
 function StepBox(activeStep){
     return (
     <Box className="mt-3">
