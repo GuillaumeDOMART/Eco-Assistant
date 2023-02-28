@@ -564,6 +564,10 @@ VALUES  (5, 3, 1, 1, 'HORS_PHASE'),
         (5, 93, 39, 1, 'MAINTENANCE');
 
 /*HORS_PHASE*/
+--Création Questions proposées
+INSERT INTO questionpropose (intitule, phase, vote, isapprove)
+VALUES ('Est-ce que vous avez des consoles de jeux en salle de pause ?', 'HORS_PHASE', 0, 0);
+
 UPDATE question
 SET dependance = null
     WHERE idquestion = 1;

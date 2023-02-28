@@ -138,4 +138,17 @@ public class CalculServiceImpl implements CalculService {
         });
             return Optional.of(resultat);
     }
+    /**
+     * Function to get the result for a calcul
+     *
+     * @param nbCalcul the id of the group of response of the same calcul
+     * @return the result
+     */
+    public Map<Integer, Map<Integer, List<CalculEntity>>> resultatForCalcul(Integer nbCalcul) {
+        var resultat = new ResultatDto();
+        var calculs = calculRepository.findByNbCalcul(nbCalcul);
+        return  creationResultat(calculs);
+
+
+    }
 }

@@ -127,7 +127,7 @@ function AccueilSite() {
             setParagraphContent("Les mot de passe fournies ne correspondent pas")
             return
         }
-        const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.firstname, prenom: datas.lastname}
+        const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.lastname, prenom: datas.firstname}
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
