@@ -124,6 +124,7 @@ public class CalculServiceImpl implements CalculService {
                 }
                 var intitule = "test" + k;
                 executer.ifPresent(aDouble -> {
+                    System.out.println(calculEntier.getPhase() + " " + intitule + " " + aDouble);
                     switch (calculEntier.getPhase()) {
                         case PLANIFICATION -> resultat.addPlanification(new CalculDto(intitule, aDouble));
                         case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(intitule, aDouble));
@@ -136,5 +137,18 @@ public class CalculServiceImpl implements CalculService {
             }
         });
             return Optional.of(resultat);
+    }
+    /**
+     * Function to get the result for a calcul
+     *
+     * @param nbCalcul the id of the group of response of the same calcul
+     * @return the result
+     */
+    public Map<Integer, Map<Integer, List<CalculEntity>>> resultatForCalcul(Integer nbCalcul) {
+        var resultat = new ResultatDto();
+        var calculs = calculRepository.findByNbCalcul(nbCalcul);
+        return  creationResultat(calculs);
+
+
     }
 }

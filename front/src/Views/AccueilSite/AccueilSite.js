@@ -148,7 +148,7 @@ function AccueilSite() {
             setfieldErrors({"password": "Les mots de passes ne sont pas identique"})
             return
         }
-        const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.firstname, prenom: datas.lastname}
+        const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.lastname, prenom: datas.firstname}
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
