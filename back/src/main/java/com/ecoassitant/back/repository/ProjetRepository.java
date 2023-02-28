@@ -31,5 +31,10 @@ public interface ProjetRepository extends JpaRepository<ProjetEntity, Integer> {
      */
     List<ProjetEntity> findByProfilMail(String mail);
 
+    /**
+     * Get list of projects by type
+     * @param type type wanted
+     * @return list of projet same type
+     */
     List<ProjetEntity> findByType(TypeP type);
 }
