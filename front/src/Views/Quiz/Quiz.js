@@ -193,7 +193,8 @@ function StepperComponent() {
      * Send responses to the backEnd when Next button is pressed
      * @param dataList
      */
-    const onSubmit = (dataList) => {
+    const onSubmit = useCallback(
+    (dataList) => {
         const projectId = sessionStorage.getItem("project")
         const sendToBack = {}
         const responses = []
@@ -226,7 +227,8 @@ function StepperComponent() {
             navigate(`/result?id=${projectId}`)
         else
             handleNext();
-    }
+    }, [handleNext, activeStep, navigate]
+    )
 
     useEffect(() => {
         handlePhase()

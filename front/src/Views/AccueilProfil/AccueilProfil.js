@@ -180,7 +180,7 @@ function LigneTableauProjet(datas) {
 
     const handleCopy = useCallback(() => {
         //empty because reason
-    })
+    }, [])
 
 
     return (
