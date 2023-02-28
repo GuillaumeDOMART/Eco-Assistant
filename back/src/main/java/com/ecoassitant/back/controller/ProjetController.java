@@ -129,6 +129,23 @@ public class ProjetController {
         return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
 
     }
+    @PutMapping("/projet/finish")
+    public ResponseEntity<ProjectIdDto> finish(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        var profilEntityOptional = profilRepository.findByMail(mail);
+        if (profilEntityOptional.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        var projet = projetRepository.findByIdProjet(projetDto.getId());
+        var mailOwner = projet.getProfil().getMail();
+        if (!mailOwner.equals(mail)) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        projet.setEtat(Etat.FINISH);
+        projetRepository.save(projet);
+        return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
+    }
 
     /**
      * Function to generate a random string

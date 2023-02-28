@@ -99,10 +99,35 @@ function StepperComponent() {
         fetch("/api/reponsesDonnees", requestOptions)
             .then(response => response.text())
 
-        if (activeStep === steps.length - 1)
-            navigate(`/result?id=${projectId}`)
-        else
+        if (activeStep === steps.length - 1){
+
+            const body = {}
+            body.id= projectId
+            const options = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(body)
+            };
+            fetch('/api/profil/finish', options)
+                .then(res => {
+                    if(res.status === 404 ){
+                        navigate(`/profil`)
+                    }
+                    else{
+                        navigate(`/result?id=${projectId}`)
+                    }
+                })
+
+
+
+        }
+        else{
             handleNext();
+        }
+
     }
 
     useEffect( () => {
