@@ -1,4 +1,4 @@
-import {Col, Container, Modal, Row} from "react-bootstrap";
+import {Alert, Col, Container, Modal, Row} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
 import "./AccueilSite.css"
@@ -114,6 +114,7 @@ function AccueilSite() {
     const navigate = useNavigate();
     const [paragraphContent, setParagraphContent] = useState()
 
+
     /**
      * Send datas to the back
      * @param datas
@@ -141,14 +142,10 @@ function AccueilSite() {
             setParagraphContent("Le mail est déjà utilisé pour un compte")
             return
         }
-        const json = await response.json();
         if (response.status === 400) {
             setParagraphContent("Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)");
             return;
         }
-
-        sessionStorage.setItem("token", json.token);
-        navigate("/profil")
     }
 
     useEffect(() => {

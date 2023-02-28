@@ -83,7 +83,7 @@ public class ProfilController {
      */
     @PatchMapping("/profil/forgotMail")
     public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
-        return new ResponseEntity<>(profilService.forgotMail(authorizationHeader, forgotPasswordVerifyDto))
+        return profilService.forgotMail(authorizationHeader, forgotPasswordVerifyDto);
     }
 
     /**

@@ -111,11 +111,8 @@ public class ProfilServiceImpl implements ProfilService {
     }
 
     @Override
-    public Boolean forgotMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto) {
+    public ResponseEntity<Boolean> forgotMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto) {
         String token = authorizationHeader.substring(7);
-        if(!jwtService.extractVerify(token)){
-            return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
-        }
         var mail = jwtService.extractMail(token);
         return authenticationService.changePassword(mail, forgotPasswordVerifyDto.getPassword(), forgotPasswordVerifyDto.getOldPassword());
     }

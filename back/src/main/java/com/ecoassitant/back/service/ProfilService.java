@@ -47,10 +47,7 @@ public interface ProfilService {
 
     ProfilDto recupererProfilAvecToken(String authorizationHeader);
 
-    Boolean forgotMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto);
-<<<<<<< HEAD
+    ResponseEntity<Boolean> forgotMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto);
 
     ResponseEntity<Boolean> register(String token);
-=======
->>>>>>> guillaume-code-refactor
 }
