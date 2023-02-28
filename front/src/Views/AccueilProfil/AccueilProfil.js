@@ -178,6 +178,9 @@ function LigneTableauProjet(datas) {
         datas.handleDissociate(datas.itemsList)
     },[datas])
 
+    const handleCopy = useCallback(() => {
+
+    })
 
 
     return (
@@ -188,7 +191,7 @@ function LigneTableauProjet(datas) {
                 <td align={"center"} valign={"middle"}>
                     <Button className="m-3" variant="secondary" onClick={handleClick}>Modifier</Button>
                     <Button className="m-3" variant="primary" href={`/result?id=${datas.id}`}>Visionner</Button>
-                    <Button className="m-3" variant="outline-primary">Créer une copie</Button>
+                    <Button className="m-3" variant="outline-primary" onClick={handleCopy}>Créer une copie</Button>
                     <Button className="m-3" variant="outline-danger" onClick={executeHandleShow}>Dissocier</Button>
                 </td>
             </tr>
