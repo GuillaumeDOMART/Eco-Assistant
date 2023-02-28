@@ -43,8 +43,8 @@ function StepForm({activeStep, data, selectedAnswers, handleSubmit, handleChange
                             />)
                     }
                     return (
-                        <>
-                        </>
+                        <div key={question.questionId}>
+                        </div>
                     );
                 }
             )}
@@ -75,7 +75,7 @@ function StepForm({activeStep, data, selectedAnswers, handleSubmit, handleChange
  * @returns {JSX.Element} truc
  * @constructor
  */
-function StepBox(activeStep) {
+function StepBox({activeStep}) {
     return (
         <Box className="mt-3">
             <Stepper activeStep={activeStep} alternativeLabel>
