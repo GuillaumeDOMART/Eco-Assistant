@@ -45,7 +45,7 @@ const StrengthMeter = ({register}) => {
     return (
         <>
             <Tooltip
-                title={"\"Le mot de passe doit être composé de 8 caractères minimum dont au moins 1 minuscule, 1 MAJUSCULE, 1 chiffre et 1 caractère spécial"}
+                title={"Le mot de passe doit être composé de 8 caractères minimum dont au moins 1 minuscule, 1 MAJUSCULE, 1 chiffre et 1 caractère spécial"}
                 arrow>
                 <TextField label="Mot de passe" type="password" variant="standard"
                            className="textfield " {...register("password")} value={password} onChange={pwdChecker}
