@@ -10,6 +10,10 @@ import React from "react";
  * @constructor
  */
 export default function Phase({value, register, onChange}) {
+    /**
+     * doc
+     * @param target because
+     */
     const handleChange = (target) => {
         onChange(target, value)
     };
