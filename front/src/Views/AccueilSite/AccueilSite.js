@@ -1,7 +1,8 @@
 import {Col, Container, Modal, Row} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {Alert, Button, TextField} from "@mui/material";
-import "./AccueilSite.css"
+import "./AccueilSite.css";
+import StrengthMeter from "./StrengthMeter";
 import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 
@@ -20,6 +21,12 @@ const Connexion = ({onSubmit, register, navigate, fieldErrors}) => {
         navigate("/connexion")
     }, [navigate])
 
+
+    /**
+     * Progress bar on change
+     */
+
+
     return (
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
             {fieldErrors.server &&
@@ -35,13 +42,13 @@ const Connexion = ({onSubmit, register, navigate, fieldErrors}) => {
                            error={!!fieldErrors.mail}
                            helperText={fieldErrors.mail}/><br/>
 
-                <TextField label="Mot de passe" type="password" variant="standard"
-                           className="textfield " {...register("password")} required/><br/>
+                <StrengthMeter className={"align-items-center"} register={register}/><br/>
+
                 <TextField id="outlined-error-helper-text" label="Valider le mot de passe" type="password"
-                           variant="standard"
-                           className="textfield " {...register("passwordConfirmed")} required
-                           error={!!fieldErrors.password}
-                           helperText={fieldErrors.password}/><br/>
+                    variant="standard"
+                    className="textfield " {...register("passwordConfirmed")} required
+                    error={!!fieldErrors.password}
+                    helperText={fieldErrors.password}/><br/>
 
                 <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>
                 <p>Déjà un compte ? <Button onClick={handleConnect} className="text-black text-decoration-underline">Se
