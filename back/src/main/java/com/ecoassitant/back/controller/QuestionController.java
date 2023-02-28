@@ -1,16 +1,17 @@
 package com.ecoassitant.back.controller;
 
-import com.ecoassitant.back.dto.IdDto;
+import com.ecoassitant.back.dto.PhaseDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
-import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -32,24 +33,13 @@ public class QuestionController {
     }
 
     /**
-     * Api for get quiz
-     *
-     * @return quiz type Map
+     * Api for get a Quiz by phase
+     * @param phaseDto phase of the project
+     * @return list of question of the phase
      */
-    @GetMapping("/questions")
-    public ResponseEntity<Map<Phase, List<QuestionUniqueDto>>> testsQuestionnaire() {
-        var quiz = questionService.getQuestionnaire();
-        return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    }
-
-    /**
-     * Api for get quiz with the response of the project complete previously
-     * @param id id of the project
-     * @return quiz type Map
-     */
-    @PostMapping("/questions")
-    public ResponseEntity <Map<Phase, List<QuestionUniqueDto>>> modifierQuestionnaire(@RequestBody  IdDto id){
-        var quiz = questionService.completQuiz(id.getId());
-        return quiz != null ? new ResponseEntity<>(quiz, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    @PostMapping("/questions/phase")
+    public ResponseEntity<List<QuestionUniqueDto>> getPhaseProjet(@RequestBody PhaseDto phaseDto) {
+        var quiz = questionService.completPhase(phaseDto);
+        return quiz.isEmpty() ? new ResponseEntity<>(null, HttpStatus.NOT_FOUND) : new ResponseEntity<>(quiz, HttpStatus.OK);
     }
 }
