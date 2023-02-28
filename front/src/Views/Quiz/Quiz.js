@@ -11,6 +11,23 @@ import Phase from "./Phase";
 
 const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiement", "Maintenance"];
 
+function StepBox(activeStep){
+    return (
+    <Box className="mt-3">
+        <Stepper activeStep={activeStep} alternativeLabel>
+            {steps.map((label) => {
+                const stepProps = {};
+                const labelProps = {};
+                return (
+                    <Step key={label} {...stepProps}>
+                        <StepLabel {...labelProps}>{label}</StepLabel>
+                    </Step>
+                );
+            })}
+        </Stepper>
+    </Box>
+    );
+}
 /**
  * The component representing the Stepper
  * @returns {JSX.Element}
@@ -162,19 +179,7 @@ function StepperComponent() {
     return (
         <Container fluid>
             <Row>
-                <Box className="mt-3">
-                    <Stepper activeStep={activeStep} alternativeLabel>
-                        {steps.map((label) => {
-                            const stepProps = {};
-                            const labelProps = {};
-                            return (
-                                <Step key={label} {...stepProps}>
-                                    <StepLabel {...labelProps}>{label}</StepLabel>
-                                </Step>
-                            );
-                        })}
-                    </Stepper>
-                </Box>
+                <StepBox activeStep={activeStep}/>
                 <Col></Col>
                 <form onSubmit={handleSubmit(onSubmit)}
                       className="navbar-nav-scroll mt-4 col-8"

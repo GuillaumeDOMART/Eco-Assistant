@@ -17,7 +17,7 @@ export default function Phase({value, register, onChange}) {
     const handleChange = useCallback(
         (target) => {
         onChange(target, value)
-    }, []
+    }, [onChange, value]
     );
     switch (value.type) {
         case 'QCM' :
