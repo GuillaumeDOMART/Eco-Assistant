@@ -10,16 +10,16 @@ import React from "react";
  * @constructor
  */
 export default function Phase({value, register, onChange}) {
-
+    const handleChange = (target) => {
+        onChange(target, value)
+    };
     switch (value.type) {
         case 'QCM' :
             /**
              * affiche réponses
              * @param target question lint to the response
              */
-            const handleChange = (target) => {
-                onChange(target, value)
-            }
+
             return (
                 <QCM key={value.intitule}
                      question={value}

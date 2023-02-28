@@ -95,15 +95,15 @@ function StepperComponent() {
     )
 
     const handleChange = useCallback((target, value) => {
-        const select = value.reponses.find(value => value.intitule === target.target.value)
+        const select = value.reponses.find(val => val.intitule === target.target.value)
         let answer = {
             "question": target.target.name,
             "reponseId": select.reponseId
         }
 
-        selectedAnswers.forEach(value => {
-            if (value.question === answer.question)
-                selectedAnswers.splice(selectedAnswers.indexOf(value), 1)
+        selectedAnswers.forEach(val => {
+            if (val.question === answer.question)
+                selectedAnswers.splice(selectedAnswers.indexOf(val), 1)
         })
         setSelectedAnswers([...selectedAnswers, answer])
     }, [selectedAnswers])
