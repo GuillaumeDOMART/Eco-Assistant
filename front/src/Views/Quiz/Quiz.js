@@ -38,7 +38,7 @@ function StepperComponent() {
 
         const raw = JSON.stringify({
             "phase": phase.toUpperCase(),
-            "id": id
+            id
         });
 
         const requestOptions = {
@@ -53,7 +53,6 @@ function StepperComponent() {
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    console.log(result)
                     setData(result);
                 },
                 (error) => {
@@ -96,7 +95,7 @@ function StepperComponent() {
 
     const handleChange = useCallback((target, value) => {
         const select = value.reponses.find(val => val.intitule === target.target.value)
-        let answer = {
+        const answer = {
             "question": target.target.name,
             "reponseId": select.reponseId
         }
@@ -222,7 +221,6 @@ function StepperComponent() {
                 </Col>
             </Row>
         </Container>
-
     );
 }
 
