@@ -10,9 +10,9 @@ import {useState} from "react";
  * @constructor the constructor
  */
 function ModifyPassword() {
-    const {register, handleSubmit} = useForm()
-    const navigate = useNavigate()
-    const [paragraphContent, setParagraphContent] = useState("");
+    const {register, handleSubmit} = useForm();
+    const navigate = useNavigate();
+    const [fieldErrors, setFieldErrors] = useState({});
     /**
      * Function that will submit the new password. If the password is not correct, an error 400 is returned
      *
@@ -26,12 +26,12 @@ function ModifyPassword() {
         }
 
         if (datas.newPassword !== datas.newPasswordConfirmed) {
-            setParagraphContent("Les mot de passe fournis ne correspondent pas")
+            setFieldErrors({"passwordConfirm": "Les mot de passe fournis ne correspondent pas"})
             return
         }
 
         if (datas.actualPassword === datas.newPassword) {
-            setParagraphContent("Le nouveau mot de passe ne peut pas être le même que l'ancien")
+            setFieldErrors({"newPassword": "Le nouveau mot de passe ne peut pas être le même que l'ancien"})
             return;
         }
 
@@ -51,14 +51,13 @@ function ModifyPassword() {
 
         if (response.status > 200) {
             if (response.status === 400) {
-                setParagraphContent("Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)");
+                setFieldErrors({"newPassword": "Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)"});
                 return;
             } else {
-                setParagraphContent("Une erreur innatendue est survenue, veuillez réessayer plus tard");
+                setFieldErrors({"actualPassword": "Ce n'est pas votre mot de passe actuel"});
             }
             return;
         }
-
 
         navigate("/infoProfil")
     }
@@ -70,12 +69,17 @@ function ModifyPassword() {
                 <h1>Modification du mot de passe</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField label="Mot de passe actuel" type="password" variant="standard"
-                               className="textfield" {...register("actualPassword")} required/>
+                               className="textfield" {...register("actualPassword")} required
+                               error={!!fieldErrors.actualPassword}
+                               helperText={fieldErrors.actualPassword}/>
                     <TextField label="Nouveau mot de passe" type="password" variant="standard"
-                               className="textfield" {...register("newPassword")} required/><br/>
+                               className="textfield" {...register("newPassword")} required
+                               error={!!fieldErrors.newPassword}
+                               helperText={fieldErrors.newPassword}/><br/>
                     <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard"
-                               className="textfield" {...register("newPasswordConfirmed")} required/><br/>
-                    <p className="text-danger w-100 h-auto">{paragraphContent}</p>
+                               className="textfield" {...register("newPasswordConfirmed")} required
+                               error={!!fieldErrors.passwordConfirm}
+                               helperText={fieldErrors.passwordConfirm}/><br/>
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
             </div>

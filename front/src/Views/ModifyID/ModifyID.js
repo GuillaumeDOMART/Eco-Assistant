@@ -29,7 +29,7 @@ function ModifyID(callback, deps) {
         }
 
         if (datas.newMail !== datas.confirmMail) {
-            setFieldErrors({"mail": "Les mails ne correspondent pas"});
+            setFieldErrors({"mailConfirm": "Les mails ne correspondent pas"});
             return
         }
 
@@ -76,7 +76,9 @@ function ModifyID(callback, deps) {
                                error={!!fieldErrors.mail}
                                helperText={fieldErrors.mail}/><br/>
                     <TextField label="Confirmer l'adresse mail" type="email" variant="standard"
-                               className="textfield" {...register("confirmMail")} required onPaste={handlePaste}/><br/>
+                               className="textfield" {...register("confirmMail")} required onPaste={handlePaste}
+                               error={!!fieldErrors.mailConfirm}
+                               helperText={fieldErrors.mailConfirm}/><br/>
 
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
