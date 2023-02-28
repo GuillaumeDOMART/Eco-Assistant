@@ -42,7 +42,7 @@ const Connexion = ({onSubmit, register, navigate, fieldErrors}) => {
                            error={!!fieldErrors.mail}
                            helperText={fieldErrors.mail}/><br/>
 
-                <StrengthMeter className={"align-items-center"} register={register}/><br/>
+                <StrengthMeter className={"align-items-center"} register={register} fieldErrors={fieldErrors}/><br/>
 
                 <TextField id="outlined-error-helper-text" label="Valider le mot de passe" type="password"
                     variant="standard"

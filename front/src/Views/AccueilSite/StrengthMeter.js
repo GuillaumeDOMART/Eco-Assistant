@@ -2,7 +2,7 @@ import React, {useCallback, useState} from "react";
 import "./AccueilSite.css";
 import {TextField, Tooltip} from "@mui/material";
 
-const StrengthMeter = ({register}) => {
+const StrengthMeter = ({register, fieldErrors}) => {
 
     const [password, setPassword] = useState("");
 
@@ -49,7 +49,9 @@ const StrengthMeter = ({register}) => {
                 arrow>
                 <TextField label="Mot de passe" type="password" variant="standard"
                            className="textfield " {...register("password")} value={password} onChange={pwdChecker}
-                           required/>
+                           required
+                           error={!!fieldErrors.password}
+                           helperText={fieldErrors.password}/>
             </Tooltip><br/>
 
             <progress

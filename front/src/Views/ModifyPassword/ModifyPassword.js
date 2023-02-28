@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import {useState} from "react";
+import StrengthMeter from "../AccueilSite/StrengthMeter";
 
 /**
  * Page for change password
@@ -25,13 +26,13 @@ function ModifyPassword() {
             navigate("/");
         }
 
-        if (datas.newPassword !== datas.newPasswordConfirmed) {
+        if (datas.password !== datas.newPasswordConfirmed) {
             setFieldErrors({"passwordConfirm": "Les mot de passe fournis ne correspondent pas"})
             return
         }
 
-        if (datas.actualPassword === datas.newPassword) {
-            setFieldErrors({"newPassword": "Le nouveau mot de passe ne peut pas être le même que l'ancien"})
+        if (datas.actualPassword === datas.password) {
+            setFieldErrors({"password": "Le nouveau mot de passe ne peut pas être le même que l'ancien"})
             return;
         }
 
@@ -39,7 +40,7 @@ function ModifyPassword() {
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${token}`)
 
-        const jsonBody = {oldPassword: datas.actualPassword, password: datas.newPassword}
+        const jsonBody = {oldPassword: datas.actualPassword, password: datas.password}
         const requestOptions = {
             method: 'PATCH',
             headers: myHeaders,
@@ -51,7 +52,7 @@ function ModifyPassword() {
 
         if (response.status > 200) {
             if (response.status === 400) {
-                setFieldErrors({"newPassword": "Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)"});
+                setFieldErrors({"password": "Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)"});
                 return;
             } else {
                 setFieldErrors({"actualPassword": "Ce n'est pas votre mot de passe actuel"});
@@ -72,14 +73,14 @@ function ModifyPassword() {
                                className="textfield" {...register("actualPassword")} required
                                error={!!fieldErrors.actualPassword}
                                helperText={fieldErrors.actualPassword}/>
-                    <TextField label="Nouveau mot de passe" type="password" variant="standard"
-                               className="textfield" {...register("newPassword")} required
-                               error={!!fieldErrors.newPassword}
-                               helperText={fieldErrors.newPassword}/><br/>
+
+                    <StrengthMeter register={register} fieldErrors={fieldErrors}></StrengthMeter>
+
                     <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard"
                                className="textfield" {...register("newPasswordConfirmed")} required
                                error={!!fieldErrors.passwordConfirm}
                                helperText={fieldErrors.passwordConfirm}/><br/>
+
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
             </div>
