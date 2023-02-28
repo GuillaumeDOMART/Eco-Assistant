@@ -9,7 +9,6 @@ import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
  * Generate a web page containing a navigation bar and a project listing table
  */
 function Moderation(){
-    const mockFront = false;
     let tableToDisplay = <UsersList/>
 
     return (
@@ -40,6 +39,9 @@ function UsersList(){
                 return res.json()
             })
             .then(
+                (result) => {
+                    setItems(result);
+                },
                 (error) => {
                     setApiError(error);
                 }
@@ -56,12 +58,7 @@ function UsersList(){
     } else {
             return (
                 <>
-                    <Table>
-                        <TableauProjetsHeader/>
-                        <tbody>
-                        {items.map((item) => <LigneTableauProjet key={item.id} {...item} itemsList={items} itemSelected={item} showVar={show} handleShow={handleShow} handleCancel={handleCancel} handleDissociate={handleDissociate} />)}
-                        </tbody>
-                    </Table>
+
                 </>
             );
 
