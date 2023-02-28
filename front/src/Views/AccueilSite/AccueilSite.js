@@ -45,10 +45,10 @@ const Connexion = ({onSubmit, register, navigate, fieldErrors}) => {
                 <StrengthMeter className={"align-items-center"} register={register} fieldErrors={fieldErrors}/><br/>
 
                 <TextField id="outlined-error-helper-text" label="Valider le mot de passe" type="password"
-                    variant="standard"
-                    className="textfield " {...register("passwordConfirmed")} required
-                    error={!!fieldErrors.password}
-                    helperText={fieldErrors.password}/><br/>
+                           variant="standard"
+                           className="textfield " {...register("passwordConfirmed")} required
+                           error={!!fieldErrors.password}
+                           helperText={fieldErrors.password}/><br/>
 
                 <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>
                 <p>Déjà un compte ? <Button onClick={handleConnect} className="text-black text-decoration-underline">Se
@@ -171,11 +171,8 @@ function AccueilSite() {
         }
 
         const json = await response.json()
-        if (response.status >= 400) {
-            if (json.fieldErrors) {
-                setfieldErrors(json.fieldErrors);
-                return;
-            }
+        if (response.status >= 400 && json.fieldErrors) {
+            setfieldErrors(json.fieldErrors);
             return;
         }
 

@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS projet
     profilid  INT         NOT NULL,
     nomprojet VARCHAR(50) NOT NULL,
     etat      VARCHAR(50) NOT NULL,
-    CONSTRAINT profilid FOREIGN KEY (profilid) REFERENCES profil (idprofil)
+    CONSTRAINT profilid FOREIGN KEY (profilid) REFERENCES profil (idprofil),
+    UNIQUE(profilid, nomprojet)
 );
 CREATE TABLE IF NOT EXISTS question
 (

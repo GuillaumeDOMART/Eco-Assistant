@@ -9,11 +9,13 @@ import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -74,20 +76,21 @@ public class ProjetController {
 
     /**
      * Endpoint to create a project
+     *
      * @param authorizationHeader the token of the user
      * @param projet              the project name
      * @return the project id
      */
     @PostMapping("/projet/create")
-    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
-        if(projet.getNom().length() >= 50){
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet) {
+        if (projet.getNom().length() >= 50) {
+            throw new IllegalArgumentException("Le nom du projet doit avoir une taille inférieur à 50 caractères");
         }
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
         if (profilEntityOptional.isEmpty()) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         var profil = profilEntityOptional.get();
         var projetEntity = ProjetEntity.builder()
@@ -146,5 +149,24 @@ public class ProjetController {
             sb.append(randomChar);
         }
         return sb.toString();
+    }
+
+
+    /**
+     * Method to handle DataIntegrityViolationException into an HttpStatus.BAD_REQUEST when a project name already exist
+     * with the same profil id
+     *
+     * @param ex exception
+     * @return Map with the field nom and the message
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({DataIntegrityViolationException.class, IllegalArgumentException.class})
+    @ResponseBody
+    public Map<String, Map<String, String>> handleDataViolationExceptions(RuntimeException ex) {
+        var message = ex.getMessage();
+        if (ex.getMessage().contains("SQL"))
+            message = "Le nom de projet est déjà utilisé, veuillez en choisir un autre";
+
+        return Map.of("fieldErrors", Map.of("nom", message));
     }
 }
