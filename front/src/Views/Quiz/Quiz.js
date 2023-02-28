@@ -11,6 +11,18 @@ import Phase from "./Phase";
 
 const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiement", "Maintenance"];
 
+/**
+ * FormConponnents
+ * @param activeStep activeStep
+ * @param data data
+ * @param selectedAnswers selectedAnswers
+ * @param handleSubmit handleSubmit
+ * @param handleChange handleChange
+ * @param handleBack handleBack
+ * @param register register
+ * @returns {JSX.Element} oui
+ * @constructor
+ */
 function StepForm(activeStep, data, selectedAnswers, handleSubmit, handleChange, handleBack, register) {
     return (<form onSubmit={handleSubmit}
                   className="navbar-nav-scroll mt-4 col-8"
