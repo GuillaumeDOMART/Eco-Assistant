@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -45,7 +46,20 @@ public class ProfilServiceImpl implements ProfilService {
         var profil = repository.findByMail(mail);
         return new ProfilDto(profil.orElseThrow());
     }
-
+    @Override
+    public Optional<List<ProfilDto>> getAllUsersProfil(String mail) {
+        var optionalProfil = repository.findByMail(mail);
+        if(optionalProfil.isEmpty()){
+            return Optional.empty();
+        }
+        var connectedProfil = optionalProfil.get();
+        if(connectedProfil.getIsAdmin()!=1){
+            return Optional.empty();
+        }
+        var profilUsersEntityList = repository.findByIsAdmin(0);
+        var profilUsersDtoList = profilUsersEntityList.stream().map(ProfilDto::new).toList();
+        return Optional.of(profilUsersDtoList);
+    }
     @Override
     public Integer createProfil(ProfilSimplDto profilDto) {
         var profilEntity = new ProfilEntity();
@@ -71,7 +85,7 @@ public class ProfilServiceImpl implements ProfilService {
         profilOwner.setMail("guest"+generateRandomString(8)+"@eco-assistant-esipe.fr");
         profilOwner.setLastname(generateRandomString(8));
         profilOwner.setPassword(generateRandomString(8));
-        profilOwner.setIsAdmin(0);
+        profilOwner.setIsAdmin(-1);
         var savedEntity = repository.save(profilOwner);
         return Optional.of(new ProfilIdDto(savedEntity.getIdProfil()));
     }

@@ -23,6 +23,7 @@ import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
 import ModifyID from "./Views/ModifyID/ModifyID";
 import ForgotPasswordMail from "./Views/ForgotPassword/ForgotPasswordMail";
 import QuestionProposee from "./Views/QuestionProposée/QuestionProposee";
+import Moderation from "./Views/Moderation/Moderation";
 
 const router = createBrowserRouter([
     {
@@ -82,6 +83,9 @@ const router = createBrowserRouter([
     }, {
         path: "/questionsProposees",
         element: <QuestionProposee/>
+    }, {
+        path: "/moderation",
+        element: <Moderation/>
     }
 ]);
 

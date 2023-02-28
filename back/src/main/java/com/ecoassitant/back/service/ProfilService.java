@@ -4,6 +4,7 @@ import com.ecoassitant.back.dto.ProfilDto;
 import com.ecoassitant.back.dto.ProfilIdDto;
 import com.ecoassitant.back.dto.ProfilSimplDto;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,6 +25,8 @@ public interface ProfilService {
      * @return a ProfilDto with the submitted mail, or null if it doesn't exist
      */
     ProfilDto getProfilByMail(String mail);
+
+    Optional<List<ProfilDto>> getAllUsersProfil(String mail);
 
     /**
      * Endpoint to create a user admin

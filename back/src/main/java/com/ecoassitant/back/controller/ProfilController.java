@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -125,6 +126,26 @@ public class ProfilController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         var profil = profilService.deleteProfil(mail);
+        if(profil.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else{
+            return new ResponseEntity<>(profil.get(), HttpStatus.OK);
+        }
+
+    }
+    /**
+     * Function to delete the profile of the user currently connected
+     * @param authorizationHeader the token of the user
+     * @return ResponseEntity of ProfilIdDto of profile deleted
+     */
+    @GetMapping("/profil/users")
+    public ResponseEntity<List<ProfilDto>> getAllUsersProfil(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        var profil = profilService.getAllUsersProfil(mail);
         if(profil.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
