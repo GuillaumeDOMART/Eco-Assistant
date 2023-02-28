@@ -113,6 +113,7 @@ function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
     const [paragraphContent, setParagraphContent] = useState()
+    const [show, setShow] = useState(false);
 
 
     /**
@@ -146,7 +147,14 @@ function AccueilSite() {
             setParagraphContent("Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)");
             return;
         }
+        setShow(true)
     }
+
+
+    const handleClose= useCallback(() => {
+        setShow(false);
+        navigate("/")
+    }, [setShow,navigate])
 
     useEffect(() => {
         const value = sessionStorage.getItem('token');
@@ -157,13 +165,29 @@ function AccueilSite() {
 
 
     return (
-           <Container className="bg" fluid>
+        <>
+            <Container className="bg" fluid>
                <Row className="vh-100 align-items-center">
                    <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate} paragraphContent={paragraphContent}/>
                    <Col className="col-1"></Col>
                    <Anonyme navigate={navigate}/>
                </Row>
            </Container>
+            <Modal show={show} >
+                <Modal.Header>
+                    <Modal.Title>Création de compte</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Un mail de confirmation viens de vous être envoyé.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-primary" className="text-black" onClick={handleClose}>
+                        Fermer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            </>
+
     )
 }
 
