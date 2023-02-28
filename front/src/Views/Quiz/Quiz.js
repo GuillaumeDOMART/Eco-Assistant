@@ -29,6 +29,7 @@ function StepperComponent() {
 
     const handlePhase = useCallback(() => {
         setPhase(steps[activeStep])
+        setSelectedAnswers([])
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
         const myHeaders = new Headers();
@@ -158,95 +159,71 @@ function StepperComponent() {
                 <Spinner animation="grow" variant="success"/>
             </>
         );
-    } else {
-        let currentPhase = data.PLANIFICATION;
-        switch (activeStep) {
-            case 0:
-                currentPhase = data.HORS_PHASE
-                break;
-            case 1:
-                currentPhase = data.PLANIFICATION
-                break;
-            case 2:
-                currentPhase = data.DEVELOPPEMENT
-                break;
-            case 3:
-                currentPhase = data.TEST
-                break;
-            case 4:
-                currentPhase = data.DEPLOIEMENT
-                break;
-            case 5:
-                currentPhase = data.MAINTENANCE
-                break;
-            default:
-                break;
-        }
-        return (
-            <Container fluid>
-                <Row>
-                    <Box className="mt-3">
-                        <Stepper activeStep={activeStep} alternativeLabel>
-                            {steps.map((label) => {
-                                const stepProps = {};
-                                const labelProps = {};
-                                return (
-                                    <Step key={label} {...stepProps}>
-                                        <StepLabel {...labelProps}>{label}</StepLabel>
-                                    </Step>
-                                );
-                            })}
-                        </Stepper>
-                    </Box>
-                    <Col></Col>
-                    <form onSubmit={handleSubmit(onSubmit)}
-                          className="navbar-nav-scroll mt-4 col-8"
-                          style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
-                    >
-                        {data.map(question => {
-                                const check = selectedAnswers.find(answer => {
-                                    return question.dependance === answer.reponseId;
-                                })
-                                if (question.dependance === -1 || check) {
-                                    return (
-                                        <Phase key={question.questionId}
-                                               register={register}
-                                               value={question}
-                                               onChange={handleChange}
-                                        />)
-                                }
-                                return (
-                                    <>
-                                    </>
-                                );
-                            }
-                        )}
-                        <Box className="">
-                            <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                <Button
-                                    color="inherit"
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                    sx={{mr: 1}}
-                                >
-                                    Back
-                                </Button>
-                                <Box sx={{flex: '1 1 auto'}}/>
-
-                                <Button type={"submit"}>
-                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                </Button>
-                            </Box>
-                        </Box>
-                    </form>
-                    <Col>
-                        <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
-                    </Col>
-                </Row>
-            </Container>
-
-        );
     }
+    return (
+        <Container fluid>
+            <Row>
+                <Box className="mt-3">
+                    <Stepper activeStep={activeStep} alternativeLabel>
+                        {steps.map((label) => {
+                            const stepProps = {};
+                            const labelProps = {};
+                            return (
+                                <Step key={label} {...stepProps}>
+                                    <StepLabel {...labelProps}>{label}</StepLabel>
+                                </Step>
+                            );
+                        })}
+                    </Stepper>
+                </Box>
+                <Col></Col>
+                <form onSubmit={handleSubmit(onSubmit)}
+                      className="navbar-nav-scroll mt-4 col-8"
+                      style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
+                >
+                    {data.map(question => {
+                            const check = selectedAnswers.find(answer => {
+                                return question.dependance === answer.reponseId;
+                            })
+                            if (question.dependance === -1 || check) {
+                                return (
+                                    <Phase key={question.questionId}
+                                           register={register}
+                                           value={question}
+                                           onChange={handleChange}
+                                    />)
+                            }
+                            return (
+                                <>
+                                </>
+                            );
+                        }
+                    )}
+                    <Box className="">
+                        <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
+                            <Button
+                                color="inherit"
+                                disabled={activeStep === 0}
+                                onClick={handleBack}
+                                sx={{mr: 1}}
+                            >
+                                Back
+                            </Button>
+                            <Box sx={{flex: '1 1 auto'}}/>
+
+                            <Button type={"submit"}>
+                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                            </Button>
+                        </Box>
+                    </Box>
+                </form>
+                <Col>
+                    <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
+                </Col>
+            </Row>
+        </Container>
+
+    );
 }
 
 export default StepperComponent
