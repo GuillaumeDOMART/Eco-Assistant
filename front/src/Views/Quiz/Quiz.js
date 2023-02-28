@@ -202,7 +202,7 @@ function StepperComponent() {
             responses.push(tuple)
         }
         sendToBack.projetId = projectId;
-        sendToBack.reponses = responses;
+        //sendToBack.reponses = responses;
 
         const token = sessionStorage.getItem("token")
 
