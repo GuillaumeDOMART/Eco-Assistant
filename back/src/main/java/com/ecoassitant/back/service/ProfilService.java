@@ -1,5 +1,6 @@
 package com.ecoassitant.back.service;
 
+import com.ecoassitant.back.dto.ForgotPasswordVerifyDto;
 import com.ecoassitant.back.dto.ProfilDto;
 import com.ecoassitant.back.dto.ProfilIdDto;
 import com.ecoassitant.back.dto.ProfilSimplDto;
@@ -38,4 +39,12 @@ public interface ProfilService {
      * @return optional the id of the profile dissociated
      */
     Optional<ProfilIdDto> deleteProfil(String mail);
+
+    ProfilDto recupererProfilAvecId(Integer id);
+
+    ProfilDto recupererProfilAvecMail(String mail);
+
+    ProfilDto recupererProfilAvecToken(String authorizationHeader);
+
+    Boolean forgotMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto);
 }
