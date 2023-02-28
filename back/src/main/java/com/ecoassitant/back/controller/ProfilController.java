@@ -43,14 +43,7 @@ public class ProfilController {
     @GetMapping("profil/{id}")
     @ResponseBody
     public ResponseEntity<ProfilDto> recupererProfilAvecId(@PathVariable("id") Integer id) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        var profil = profilService.getProfilByID(id);
-        if (profil == null) {
-            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(profil, headers, HttpStatus.OK);
-        }
+        return ResponseEntity.ok(profilService.recupererProfilAvecId(id));
     }
 
     /**
@@ -59,14 +52,7 @@ public class ProfilController {
     @GetMapping("profil/search/{mail}")
     @ResponseBody
     public ResponseEntity<ProfilDto> recupererProfilAvecMail(@PathVariable("mail") String mail) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        var profil = profilService.getProfilByMail(mail);
-        if (profil == null) {
-            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(profil, headers, HttpStatus.OK);
-        }
+        return ResponseEntity.ok(profilService.recupererProfilAvecMail(mail));
     }
 
     /**
@@ -76,9 +62,8 @@ public class ProfilController {
      * @return return the id of the profile
      */
     @PostMapping("profil")
-    public ResponseEntity<Integer> createProfil(@RequestBody ProfilSimplDto profilDto) {
-        var id = profilService.createProfil(profilDto);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+    public ResponseEntity<Integer> createProfil(@RequestBody ProfilSimplDto profilDto){
+        return new ResponseEntity<>(profilService.createProfil(profilDto), HttpStatus.OK);
     }
 
     /**
@@ -86,17 +71,8 @@ public class ProfilController {
      */
     @GetMapping("/profil/user")
     @ResponseBody
-    public ResponseEntity<ProfilDto> recupererProfilAvecToken(@RequestHeader("Authorization") String authorizationHeader) {
-        String token = authorizationHeader.substring(7);
-        var mail = jwtService.extractMail(token);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        var profil = profilService.getProfilByMail(mail);
-        if (profil == null) {
-            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(profil, headers, HttpStatus.OK);
-        }
+    public ResponseEntity<ProfilDto> recupererProfilAvecToken(@RequestHeader("Authorization") String authorizationHeader){
+        return new ResponseEntity<>(profilService.recupererProfilAvecToken(authorizationHeader), HttpStatus.OK);
     }
 
     /**
@@ -106,13 +82,8 @@ public class ProfilController {
      * @return if the password was change successfully
      */
     @PatchMapping("/profil/forgotMail")
-    public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto) {
-        String token = authorizationHeader.substring(7);
-        if (!jwtService.extractVerify(token)) {
-            return new ResponseEntity<>(false, HttpStatus.FORBIDDEN);
-        }
-        var mail = jwtService.extractMail(token);
-        return authenticationService.changePassword(mail, forgotPasswordVerifyDto.getPassword(), forgotPasswordVerifyDto.getOldPassword());
+    public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
+        return new ResponseEntity<>(profilService.forgotMail(authorizationHeader, forgotPasswordVerifyDto))
     }
 
     /**
