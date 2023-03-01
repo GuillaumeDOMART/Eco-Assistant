@@ -2,6 +2,14 @@ import React, {useCallback, useState} from "react";
 import "./AccueilSite.css";
 import {TextField, Tooltip} from "@mui/material";
 
+/**
+ * Component that represente a strengh meter for passwords, it includes the textfield password and the error handling of it
+ *
+ * @param register
+ * @param fieldErrors
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const StrengthMeter = ({register, fieldErrors}) => {
 
     const [password, setPassword] = useState("");
