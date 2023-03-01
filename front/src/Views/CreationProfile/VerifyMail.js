@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {Alert} from "react-bootstrap";
 
 
 /**
@@ -36,7 +37,7 @@ function ProfilVerifyMail() {
 
     return (
         <Alert show={showAlert} variant="danger">
-            Lien d'activation expiré
+            Lien d&apos;activation expiré
         </Alert>
         )
 }
