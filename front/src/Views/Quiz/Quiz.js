@@ -36,11 +36,14 @@ function StepForm({activeStep, data, selectedAnswers, handleSubmit, handleChange
                     })
                     if (question.dependance === -1 || check) {
                         return (
-                            <Phase key={question.questionId}
-                                   register={register}
-                                   value={question}
-                                   onChange={handleChange}
-                            />)
+                            // <Phase key={question.questionId}
+                            //        register={register}
+                            //        value={question}
+                            //        onChange={handleChange}
+                            // />)
+                            <div>
+                                {question.phase}
+                            </div>)
                     }
                     return (
                         <div key={question.questionId}>
@@ -110,13 +113,15 @@ function StepperComponent() {
 
 
     const handlePhase = useCallback(() => {
-        setPhase(steps[activeStep])
-        setSelectedAnswers([])
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
+
+        reset()
+        setPhase(steps[activeStep])
+        setSelectedAnswers([])
 
         const raw = JSON.stringify({
             "phase": phase.toUpperCase(),
@@ -142,18 +147,18 @@ function StepperComponent() {
                     setErrorApiGetQuestionnaire(error);
                 }
             )
-    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, setPhase, activeStep, phase])
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, setPhase, activeStep, phase, reset])
 
     /**
      * Go to the next step
      */
     const handleNext = useCallback(
         () => {
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
             handlePhase()
-            reset()
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
         },
-        [reset, handlePhase]
+        [handlePhase]
     );
 
     /**
@@ -161,11 +166,10 @@ function StepperComponent() {
      */
     const handleBack = useCallback(
         () => {
-            setActiveStep((prevActiveStep) => prevActiveStep - 1);
             handlePhase()
-            reset()
+            setActiveStep((prevActiveStep) => prevActiveStep - 1);
         },
-        [reset, handlePhase]
+        [handlePhase]
     );
 
     const handleQuit = useCallback(
@@ -194,40 +198,41 @@ function StepperComponent() {
      * @param dataList
      */
     const onSubmit = useCallback(
-    (dataList) => {
-        const projectId = sessionStorage.getItem("project")
-        const sendToBack = {}
-        const responses = []
-        for (const [key, value] of Object.entries(dataList)) {
-            const tuple = {}
-            tuple.questionId = key;
-            tuple.entry = value;
-            responses.push(tuple)
-        }
-        sendToBack.projetId = projectId;
-        sendToBack.reponses = responses;
+        (dataList) => {
+            // alert(JSON.stringify(dataList))
+            const projectId = sessionStorage.getItem("project")
+            const sendToBack = {}
+            const responses = []
+            for (const [key, value] of Object.entries(dataList)) {
+                const tuple = {}
+                tuple.questionId = key;
+                tuple.entry = value;
+                responses.push(tuple)
+            }
+            sendToBack.projetId = projectId;
+            sendToBack.reponses = responses;
 
-        const token = sessionStorage.getItem("token")
+            const token = sessionStorage.getItem("token")
 
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", `Bearer ${token}`);
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
 
-        const requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: JSON.stringify(sendToBack),
-            redirect: 'follow'
-        };
+            const requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: JSON.stringify(sendToBack),
+                redirect: 'follow'
+            };
 
-        fetch("/api/reponsesDonnees", requestOptions)
-            .then(response => response.text())
+            fetch("/api/reponsesDonnees", requestOptions)
+                .then(response => response.text())
 
-        if (activeStep === steps.length - 1)
-            navigate(`/result?id=${projectId}`)
-        else
-            handleNext();
-    }, [handleNext, activeStep, navigate]
+            if (activeStep === steps.length - 1)
+                navigate(`/result?id=${projectId}`)
+            else
+                handleNext();
+        }, [handleNext, activeStep, navigate]
     )
 
     useEffect(() => {
@@ -248,9 +253,16 @@ function StepperComponent() {
             <Row>
                 <StepBox activeStep={activeStep}/>
                 <Col></Col>
-                <StepForm activeStep={activeStep} data={data} selectedAnswers={selectedAnswers}
-                          handleSubmit={handleSubmit} handleChange={handleChange} handleBack={handleBack}
-                          register={register} onSubmit={onSubmit}/>
+                <StepForm
+                    activeStep={activeStep}
+                    data={data}
+                    selectedAnswers={selectedAnswers}
+                    handleSubmit={handleSubmit}
+                    handleChange={handleChange}
+                    handleBack={handleBack}
+                    register={register}
+                    onSubmit={onSubmit}
+                />
                 <Col>
                     <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
                 </Col>
