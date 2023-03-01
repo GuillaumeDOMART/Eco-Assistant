@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.project;
 
 import lombok.Data;
 
