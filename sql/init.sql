@@ -122,7 +122,8 @@ VALUES
     ('Veux-tu apporté des données concernant la phase de planification ?', 2, 'QCM', 'PLANIFICATION'),
     ('Combien de jours dure cette phase ?', 3, 'NUMERIC', 'PLANIFICATION'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 4, 'NUMERIC', 'PLANIFICATION'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 5, 'NUMERIC', 'PLANIFICATION'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 5, 'NUMERIC',
+     'PLANIFICATION'),
     ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 6, 'QCM', 'PLANIFICATION'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 7, 'NUMERIC',
      'PLANIFICATION'),
@@ -136,7 +137,8 @@ VALUES
     ('Veux-tu apporté des données concernant la phase de developpement  ?', 13, 'QCM', 'DEVELOPPEMENT'),
     ('Combien de jours dure cette phase ?', 14, 'NUMERIC', 'DEVELOPPEMENT'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 15, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 16, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 16, 'NUMERIC',
+     'DEVELOPPEMENT'),
     ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 17, 'QCM', 'DEVELOPPEMENT'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 18, 'NUMERIC',
      'DEVELOPPEMENT'),
@@ -159,7 +161,8 @@ VALUES
     ('Veux-tu apporté des données concernant la phase de test  ?', 32, 'QCM', 'TEST'),
     ('Combien de jours dure cette phase ?', 33, 'NUMERIC', 'TEST'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 34, 'NUMERIC', 'TEST'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 35, 'NUMERIC', 'TEST'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 35, 'NUMERIC',
+     'TEST'),
     ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 36, 'QCM', 'TEST'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 37, 'NUMERIC',
      'TEST'),
@@ -178,7 +181,8 @@ VALUES
     ('Veux-tu apporté des données concernant la phase de deploiement  ?', 47, 'QCM', 'DEPLOIEMENT'),
     ('Combien de jours dure cette phase ?', 48, 'NUMERIC', 'DEPLOIEMENT'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 49, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 50, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 50, 'NUMERIC',
+     'DEPLOIEMENT'),
     ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 51, 'QCM', 'DEPLOIEMENT'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 52, 'NUMERIC',
      'DEPLOIEMENT'),
@@ -196,7 +200,8 @@ VALUES
     ('Veux-tu apporté des données concernant la phase de maintenance  ?', 62, 'QCM', 'MAINTENANCE'),
     ('Combien de jours dure cette phase ?', 63, 'NUMERIC', 'MAINTENANCE'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 64, 'NUMERIC', 'MAINTENANCE'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 65, 'NUMERIC', 'MAINTENANCE'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 65, 'NUMERIC',
+     'MAINTENANCE'),
     ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 66, 'QCM', 'MAINTENANCE'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 67, 'NUMERIC',
      'MAINTENANCE'),
@@ -213,25 +218,25 @@ VALUES (0, 'Constante neutre'),
        (0.178, 'https://datagir.ademe.fr/apps/mon-impact-transport/ '),
     /*C*/
        (0.005,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur 0.005'),
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*C++*/
        (0.0067,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur 0.005'),
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Java*/
        (0.0099,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur 0.005'),
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Python*/
        (0.3794,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur 0.005'),
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Moyenne*/
        (0.0806,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur 0.005'),
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*PHP*/
        (0.1465,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur 0.005'),
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*JavaScript*/
        (0.02225,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur 0.005'),
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*TypeScript*/
        (0.1075,
         'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur 0.005'),
@@ -244,8 +249,58 @@ VALUES (0, 'Constante neutre'),
        (0.025,
         'Émissions de CO2 (kgCO2e/kWh) de energie renouvlable, https://climate.selectra.com/fr/empreinte-carbone/energie'),
        (0.6515,
-        'Émissions de CO2 (kgCO2e/kWh) de energie fossile, https://climate.selectra.com/fr/empreinte-carbone/energie');
-
+        'Émissions de CO2 (kgCO2e/kWh) de energie fossile, https://climate.selectra.com/fr/empreinte-carbone/energie'),
+    /*Perl*/
+       (79.58 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Ruby*/
+       (69.91 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Jruby*/
+       (46.54 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Lua*/
+       (48.98 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Erlang*/
+       (42.23 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Hack*/
+       (24.02 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Racket*/
+       (7.91 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*F#*/
+       (4.13 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Haskell*/
+       (3.10 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Swift*/
+       (2.79 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Fortran*/
+       (2.52 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*OCaml*/
+       (2.40 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Lisp*/
+       (2.27 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Chapel*/
+       (2.18 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Pascal*/
+       (2.14 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Ada*/
+       (1.70 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+    /*Rust*/
+       (1.03 / 200,
+        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base');
 
 --- CREATION DES REPONSES POSSIBLE
 INSERT INTO reponsepossible (questionasso, questionsuiv, intitule,
@@ -290,11 +345,28 @@ VALUES
     (25, 26, 'C++', 5),
     (25, 26, 'Java', 6),
     (25, 26, 'Python', 7),
+    (25, 26, 'Perl', 20),
+    (25, 26, 'Ruby', 21),
+    (25, 26, 'JRuby', 22),
+    (25, 26, 'Erlang', 24),
+    (25, 26, 'Racket', 26),
+    (25, 26, 'F#', 27),
+    (25, 26, 'Haskell', 28),
+    (25, 26, 'Swift', 29),
+    (25, 26, 'Fortran', 30),
+    (25, 26, 'OCaml', 31),
+    (25, 26, 'Lisp', 32),
+    (25, 26, 'Chapel', 33),
+    (25, 26, 'Pascal', 34),
+    (25, 26, 'Rust', 36),
     (25, 26, 'Autre', 8),
     (26, 27, 'Veuillez entrer le nombre de lignes', 2),
     (27, 28, 'PHP', 9),
     (27, 28, 'JavaScript', 10),
     (27, 28, 'TypeScript', 11),
+    (27, 28, 'Perl', 20),
+    (27, 28, 'Hack', 25),
+    (27, 28, 'Swift', 29),
     (27, 28, 'Autre', 8),
     (28, 29, 'Veuillez entrer le nombre de lignes', 2),
     (29, 30, 'OUI', 2),
@@ -439,154 +511,206 @@ VALUES (5, 3, 1, 1, 'HORS_PHASE'),
        (5, 19, 9, 1, 'DEVELOPPEMENT'),
 
        (3, 30, 10, 1, 'DEVELOPPEMENT'),
-       (5, 35, 10, 1, 'DEVELOPPEMENT'),
+       (5, 49, 10, 1, 'DEVELOPPEMENT'),
 
        (3, 31, 11, 1, 'DEVELOPPEMENT'),
-       (5, 35, 11, 1, 'DEVELOPPEMENT'),
+       (5, 49, 11, 1, 'DEVELOPPEMENT'),
 
        (3, 32, 12, 1, 'DEVELOPPEMENT'),
-       (5, 35, 12, 1, 'DEVELOPPEMENT'),
+       (5, 49, 12, 1, 'DEVELOPPEMENT'),
 
        (3, 33, 13, 1, 'DEVELOPPEMENT'),
-       (5, 35, 13, 1, 'DEVELOPPEMENT'),
+       (5, 49, 13, 1, 'DEVELOPPEMENT'),
 
        (3, 34, 14, 1, 'DEVELOPPEMENT'),
-       (5, 35, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 36, 15, 1, 'DEVELOPPEMENT'),
-       (5, 40, 15, 1, 'DEVELOPPEMENT'),
+       (3, 35, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 37, 16, 1, 'DEVELOPPEMENT'),
-       (5, 40, 16, 1, 'DEVELOPPEMENT'),
+       (3, 36, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 38, 17, 1, 'DEVELOPPEMENT'),
-       (5, 40, 17, 1, 'DEVELOPPEMENT'),
+       (3, 37, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 39, 18, 1, 'DEVELOPPEMENT'),
-       (5, 40, 18, 1, 'DEVELOPPEMENT'),
+       (3, 38, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 43, 19, 1, 'DEVELOPPEMENT'),
-       (5, 46, 19, 1, 'DEVELOPPEMENT'),
+       (3, 39, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 43, 20, 1, 'DEVELOPPEMENT'),
-       (5, 47, 20, 1, 'DEVELOPPEMENT'),
+       (3, 40, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 43, 21, 1, 'DEVELOPPEMENT'),
-       (5, 48, 21, 1, 'DEVELOPPEMENT'),
+       (3, 41, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (5, 51, 22, 1, 'TEST'),
+       (3, 42, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 57, 23, 1, 'TEST'),
-       (3, 56, 23, 1, 'TEST'),
-       (1, 51, 23, 1, 'TEST'),
-       (3, 59, 23, 1, 'TEST'),
-       (3, 56, 23, 1, 'TEST'),
-       (2, 51, 23, 1, 'TEST'),
-       (3, 53, 23, 1, 'TEST'),
-       (3, 57, 23, 1, 'TEST'),
-       (2, 56, 23, 1, 'TEST'),
-       (3, 53, 23, 1, 'TEST'),
-       (3, 59, 23, 1, 'TEST'),
-       (5, 56, 23, 1, 'TEST'),
+       (3, 43, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 57, 23, 2, 'TEST'),
-       (3, 56, 23, 2, 'TEST'),
-       (1, 51, 23, 2, 'TEST'),
-       (3, 59, 23, 2, 'TEST'),
-       (3, 56, 23, 2, 'TEST'),
-       (5, 51, 23, 2, 'TEST'),
+       (3, 44, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 52, 23, 3, 'TEST'),
-       (5, 51, 23, 3, 'TEST'),
+       (3, 45, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 60, 24, 1, 'TEST'),
-       (5, 51, 24, 1, 'TEST'),
+       (3, 46, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 61, 25, 1, 'TEST'),
-       (5, 51, 25, 1, 'TEST'),
+       (3, 47, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 64, 26, 1, 'TEST'),
-       (5, 67, 26, 1, 'TEST'),
+       (3, 48, 14, 1, 'DEVELOPPEMENT'),
+       (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 64, 27, 1, 'TEST'),
-       (5, 68, 27, 1, 'TEST'),
+       (3, 50, 15, 1, 'DEVELOPPEMENT'),
+       (5, 57, 15, 1, 'DEVELOPPEMENT'),
 
-       (3, 64, 28, 1, 'TEST'),
-       (5, 69, 28, 1, 'TEST'),
+       (3, 51, 16, 1, 'DEVELOPPEMENT'),
+       (5, 57, 16, 1, 'DEVELOPPEMENT'),
 
-       (5, 72, 29, 1, 'DEPLOIEMENT'),
+       (3, 52, 17, 1, 'DEVELOPPEMENT'),
+       (5, 57, 17, 1, 'DEVELOPPEMENT'),
 
-       (3, 78, 30, 1, 'DEPLOIEMENT'),
-       (3, 77, 30, 1, 'DEPLOIEMENT'),
-       (1, 72, 30, 1, 'DEPLOIEMENT'),
-       (3, 80, 30, 1, 'DEPLOIEMENT'),
-       (3, 77, 30, 1, 'DEPLOIEMENT'),
-       (2, 72, 30, 1, 'DEPLOIEMENT'),
-       (3, 74, 30, 1, 'DEPLOIEMENT'),
-       (3, 78, 30, 1, 'DEPLOIEMENT'),
-       (2, 77, 30, 1, 'DEPLOIEMENT'),
-       (3, 74, 30, 1, 'DEPLOIEMENT'),
-       (3, 80, 30, 1, 'DEPLOIEMENT'),
-       (5, 77, 30, 1, 'DEPLOIEMENT'),
+       (3, 53, 18, 1, 'DEVELOPPEMENT'),
+       (5, 57, 18, 1, 'DEVELOPPEMENT'),
 
-       (3, 78, 30, 2, 'DEPLOIEMENT'),
-       (3, 77, 30, 2, 'DEPLOIEMENT'),
-       (1, 72, 30, 2, 'DEPLOIEMENT'),
-       (3, 80, 30, 2, 'DEPLOIEMENT'),
-       (3, 77, 30, 2, 'DEPLOIEMENT'),
-       (5, 72, 30, 2, 'DEPLOIEMENT'),
+       (3, 54, 18, 1, 'DEVELOPPEMENT'),
+       (5, 57, 18, 1, 'DEVELOPPEMENT'),
 
-       (3, 73, 30, 3, 'DEPLOIEMENT'),
-       (5, 72, 30, 3, 'DEPLOIEMENT'),
+       (3, 55, 18, 1, 'DEVELOPPEMENT'),
+       (5, 57, 18, 1, 'DEVELOPPEMENT'),
 
-       (3, 81, 31, 1, 'DEPLOIEMENT'),
-       (5, 72, 31, 1, 'DEPLOIEMENT'),
+       (3, 56, 18, 1, 'DEVELOPPEMENT'),
+       (5, 57, 18, 1, 'DEVELOPPEMENT'),
 
-       (3, 82, 32, 1, 'DEPLOIEMENT'),
-       (5, 72, 32, 1, 'DEPLOIEMENT'),
+       (3, 61, 19, 1, 'DEVELOPPEMENT'),
+       (5, 64, 19, 1, 'DEVELOPPEMENT'),
 
-       (3, 85, 33, 1, 'DEPLOIEMENT'),
-       (5, 88, 33, 1, 'DEPLOIEMENT'),
+       (3, 61, 20, 1, 'DEVELOPPEMENT'),
+       (5, 65, 20, 1, 'DEVELOPPEMENT'),
 
-       (3, 85, 34, 1, 'DEPLOIEMENT'),
-       (5, 89, 34, 1, 'DEPLOIEMENT'),
+       (3, 61, 21, 1, 'DEVELOPPEMENT'),
+       (5, 66, 21, 1, 'DEVELOPPEMENT'),
 
-       (3, 85, 35, 1, 'DEPLOIEMENT'),
-       (5, 90, 35, 1, 'DEPLOIEMENT'),
+       (5, 69, 22, 1, 'TEST'),
 
-       (5, 93, 36, 1, 'MAINTENANCE'),
+       (3, 75, 23, 1, 'TEST'),
+       (3, 74, 23, 1, 'TEST'),
+       (1, 69, 23, 1, 'TEST'),
+       (3, 77, 23, 1, 'TEST'),
+       (3, 74, 23, 1, 'TEST'),
+       (2, 69, 23, 1, 'TEST'),
+       (3, 71, 23, 1, 'TEST'),
+       (3, 75, 23, 1, 'TEST'),
+       (2, 74, 23, 1, 'TEST'),
+       (3, 71, 23, 1, 'TEST'),
+       (3, 77, 23, 1, 'TEST'),
+       (5, 74, 23, 1, 'TEST'),
 
-       (3, 99, 37, 1, 'MAINTENANCE'),
-       (3, 98, 37, 1, 'MAINTENANCE'),
-       (1, 93, 37, 1, 'MAINTENANCE'),
-       (3, 101, 37, 1, 'MAINTENANCE'),
-       (3, 98, 37, 1, 'MAINTENANCE'),
-       (2, 93, 37, 1, 'MAINTENANCE'),
-       (3, 95, 37, 1, 'MAINTENANCE'),
-       (3, 99, 37, 1, 'MAINTENANCE'),
-       (2, 98, 37, 1, 'MAINTENANCE'),
-       (3, 93, 37, 1, 'MAINTENANCE'),
-       (3, 101, 37, 1, 'MAINTENANCE'),
-       (5, 98, 37, 1, 'MAINTENANCE'),
+       (3, 75, 23, 2, 'TEST'),
+       (3, 74, 23, 2, 'TEST'),
+       (1, 69, 23, 2, 'TEST'),
+       (3, 77, 23, 2, 'TEST'),
+       (3, 74, 23, 2, 'TEST'),
+       (5, 69, 23, 2, 'TEST'),
 
-       (3, 99, 37, 2, 'MAINTENANCE'),
-       (3, 98, 37, 2, 'MAINTENANCE'),
-       (1, 93, 37, 2, 'MAINTENANCE'),
-       (3, 101, 37, 2, 'MAINTENANCE'),
-       (3, 98, 37, 2, 'MAINTENANCE'),
-       (5, 93, 37, 2, 'MAINTENANCE'),
+       (3, 70, 23, 3, 'TEST'),
+       (5, 69, 23, 3, 'TEST'),
 
-       (3, 94, 37, 3, 'MAINTENANCE'),
-       (5, 93, 37, 3, 'MAINTENANCE'),
+       (3, 78, 24, 1, 'TEST'),
+       (5, 69, 24, 1, 'TEST'),
 
-       (3, 102, 38, 1, 'MAINTENANCE'),
-       (5, 93, 38, 1, 'MAINTENANCE'),
+       (3, 79, 25, 1, 'TEST'),
+       (5, 69, 25, 1, 'TEST'),
 
-       (3, 103, 39, 1, 'MAINTENANCE'),
-       (5, 93, 39, 1, 'MAINTENANCE');
+       (3, 83, 26, 1, 'TEST'),
+       (5, 86, 26, 1, 'TEST'),
 
-/*HORS_PHASE*/
+       (3, 83, 27, 1, 'TEST'),
+       (5, 87, 27, 1, 'TEST'),
+
+       (3, 83, 28, 1, 'TEST'),
+       (5, 88, 28, 1, 'TEST'),
+
+       (5, 91, 29, 1, 'DEPLOIEMENT'),
+
+       (3, 97, 30, 1, 'DEPLOIEMENT'),
+       (3, 96, 30, 1, 'DEPLOIEMENT'),
+       (1, 91, 30, 1, 'DEPLOIEMENT'),
+       (3, 99, 30, 1, 'DEPLOIEMENT'),
+       (3, 96, 30, 1, 'DEPLOIEMENT'),
+       (2, 91, 30, 1, 'DEPLOIEMENT'),
+       (3, 93, 30, 1, 'DEPLOIEMENT'),
+       (3, 97, 30, 1, 'DEPLOIEMENT'),
+       (2, 96, 30, 1, 'DEPLOIEMENT'),
+       (3, 93, 30, 1, 'DEPLOIEMENT'),
+       (3, 99, 30, 1, 'DEPLOIEMENT'),
+       (5, 96, 30, 1, 'DEPLOIEMENT'),
+
+       (3, 97, 30, 2, 'DEPLOIEMENT'),
+       (3, 96, 30, 2, 'DEPLOIEMENT'),
+       (1, 91, 30, 2, 'DEPLOIEMENT'),
+       (3, 99, 30, 2, 'DEPLOIEMENT'),
+       (3, 96, 30, 2, 'DEPLOIEMENT'),
+       (5, 91, 30, 2, 'DEPLOIEMENT'),
+
+       (3, 92, 30, 3, 'DEPLOIEMENT'),
+       (5, 91, 30, 3, 'DEPLOIEMENT'),
+
+       (3, 100, 31, 1, 'DEPLOIEMENT'),
+       (5, 91, 31, 1, 'DEPLOIEMENT'),
+
+       (3, 101, 32, 1, 'DEPLOIEMENT'),
+       (5, 91, 32, 1, 'DEPLOIEMENT'),
+
+       (3, 105, 33, 1, 'DEPLOIEMENT'),
+       (5, 108, 33, 1, 'DEPLOIEMENT'),
+
+       (3, 105, 34, 1, 'DEPLOIEMENT'),
+       (5, 109, 34, 1, 'DEPLOIEMENT'),
+
+       (3, 105, 35, 1, 'DEPLOIEMENT'),
+       (5, 110, 35, 1, 'DEPLOIEMENT'),
+
+       (5, 113, 36, 1, 'MAINTENANCE'),
+
+       (3, 119, 37, 1, 'MAINTENANCE'),
+       (3, 118, 37, 1, 'MAINTENANCE'),
+       (1, 113, 37, 1, 'MAINTENANCE'),
+       (3, 121, 37, 1, 'MAINTENANCE'),
+       (3, 118, 37, 1, 'MAINTENANCE'),
+       (2, 113, 37, 1, 'MAINTENANCE'),
+       (3, 115, 37, 1, 'MAINTENANCE'),
+       (3, 119, 37, 1, 'MAINTENANCE'),
+       (2, 118, 37, 1, 'MAINTENANCE'),
+       (3, 113, 37, 1, 'MAINTENANCE'),
+       (3, 121, 37, 1, 'MAINTENANCE'),
+       (5, 118, 37, 1, 'MAINTENANCE'),
+
+       (3, 119, 37, 2, 'MAINTENANCE'),
+       (3, 118, 37, 2, 'MAINTENANCE'),
+       (1, 113, 37, 2, 'MAINTENANCE'),
+       (3, 121, 37, 2, 'MAINTENANCE'),
+       (3, 118, 37, 2, 'MAINTENANCE'),
+       (5, 113, 37, 2, 'MAINTENANCE'),
+
+       (3, 114, 37, 3, 'MAINTENANCE'),
+       (5, 113, 37, 3, 'MAINTENANCE'),
+
+       (3, 122, 38, 1, 'MAINTENANCE'),
+       (5, 113, 38, 1, 'MAINTENANCE'),
+
+       (3, 123, 39, 1, 'MAINTENANCE'),
+       (5, 113, 39, 1, 'MAINTENANCE');
+
+
 --Création Questions proposées
+/*HORS_PHASE*/
 INSERT INTO questionpropose (intitule, phase, vote, isapprove)
 VALUES ('Est-ce que vous avez des consoles de jeux en salle de pause ?', 'HORS_PHASE', 0, 0);
 
