@@ -119,11 +119,11 @@ VALUES
     ('Combien de km en avion sont effectués pour le projet ?', 1, 'NUMERIC', 'HORS_PHASE'),
 
     /*PLANIFICATION*/
-    ('Veux-tu remplir cette phase ?', 2, 'QCM', 'PLANIFICATION'),
+    ('Veux-tu apporté des données concernant la phase de planification ?', 2, 'QCM', 'PLANIFICATION'),
     ('Combien de jours dure cette phase ?', 3, 'NUMERIC', 'PLANIFICATION'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 4, 'NUMERIC', 'PLANIFICATION'),
-    ('Combien de jours de télé-travail vos collaborateur ont pour cette phase ?', 5, 'NUMERIC', 'PLANIFICATION'),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 6, 'QCM', 'PLANIFICATION'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 5, 'NUMERIC', 'PLANIFICATION'),
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 6, 'QCM', 'PLANIFICATION'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 7, 'NUMERIC',
      'PLANIFICATION'),
     ('Combien viennent en voiture ?', 8, 'NUMERIC', 'PLANIFICATION'),
@@ -133,11 +133,11 @@ VALUES
     ('Combien de PC portables utilises-tu pour cette phase ?', 12, 'NUMERIC', 'PLANIFICATION'),
 
     /*DEVELOPPEMENT*/
-    ('Veux-tu remplir cette phase?', 13, 'QCM', 'DEVELOPPEMENT'),
+    ('Veux-tu apporté des données concernant la phase de developpement  ?', 13, 'QCM', 'DEVELOPPEMENT'),
     ('Combien de jours dure cette phase ?', 14, 'NUMERIC', 'DEVELOPPEMENT'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 15, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Combien de jours de télé-travail vos collaborateur ont pour cette phase ?', 16, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 17, 'QCM', 'DEVELOPPEMENT'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 16, 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 17, 'QCM', 'DEVELOPPEMENT'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 18, 'NUMERIC',
      'DEVELOPPEMENT'),
     ('Combien viennent en voiture ?', 19, 'NUMERIC', 'DEVELOPPEMENT'),
@@ -149,7 +149,6 @@ VALUES
     ('Combien de lignes de code ?', 25, 'NUMERIC', 'DEVELOPPEMENT'),
     ('Quel langage utilises-tu majoritairement pour le front ?', 26, 'QCM', 'DEVELOPPEMENT'),
     ('Combien de lignes de code ?', 27, 'NUMERIC', 'DEVELOPPEMENT'),
-
     ('Utilises-tu un DataCenter ?', 28, 'QCM', 'DEVELOPPEMENT'),
     ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 29, 'NUMERIC', 'DEVELOPPEMENT'),
     ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 30, 'QCM',
@@ -157,11 +156,11 @@ VALUES
     ('Quelle énergie alimente majoritairement ton DataCenter ?', 31, 'QCM', 'DEVELOPPEMENT'),
 
     /*TEST*/
-    ('Veux-tu remplir cette phase?', 32, 'QCM', 'TEST'),
+    ('Veux-tu apporté des données concernant la phase de test  ?', 32, 'QCM', 'TEST'),
     ('Combien de jours dure cette phase ?', 33, 'NUMERIC', 'TEST'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 34, 'NUMERIC', 'TEST'),
-    ('Combien de jours de télé-travail vos collaborateur ont pour cette phase ?', 35, 'NUMERIC', 'TEST'),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 36, 'QCM', 'TEST'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 35, 'NUMERIC', 'TEST'),
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 36, 'QCM', 'TEST'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 37, 'NUMERIC',
      'TEST'),
     ('Combien viennent en voiture ?', 38, 'NUMERIC', 'TEST'),
@@ -176,11 +175,11 @@ VALUES
     ('Quelle énergie alimente majoritairement ton DataCenter ?', 46, 'QCM', 'TEST'),
 
     /*DEPLOIEMENT*/
-    ('Veux-tu remplir cette phase?', 47, 'QCM', 'DEPLOIEMENT'),
+    ('Veux-tu apporté des données concernant la phase de deploiement  ?', 47, 'QCM', 'DEPLOIEMENT'),
     ('Combien de jours dure cette phase ?', 48, 'NUMERIC', 'DEPLOIEMENT'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 49, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de jours de télé-travail vos collaborateur ont pour cette phase ?', 50, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 51, 'QCM', 'DEPLOIEMENT'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 50, 'NUMERIC', 'DEPLOIEMENT'),
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 51, 'QCM', 'DEPLOIEMENT'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 52, 'NUMERIC',
      'DEPLOIEMENT'),
     ('Combien viennent en voiture ?', 53, 'NUMERIC', 'DEPLOIEMENT'),
@@ -194,11 +193,11 @@ VALUES
     ('Quelle énergie alimente majoritairement ton DataCenter ?', 61, 'QCM', 'DEPLOIEMENT'),
 
     /*MAINTENANCE*/
-    ('Veux-tu remplir cette phase?', 62, 'QCM', 'MAINTENANCE'),
+    ('Veux-tu apporté des données concernant la phase de maintenance  ?', 62, 'QCM', 'MAINTENANCE'),
     ('Combien de jours dure cette phase ?', 63, 'NUMERIC', 'MAINTENANCE'),
     ('Combien de collaborateurs travaillent sur cette phase ?', 64, 'NUMERIC', 'MAINTENANCE'),
-    ('Combien de jours de télé-travail vos collaborateur ont pour cette phase ?', 65, 'NUMERIC', 'MAINTENANCE'),
-    ('Connais-tu à peu près la distance de trajet de tes collaborateurs ?', 66, 'QCM', 'MAINTENANCE'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 65, 'NUMERIC', 'MAINTENANCE'),
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 66, 'QCM', 'MAINTENANCE'),
     ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 67, 'NUMERIC',
      'MAINTENANCE'),
     ('Combien viennent en voiture ?', 68, 'NUMERIC', 'MAINTENANCE'),
