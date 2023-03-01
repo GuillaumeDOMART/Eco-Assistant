@@ -808,13 +808,13 @@ UPDATE question
 SET dependance = 17
 WHERE idquestion = 29;
 UPDATE question
-SET dependance = 41
+SET dependance = 58
 WHERE idquestion = 30;
 UPDATE question
-SET dependance = 41
+SET dependance = 58
 WHERE idquestion = 31;
 UPDATE question
-SET dependance = 44
+SET dependance = 62
 WHERE idquestion = 32;
 
 /*TEST*/
@@ -822,46 +822,46 @@ UPDATE question
 SET dependance = null
 WHERE idquestion = 33;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 34;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 35;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 36;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 37;
 UPDATE question
-SET dependance = 54
+SET dependance = 72
 WHERE idquestion = 38;
 UPDATE question
-SET dependance = 54
+SET dependance = 72
 WHERE idquestion = 39;
 UPDATE question
-SET dependance = 54
+SET dependance = 72
 WHERE idquestion = 40;
 UPDATE question
-SET dependance = 54
+SET dependance = 72
 WHERE idquestion = 41;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 42;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 43;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 44;
 UPDATE question
-SET dependance = 62
+SET dependance = 80
 WHERE idquestion = 45;
 UPDATE question
-SET dependance = 62
+SET dependance = 80
 WHERE idquestion = 46;
 UPDATE question
-SET dependance = 65
+SET dependance = 84
 WHERE idquestion = 47;
 
 /*DEPLOIEMENT*/
@@ -869,46 +869,46 @@ UPDATE question
 SET dependance = null
 WHERE idquestion = 48;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 49;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 50;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 51;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 52;
 UPDATE question
-SET dependance = 75
+SET dependance = 94
 WHERE idquestion = 53;
 UPDATE question
-SET dependance = 75
+SET dependance = 94
 WHERE idquestion = 54;
 UPDATE question
-SET dependance = 75
+SET dependance = 94
 WHERE idquestion = 55;
 UPDATE question
-SET dependance = 75
+SET dependance = 94
 WHERE idquestion = 56;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 57;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 58;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 59;
 UPDATE question
-SET dependance = 83
+SET dependance = 102
 WHERE idquestion = 60;
 UPDATE question
-SET dependance = 83
+SET dependance = 102
 WHERE idquestion = 61;
 UPDATE question
-SET dependance = 86
+SET dependance = 106
 WHERE idquestion = 62;
 
 /*MAITENANCE*/
@@ -916,32 +916,32 @@ UPDATE question
 SET dependance = null
 WHERE idquestion = 63;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 64;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 65;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 66;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 67;
 UPDATE question
-SET dependance = 96
+SET dependance = 116
 WHERE idquestion = 68;
 UPDATE question
-SET dependance = 96
+SET dependance = 116
 WHERE idquestion = 69;
 UPDATE question
-SET dependance = 96
+SET dependance = 116
 WHERE idquestion = 70;
 UPDATE question
-SET dependance = 96
+SET dependance = 116
 WHERE idquestion = 71;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 72;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 73;
