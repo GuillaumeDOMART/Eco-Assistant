@@ -1,22 +1,36 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Alert, Button, Modal} from "react-bootstrap";
-import {Table} from "@mui/material";
+import {Alert, Button, Container, Modal, Row, Table} from "react-bootstrap";
 
 
 /**
  * Generate a web page containing a navigation bar and a project listing table
  */
 function Moderation(){
-    let tableToDisplay = <UsersList/>
 
     return (
         <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
             <BarreNavCore/>
-            <div className="col-10 p-5">{tableToDisplay}</div>
+            <Container className="col-10 p-5 h-100">
+                <ListContainer/>
+            </Container>
         </div>
     );
+}
+function ListContainer(){
+
+    return (
+        <>
+            <h1>Modération</h1>
+            <br/>
+            <Container className="h-25 w-100">
+                <UsersList/>
+            </Container>
+            <Container className="p-5 h-25 w-100"/>
+
+        </>
+    )
 }
 const filterItems = (items,query)=>{
     return items.filter((item)=>{
@@ -62,10 +76,10 @@ function LigneTableauUsers(datas) {
     const handleClick = useCallback(() => {
         sessionStorage.setItem("user",datas.id)
 
-    }, [navigate, datas.id])
+    }, [datas.id])
     const executeHandleShow = useCallback( ()=>{
         handleShow(datas.itemSelected)
-    },[datas])
+    },[datas,handleShow])
     /**
      * Dissociate the project describe by the id
      * @type {(function(*=): void)|*}
@@ -169,16 +183,16 @@ function UsersList(){
         return (
             <>
                 <SearchBar searchQuery={searchQuery} onChange={handleSearchChange}/>
-                <br/>
-
-                <Table>
-                    <TableauUsersHeader/>
-                <tbody>
-                    {filteredItems.map((item) => (
-                        <LigneTableauUsers key={item.id} {...item} setItems={setItems}>{item.nom}</LigneTableauUsers>
-                    ))}
-                </tbody>
-                </Table>
+                <Container className="w-100 h-100 navbar-nav-scroll">
+                    <Table>
+                        <TableauUsersHeader/>
+                        <tbody>
+                        {filteredItems.map((item) => (
+                            <LigneTableauUsers key={item.id} {...item} setItems={setItems}>{item.nom}</LigneTableauUsers>
+                        ))}
+                        </tbody>
+                    </Table>
+                </Container>
             </>
         );
 
@@ -197,7 +211,7 @@ function SearchBar(datas) {
                 id="header-search"
                 placeholder="Rechercher des utilisateurs"
             />
-            </>
+        </>
     );
 }
 
