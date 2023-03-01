@@ -75,7 +75,7 @@ public class AuthenticationService {
         profile.setPassword(encodedPassword);
 
         profilRepository.save(profile);
-        var token = jwtService.generateToken(profile);
+        var token = jwtService.generateShortToken(profile);
         emailSenderService.sendEmail(registerInputDto.getMail(), "Eco-Assistant: Création de compte", "Voici le liens pour crée votre compte: https://" + domain + "/verifyMail?token=" + token);
         return ResponseEntity.ok(true);
     }
@@ -157,7 +157,7 @@ public class AuthenticationService {
         var claims = new HashMap<String, Object>() {{
             put("verify", true);
         }};
-        var token = jwtService.generateToken(profile.get(), claims);
+        var token = jwtService.generateShortToken(profile.get(), claims);
         try {
             emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de passe oublié", "Voici le liens pour changer vôtre mot de pass: https://" + domain + "/forgotPassword?token=" + token);
         } catch (MailException exception) {

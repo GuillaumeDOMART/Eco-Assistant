@@ -28,28 +28,48 @@ public class JwtService {
     private final static String SECRET_KEY = "9nWcIUOcoBTOrAJjkSi3Ltl/OJpEyXvLPZ3R8hF6pZs=";
 
     /**
-     * Function for generate token form a profile
+     * Function for generate token from a profile
      * @param profilEntity profile use for generate token
      * @return the token
      */
     public String generateToken(ProfilEntity profilEntity){
-        return  generateToken(profilEntity, new HashMap<>());
+        return  generateToken(profilEntity, new HashMap<>(),86400000);
     }
 
     /**
      * Function for generate token form a profile with extra claims
      * @param profilEntity profile use for generate token
      * @param claims extra claims
+     * @param time expiration time
      * @return the token
      */
-    public String generateToken(ProfilEntity profilEntity, Map<String, Object> claims){
+    public String generateToken(ProfilEntity profilEntity, Map<String, Object> claims, int time){
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(profilEntity.getMail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000))//set expiration date in 1 day
+                .setExpiration(new Date(System.currentTimeMillis() + time))//set expiration date in 1 day
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    /**
+     * Function for generate token with an expiration of 15min from a profile
+     * @param profilEntity profile use for generate token
+     * @return the token
+     */
+    public String generateShortToken(ProfilEntity profilEntity){
+        return generateToken(profilEntity, new HashMap<>(),900000);
+    }
+
+    /**
+     * Function for generate token with an expiration of 15min from a profile with extra claims
+     * @param profilEntity profile use for generate token
+     * @param claims extra claims
+     * @return the token
+     */
+    public String generateShortToken(ProfilEntity profilEntity, Map<String, Object> claims ){
+        return generateToken(profilEntity, claims,900000);
     }
 
     /**

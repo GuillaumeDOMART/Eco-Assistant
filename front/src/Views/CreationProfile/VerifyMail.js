@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 
@@ -8,6 +8,8 @@ import {useNavigate} from "react-router-dom";
  */
 function ProfilVerifyMail() {
     const navigate = useNavigate();
+    const [showAlert, setShowAlert] = useState(false);
+
 
     useEffect(() => {
         const token = new URLSearchParams(window.location.search).get('token');
@@ -24,14 +26,19 @@ function ProfilVerifyMail() {
         fetch("/api/profil/register", requestOptions)
             .then(response => {
                 if (response.status === 403) {
-
+                    setShowAlert(true);
                 } else {
                     sessionStorage.setItem("token", token)
-                    navigate("/profil")
+                    navigate("/profil");
                 }
             })
     }, [navigate]);
 
+    return (
+        <Alert show={showAlert} variant="danger">
+            Lien d'activation expiré
+        </Alert>
+        )
 }
 
 export default ProfilVerifyMail
