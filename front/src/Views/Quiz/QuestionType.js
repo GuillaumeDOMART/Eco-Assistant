@@ -11,14 +11,16 @@ export const QCM = React.forwardRef(({onChange, name, question}, ref) => {
     return (
         <div style={{marginTop: '20px'}} className="shadow-lg rounded p-3">
             <h5>{question.intitule}</h5>
-            <RadioGroup className="mx-5" defaultValue={question.reponses[0].intitule}>
+            <RadioGroup className="mx-5">
                 {question.reponses.map((data) => {
                     return (
                         <FormControlLabel
                             value={data.intitule}
                             key={data.intitule}
                             label={data.intitule}
-                            control={<Radio ref={ref} name={name} onChange={onChange}/>}
+                            control={
+                                <Radio ref={ref} name={name} onChange={onChange}/>
+                            }
                         />
                     )
                 })}<br/>
