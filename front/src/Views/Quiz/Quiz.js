@@ -50,7 +50,7 @@ function StepperComponent() {
             setData(json);
         } else {
             setIsLoaded(true);
-            setErrorApiGetQuestionnaire(response.text());
+            setErrorApiGetQuestionnaire("Erreur lors de la récupération du questionnaire");
         }
 
     }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep])

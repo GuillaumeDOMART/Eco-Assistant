@@ -29,7 +29,7 @@ export default function Phase({value, register, onChange}) {
             return (
                 <QCM key={value.intitule}
                      question={value}
-                     {...register(value.questionId.toString())}
+                     register={register}
                      onChange={handleChange}
                 />
             )
