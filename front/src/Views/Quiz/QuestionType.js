@@ -7,13 +7,11 @@ import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
  * @returns {JSX.Element}
  * @constructor
  */
-export const QCM = React.forwardRef(({onChange, name, question, register}, ref) => {
+export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, ref) => {
     return (
         <div style={{marginTop: '20px'}} className="shadow-lg rounded p-3">
             <h5>{question.intitule}</h5>
-            <RadioGroup className="mx-5"
-                        {...register(question.questionId.toString())}
-            >
+            <RadioGroup className="mx-5">
                 {question.reponses.map((data) => {
                     return (
                         <FormControlLabel
@@ -21,7 +19,10 @@ export const QCM = React.forwardRef(({onChange, name, question, register}, ref) 
                             key={data.intitule}
                             label={data.intitule}
                             control={
-                                <Radio ref={ref} name={name} onChange={onChange}/>
+                                <Radio ref={ref} name={name} onChange={event => {
+                                onChange(event);
+                                onVisibility(event)}
+                                }/>
                             }
                         />
                     )
