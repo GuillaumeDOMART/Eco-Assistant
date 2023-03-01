@@ -19,7 +19,7 @@ export const QCM = React.forwardRef(({onChange, name, question}, ref) => {
                             key={data.intitule}
                             label={data.intitule}
                             control={
-                                <Radio ref={ref} name={name} onChange={onChange}/>
+                                <Radio ref={ref} name={name} onChange={onChange} />
                             }
                         />
                     )

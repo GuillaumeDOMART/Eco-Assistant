@@ -1,100 +1,13 @@
 import {useCallback, useEffect, useState} from 'react';
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom";
 import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import Phase from "./Phase";
+import StepForm from "./StepForm";
+import StepBox from "./StepBox";
 
 const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiement", "Maintenance"];
-
-/**
- * FormConponnents
- * @param activeStep activeStep
- * @param data data
- * @param selectedAnswers selectedAnswers
- * @param handleSubmit handleSubmit
- * @param handleChange handleChange
- * @param handleBack handleBack
- * @param register register
- * @param onSubmit onSubmit
- * @returns {JSX.Element} oui
- * @constructor
- */
-function StepForm({activeStep, data, selectedAnswers, handleSubmit, handleChange, handleBack, register, onSubmit}) {
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}
-              className="navbar-nav-scroll mt-4 col-8"
-              style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
-        >
-            {data.map(question => {
-                    const check = selectedAnswers.find(answer => {
-                        return question.dependance === answer.reponseId;
-                    })
-                    if (question.dependance === -1 || check) {
-                        return (
-                            // <Phase key={question.questionId}
-                            //        register={register}
-                            //        value={question}
-                            //        onChange={handleChange}
-                            // />)
-                            <div>
-                                {question.phase}
-                            </div>)
-                    }
-                    return (
-                        <div key={question.questionId}>
-                        </div>
-                    );
-                }
-            )}
-            <Box className="">
-                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                    <Button
-                        color="inherit"
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{mr: 1}}
-                    >
-                        Back
-                    </Button>
-                    <Box sx={{flex: '1 1 auto'}}/>
-
-                    <Button type={"submit"}>
-                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                    </Button>
-                </Box>
-            </Box>
-        </form>
-    );
-}
-
-/**
- * components
- * @param activeStep activeStep
- * @returns {JSX.Element} truc
- * @constructor
- */
-function StepBox({activeStep}) {
-    return (
-        <Box className="mt-3">
-            <Stepper activeStep={activeStep} alternativeLabel>
-                {steps.map((label) => {
-                    const stepProps = {};
-                    const labelProps = {};
-                    return (
-                        <Step key={label} {...stepProps}>
-                            <StepLabel {...labelProps}>{label}</StepLabel>
-                        </Step>
-                    );
-                })}
-            </Stepper>
-        </Box>
-    );
-}
 
 /**
  * The component representing the Stepper
@@ -108,23 +21,19 @@ function StepperComponent() {
     const [data, setData] = useState({})
     const [selectedAnswers, setSelectedAnswers] = useState([])
     const {register, handleSubmit, reset} = useForm();
-    const [phase, setPhase] = useState("HORS_PHASE");
     const navigate = useNavigate();
 
 
     const handlePhase = useCallback(() => {
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
+        setSelectedAnswers([])
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
 
-        reset()
-        setPhase(steps[activeStep])
-        setSelectedAnswers([])
-
         const raw = JSON.stringify({
-            "phase": phase.toUpperCase(),
+            "phase": steps[activeStep].toUpperCase(),
             id
         });
 
@@ -147,16 +56,15 @@ function StepperComponent() {
                     setErrorApiGetQuestionnaire(error);
                 }
             )
-    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, setPhase, activeStep, phase, reset])
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep])
 
     /**
      * Go to the next step
      */
     const handleNext = useCallback(
         () => {
-            handlePhase()
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
+            handlePhase()
         },
         [handlePhase]
     );
@@ -166,8 +74,8 @@ function StepperComponent() {
      */
     const handleBack = useCallback(
         () => {
-            handlePhase()
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            handlePhase()
         },
         [handlePhase]
     );
@@ -199,7 +107,7 @@ function StepperComponent() {
      */
     const onSubmit = useCallback(
         (dataList) => {
-            // alert(JSON.stringify(dataList))
+            alert(JSON.stringify(dataList))
             const projectId = sessionStorage.getItem("project")
             const sendToBack = {}
             const responses = []
@@ -237,7 +145,8 @@ function StepperComponent() {
 
     useEffect(() => {
         handlePhase()
-    }, [handlePhase])
+        reset()
+    }, [handlePhase, reset])
 
     if (errorApiGetQuestionnaire) {
         return <div>Error: {errorApiGetQuestionnaire.message}</div>;
@@ -251,9 +160,13 @@ function StepperComponent() {
     return (
         <Container fluid>
             <Row>
-                <StepBox activeStep={activeStep}/>
+                <StepBox
+                    activeStep={activeStep}
+                    steps={steps}
+                />
                 <Col></Col>
                 <StepForm
+                    steps={steps}
                     activeStep={activeStep}
                     data={data}
                     selectedAnswers={selectedAnswers}
