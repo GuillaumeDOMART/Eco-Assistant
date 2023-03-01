@@ -6,7 +6,7 @@ import com.ecoassitant.back.dto.ProfilDto;
 import com.ecoassitant.back.dto.ProfilIdDto;
 import com.ecoassitant.back.dto.ProfilSimplDto;
 import com.ecoassitant.back.entity.ProfilEntity;
-import com.ecoassitant.back.exception.NoSuchElementInDataBase;
+import com.ecoassitant.back.exception.NoSuchElementInDataBaseException;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.service.ProfilService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +84,7 @@ public class ProfilServiceImpl implements ProfilService {
     public ProfilDto recupererProfilAvecId(Integer id) {
         var profil =  repository.findById(id);
         if(profil.isEmpty()){
-            throw new NoSuchElementInDataBase();
+            throw new NoSuchElementInDataBaseException();
         }
         return new ProfilDto(profil.get());
     }
@@ -93,7 +93,7 @@ public class ProfilServiceImpl implements ProfilService {
     public ProfilDto recupererProfilAvecMail(String mail) {
         var profil =  repository.findByMail(mail);
         if(profil.isEmpty()){
-            throw new NoSuchElementInDataBase();
+            throw new NoSuchElementInDataBaseException();
         }
         return new ProfilDto(profil.get());
     }
@@ -104,7 +104,7 @@ public class ProfilServiceImpl implements ProfilService {
         var mail = jwtService.extractMail(token);
         var profil = repository.findByMail(mail);
         if(profil.isEmpty()){
-            throw new NoSuchElementInDataBase();
+            throw new NoSuchElementInDataBaseException();
         }
         return new ProfilDto(profil.get());
 

@@ -1,6 +1,6 @@
 package com.ecoassitant.back.handler;
 
-import com.ecoassitant.back.exception.NoSuchElementInDataBase;
+import com.ecoassitant.back.exception.NoSuchElementInDataBaseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,10 +9,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Map;
 
+/**
+ * Exception Handler
+ */
 @ControllerAdvice
-public class ExecptionHandler extends ResponseEntityExceptionHandler {
+public class EntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(NoSuchElementInDataBase.class)
+    /**
+     * Handler for NoSuchElementInDataBaseException
+     * @return ResponseEntity 404
+     */
+    @ExceptionHandler(NoSuchElementInDataBaseException.class)
     public ResponseEntity<Object> noSuchElementInDataBaseHandler(){
 
         return new ResponseEntity<>(Map.of("error", "not found"),HttpStatus.NOT_FOUND);

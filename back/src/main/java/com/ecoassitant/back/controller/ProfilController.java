@@ -108,6 +108,11 @@ public class ProfilController {
 
     }
 
+    /**
+     * Function to finalize profile creation
+     * @param authorizationHeader bearer token
+     * @return if the account was created
+     */
     @PatchMapping("profil/register")
     public ResponseEntity<Boolean> register(@RequestHeader("Authorization") String authorizationHeader) {
         return profilService.register(authorizationHeader.substring(7));
