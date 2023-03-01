@@ -2,6 +2,9 @@ package com.ecoassitant.back.utils;
 
 import java.util.Random;
 
+/**
+ * Class that group method to generate string
+ */
 public class StringGeneratorUtils {
 
     /**

@@ -39,7 +39,7 @@ const Connexion = ({onSubmit, register, navigate, fieldErrors}) => {
                            required/><br/>
                 <TextField id="outlined-error-helper-text" label="Adresse Mail" type="email" variant="standard"
                            className="textfield " {...register("mail")} required
-                           error={!!fieldErrors.mail}
+                           error={!Boolean(fieldErrors.mail)}
                            helperText={fieldErrors.mail}/><br/>
 
                 <StrengthMeter className={"align-items-center"} register={register} fieldErrors={fieldErrors}/><br/>
@@ -47,7 +47,7 @@ const Connexion = ({onSubmit, register, navigate, fieldErrors}) => {
                 <TextField id="outlined-error-helper-text" label="Valider le mot de passe" type="password"
                            variant="standard"
                            className="textfield " {...register("passwordConfirmed")} required
-                           error={!!fieldErrors.password}
+                           error={!Boolean(fieldErrors.password)}
                            helperText={fieldErrors.password}/><br/>
 
                 <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>

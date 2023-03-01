@@ -19,7 +19,7 @@ function Project({onSubmit, register, fieldErrors}) {
             <form onSubmit={onSubmit} className="">
                 <TextField label="Nom du projet" type="text" variant="standard"
                            className="textfield" {...register("nom")} required
-                           error={!!fieldErrors.nom}
+                           error={!Boolean(fieldErrors.nom)}
                            helperText={fieldErrors.nom}/><br/>
                 <Button type="submit">Créer le projet</Button><br/>
             </form>
@@ -76,7 +76,7 @@ function CreateProject() {
         }
 
         const json = await response.json()
-            .catch((err) => setParagraphContent("Une erreur innatendue est survenue, veuillez réesayer plus tard"));
+            .catch((_) => setParagraphContent("Une erreur innatendue est survenue, veuillez réesayer plus tard"));
 
 
         if (response.status >= 400 && json.fieldErrors) {

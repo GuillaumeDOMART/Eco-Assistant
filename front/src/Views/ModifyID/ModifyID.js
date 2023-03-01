@@ -9,7 +9,7 @@ import {useCallback, useState} from "react";
  * @returns {JSX.Element} the jsx element
  * @constructor the constructor
  */
-function ModifyID(callback, deps) {
+function ModifyID() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
     const [fieldErrors, setFieldErrors] = useState({});
@@ -73,11 +73,11 @@ function ModifyID(callback, deps) {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField label="Nouvelle adresse mail" type="email" variant="standard"
                                className="textfield" {...register("newMail")} required
-                               error={!!fieldErrors.mail}
+                               error={!Boolean(fieldErrors.mail)}
                                helperText={fieldErrors.mail}/><br/>
                     <TextField label="Confirmer l'adresse mail" type="email" variant="standard"
                                className="textfield" {...register("confirmMail")} required onPaste={handlePaste}
-                               error={!!fieldErrors.mailConfirm}
+                               error={!Boolean(fieldErrors.mailConfirm)}
                                helperText={fieldErrors.mailConfirm}/><br/>
 
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
