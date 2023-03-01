@@ -6,6 +6,7 @@ import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.dto.project.ProjetSimpleDto;
 import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.service.impl.AuthenticationService;
@@ -99,6 +100,7 @@ public class ProjetController {
                 .nomProjet(projet.getNom())
                 .profil(profil)
                 .etat(Etat.INPROGRESS)
+                .type(projet.getType().equals("simulation")? TypeP.SIMULATION:TypeP.PROJET)
                 .build();
         projetRepository.save(projetEntity);
         return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()), HttpStatus.OK);
