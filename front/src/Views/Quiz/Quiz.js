@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom";
 import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
-import Phase from "./Phase";
 import StepForm from "./StepForm";
 import StepBox from "./StepBox";
 
@@ -24,7 +23,7 @@ function StepperComponent() {
     const navigate = useNavigate();
 
 
-    const handlePhase = useCallback(() => {
+    const handlePhase = useCallback(async () => {
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
         setSelectedAnswers([])
@@ -44,27 +43,24 @@ function StepperComponent() {
             redirect: 'follow'
         };
 
-        fetch("/api/questions/phase", requestOptions)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setData(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setErrorApiGetQuestionnaire(error);
-                }
-            )
+        const response = await fetch("/api/questions/phase", requestOptions)
+        if (response.ok) {
+            const json = await response.json();
+            setIsLoaded(true);
+            setData(json);
+        } else {
+            setIsLoaded(true);
+            setErrorApiGetQuestionnaire(response.text());
+        }
+
     }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep])
 
     /**
-     * Go to the next step
      */
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            handlePhase()
+            handlePhase().then(r => r)
         },
         [handlePhase]
     );
@@ -75,7 +71,7 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            handlePhase()
+            handlePhase().then(r => r)
         },
         [handlePhase]
     );
@@ -144,8 +140,7 @@ function StepperComponent() {
     )
 
     useEffect(() => {
-        handlePhase()
-        reset()
+        handlePhase().then(() => reset())
     }, [handlePhase, reset])
 
     if (errorApiGetQuestionnaire) {
