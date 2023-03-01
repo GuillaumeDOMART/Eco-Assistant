@@ -103,7 +103,6 @@ function StepperComponent() {
      */
     const onSubmit = useCallback(
         (dataList) => {
-            alert(JSON.stringify(dataList))
             const projectId = sessionStorage.getItem("project")
             const sendToBack = {}
             const responses = []
