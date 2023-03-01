@@ -4,6 +4,7 @@ import com.ecoassitant.back.entity.ProfilEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +26,9 @@ import java.util.function.Function;
  */
 @Service
 public class JwtService {
-    private final static String SECRET_KEY = "9nWcIUOcoBTOrAJjkSi3Ltl/OJpEyXvLPZ3R8hF6pZs=";
+
+    @Value("${SECRET_KEY}")
+    private final static String SECRET_KEY;
 
     /**
      * Function for generate token from a profile
