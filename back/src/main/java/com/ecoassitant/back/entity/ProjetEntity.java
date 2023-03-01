@@ -1,6 +1,7 @@
 package com.ecoassitant.back.entity;
 
 import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.entity.tools.TypeP;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,4 +34,8 @@ public class ProjetEntity implements Serializable {
     @Column(name = "etat", nullable = false)
     @Enumerated(EnumType.STRING)
     private Etat etat;
+
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TypeP type;
 }

@@ -1,16 +1,14 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.config.JwtService;
-import com.ecoassitant.back.dto.ProfilDto;
-import com.ecoassitant.back.dto.ProfilIdDto;
-import com.ecoassitant.back.dto.ProfilSimplDto;
+import com.ecoassitant.back.dto.profil.ProfilDto;
+import com.ecoassitant.back.dto.profil.ProfilIdDto;
+import com.ecoassitant.back.dto.profil.ProfilSimplDto;
 import com.ecoassitant.back.entity.ProfilEntity;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.service.ProfilService;
 import com.ecoassitant.back.utils.StringGeneratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

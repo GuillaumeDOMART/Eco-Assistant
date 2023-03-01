@@ -1,9 +1,9 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
-import com.ecoassitant.back.dto.ProjectIdDto;
-import com.ecoassitant.back.dto.ProjetDto;
-import com.ecoassitant.back.dto.ProjetSimpleDto;
+import com.ecoassitant.back.dto.project.ProjectIdDto;
+import com.ecoassitant.back.dto.project.ProjetDto;
+import com.ecoassitant.back.dto.project.ProjetSimpleDto;
 import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.repository.ProfilRepository;

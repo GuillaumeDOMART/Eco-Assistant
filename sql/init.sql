@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS projet
     profilid  INT         NOT NULL,
     nomprojet VARCHAR(50) NOT NULL,
     etat      VARCHAR(50) NOT NULL,
+    type      VARCHAR(50) NOT NULL,
     CONSTRAINT profilid FOREIGN KEY (profilid) REFERENCES profil (idprofil),
     UNIQUE(profilid, nomprojet)
 );
@@ -104,13 +105,13 @@ VALUES ('admin@demo.fr', '$2a$10$b8qqjDh64vjz2/KsV9Yc8uYKMDTatn3cL6Bp7Uuhcwg/N0l
        ('anonyme@demo.fr', 'anonyme',
         'DEMO', 'Ano', 0);
 -- CREATION DES PROJETS DEVS ET SUPPORT
-INSERT INTO projet(profilid, nomprojet, etat)
+INSERT INTO projet(profilid, nomprojet, etat, type)
 VALUES (1, 'QUESTIONAIRE POUR Administrateur',
-        'INPROGRESS'),
+        'INPROGRESS', 'PROJET'),
        (2, 'QUESTIONAIRE POUR Salarie 1',
-        'INPROGRESS'),
+        'INPROGRESS', 'PROJET'),
        (2, 'QUESTIONAIRE POUR Salarie 2',
-        'INPROGRESS');
+        'INPROGRESS', 'SIMULATION');
 -- CREATION DES QUESTIONS
 INSERT INTO question (intitule, questionpre, typeq, phase)
 VALUES
