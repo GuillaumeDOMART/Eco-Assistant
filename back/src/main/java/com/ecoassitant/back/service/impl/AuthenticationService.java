@@ -8,6 +8,7 @@ import com.ecoassitant.back.dto.RegisterInputDto;
 import com.ecoassitant.back.dto.TokenDto;
 import com.ecoassitant.back.entity.ProfilEntity;
 import com.ecoassitant.back.repository.ProfilRepository;
+import com.ecoassitant.back.utils.StringGeneratorUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -105,13 +106,14 @@ public class AuthenticationService {
      */
     public ResponseEntity<TokenDto> guest() {
         for (int i = 0; i < 5; i++) {
-            var randomMail = "guest" + "." + generateRandomString(8) + "@eco-assistant-esipe.fr";
+            var randomMail = "guest" + "." + StringGeneratorUtils.generateRandomString(8) + "@eco-assistant-esipe.fr";
             if (profilRepository.findByMail(randomMail).isPresent()) {
                 continue;
             }
+            var encodedPassword = passwordEncoder.encode(StringGeneratorUtils.generateRandomPassword());
             var profile = ProfilEntity.builder()
                     .mail(randomMail)
-                    .password("guest")
+                    .password(encodedPassword)
                     .lastname("guest")
                     .firstname("guest")
                     .isAdmin(-1)
@@ -122,24 +124,6 @@ public class AuthenticationService {
             return ResponseEntity.ok(new TokenDto(token));
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    }
-
-    /**
-     * Function to generate a random string
-     *
-     * @param length the length of the random string
-     * @return the random string
-     */
-    private static String generateRandomString(int length) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var random = new Random();
-        var sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(chars.length());
-            char randomChar = chars.charAt(index);
-            sb.append(randomChar);
-        }
-        return sb.toString();
     }
 
     /**

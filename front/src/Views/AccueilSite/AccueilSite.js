@@ -1,7 +1,8 @@
 import {Col, Container, Modal, Row} from "react-bootstrap";
 import {useForm} from "react-hook-form";
-import {Button, TextField} from "@mui/material";
-import "./AccueilSite.css"
+import {Alert, Button, TextField} from "@mui/material";
+import "./AccueilSite.css";
+import StrengthMeter from "./StrengthMeter";
 import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 
@@ -12,7 +13,7 @@ import {useCallback, useEffect, useState} from "react";
  * @returns {JSX.Element}
  * @constructor
  */
-const Connexion = ({onSubmit, register, navigate, paragraphContent}) => {
+const Connexion = ({onSubmit, register, navigate, fieldErrors}) => {
     /**
      * Redirect to the connection page
      */
@@ -20,16 +21,35 @@ const Connexion = ({onSubmit, register, navigate, paragraphContent}) => {
         navigate("/connexion")
     }, [navigate])
 
+
+    /**
+     * Progress bar on change
+     */
+
+
     return (
         <Col className="mx-5 my-5 shadow-lg p-3 mb-5 rounded-3 bg-white bg-opacity-75 col-4">
+            {fieldErrors.server &&
+                <Alert className="justify-content-center" severity={'warning'}>{fieldErrors.server}</Alert>}
             <h2 className="m-3">Créer un compte</h2>
             <form onSubmit={onSubmit}>
-                <TextField label="Prénom" type="text" variant="standard" className="textfield" {...register("firstname")} required/><br/>
-                <TextField label="Nom" type="text" variant="standard" className="textfield " {...register("lastname")} required/><br/>
-                <TextField label="Adresse Mail" type="email" variant="standard" className="textfield " {...register("mail")} required/><br/>
-                <TextField label="Mot de passe" type="password" variant="standard" className="textfield " {...register("password")} required/><br/>
-                <TextField label="Valider le mot de passe" type="password" variant="standard" className="textfield " {...register("passwordConfirmed")} required/><br/>
-                <p className="text-danger w-100 h-auto">{paragraphContent}</p>
+                <TextField label="Prénom" type="text" variant="standard"
+                           className="textfield" {...register("firstname")} required/><br/>
+                <TextField label="Nom" type="text" variant="standard" className="textfield " {...register("lastname")}
+                           required/><br/>
+                <TextField id="outlined-error-helper-text" label="Adresse Mail" type="email" variant="standard"
+                           className="textfield " {...register("mail")} required
+                           error={!Boolean(fieldErrors.mail)}
+                           helperText={fieldErrors.mail}/><br/>
+
+                <StrengthMeter className={"align-items-center"} register={register} fieldErrors={fieldErrors}/><br/>
+
+                <TextField id="outlined-error-helper-text" label="Valider le mot de passe" type="password"
+                           variant="standard"
+                           className="textfield " {...register("passwordConfirmed")} required
+                           error={!Boolean(fieldErrors.password)}
+                           helperText={fieldErrors.password}/><br/>
+
                 <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>
                 <p>Déjà un compte ? <Button onClick={handleConnect} className="text-black text-decoration-underline">Se
                     connecter</Button></p>
@@ -90,7 +110,8 @@ const Anonyme = ({navigate}) => {
                 <Modal.Body>
                     Tu es sur le point de remplir le questionnaire sans être connecté.
                     Si tu quittes, toutes les données remplies seront perdues.<br/>
-                    Il te sera possible d&lsquo;accéder au résultat du questionnaire et de l&lsquo;exporter mais tu perdras l&lsquo;accès
+                    Il te sera possible d&lsquo;accéder au résultat du questionnaire et de l&lsquo;exporter mais tu
+                    perdras l&lsquo;accès
                     une fois la page quittée.<br/>
                     Souhaites-tu continuer de manière anonyme ?
                 </Modal.Body>
@@ -112,7 +133,7 @@ const Anonyme = ({navigate}) => {
 function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
-    const [paragraphContent, setParagraphContent] = useState()
+    const [fieldErrors, setfieldErrors] = useState({})
 
     /**
      * Send datas to the back
@@ -124,7 +145,7 @@ function AccueilSite() {
         myHeaders.append("Content-Type", "application/json");
 
         if (datas.password !== datas.passwordConfirmed) {
-            setParagraphContent("Les mot de passe fournies ne correspondent pas")
+            setfieldErrors({"password": "Les mots de passes ne sont pas identique"})
             return
         }
         const jsonBody = {mail: datas.mail, password: datas.password, nom: datas.lastname, prenom: datas.firstname}
@@ -136,14 +157,22 @@ function AccueilSite() {
         };
 
         const response = await fetch("api/auth/register", requestOptions);
-
         if (response.status === 403) {
-            setParagraphContent("Le mail est déjà utilisé pour un compte")
-            return
+            setfieldErrors({"mail": "L'adresse mail est déjà attribué à un compte existant"})
+            return;
         }
-        const json = await response.json();
-        if (response.status === 400) {
-            setParagraphContent("Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)");
+
+        if (response.status >= 500) {
+            setfieldErrors({
+                "server": "Une erreur innatendue en provenance du serveur est survenue" +
+                    "\nVeuillez réessayez ultérieurement"
+            });
+            return;
+        }
+
+        const json = await response.json()
+        if (response.status >= 400 && json.fieldErrors) {
+            setfieldErrors(json.fieldErrors);
             return;
         }
 
@@ -160,13 +189,14 @@ function AccueilSite() {
 
 
     return (
-           <Container className="bg" fluid>
-               <Row className="vh-100 align-items-center">
-                   <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate} paragraphContent={paragraphContent}/>
-                   <Col className="col-1"></Col>
-                   <Anonyme navigate={navigate}/>
-               </Row>
-           </Container>
+        <Container className="bg" fluid>
+            <Row className="vh-100 align-items-center">
+                <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate}
+                           fieldErrors={fieldErrors}/>
+                <Col className="col-1"></Col>
+                <Anonyme navigate={navigate}/>
+            </Row>
+        </Container>
     )
 }
 

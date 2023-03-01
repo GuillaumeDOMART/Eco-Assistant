@@ -2,7 +2,7 @@ import {Button, TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 
 /**
  * Page for change mail
@@ -10,9 +10,9 @@ import {useState} from "react";
  * @constructor the constructor
  */
 function ModifyID() {
-    const {register, handleSubmit} = useForm()
-    const navigate = useNavigate()
-    const [paragraphContent, setParagraphContent] = useState("");
+    const {register, handleSubmit} = useForm();
+    const navigate = useNavigate();
+    const [fieldErrors, setFieldErrors] = useState({});
 
     /**
      * Function that will submit the new mail. If the mail is not correct or already used, an error 400 is returned
@@ -26,6 +26,11 @@ function ModifyID() {
         // Token session expired
         if (token === null) {
             navigate("/");
+        }
+
+        if (datas.newMail !== datas.confirmMail) {
+            setFieldErrors({"mailConfirm": "Les mails ne correspondent pas"});
+            return
         }
 
         const myHeaders = new Headers();
@@ -44,20 +49,21 @@ function ModifyID() {
         const json = await response.json();
         if (response.status > 200) {
             if (response.status === 400) {
-                setParagraphContent("Le mail n'est pas conforme ou est attribué à un compte déjà existant");
-                return;
+                setFieldErrors({"mail": "Le mail est attribué à un compte déjà existant"});
             } else {
-                setParagraphContent("Une erreur inattendue est survenue, veuillez réessayer plus tard");
+                setFieldErrors({"server": "Une erreur inattendue est survenue, veuillez réessayer plus tard"});
             }
             return;
         }
 
         sessionStorage.setItem("token", json.token);
-        // Gestion erreur
-
 
         navigate("/infoProfil")
     }
+
+    const handlePaste = useCallback((event) => {
+        event.preventDefault();
+    }, [])
 
     return (
         <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
@@ -65,9 +71,15 @@ function ModifyID() {
             <div className="col-7 p-5">
                 <h1>Modification de l&lsquo;adresse mail du profil</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <TextField label="Nouvel adresse mail" type="email" variant="standard"
-                               className="textfield" {...register("newMail")} required/><br/>
-                    <p className="text-danger w-100 h-auto">{paragraphContent}</p>
+                    <TextField label="Nouvelle adresse mail" type="email" variant="standard"
+                               className="textfield" {...register("newMail")} required
+                               error={!Boolean(fieldErrors.mail)}
+                               helperText={fieldErrors.mail}/><br/>
+                    <TextField label="Confirmer l'adresse mail" type="email" variant="standard"
+                               className="textfield" {...register("confirmMail")} required onPaste={handlePaste}
+                               error={!Boolean(fieldErrors.mailConfirm)}
+                               helperText={fieldErrors.mailConfirm}/><br/>
+
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
             </div>
