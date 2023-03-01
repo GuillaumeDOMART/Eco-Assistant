@@ -1,10 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.PhaseDto;
-import com.ecoassitant.back.dto.quiz.QuestionDto;
+import com.ecoassitant.back.dto.quiz.PhaseDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
-import com.ecoassitant.back.entity.ProjetEntity;
-import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.repository.QuestionRepository;
 import com.ecoassitant.back.repository.ReponseDonneeRepository;
@@ -13,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * implementation of questionService

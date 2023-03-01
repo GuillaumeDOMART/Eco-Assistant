@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.profil;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

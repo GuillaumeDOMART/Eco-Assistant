@@ -1,11 +1,9 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.PhaseDto;
+import com.ecoassitant.back.dto.quiz.PhaseDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
-import com.ecoassitant.back.entity.tools.Phase;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Service for QuestionController

@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import {useState} from "react";
+import StrengthMeter from "../AccueilSite/StrengthMeter";
 
 /**
  * Page for change password
@@ -10,9 +11,9 @@ import {useState} from "react";
  * @constructor the constructor
  */
 function ModifyPassword() {
-    const {register, handleSubmit} = useForm()
-    const navigate = useNavigate()
-    const [paragraphContent, setParagraphContent] = useState("");
+    const {register, handleSubmit} = useForm();
+    const navigate = useNavigate();
+    const [fieldErrors, setFieldErrors] = useState({});
     /**
      * Function that will submit the new password. If the password is not correct, an error 400 is returned
      *
@@ -25,13 +26,13 @@ function ModifyPassword() {
             navigate("/");
         }
 
-        if (datas.newPassword !== datas.newPasswordConfirmed) {
-            setParagraphContent("Les mot de passe fournis ne correspondent pas")
+        if (datas.password !== datas.newPasswordConfirmed) {
+            setFieldErrors({"passwordConfirm": "Les mot de passe fournis ne correspondent pas"})
             return
         }
 
-        if (datas.actualPassword === datas.newPassword) {
-            setParagraphContent("Le nouveau mot de passe ne peut pas être le même que l'ancien")
+        if (datas.actualPassword === datas.password) {
+            setFieldErrors({"password": "Le nouveau mot de passe ne peut pas être le même que l'ancien"})
             return;
         }
 
@@ -39,7 +40,7 @@ function ModifyPassword() {
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${token}`)
 
-        const jsonBody = {oldPassword: datas.actualPassword, password: datas.newPassword}
+        const jsonBody = {oldPassword: datas.actualPassword, password: datas.password}
         const requestOptions = {
             method: 'PATCH',
             headers: myHeaders,
@@ -51,14 +52,13 @@ function ModifyPassword() {
 
         if (response.status > 200) {
             if (response.status === 400) {
-                setParagraphContent("Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)");
+                setFieldErrors({"password": "Le mot de passe n'est pas conforme (1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial, longueur de 8 caractères minimum)"});
                 return;
             } else {
-                setParagraphContent("Une erreur innatendue est survenue, veuillez réessayer plus tard");
+                setFieldErrors({"actualPassword": "Ce n'est pas votre mot de passe actuel"});
             }
             return;
         }
-
 
         navigate("/infoProfil")
     }
@@ -70,12 +70,17 @@ function ModifyPassword() {
                 <h1>Modification du mot de passe</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField label="Mot de passe actuel" type="password" variant="standard"
-                               className="textfield" {...register("actualPassword")} required/>
-                    <TextField label="Nouveau mot de passe" type="password" variant="standard"
-                               className="textfield" {...register("newPassword")} required/><br/>
+                               className="textfield" {...register("actualPassword")} required
+                               error={!Boolean(fieldErrors.actualPassword)}
+                               helperText={fieldErrors.actualPassword}/>
+
+                    <StrengthMeter register={register} fieldErrors={fieldErrors}></StrengthMeter>
+
                     <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard"
-                               className="textfield" {...register("newPasswordConfirmed")} required/><br/>
-                    <p className="text-danger w-100 h-auto">{paragraphContent}</p>
+                               className="textfield" {...register("newPasswordConfirmed")} required
+                               error={!Boolean(fieldErrors.passwordConfirm)}
+                               helperText={fieldErrors.passwordConfirm}/><br/>
+
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
                 </form>
             </div>

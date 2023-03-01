@@ -29,8 +29,9 @@ export default function Phase({value, register, onChange}) {
             return (
                 <QCM key={value.intitule}
                      question={value}
+                     register={register}
                      {...register(value.questionId.toString())}
-                     onChange={handleChange}
+                     onVisibility={handleChange}
                 />
             )
         case 'NUMERIC' :

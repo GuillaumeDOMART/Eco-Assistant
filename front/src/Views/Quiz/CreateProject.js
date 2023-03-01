@@ -12,12 +12,15 @@ import {useCallback, useState} from "react";
  * @returns {JSX.Element} the jsx element
  * @constructor the constructor
  */
-function Project({onSubmit, register}) {
+function Project({onSubmit, register, fieldErrors}) {
     return (
         <Col className="">
             <h1>Nouveau Projet</h1>
             <form onSubmit={onSubmit} className="">
-                <TextField label="Nom du projet" type="text" variant="standard" className="textfield" {...register("nom")} required/><br/>
+                <TextField label="Nom du projet" type="text" variant="standard"
+                           className="textfield" {...register("nom")} required
+                           error={!Boolean(fieldErrors.nom)}
+                           helperText={fieldErrors.nom}/><br/>
                 <Button type="submit">Créer le projet</Button><br/>
             </form>
         </Col>
@@ -43,6 +46,7 @@ function CreateProject() {
     const navigate = useNavigate();
     const {register, handleSubmit} = useForm();
     const [paragraphContent, setParagraphContent] = useState("")
+    const [fieldErrors, setfieldErrors] = useState({})
 
     /**
      * Function for the submission of the data
@@ -62,14 +66,25 @@ function CreateProject() {
         };
 
         const response = await fetch("/api/projet/create", requestOptions)
-        if(response.status === 403){
+        if (response.status === 403) {
             navigate("/logout")
         }
-        else if(response.status === 400){
-            setParagraphContent("Le nom du projet doit avoir une taille inférieur à 50 caractères")
+
+        if (response.status >= 500) {
+            setParagraphContent("Une erreur innatendue est survenue, veuillez réesayer plus tard");
+            return;
         }
-        const json = await response.json();
-        sessionStorage.setItem("project",json.id)
+
+        const json = await response.json()
+            .catch((_) => setParagraphContent("Une erreur innatendue est survenue, veuillez réesayer plus tard"));
+
+
+        if (response.status >= 400 && json.fieldErrors) {
+            setfieldErrors(json.fieldErrors);
+            return;
+        }
+
+        sessionStorage.setItem("project", json.id)
         navigate("/questionnaire")
     }
 
@@ -77,19 +92,19 @@ function CreateProject() {
      * function to handle quit
      */
     const handleQuit = useCallback(() => {
-        if(sessionStorage.getItem("guest")){
+        if (sessionStorage.getItem("guest")) {
             navigate("/logout")
-        }
-        else {
+        } else {
             navigate("/profil")
         }
-    },[navigate]);
+    }, [navigate]);
 
     return (
         <Container fluid>
             <Row className="border border-5 vh-100">
                 <Col>
-                    <Project onSubmit={handleProjectSubmit(onSubmit, handleSubmit)} register={register}/>
+                    <Project onSubmit={handleProjectSubmit(onSubmit, handleSubmit)} register={register}
+                             fieldErrors={fieldErrors}/>
                     <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                     <Button onClick={handleQuit} type={"button"}>Revenir à l&lsquo;accueil</Button>
                 </Col>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
 
 /**
@@ -7,7 +7,13 @@ import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
  * @returns {JSX.Element}
  * @constructor
  */
-export const QCM = React.forwardRef(({onChange, name, question}, ref) => {
+export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, ref) => {
+
+    const handleChange = useCallback((event) => {
+        onChange(event);
+        onVisibility(event)
+    }, [onVisibility, onChange])
+
     return (
         <div style={{marginTop: '20px'}} className="shadow-lg rounded p-3">
             <h5>{question.intitule}</h5>
@@ -19,7 +25,7 @@ export const QCM = React.forwardRef(({onChange, name, question}, ref) => {
                             key={data.intitule}
                             label={data.intitule}
                             control={
-                                <Radio ref={ref} name={name} onChange={onChange}/>
+                                <Radio ref={ref} name={name} onChange={handleChange}/>
                             }
                         />
                     )

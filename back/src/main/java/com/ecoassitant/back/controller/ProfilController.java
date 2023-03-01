@@ -2,6 +2,9 @@ package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.*;
+import com.ecoassitant.back.dto.profil.ProfilDto;
+import com.ecoassitant.back.dto.profil.ProfilIdDto;
+import com.ecoassitant.back.dto.profil.ProfilSimplDto;
 import com.ecoassitant.back.service.ProfilService;
 import com.ecoassitant.back.service.impl.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
