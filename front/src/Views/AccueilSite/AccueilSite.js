@@ -1,4 +1,4 @@
-import {Alert, Col, Container, Modal, Row} from "react-bootstrap";
+import {Col, Container, Modal, Row} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {Button, TextField} from "@mui/material";
 import "./AccueilSite.css"
@@ -153,8 +153,7 @@ function AccueilSite() {
 
     const handleClose= useCallback(() => {
         setShow(false);
-        navigate("/")
-    }, [setShow,navigate])
+    }, [setShow])
 
     useEffect(() => {
         const value = sessionStorage.getItem('token');

@@ -22,6 +22,7 @@ import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
 import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
 import ModifyID from "./Views/ModifyID/ModifyID";
 import ForgotPasswordMail from "./Views/ForgotPassword/ForgotPasswordMail";
+import ProfilVerifyMail from "./Views/CreationProfile/VerifyMail";
 
 const router = createBrowserRouter([
     {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
     }, {
         path: "/guest",
         element: <Guest/>
+    },
+    {
+        path: "/verifyMail",
+        element: <ProfilVerifyMail/>
     }
 ]);
 
