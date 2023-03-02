@@ -22,5 +22,9 @@ public class ReponseDonneeEntity implements Serializable {
 
     @Column(name = "entry", nullable = false)
     private int entry;
+
+    public void updateReponseDonneeProjectId(ProjetEntity project) {
+        this.reponseDonneeKey.setProjet(project);
+    }
 }
 

@@ -26,9 +26,10 @@ function TableauProjets() {
      * Hide pop-up if deletion of profile is refused
      */
     const handleCancel = useCallback(() => {
-        setSelectedProject(null)
+        setSelectedProject(null);
         setShowDissocier(false);
-        setShowCopy(false)
+        setShowCopy(false);
+        setFieldErrors({});
     }, [setShowDissocier, setSelectedProject, setShowCopy])
 
     /**
@@ -97,7 +98,7 @@ function TableauProjets() {
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            body: JSON.stringify(formData.nom),
+            body: JSON.stringify({id: selectedProject.id, projectName: formData.nom}),
             redirect: 'follow'
         };
 
@@ -216,8 +217,8 @@ function TableauProjets() {
 
                             <TextField label="Nom du projet" type="text" variant="standard"
                                        className="textfield" {...register("nom")} required
-                                       error={Boolean(fieldErrors.nom)}
-                                       helperText={fieldErrors.nom}/><br/>
+                                       error={Boolean(fieldErrors.nom)} 
+                                       helperText={fieldErrors.nom} value={selectedProject !== null && selectedProject.nomProjet}/><br/>
                         </Modal.Body>
 
                         <Modal.Footer>

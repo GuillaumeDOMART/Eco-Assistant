@@ -48,7 +48,7 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
         if (project.isEmpty()) {
             System.out.println("4");
             return false;
-        //throw new IllegalArgumentException();
+            //throw new IllegalArgumentException();
         }
         var list = responses.getReponses();
         boolean result = true;
@@ -95,6 +95,11 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
             }
         }
         return result;
+    }
+
+    @Override
+    public void saveResponseDonnees(List<ReponseDonneeEntity> responses) {
+        reponseDonneeRepository.saveAll(responses);
     }
 
     @Override
