@@ -61,7 +61,7 @@ function StepperComponent() {
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         },
-        [handlePhase]
+        []
     );
 
     /**
@@ -71,7 +71,7 @@ function StepperComponent() {
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
         },
-        [handlePhase]
+        []
     );
 
     const handleQuit = useCallback(
@@ -112,13 +112,13 @@ function StepperComponent() {
             for (const [key, value] of Object.entries(dataList)) {
                 const tuple = {}
                 tuple.questionId = key;
-                if (!getDependancy(key)) {
+                // if (!getDependancy(key)) {
                     if (value === null)
                         tuple.entry = "";
                     else
                         tuple.entry = value;
                     responses.push(tuple)
-                }
+                // }
             }
             sendToBack.projetId = projectId;
             sendToBack.reponses = responses;
