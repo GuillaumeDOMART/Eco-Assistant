@@ -1,5 +1,6 @@
 package com.ecoassitant.back.service;
 
+import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.dto.ProfilIdDto;
 import com.ecoassitant.back.dto.ProjectIdDto;
 import com.ecoassitant.back.dto.ProjetDto;

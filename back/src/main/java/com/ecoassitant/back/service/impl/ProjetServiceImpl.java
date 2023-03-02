@@ -1,5 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
+import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.dto.ProjectIdDto;
 import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.entity.tools.Etat;

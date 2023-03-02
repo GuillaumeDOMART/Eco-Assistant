@@ -53,3 +53,62 @@ hr {
 a {
     color: black;
 }
+
+.pwd-checker-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 50%;
+    height: 10px;
+}
+.pwd-checker-bar::-webkit-progress-bar {
+    background-color: rgb(246, 241, 241);
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+.pwd-label {
+    font-size: 22px;
+}
+
+.pwd-checker-bar::-webkit-progress-value {
+    border-radius: 4px;
+    background-size: 30px 18px, 100% 100%, 100% 100%;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+.label {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+.strength-faible::-webkit-progress-value {
+    background-color: #e20b07;
+}
+.strength-passable::-webkit-progress-value {
+    background-color: #ebbd04;
+}
+.strength-bon::-webkit-progress-value {
+    background-color: #0b75ed;
+}
+.strength-fort::-webkit-progress-value {
+    background-color: #01a917;
+}
+
+.strength-weak span {
+    color: #e20b07;
+}
+.strength-passable span {
+    color: #ebbd04;
+}
+.strength-passable span {
+    color: #f6ff00;
+}
+.strength-bon span {
+    color: #0b75ed;
+}
+.strength-fort span {
+    color: #01a917;
+}

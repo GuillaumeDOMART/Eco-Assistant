@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.profil;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

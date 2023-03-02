@@ -1,6 +1,6 @@
 package com.ecoassitant.back.controller;
 
-import com.ecoassitant.back.dto.PhaseDto;
+import com.ecoassitant.back.dto.quiz.PhaseDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
