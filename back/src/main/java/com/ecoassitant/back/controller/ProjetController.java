@@ -45,10 +45,11 @@ public class ProjetController {
      * @param reponseDonneesService
      */
     @Autowired
-    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository, ReponseDonneesService reponseDonneesService) {
+    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository,ProjetService projetService, ReponseDonneesService reponseDonneesService) {
         this.projetRepository = Objects.requireNonNull(projetRepository);
         this.jwtService = Objects.requireNonNull(jwtService);
         this.profilRepository = Objects.requireNonNull(profilRepository);
+        this.projetService = Objects.requireNonNull(projetService);
         this.reponseDonneesService = Objects.requireNonNull(reponseDonneesService);
     }
 
@@ -93,7 +94,7 @@ public class ProjetController {
     @PostMapping("/projet/create")
     public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet) {
         if (projet.getNom().length() >= 50) {
-            throw new IllegalArgumentException("Le nom du projet doit avoir une taille inférieur à 50 caractères");
+            throw new IllegalArgumentException("Le nom du projet ne peut pas avoir un nom de plus de 50 caractères");
         }
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
@@ -191,7 +192,6 @@ public class ProjetController {
 
         var projetCopy = projetRepository.save(projet);
 
-        var responseDto = new ReponseDonneesDto(projectIdDto.getId(), reponseDonneesService.findReponsesByProject(projet));
 
         return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
 
