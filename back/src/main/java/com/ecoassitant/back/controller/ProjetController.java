@@ -139,6 +139,13 @@ public class ProjetController {
         return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
 
     }
+
+    /**
+     * Method to finish a project of a user
+     * @param authorizationHeader the token of the user
+     * @param projetDto the project name
+     * @return the project dto id
+     */
     @PutMapping("/projet/finish")
     public ResponseEntity<ProjectIdDto> finish(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
         String token = authorizationHeader.substring(7);
