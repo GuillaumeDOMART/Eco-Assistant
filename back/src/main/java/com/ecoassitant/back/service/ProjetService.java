@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.ProjetDto;
+import com.ecoassitant.back.dto.project.ProjetDto;
 
 import java.util.List;
 
