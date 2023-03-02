@@ -41,7 +41,8 @@ public class ProjetController {
      * @param projetRepository      ProjetRepository
      * @param jwtService            JwtService
      * @param profilRepository      ProfilRepository
-     * @param reponseDonneesService
+     * @param reponseDonneesService Service
+     *
      */
     @Autowired
     public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository, ProjetService projetService, ReponseDonneesService reponseDonneesService) {

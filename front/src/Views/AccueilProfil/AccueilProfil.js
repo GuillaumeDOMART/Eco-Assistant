@@ -213,11 +213,11 @@ function TableauProjets() {
                     <form onSubmit={handleSubmit(fetchCopy)}>
                         <Modal.Body>
                             <p>Veuillez donner un nom à la nouvelle copie du
-                                projet "{selectedProject !== null && selectedProject.nomProjet}"</p>
+                                projet &quot{selectedProject !== null && selectedProject.nomProjet}&quot</p>
 
                             <TextField label="Nom du projet" type="text" variant="standard"
                                        className="textfield" {...register("nom")} required
-                                       error={Boolean(fieldErrors.nom)} 
+                                       error={Boolean(fieldErrors.nom)}
                                        helperText={fieldErrors.nom} value={selectedProject !== null && selectedProject.nomProjet}/><br/>
                         </Modal.Body>
 

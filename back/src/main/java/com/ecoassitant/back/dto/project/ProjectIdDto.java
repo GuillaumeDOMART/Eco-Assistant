@@ -19,6 +19,11 @@ public class ProjectIdDto {
     @Nullable
     private String projectName = "noName";
 
+    /**
+     * Constructor with only an id
+     *
+     * @param id id of the project
+     */
     public ProjectIdDto(int id) {
         this.id = id;
     }
