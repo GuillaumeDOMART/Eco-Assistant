@@ -5,19 +5,22 @@ import {Alert, Button, Container, Image, Modal, Placeholder, Row} from "react-bo
 import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
 import {useNavigate} from "react-router-dom";
 
-
+/**
+ * Buttons container adapted to the state of the project
+ * @param datas
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function ButtonSet(datas){
-    console.log(datas.etat)
     if(datas.etat === "INPROGRESS"){
         return(
             <>
-                <Button className="m-3" variant="secondary" onClick={datas.handleClick}>Modifier</Button>
+                <Button className="m-3" variant="secondary" onClick={datas.handleClickModifyButton}>Modifier</Button>
                 <Button className="m-3" variant="outline-primary">Créer une copie</Button>
                 <Button className="m-3" variant="outline-danger" onClick={datas.executeHandleShow}>Dissocier</Button>
             </>
         );
     }else{
-        console.log(datas.id)
         return(
             <>
                 <Button className="m-3" variant="primary" href={`/result?id=${datas.idProject}`}>Visionner</Button>
@@ -185,7 +188,6 @@ function TableauProjets() {
  */
 function LigneTableauProjet(datas) {
     const navigate = useNavigate();
-    console.log(datas.id)
     const handleClick = React.useCallback(() => {
         sessionStorage.setItem("project",datas.id)
         navigate("/questionnaire")
@@ -200,10 +202,6 @@ function LigneTableauProjet(datas) {
         datas.handleDissociate(datas.itemsList)
     },[datas])
 
-    const handleCopy = useCallback(() => {
-        //empty because reason
-    }, [])
-
 
     return (
         <>
@@ -211,7 +209,7 @@ function LigneTableauProjet(datas) {
                 <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
                 <td align={"center"} valign={"middle"}>{datas.etat}</td>
                 <td align={"center"} valign={"middle"}>
-                    <ButtonSet idProject={datas.id} etat={datas.etat} handleClick={handleClick} executeHandleShow={executeHandleShow}/>
+                    <ButtonSet idProject={datas.id} etat={datas.etat} handleClickModifyButton={handleClick} executeHandleShow={executeHandleShow}/>
                 </td>
             </tr>
             <Modal show={datas.showVar} onHide={datas.handleCancel}>
