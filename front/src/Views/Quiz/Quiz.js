@@ -97,6 +97,11 @@ function StepperComponent() {
         setSelectedAnswers([...selectedAnswers, answer])
     }, [selectedAnswers])
 
+    const getDependancy = useCallback((questionId) => {
+        const dependance = data.find((value) => value.questionId.toString() === questionId).dependance
+        return (selectedAnswers.find(value => value.question === dependance.toString()) != null)
+    }, [data, selectedAnswers])
+
     /**
      * Send responses to the backEnd when Next button is pressed
      * @param dataList
@@ -109,11 +114,13 @@ function StepperComponent() {
             for (const [key, value] of Object.entries(dataList)) {
                 const tuple = {}
                 tuple.questionId = key;
-                if (value === null)
-                    tuple.entry = "";
-                else
-                    tuple.entry = value;
-                responses.push(tuple)
+                if (!getDependancy(key)) {
+                    if (value === null)
+                        tuple.entry = "";
+                    else
+                        tuple.entry = value;
+                    responses.push(tuple)
+                }
             }
             sendToBack.projetId = projectId;
             sendToBack.reponses = responses;
@@ -138,7 +145,7 @@ function StepperComponent() {
                 navigate(`/result?id=${projectId}`)
             else
                 handleNext();
-        }, [handleNext, activeStep, navigate]
+        }, [handleNext, activeStep, navigate, getDependancy]
     )
 
     useEffect(() => {
@@ -162,6 +169,7 @@ function StepperComponent() {
                     steps={steps}
                 />
                 <Col></Col>
+                {activeStep}
                 <StepForm
                     steps={steps}
                     activeStep={activeStep}
