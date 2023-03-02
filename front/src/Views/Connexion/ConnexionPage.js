@@ -6,14 +6,12 @@ import {useEffect, useState} from "react";
 import './ConnexionPage.css'
 
 
-
-
 /**
  * The component representing the page for connexion
  * @returns {JSX.Element}
  * @constructor
  */
-function ConnexionPage(){
+function ConnexionPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,7 +25,9 @@ function ConnexionPage(){
     return (
         <>
             <Container className="bg-page-as-paysage vh-100 vw-100 d-flex align-items-center" fluid>
-                <FormContainer/>
+                <Container className="bg-white bg-opacity-75 rounded col-6 p-5 shadow-lg">
+                    <FormContainer/>
+                </Container>
             </Container>
         </>
     )
@@ -38,6 +38,7 @@ function ConnexionPage(){
  * @returns {JSX.Element}
  * @constructor
  */
+
 /*function Logo(){
     return (
         <img className="logo position-absolute top-0 start-0 m-1"  src={logo} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
@@ -49,32 +50,28 @@ function ConnexionPage(){
  * @returns {JSX.Element}
  * @constructor
  */
-function FormContainer(){
+function FormContainer() {
     return (
-        <Container className= "bg-white bg-opacity-75 rounded col-6 p-5 shadow-lg">
+        <>
             <HeaderAndLogo/>
             <Row>
                 <Container fluid className="justify-content-center align-content-center">
                     <Form/>
                 </Container>
             </Row>
-        </Container>
+        </>
     );
 }
 
 /**
  * Component containing header and logo
  */
-function HeaderAndLogo(){
-    return(
+function HeaderAndLogo() {
+    return (
         <>
             <div className="d-flex flex-row justify-content-center align-items-center">
-                <Col xs={3}>
-                    <Image src={require("../../Components/logo/logo.PNG")}  fluid/>
-                </Col>
-                <Col>
-                    <h1 className="align-self-stretch">Page de Connexion</h1>
-                </Col>
+                <Image src={require("../../Components/logo/logo.PNG")} fluid className="col-3"/>
+                <h1 className="align-self-center">Page de Connexion</h1>
             </div>
         </>
     );
@@ -86,7 +83,7 @@ function HeaderAndLogo(){
  * @returns {JSX.Element} the jsx element
  * @constructor the constructor
  */
-function Form(){
+function Form() {
     const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();
     const [paragraphContent, setParagraphContent] = useState("")
@@ -107,7 +104,7 @@ function Form(){
         };
 
         const reponse = await fetch("/api/auth/authentication", requestOptions);
-        if(reponse.status === 403){
+        if (reponse.status === 403) {
             setParagraphContent("Informations de connexion non valide, veuillez vérifier les informations renseignées")
             reset();
             return;
@@ -119,8 +116,10 @@ function Form(){
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField className="w-75" label="Adresse Mail" type="email" variant="standard" required {...register('login')}/><br/>
-            <TextField className="w-75" label="Mot de passe" type="password" variant="standard" required {...register('password')}/><br/>
+            <TextField className="w-75" label="Adresse Mail" type="email" variant="standard"
+                       required {...register('login')}/><br/>
+            <TextField className="w-75" label="Mot de passe" type="password" variant="standard"
+                       required {...register('password')}/><br/>
             <p className="text-danger w-100 p-3">{paragraphContent}</p>
             <Row className="p-3">
                 <Col>
@@ -136,4 +135,5 @@ function Form(){
         </form>
     );
 }
+
 export default ConnexionPage;
