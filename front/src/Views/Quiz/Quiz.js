@@ -60,7 +60,7 @@ function StepperComponent() {
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            handlePhase().then(r => r)
+            // handlePhase().then(r => r)
         },
         [handlePhase]
     );
@@ -71,7 +71,7 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            handlePhase().then(r => r)
+            // handlePhase().then(r => r)
         },
         [handlePhase]
     );
@@ -107,7 +107,7 @@ function StepperComponent() {
      * @param dataList
      */
     const onSubmit = useCallback(
-        (dataList) => {
+        async (dataList) => {
             const projectId = sessionStorage.getItem("project")
             const sendToBack = {}
             const responses = []
@@ -138,8 +138,7 @@ function StepperComponent() {
                 redirect: 'follow'
             };
 
-            fetch("/api/reponsesDonnees", requestOptions)
-                .then(response => response.text())
+            await fetch("/api/reponsesDonnees", requestOptions)
 
             if (activeStep === steps.length - 1)
                 navigate(`/result?id=${projectId}`)
@@ -169,7 +168,6 @@ function StepperComponent() {
                     steps={steps}
                 />
                 <Col></Col>
-                {activeStep}
                 <StepForm
                     steps={steps}
                     activeStep={activeStep}
