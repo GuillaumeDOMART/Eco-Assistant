@@ -17,7 +17,7 @@ function ButtonSet(datas){
             <>
                 <Button className="m-3" variant="secondary" onClick={datas.handleClickModifyButton}>Modifier</Button>
                 <Button className="m-3" variant="outline-primary">Créer une copie</Button>
-                <Button className="m-3" variant="outline-danger" onClick={datas.executeHandleShow}>Dissocier</Button>
+                <Button className="m-3" variant="outline-danger" onClick={datas.handleShowDissociate}>Dissocier</Button>
             </>
         );
     }else{
@@ -25,7 +25,7 @@ function ButtonSet(datas){
             <>
                 <Button className="m-3" variant="primary" href={`/result?id=${datas.idProject}`}>Visionner</Button>
                 <Button className="m-3" variant="outline-primary">Créer une copie</Button>
-                <Button className="m-3" variant="outline-danger" onClick={datas.executeHandleShow}>Dissocier</Button>
+                <Button className="m-3" variant="outline-danger" onClick={datas.handleShowDissociate}>Dissocier</Button>
             </>
         );
     }
@@ -209,7 +209,7 @@ function LigneTableauProjet(datas) {
                 <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
                 <td align={"center"} valign={"middle"}>{datas.etat}</td>
                 <td align={"center"} valign={"middle"}>
-                    <ButtonSet idProject={datas.id} etat={datas.etat} handleClickModifyButton={handleClick} executeHandleShow={executeHandleShow}/>
+                    <ButtonSet idProject={datas.id} etat={datas.etat} handleClickModifyButton={handleClick} handleShowDissociate={executeHandleShow}/>
                 </td>
             </tr>
             <Modal show={datas.showVar} onHide={datas.handleCancel}>
