@@ -39,7 +39,7 @@ const Connexion = ({onSubmit, register, navigate, fieldErrors}) => {
                            required/><br/>
                 <TextField id="outlined-error-helper-text" label="Adresse Mail" type="email" variant="standard"
                            className="textfield " {...register("mail")} required
-                           error={!Boolean(fieldErrors.mail)}
+                           error={Boolean(fieldErrors.mail)}
                            helperText={fieldErrors.mail}/><br/>
 
                 <StrengthMeter className={"align-items-center"} register={register} fieldErrors={fieldErrors}/><br/>
@@ -47,7 +47,7 @@ const Connexion = ({onSubmit, register, navigate, fieldErrors}) => {
                 <TextField id="outlined-error-helper-text" label="Valider le mot de passe" type="password"
                            variant="standard"
                            className="textfield " {...register("passwordConfirmed")} required
-                           error={!Boolean(fieldErrors.password)}
+                           error={Boolean(fieldErrors.password)}
                            helperText={fieldErrors.password}/><br/>
 
                 <Button type="submit" className="text-black mt-2" variant={"outline-primary"}>Créer</Button><br/>
@@ -134,6 +134,9 @@ function AccueilSite() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
     const [fieldErrors, setfieldErrors] = useState({})
+    const [show, setShow] = useState(false);
+
+
 
     /**
      * Send datas to the back
@@ -176,9 +179,13 @@ function AccueilSite() {
             return;
         }
 
-        sessionStorage.setItem("token", json.token);
-        navigate("/profil")
+        setShow(true);
     }
+
+
+    const handleClose= useCallback(() => {
+        setShow(false);
+    }, [setShow])
 
     useEffect(() => {
         const value = sessionStorage.getItem('token');
@@ -189,6 +196,7 @@ function AccueilSite() {
 
 
     return (
+        <>
         <Container className="bg" fluid>
             <Row className="vh-100 align-items-center">
                 <Connexion onSubmit={handleSubmit(submitCreation)} register={register} navigate={navigate}
@@ -197,7 +205,22 @@ function AccueilSite() {
                 <Anonyme navigate={navigate}/>
             </Row>
         </Container>
-    )
+        <Modal show={show} >
+            <Modal.Header>
+                <Modal.Title>Création de compte</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                Un mail de confirmation viens de vous être envoyé.
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="outline-primary" className="text-black" onClick={handleClose}>
+                    Fermer
+                </Button>
+            </Modal.Footer>
+        </Modal>
+</>
+
+)
 }
 
 export default AccueilSite

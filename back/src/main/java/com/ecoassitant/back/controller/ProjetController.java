@@ -7,10 +7,12 @@ import com.ecoassitant.back.dto.project.ProjetSimpleDto;
 import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
 import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.service.ReponseDonneesService;
 import com.ecoassitant.back.utils.StringGeneratorUtils;
+import com.ecoassitant.back.service.ProjetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,7 @@ public class ProjetController {
     private final ProjetRepository projetRepository;
     private final JwtService jwtService;
     private final ProfilRepository profilRepository;
+    private final ProjetService projetService;
 
     private final ReponseDonneesService reponseDonneesService;
 
@@ -103,6 +106,7 @@ public class ProjetController {
                 .nomProjet(projet.getNom())
                 .profil(profil)
                 .etat(Etat.INPROGRESS)
+                .type(projet.getType().equals("simulation")? TypeP.SIMULATION:TypeP.PROJET)
                 .build();
         projetRepository.save(projetEntity);
         return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()), HttpStatus.OK);
@@ -136,6 +140,26 @@ public class ProjetController {
         projet.setProfil(anoProfilOptional.get());
         projetRepository.save(projet);
         return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
+
+    }
+
+    /**
+     * Method to finish a project of a user
+     * @param authorizationHeader the token of the user
+     * @param projetDto the project name
+     * @return the project dto id
+     */
+    @PutMapping("/projet/finish")
+    public ResponseEntity<ProjectIdDto> finish(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        var optionalProjet = projetService.finish(mail,projetDto);
+        if(optionalProjet.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }else{
+            var projet = optionalProjet.get();
+            return new ResponseEntity<>(new ProjectIdDto(projet.getId()), HttpStatus.OK);
+        }
 
     }
 

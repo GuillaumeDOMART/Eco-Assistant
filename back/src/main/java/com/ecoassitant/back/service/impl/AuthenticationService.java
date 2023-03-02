@@ -56,9 +56,9 @@ public class AuthenticationService {
      * @param registerInputDto input that represent the profile to create
      * @return Token authentication
      */
-    public ResponseEntity<TokenDto> register(RegisterInputDto registerInputDto) {
+    public ResponseEntity<Boolean> register(RegisterInputDto registerInputDto) {
         if (profilRepository.findByMail(registerInputDto.getMail()).isPresent()) {
-            return ResponseEntity.status(403).body(null);
+            return ResponseEntity.status(403).body(false);
         }
         String encodedPassword = passwordEncoder.encode(registerInputDto.getPassword());
         var profile = ProfilEntity.builder()
@@ -66,7 +66,7 @@ public class AuthenticationService {
                 .password(registerInputDto.getPassword())
                 .lastname(registerInputDto.getNom())
                 .firstname(registerInputDto.getPrenom())
-                .isAdmin(0)
+                .isAdmin(-2)
                 .build();
 
         var violations = validator.validate(profile);
@@ -76,8 +76,9 @@ public class AuthenticationService {
         profile.setPassword(encodedPassword);
 
         profilRepository.save(profile);
-        var token = jwtService.generateToken(profile);
-        return ResponseEntity.ok(new TokenDto(token));
+        var token = jwtService.generateShortToken(profile);
+        emailSenderService.sendEmail(registerInputDto.getMail(), "Eco-Assistant: Création de compte", "Voici le liens pour crée votre compte: https://" + domain + "/verifyMail?token=" + token);
+        return ResponseEntity.ok(true);
     }
 
     /**
@@ -140,7 +141,7 @@ public class AuthenticationService {
         var claims = new HashMap<String, Object>() {{
             put("verify", true);
         }};
-        var token = jwtService.generateToken(profile.get(), claims);
+        var token = jwtService.generateShortToken(profile.get(), claims);
         try {
             emailSenderService.sendEmail(mail, "Eco-Assistant: Mot de passe oublié", "Voici le liens pour changer vôtre mot de pass: https://" + domain + "/forgotPassword?token=" + token);
         } catch (MailException exception) {

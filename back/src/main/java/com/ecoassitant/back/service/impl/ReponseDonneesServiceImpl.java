@@ -45,10 +45,11 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
     @Override
     public boolean saveResponseDonnees(ReponseDonneesDto responses) {
         var project = projetRepository.findById(responses.getProjetId());
-        if (project.isEmpty())
+        if (project.isEmpty()) {
+            System.out.println("4");
             return false;
         //throw new IllegalArgumentException();
-
+        }
         var list = responses.getReponses();
         boolean result = true;
         Iterator<ReponseDto> reponseDtoIterator = list.iterator();
@@ -70,7 +71,6 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                 if (reponsePossibles.isEmpty()) {
                     result = false;
                     break;
-                    //throw new IllegalArgumentException();
                 }
 
                 if (question.get().getTypeQ().equals(TypeQ.NUMERIC)) { //NUMERIC
@@ -81,6 +81,7 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                     var reponsePossible = reponsePossibles.stream()
                             .filter(reponse -> reponse.getIntitule().equals(reponseDto.getEntry())).findFirst();
                     if (reponsePossible.isEmpty()) {
+                        // CA PETE ICI
                         result = false;
                         break;
                     }
@@ -93,7 +94,6 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                 reponseDonneeRepository.save(reponseEntity);
             }
         }
-        ;
         return result;
     }
 

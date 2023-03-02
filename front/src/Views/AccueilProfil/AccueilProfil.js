@@ -5,6 +5,32 @@ import {Alert, Button, Container, Image, Modal, Placeholder, Row} from "react-bo
 import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
 import {useNavigate} from "react-router-dom";
 
+/**
+ * Buttons container adapted to the state of the project
+ * @param datas
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function ButtonSet(datas){
+    if(datas.etat === "INPROGRESS"){
+        return(
+            <>
+                <Button className="m-3" variant="secondary" onClick={datas.handleClickModifyButton}>Modifier</Button>
+                <Button className="m-3" variant="outline-primary">Créer une copie</Button>
+                <Button className="m-3" variant="outline-danger" onClick={datas.handleShowDissociate}>Dissocier</Button>
+            </>
+        );
+    }else{
+        return(
+            <>
+                <Button className="m-3" variant="primary" href={`/result?id=${datas.idProject}`}>Visionner</Button>
+                <Button className="m-3" variant="outline-primary">Créer une copie</Button>
+                <Button className="m-3" variant="outline-danger" onClick={datas.handleShowDissociate}>Dissocier</Button>
+            </>
+        );
+    }
+
+}
 
 /**
  * Generate a project listing table with data from API, use placeholder while loading
@@ -209,7 +235,6 @@ function TableauProjets() {
  */
 function LigneTableauProjet(datas) {
     const navigate = useNavigate();
-
     const handleClick = React.useCallback(() => {
         sessionStorage.setItem("project", datas.id)
         navigate("/questionnaire")
@@ -224,10 +249,6 @@ function LigneTableauProjet(datas) {
         datas.handleDissociate(datas.itemsList)
     }, [datas])
 
-    const handleCopy = useCallback(() => {
-        //empty because reason
-    }, [])
-
 
     return (
         <>
@@ -235,10 +256,7 @@ function LigneTableauProjet(datas) {
                 <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
                 <td align={"center"} valign={"middle"}>{datas.etat}</td>
                 <td align={"center"} valign={"middle"}>
-                    <Button className="m-3" variant="secondary" onClick={handleClick}>Modifier</Button>
-                    <Button className="m-3" variant="primary" href={`/result?id=${datas.id}`}>Visionner</Button>
-                    <Button className="m-3" variant="outline-primary" onClick={handleCopy}>Créer une copie</Button>
-                    <Button className="m-3" variant="outline-danger" onClick={executeHandleShow}>Dissocier</Button>
+                    <ButtonSet idProject={datas.id} etat={datas.etat} handleClickModifyButton={handleClick} handleShowDissociate={executeHandleShow}/>
                 </td>
             </tr>
             <Modal show={datas.showDissocier} onHide={datas.handleCancel}>
