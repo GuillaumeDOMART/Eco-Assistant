@@ -146,7 +146,7 @@ function StepperComponent() {
                 },
                 body: JSON.stringify(body)
             };
-            fetch('/api/profil/finish', options)
+            fetch('/api/projet/finish', options)
                 .then(res => {
                     if(res.status === 404 ){
                         navigate(`/profil`)

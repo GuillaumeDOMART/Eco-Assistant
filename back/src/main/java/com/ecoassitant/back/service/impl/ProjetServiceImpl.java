@@ -1,15 +1,12 @@
 package com.ecoassitant.back.service.impl;
 
+import com.ecoassitant.back.dto.project.ProjectIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
-import com.ecoassitant.back.dto.ProjectIdDto;
-import com.ecoassitant.back.dto.ProjetDto;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.service.ProjetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

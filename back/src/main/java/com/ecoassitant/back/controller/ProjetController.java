@@ -9,7 +9,6 @@ import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
-import com.ecoassitant.back.service.impl.AuthenticationService;
 import com.ecoassitant.back.utils.StringGeneratorUtils;
 import com.ecoassitant.back.service.ProjetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Class to manage endpoints regarding profiles

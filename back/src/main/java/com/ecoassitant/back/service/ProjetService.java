@@ -1,9 +1,8 @@
 package com.ecoassitant.back.service;
 
+
+import com.ecoassitant.back.dto.project.ProjectIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
-import com.ecoassitant.back.dto.ProfilIdDto;
-import com.ecoassitant.back.dto.ProjectIdDto;
-import com.ecoassitant.back.dto.ProjetDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,5 +36,5 @@ public interface ProjetService {
      * @param mail is the mail of the user connected
      * @return optional the id of the profile dissociated
      */
-    Optional<ProjectIdDto> finish(String mail,ProjectIdDto projetDto);
+    Optional<ProjectIdDto> finish(String mail, ProjectIdDto projetDto);
 }
