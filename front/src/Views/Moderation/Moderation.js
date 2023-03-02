@@ -1,7 +1,7 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Alert, Button, Container, Modal, Row, Table} from "react-bootstrap";
+import {Alert, Button, Container, Modal, Table} from "react-bootstrap";
 
 
 /**
@@ -53,7 +53,6 @@ function TableauUsersHeader() {
     );
 }
 function LigneTableauUsers(datas) {
-    const navigate = useNavigate();
 
     /**
      * Hide pop-up if deletion of user is refused
@@ -71,10 +70,10 @@ function LigneTableauUsers(datas) {
         datas.handleShowDeleteUser(true);
     },[datas])
 
-    const handleClick = useCallback(() => {
+    /*const handleClick = useCallback(() => {
         sessionStorage.setItem("user",datas.id)
 
-    }, [datas.id])
+    }, [datas.id])*/
     const executeHandleShow = useCallback( ()=>{
         handleShow(datas.itemSelected)
     },[datas,handleShow])
@@ -145,7 +144,7 @@ function UsersList(){
             })
 
 
-    },[setShowDeleteUser,deletedUser])
+    },[setShowDeleteUser,deletedUser,filteredItems])
     const navigate = useNavigate()
     useEffect(() => {
         const token = sessionStorage.getItem("token")

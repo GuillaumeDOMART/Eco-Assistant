@@ -34,8 +34,7 @@ public class AdminServiceImpl implements AdminService {
         var projects = projetRepository.findByProfil_IdProfil(banDto.getIdToBan());
 
         for(var project : projects){
-            project.setProfil(anonymeValue);
-            projetRepository.save(project);
+            projetRepository.delete(project);
         }
 
         return true;
