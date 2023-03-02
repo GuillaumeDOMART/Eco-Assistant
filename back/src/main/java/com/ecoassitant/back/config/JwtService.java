@@ -27,8 +27,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    @Value("${SECRET_KEY}")
-    private final static String SECRET_KEY;
+    private final static String SECRET_KEY = System.getenv("SECRET_KEY");
 
     /**
      * Function for generate token from a profile
@@ -47,6 +46,7 @@ public class JwtService {
      * @return the token
      */
     public String generateToken(ProfilEntity profilEntity, Map<String, Object> claims, int time){
+        System.out.println(SECRET_KEY);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(profilEntity.getMail())
