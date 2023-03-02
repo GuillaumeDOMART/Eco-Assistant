@@ -60,7 +60,6 @@ function StepperComponent() {
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            // handlePhase().then(r => r)
         },
         [handlePhase]
     );
@@ -71,7 +70,6 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            // handlePhase().then(r => r)
         },
         [handlePhase]
     );
