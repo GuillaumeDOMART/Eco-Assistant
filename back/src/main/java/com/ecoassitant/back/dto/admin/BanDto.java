@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.admin;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

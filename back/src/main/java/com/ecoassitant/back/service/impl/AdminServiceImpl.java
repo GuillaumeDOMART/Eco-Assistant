@@ -1,6 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.BanDto;
+import com.ecoassitant.back.dto.admin.BanDto;
+import com.ecoassitant.back.dto.admin.BanProjectDto;
 import com.ecoassitant.back.exception.NoSuchElementInDataBaseException;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -37,6 +38,16 @@ public class AdminServiceImpl implements AdminService {
             projetRepository.delete(project);
         }
 
+        return true;
+    }
+
+    @Override
+    public Boolean banProject(BanProjectDto banDto) {
+        var project = projetRepository.findById(banDto.getIdProjectToBan());
+        if(project.isEmpty()){
+            throw new NoSuchElementInDataBaseException();
+        }
+        projetRepository.delete(project.get());
         return true;
     }
 }
