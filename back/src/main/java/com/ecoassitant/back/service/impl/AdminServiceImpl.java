@@ -8,6 +8,9 @@ import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.service.AdminService;
 import org.springframework.stereotype.Service;
 
+/**
+ * AdminService implementation
+ */
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -15,6 +18,11 @@ public class AdminServiceImpl implements AdminService {
 
     private final ProjetRepository projetRepository;
 
+    /**
+     * Constructor for AdminServiceImpl
+     * @param profilRepository ProfilRepository
+     * @param projetRepository ProjetRepository
+     */
     public AdminServiceImpl(ProfilRepository profilRepository, ProjetRepository projetRepository) {
         this.profilRepository = profilRepository;
         this.projetRepository = projetRepository;
