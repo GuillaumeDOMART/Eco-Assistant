@@ -1,7 +1,7 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Alert, Button, Container, Modal, Row, Table} from "react-bootstrap";
+import {Alert, Button, Container, Modal, Table} from "react-bootstrap";
 
 
 /**
@@ -53,59 +53,31 @@ function TableauUsersHeader() {
     );
 }
 function LigneTableauUsers(datas) {
-    const navigate = useNavigate();
-    const [show, setShow] = useState(false);
-    const [deletedUser,setDeletedUser] = useState(null);
 
     /**
      * Hide pop-up if deletion of user is refused
      */
     const handleCancel = useCallback(() => {
-        setDeletedUser(null)
-        setShow(false);
-    },[setShow,setDeletedUser])
+        datas.setDeletedUser(null)
+        datas.handleShowDeleteUser(false);
+    },[datas])
 
     /**
      * Show the pop-up when you push the button delete user
      */
     const handleShow = useCallback((itemSelected) => {
-        setDeletedUser(itemSelected)
-        setShow(true);
-    },[setShow])
+        datas.setDeletedUser(itemSelected)
+        datas.handleShowDeleteUser(true);
+    },[datas])
 
-    const handleClick = useCallback(() => {
+    /*const handleClick = useCallback(() => {
         sessionStorage.setItem("user",datas.id)
 
-    }, [datas.id])
+    }, [datas.id])*/
     const executeHandleShow = useCallback( ()=>{
         handleShow(datas.itemSelected)
     },[datas,handleShow])
-    /**
-     * Dissociate the project describe by the id
-     * @type {(function(*=): void)|*}
-     */
-    const handleDissociate = useCallback((itemsList)=>{
-        const token = sessionStorage.getItem("token");
-        const jsonBody = {id : deletedUser.id}
-        const options = {
-            method: 'PUT',
-            headers: {
-                'Content-Type' : 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(jsonBody)
-        };
-        fetch('/api/profil/delete', options)
-            .then(res => res.json())
-            .then(()=>{
-                const copyItems = [...itemsList];
-                copyItems.splice(itemsList.indexOf(deletedUser), 1);
-                datas.setItems(copyItems);
-                setShow(false);
-            })
 
-
-    },[datas,setShow,deletedUser])
     return (
         <>
             <tr className='table border-bottom border-2 border-secondary'>
@@ -115,7 +87,7 @@ function LigneTableauUsers(datas) {
                     <Button className="m-3" variant="outline-danger" onClick={executeHandleShow}>Supprimer</Button>
                 </td>
             </tr>
-            <Modal show={show} onHide={handleCancel}>
+            <Modal show={datas.showDeleteUser} onHide={handleCancel}>
                 <Modal.Header closeButton>
                     <Modal.Title>Supprimer l'utilisateur</Modal.Title>
                 </Modal.Header>
@@ -124,7 +96,7 @@ function LigneTableauUsers(datas) {
                     <Button variant="secondary" onClick={handleCancel}>
                         Annuler
                     </Button>
-                    <Button variant="outline-danger" onClick={handleDissociate}>
+                    <Button variant="outline-danger" onClick={datas.handleDeleteUser}>
                         Supprimer
                     </Button>
                 </Modal.Footer>
@@ -139,12 +111,40 @@ function UsersList(){
     const { search } = window.location;
     const query = new URLSearchParams(search).get('s');
     const [apiError, setApiError] = useState(null);
+    const [deletedUser,setDeletedUser] = useState(null);
+    const [showDeleteUser, setShowDeleteUser] = useState(false);
     const [searchQuery, setSearchQuery] = useState(query || '')
     const handleSearchChange = useCallback((event)=>{
         setSearchQuery(event.target.value)
     },[])
     const filteredItems = filterItems(items, searchQuery);
 
+    /**
+     * Dissociate the project describe by the id
+     * @type {(function(*=): void)|*}
+     */
+    const handleDeleteUser= useCallback(()=>{
+        const token = sessionStorage.getItem("token");
+        const jsonBody = {idToBan : deletedUser.id}
+        const options = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(jsonBody)
+        };
+        fetch('/api/admin/ban', options)
+            .then(res => res.json())
+            .then(()=>{
+                const copyItems = [...filteredItems];
+                copyItems.splice(filteredItems.indexOf(deletedUser), 1);
+                setItems(copyItems);
+                setShowDeleteUser(false);
+            })
+
+
+    },[setShowDeleteUser,deletedUser,filteredItems])
     const navigate = useNavigate()
     useEffect(() => {
         const token = sessionStorage.getItem("token")
@@ -188,7 +188,7 @@ function UsersList(){
                         <TableauUsersHeader/>
                         <tbody>
                         {filteredItems.map((item) => (
-                            <LigneTableauUsers key={item.id} {...item} setItems={setItems}>{item.nom}</LigneTableauUsers>
+                            <LigneTableauUsers key={item.id} {...item} itemSelected={item}  itemsList={filteredItems} showDeleteUser={showDeleteUser} handleShowDeleteUser={setShowDeleteUser} setDeletedUser={setDeletedUser} setItems={setItems} handleDeleteUser={handleDeleteUser}>{item.nom}</LigneTableauUsers>
                         ))}
                         </tbody>
                     </Table>
