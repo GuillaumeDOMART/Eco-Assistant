@@ -9,6 +9,7 @@ import {useCallback, useState} from "react";
  * Page for create project
  * @param onSubmit the function for the submission
  * @param register the function for the register
+ * @param fieldErrors
  * @returns {JSX.Element} the jsx element
  * @constructor the constructor
  */
@@ -26,7 +27,7 @@ function Project({onSubmit, register, fieldErrors}) {
                 <RadioGroup className={"justify-content-center align-items-center"} row aria-label="type" name="type" {...register("type")}>
                     <FormControlLabel value="simulation" control={<Radio/>} label="Simulation"
                                       required {...register("type")} />
-                    <FormControlLabel value="project" control={<Radio/>} label="Project" {...register("type")} checked/>
+                    <FormControlLabel value="project" control={<Radio/>} label="Project" {...register("type")} />
                 </RadioGroup>
 
                 <Button type="submit">Créer le projet</Button><br/>
