@@ -2,6 +2,7 @@ package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
 import com.ecoassitant.back.dto.resultat.ReponseDto;
+import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.tools.TypeQ;
@@ -13,6 +14,7 @@ import com.ecoassitant.back.service.ReponseDonneesService;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,10 +29,11 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
 
     /**
      * Function to create ReponseDonneesServiceImpl with ReponseDonneeRepository, ReponsePossibleRepository, ProjetRepository and QuestionRepository
-     * @param reponseDonneeRepository the ReponseDonneeRepository
+     *
+     * @param reponseDonneeRepository   the ReponseDonneeRepository
      * @param reponsePossibleRepository the ReponsePossibleRepository
-     * @param projetRepository the ProjetRepository
-     * @param questionRepository the QuestionRepository
+     * @param projetRepository          the ProjetRepository
+     * @param questionRepository        the QuestionRepository
      */
     public ReponseDonneesServiceImpl(ReponseDonneeRepository reponseDonneeRepository, ReponsePossibleRepository reponsePossibleRepository, ProjetRepository projetRepository, QuestionRepository questionRepository) {
         this.reponseDonneeRepository = reponseDonneeRepository;
@@ -44,15 +47,15 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
         var project = projetRepository.findById(responses.getProjetId());
         if (project.isEmpty())
             return false;
-            //throw new IllegalArgumentException();
+        //throw new IllegalArgumentException();
 
         var list = responses.getReponses();
         boolean result = true;
         Iterator<ReponseDto> reponseDtoIterator = list.iterator();
 
-        while (result && reponseDtoIterator.hasNext()){
+        while (result && reponseDtoIterator.hasNext()) {
             var reponseDto = reponseDtoIterator.next();
-            if (!Objects.equals(reponseDto.getEntry(), "")){
+            if (!Objects.equals(reponseDto.getEntry(), "")) {
                 var reponseEntity = new ReponseDonneeEntity();
                 var responseKey = new ReponseDonneeKey();
 
@@ -89,7 +92,13 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                 reponseDonneeRepository.delete(reponseEntity);
                 reponseDonneeRepository.save(reponseEntity);
             }
-        };
+        }
+        ;
         return result;
+    }
+
+    @Override
+    public List<ReponseDonneeEntity> findReponsesByProject(ProjetEntity projet) {
+        return reponseDonneeRepository.findByReponseDonneeKey_Projet(projet);
     }
 }

@@ -4,11 +4,12 @@ import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.project.ProjectIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.dto.project.ProjetSimpleDto;
+import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
 import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
-import com.ecoassitant.back.service.impl.AuthenticationService;
+import com.ecoassitant.back.service.ReponseDonneesService;
 import com.ecoassitant.back.utils.StringGeneratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Class to manage endpoints regarding profiles
@@ -31,18 +31,22 @@ public class ProjetController {
     private final JwtService jwtService;
     private final ProfilRepository profilRepository;
 
+    private final ReponseDonneesService reponseDonneesService;
+
     /**
      * Constructor for ProjetController
      *
-     * @param projetRepository ProjetRepository
-     * @param jwtService       JwtService
-     * @param profilRepository ProfilRepository
+     * @param projetRepository      ProjetRepository
+     * @param jwtService            JwtService
+     * @param profilRepository      ProfilRepository
+     * @param reponseDonneesService
      */
     @Autowired
-    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository) {
+    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository, ReponseDonneesService reponseDonneesService) {
         this.projetRepository = Objects.requireNonNull(projetRepository);
         this.jwtService = Objects.requireNonNull(jwtService);
         this.profilRepository = Objects.requireNonNull(profilRepository);
+        this.reponseDonneesService = Objects.requireNonNull(reponseDonneesService);
     }
 
     /**
@@ -131,6 +135,40 @@ public class ProjetController {
         projet.setNomProjet(generateRandomString(8));
         projet.setProfil(anoProfilOptional.get());
         projetRepository.save(projet);
+        return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
+
+    }
+
+    /**
+     * Method to dissociate a project from a user and associate it to a default anonymous
+     *
+     * @param authorizationHeader the token of the user
+     * @param projectIdDto        the projectDTO
+     * @return the project dto id
+     */
+    @PostMapping("/projet/{id}/copy")
+    public ResponseEntity<ProjectIdDto> copy(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projectIdDto) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        var projet = projetRepository.findByIdProjet(projectIdDto.getId());
+        var mailOwner = projet.getProfil().getMail();
+        var profil = profilRepository.findByMail(mail);
+
+        // if token is not authorized in general or for this project
+        if (profil.isEmpty() || !mailOwner.equals(mail)) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
+        var projetEntity = ProjetEntity.builder()
+                .nomProjet(projectIdDto.getProjectName())
+                .profil(profil.get())
+                .etat(Etat.INPROGRESS)
+                .build();
+
+        var projetCopy = projetRepository.save(projet);
+
+        var responseDto = new ReponseDonneesDto(projectIdDto.getId(), reponseDonneesService.findReponsesByProject(projet));
+
         return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
 
     }

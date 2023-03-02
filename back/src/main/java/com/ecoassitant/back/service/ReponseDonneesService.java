@@ -1,6 +1,10 @@
 package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
+import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.entity.ReponseDonneeEntity;
+
+import java.util.List;
 
 /**
  * Service of ReponseDonnees
@@ -12,4 +16,12 @@ public interface ReponseDonneesService {
      * @return true if save in bdd is successed
      */
     public boolean saveResponseDonnees(ReponseDonneesDto responses);
+
+    /**
+     * Method to find the responses associated with the given project
+     *
+     * @param  projet project entity
+     * @return a list of responseDonne from the projet
+     */
+    List<ReponseDonneeEntity> findReponsesByProject(ProjetEntity projet);
 }

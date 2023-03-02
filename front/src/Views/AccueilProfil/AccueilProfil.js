@@ -6,7 +6,6 @@ import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
 import {useNavigate} from "react-router-dom";
 
 
-
 /**
  * Generate a project listing table with data from API, use placeholder while loading
  */
@@ -14,8 +13,9 @@ function TableauProjets() {
     const [apiError, setApiError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
-    const [show, setShow] = useState(false);
-    const [deletedProject,setDeletedProject] = useState(null);
+    const [showDissocier, setShowDissocier] = useState(false);
+    const [showCopy, setShowCopy] = useState(false);
+    const [deletedProject, setDeletedProject] = useState(null);
     const navigate = useNavigate()
 
     /**
@@ -23,43 +23,80 @@ function TableauProjets() {
      */
     const handleCancel = useCallback(() => {
         setDeletedProject(null)
-        setShow(false);
-    },[setShow,setDeletedProject])
+        setShowDissocier(false);
+        setShowCopy(false)
+    }, [setShowDissocier, setDeletedProject, setShowCopy])
 
     /**
-     * Show the pop-up when you push the button delete profil
+     * Show the Dissocie pop-up when you push the button delete profil
      */
-    const handleShow = useCallback((itemSelected) => {
+    const handleShowDissocier = useCallback((itemSelected) => {
         setDeletedProject(itemSelected)
-        setShow(true);
-    },[setShow])
+        setShowDissocier(true);
+    }, [setShowDissocier])
+
+    /**
+     * Show the copy pop-up when you push the button delete profil
+     */
+    const handleShowCopy = useCallback((itemSelected) => {
+        setDeletedProject(itemSelected)
+        setShowCopy(true);
+    }, [setShowCopy()])
+
 
     /**
      * Dissociate the project describe by the id
      * @type {(function(*=): void)|*}
      */
-    const handleDissociate = useCallback((itemsList)=>{
+    const handleDissociate = useCallback((itemsList) => {
         const token = sessionStorage.getItem("token");
-        const jsonBody = {id : deletedProject.id}
+        const jsonBody = {id: deletedProject.id}
         const options = {
             method: 'PUT',
             headers: {
-                'Content-Type' : 'application/json',
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(jsonBody)
         };
         fetch('/api/projet/delete', options)
             .then(res => res.json())
-            .then(()=>{
+            .then(() => {
                 const copyItems = [...itemsList];
                 copyItems.splice(itemsList.indexOf(deletedProject), 1);
                 setItems(copyItems);
-                setShow(false);
+                setShowDissocier(false);
             })
 
 
-    },[setShow,setItems,deletedProject])
+    }, [setShowDissocier, setItems, deletedProject])
+
+    /**
+     * Copy the project describe by the id
+     * @type {(function(*=): void)|*}
+     */
+    const handleCopy = useCallback((itemsList) => {
+        const token = sessionStorage.getItem("token");
+        const jsonBody = {id: deletedProject.id}
+        const options = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(jsonBody)
+        };
+        fetch('/api/projet/delete', options)
+            .then(res => res.json())
+            .then(() => {
+                const copyItems = [...itemsList];
+                copyItems.splice(itemsList.indexOf(deletedProject), 1);
+                setItems(copyItems);
+                setShowDissocier(false);
+            })
+
+
+    }, [setShowDissocier, setItems, deletedProject])
 
     /**
      * Navigate to the page to begin the questionnaire
@@ -77,7 +114,7 @@ function TableauProjets() {
         };
         fetch('/api/projet/user', options)
             .then(res => {
-                if(res.status === 403){
+                if (res.status === 403) {
                     navigate("/logout")
                 }
                 return res.json()
@@ -133,7 +170,15 @@ function TableauProjets() {
                     <Table>
                         <TableauProjetsHeader/>
                         <tbody>
-                            {items.map((item) => <LigneTableauProjet key={item.id} {...item} itemsList={items} itemSelected={item} showVar={show} handleShow={handleShow} handleCancel={handleCancel} handleDissociate={handleDissociate} />)}
+                        {items.map((item) => <LigneTableauProjet key={item.id} {...item}
+                                                                 itemsList={items}
+                                                                 itemSelected={item}
+                                                                 showDissocier={showDissocier}
+                                                                 showCopy={showCopy}
+                                                                 handleShowDissocier={handleShowDissocier}
+                                                                 handleShowCopy={handleShowCopy()}
+                                                                 handleCancel={handleCancel}
+                                                                 handleDissociate={handleDissociate}/>)}
                         </tbody>
                     </Table>
                 </>
@@ -141,6 +186,7 @@ function TableauProjets() {
         }
     }
 }
+
 /**
  * This function generate a line containing informations about a project
  *
@@ -165,18 +211,18 @@ function LigneTableauProjet(datas) {
     const navigate = useNavigate();
 
     const handleClick = React.useCallback(() => {
-        sessionStorage.setItem("project",datas.id)
+        sessionStorage.setItem("project", datas.id)
         navigate("/questionnaire")
 
     }, [navigate, datas.id])
 
 
-    const executeHandleShow = useCallback( ()=>{
-        datas.handleShow(datas.itemSelected)
-    },[datas])
-    const executeHandleDissociate = useCallback(()=>{
+    const executeHandleShow = useCallback(() => {
+        datas.handleShowDissocier(datas.itemSelected)
+    }, [datas])
+    const executeHandleDissociate = useCallback(() => {
         datas.handleDissociate(datas.itemsList)
-    },[datas])
+    }, [datas])
 
     const handleCopy = useCallback(() => {
         //empty because reason
@@ -195,7 +241,22 @@ function LigneTableauProjet(datas) {
                     <Button className="m-3" variant="outline-danger" onClick={executeHandleShow}>Dissocier</Button>
                 </td>
             </tr>
-            <Modal show={datas.showVar} onHide={datas.handleCancel}>
+            <Modal show={datas.showDissocier} onHide={datas.handleCancel}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Dissocier le Projet</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Es-tu sûr de vouloir dissocier ce projet ?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={datas.handleCancel}>
+                        Annuler
+                    </Button>
+                    <Button variant="outline-danger" onClick={executeHandleDissociate}>
+                        Supprimer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={datas.showCopy} onHide={datas.handleCancel}>
                 <Modal.Header closeButton>
                     <Modal.Title>Dissocier le Projet</Modal.Title>
                 </Modal.Header>
@@ -214,6 +275,7 @@ function LigneTableauProjet(datas) {
 
     );
 }
+
 /**
  * Generate a project listing table with Mock data
  */
