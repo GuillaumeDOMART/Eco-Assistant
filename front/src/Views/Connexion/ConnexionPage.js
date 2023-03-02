@@ -124,11 +124,11 @@ function Form(){
             <p className="text-danger w-100 p-3">{paragraphContent}</p>
             <Row className="p-3">
                 <Col>
-                    <Button href={"/"} variant="outline-danger">Retour</Button><br/>
+                    <Button size="lg" href={"/"} variant="outline-danger">Retour</Button><br/>
                 </Col>
                 <Col/>
                 <Col>
-                    <Button type={"submit"} variant="outline-success">Connexion</Button><br/>
+                    <Button size="lg" type={"submit"} variant="outline-success">Connexion</Button><br/>
                 </Col>
             </Row>
 
