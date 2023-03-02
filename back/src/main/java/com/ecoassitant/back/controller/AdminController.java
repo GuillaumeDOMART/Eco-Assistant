@@ -22,6 +22,6 @@ public class AdminController {
 
     @PatchMapping("ban")
     public ResponseEntity<Boolean> ban(@RequestBody BanDto banDto) {
-        return adminService.
+        return ResponseEntity.ok(adminService.ban(banDto));
     }
 }

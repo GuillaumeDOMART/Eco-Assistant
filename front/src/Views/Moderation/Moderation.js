@@ -71,7 +71,7 @@ function LigneTableauUsers(datas) {
     const handleShow = useCallback((itemSelected) => {
         setDeletedUser(itemSelected)
         setShow(true);
-    },[setShow])
+    },[setShow,setDeletedUser])
 
     const handleClick = useCallback(() => {
         sessionStorage.setItem("user",datas.id)
@@ -86,20 +86,20 @@ function LigneTableauUsers(datas) {
      */
     const handleDissociate = useCallback((itemsList)=>{
         const token = sessionStorage.getItem("token");
-        const jsonBody = {id : deletedUser.id}
+        const jsonBody = {idToBan : deletedUser.id}
         const options = {
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
                 'Content-Type' : 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(jsonBody)
         };
-        fetch('/api/profil/delete', options)
+        fetch('/api/admin/ban', options)
             .then(res => res.json())
             .then(()=>{
-                const copyItems = [...itemsList];
-                copyItems.splice(itemsList.indexOf(deletedUser), 1);
+                const copyItems = [datas.items];
+                copyItems.splice(datas.items.indexOf(deletedUser), 1);
                 datas.setItems(copyItems);
                 setShow(false);
             })
@@ -188,7 +188,7 @@ function UsersList(){
                         <TableauUsersHeader/>
                         <tbody>
                         {filteredItems.map((item) => (
-                            <LigneTableauUsers key={item.id} {...item} setItems={setItems}>{item.nom}</LigneTableauUsers>
+                            <LigneTableauUsers key={item.id} {...item} itemSelected={item} setItems={setItems}>{item.nom}</LigneTableauUsers>
                         ))}
                         </tbody>
                     </Table>
