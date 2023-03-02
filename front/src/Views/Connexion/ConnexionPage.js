@@ -28,8 +28,9 @@ function ConnexionPage() {
                 <FormContainer/>
             </Container>
         </Container>
-    );
+    )
 }
+
 
 /**
  * The component representing the form of connexion
