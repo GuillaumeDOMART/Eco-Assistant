@@ -122,6 +122,8 @@ function ResultPage() {
                 }
             }
         });
+        window.addEventListener('resize', () => chartInstance.current.resize());
+
     };
 
     /**
