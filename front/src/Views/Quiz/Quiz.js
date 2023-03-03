@@ -93,7 +93,7 @@ function StepperComponent() {
         [navigate]
     )
 
-    const handleChange = useCallback(async (target, value) => {
+    const handleChange = useCallback((target, value) => {
         const select = value.reponses.find(val => val.intitule === target.target.value)
         const answer = {
             "question": target.target.name,
@@ -101,15 +101,9 @@ function StepperComponent() {
         }
 
         selectedAnswers.forEach(val => {
-            console.log("answer : ")
-            console.log(answer)
-            console.log("val : ")
-            console.log(val)
             if (val.question === answer.question) {
-                console.log("supprimé")
                 selectedAnswers.splice(selectedAnswers.indexOf(val), 1)
             }
-            console.log("----------------")
         })
         setSelectedAnswers([...selectedAnswers, answer])
     }, [selectedAnswers])
