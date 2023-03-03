@@ -26,5 +26,11 @@ public interface AdminService {
      */
     Boolean banProject(BanProjectDto banDto);
 
+    /**
+     * Return projects finished from a user if the connected user is an admin
+     * @param mail mail of user connected
+     * @param profilId represents profile which we search the projects
+     * @return finished projects (not simulations) from a profile
+     */
     Optional<List<ProjetDto>> getProjectsFinishedFromUserId(String mail, Integer profilId);
 }

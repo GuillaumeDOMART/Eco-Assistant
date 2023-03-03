@@ -16,6 +16,11 @@ public interface ProfilRepository extends JpaRepository<ProfilEntity, Integer> {
      */
     Optional<ProfilEntity> findByMail(String mail);
 
+    /**
+     *  Retrieve all the users profile
+     * @param isAdmin represents the state of the user (admin, anonymous...)
+     * @return List of profil not admin and not anonymous
+     */
     List<ProfilEntity> findByIsAdmin(Integer isAdmin);
 
 }

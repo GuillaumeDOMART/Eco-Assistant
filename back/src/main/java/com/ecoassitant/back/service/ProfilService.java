@@ -28,6 +28,11 @@ public interface ProfilService {
      */
     ProfilDto getProfilByMail(String mail);
 
+    /**
+     * Return all users if the user connected represents an admin
+     * @param mail mail of the user connected
+     * @return all users profiles
+     */
     Optional<List<ProfilDto>> getAllUsersProfil(String mail);
 
     /**
