@@ -1,6 +1,6 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useCallback, useEffect, useState} from "react";
-import {Table, TextField} from "@mui/material";
+import {FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup, Table, TextField} from "@mui/material";
 import {Alert, Button, Container, Image, Modal, Placeholder, Row} from "react-bootstrap";
 import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
 import {useNavigate} from "react-router-dom";
@@ -17,7 +17,7 @@ function TableauProjets() {
     const [showCopy, setShowCopy] = useState(false);
     const [selectedProject, setSelectedProject] = useState(null);
     const [fieldErrors, setFieldErrors] = useState({});
-    const {register, handleSubmit} = useForm();
+    const {register, reset, handleSubmit, formState: {errors}} = useForm();
 
 
     const navigate = useNavigate()
@@ -81,6 +81,8 @@ function TableauProjets() {
     }, [setShowDissocier, setItems, selectedProject])
 
     const fetchCopy = useCallback(async (formData) => {
+        if (errors.type) return;
+
         if (formData.nom && formData.nom.length >= 50) {
             setFieldErrors({"nom": "Le nom du projet ne peut pas avoir un nom de plus de 50 caractères"})
             return;
@@ -91,6 +93,7 @@ function TableauProjets() {
             return;
         }
 
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
         myHeaders.append("Content-Type", "application/json");
@@ -98,7 +101,7 @@ function TableauProjets() {
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            body: JSON.stringify({id: selectedProject.id, projectName: formData.nom}),
+            body: JSON.stringify({id: selectedProject.id, projectName: formData.nom, projectType: formData.type}),
             redirect: 'follow'
         };
 
@@ -116,7 +119,10 @@ function TableauProjets() {
         setItems(copyItems);
         setShowCopy(false);
 
-    }, [items, selectedProject, setFieldErrors]);
+        reset()
+        setFieldErrors({})
+
+    }, [items, reeset, selectedProject, setFieldErrors, errors]);
 
     /**
      * Navigate to the page to begin the questionnaire
@@ -200,6 +206,7 @@ function TableauProjets() {
                                                              handleShowCopy={handleShowCopy}
                                                              handleCancel={handleCancel}
                                                              setItems={setItems}
+                                                             errors={errors}
                     />)}
                     </tbody>
                 </Table>
@@ -213,12 +220,24 @@ function TableauProjets() {
                     <form onSubmit={handleSubmit(fetchCopy)}>
                         <Modal.Body>
                             <p>Veuillez donner un nom à la nouvelle copie du
-                                projet &quot{selectedProject !== null && selectedProject.nomProjet}&quot</p>
+                                projet &quot;{selectedProject !== null && selectedProject.nomProjet}&quot;</p>
 
                             <TextField label="Nom du projet" type="text" variant="standard"
                                        className="textfield" {...register("nom")} required
                                        error={Boolean(fieldErrors.nom)}
-                                       helperText={fieldErrors.nom} value={selectedProject !== null && selectedProject.nomProjet}/><br/>
+                                       helperText={fieldErrors.nom}/><br/>
+
+                            <FormLabel id="demo-row-radio-buttons-group-label"> Type du projet </FormLabel>
+                            <RadioGroup className={"justify-content-center align-items-center"} row aria-label="type"
+                                        name="type" {...register("type", {required: true})}>
+                                <FormControlLabel value="simulation" control={<Radio/>} label="Simulation"
+                                                  {...register("type", {required: true})}/>
+                                <FormControlLabel value="project" control={<Radio/>}
+                                                  label="Project" {...register("type", {required: true})}
+                                                  required/>
+                            </RadioGroup>
+                            <FormHelperText className={"text-center"}
+                                            error>{errors.type && "Veuillez sélectionner une option"}</FormHelperText>
                         </Modal.Body>
 
                         <Modal.Footer>

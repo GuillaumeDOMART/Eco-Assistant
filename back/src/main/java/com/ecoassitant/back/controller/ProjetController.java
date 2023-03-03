@@ -42,7 +42,6 @@ public class ProjetController {
      * @param jwtService            JwtService
      * @param profilRepository      ProfilRepository
      * @param reponseDonneesService Service
-     *
      */
     @Autowired
     public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository, ProjetService projetService, ReponseDonneesService reponseDonneesService) {
@@ -199,7 +198,7 @@ public class ProjetController {
                 .nomProjet(projectIdDto.getProjectName())
                 .profil(profil.get())
                 .etat(Etat.INPROGRESS)
-                .type(projet.getType())
+                .type(projectIdDto.getProjectType())
                 .build();
 
         System.out.println("projetEntity = " + projetEntity);

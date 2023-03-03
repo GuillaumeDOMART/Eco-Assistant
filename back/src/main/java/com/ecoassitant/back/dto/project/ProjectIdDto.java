@@ -1,5 +1,6 @@
 package com.ecoassitant.back.dto.project;
 
+import com.ecoassitant.back.entity.tools.TypeP;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,26 @@ public class ProjectIdDto {
 
     @Nullable
     private String projectName = "noName";
+
+    @Nullable
+    private String projectType = "simulation";
+
+    /**
+     * getter of the project type
+     *
+     * @return the type of the project or the simulation type if null
+     */
+    @Nullable
+    public TypeP getProjectType() {
+        if (projectType == null) {
+            return TypeP.SIMULATION;
+        }
+        try {
+            return TypeP.valueOf(projectType);
+        } catch (IllegalArgumentException e) {
+            return TypeP.SIMULATION;
+        }
+    }
 
     /**
      * Constructor with only an id

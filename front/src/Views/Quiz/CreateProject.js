@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import {Button, FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
 import {Col, Container, Row} from "react-bootstrap";
 import {useCallback, useState} from "react";
+import React from "react";
 
 
 /**
@@ -30,10 +31,9 @@ function Project({onSubmit, register, fieldErrors, errors}) {
                                       {...register("type", {required: true})}/>
                     <FormControlLabel value="project" control={<Radio/>}
                                       label="Project" {...register("type", {required: true})}
-                                      required/><br/>
-                    <FormHelperText error>{errors.type && "Veuillez sélectionner une option"}</FormHelperText>
+                                      required/>
                 </RadioGroup>
-
+                <FormHelperText className={"text-center"} error>{errors.type && "Veuillez sélectionner une option"}</FormHelperText>
                 <Button type="submit">Créer le projet</Button><br/>
             </form>
         </Col>
