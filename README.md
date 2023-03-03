@@ -13,6 +13,7 @@ POSTGRES_PASSWORD: the password for the postgres server
 SSL_CERT_PATH= the path of the ssl certificat
 DOMAIN= the domain
 VERSION= the version number
+SECRET_KEY= The secret key can generate with the flowing command "openssl rand -base64 32"
 ```
 
 ## Installation 
