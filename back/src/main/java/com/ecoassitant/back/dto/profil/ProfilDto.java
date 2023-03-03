@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto;
+package com.ecoassitant.back.dto.profil;
 
 import com.ecoassitant.back.entity.ProfilEntity;
 import lombok.Data;

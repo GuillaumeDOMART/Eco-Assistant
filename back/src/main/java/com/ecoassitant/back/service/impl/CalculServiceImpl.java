@@ -1,11 +1,12 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.calcul.CalculEntier;
-import com.ecoassitant.back.dto.ResultatsPhaseDto;
+import com.ecoassitant.back.dto.resultat.ResultatsPhaseDto;
 import com.ecoassitant.back.dto.resultat.CalculDto;
 import com.ecoassitant.back.dto.resultat.ResultatDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.tools.Phase;
+import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.CalculRepository;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -67,7 +68,7 @@ public class CalculServiceImpl implements CalculService {
         }
 
         var resultat = new ResultatsPhaseDto(mine.get());
-        var projects = projetRepository.findAll();
+        var projects = projetRepository.findByType(TypeP.PROJET);
         if (projects.isEmpty()) {
             return Optional.empty();
         }
@@ -136,5 +137,18 @@ public class CalculServiceImpl implements CalculService {
             }
         });
             return Optional.of(resultat);
+    }
+    /**
+     * Function to get the result for a calcul
+     *
+     * @param nbCalcul the id of the group of response of the same calcul
+     * @return the result
+     */
+    public Map<Integer, Map<Integer, List<CalculEntity>>> resultatForCalcul(Integer nbCalcul) {
+        var resultat = new ResultatDto();
+        var calculs = calculRepository.findByNbCalcul(nbCalcul);
+        return  creationResultat(calculs);
+
+
     }
 }

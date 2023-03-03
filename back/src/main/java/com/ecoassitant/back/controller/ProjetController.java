@@ -1,21 +1,26 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
-import com.ecoassitant.back.dto.ProjectIdDto;
-import com.ecoassitant.back.dto.ProjetDto;
-import com.ecoassitant.back.dto.ProjetSimpleDto;
+import com.ecoassitant.back.dto.project.ProjectIdDto;
+import com.ecoassitant.back.dto.project.ProjetDto;
+import com.ecoassitant.back.dto.project.ProjetSimpleDto;
 import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
+import com.ecoassitant.back.service.ProjetService;
+import com.ecoassitant.back.service.ReponseDonneesService;
+import com.ecoassitant.back.utils.StringGeneratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Class to manage endpoints regarding profiles
@@ -26,19 +31,35 @@ public class ProjetController {
     private final ProjetRepository projetRepository;
     private final JwtService jwtService;
     private final ProfilRepository profilRepository;
+    private final ProjetService projetService;
+
+    private final ReponseDonneesService reponseDonneesService;
 
     /**
      * Constructor for ProjetController
      *
-     * @param projetRepository ProjetRepository
-     * @param jwtService       JwtService
-     * @param profilRepository ProfilRepository
+     * @param projetRepository      ProjetRepository
+     * @param jwtService            JwtService
+     * @param profilRepository      ProfilRepository
+     * @param reponseDonneesService Service
      */
     @Autowired
-    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository) {
+    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository, ProjetService projetService, ReponseDonneesService reponseDonneesService) {
         this.projetRepository = Objects.requireNonNull(projetRepository);
         this.jwtService = Objects.requireNonNull(jwtService);
         this.profilRepository = Objects.requireNonNull(profilRepository);
+        this.projetService = Objects.requireNonNull(projetService);
+        this.reponseDonneesService = Objects.requireNonNull(reponseDonneesService);
+    }
+
+    /**
+     * Function to generate a random string
+     *
+     * @param length the length of the random string
+     * @return the random string
+     */
+    private static String generateRandomString(int length) {
+        return StringGeneratorUtils.generateRandomString(length);
     }
 
     /**
@@ -74,26 +95,28 @@ public class ProjetController {
 
     /**
      * Endpoint to create a project
+     *
      * @param authorizationHeader the token of the user
      * @param projet              the project name
      * @return the project id
      */
     @PostMapping("/projet/create")
-    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet){
-        if(projet.getNom().length() >= 50){
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet) {
+        if (projet.getNom().length() >= 50) {
+            throw new IllegalArgumentException("Le nom du projet ne peut pas avoir un nom de plus de 50 caractères");
         }
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
         if (profilEntityOptional.isEmpty()) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         var profil = profilEntityOptional.get();
         var projetEntity = ProjetEntity.builder()
                 .nomProjet(projet.getNom())
                 .profil(profil)
                 .etat(Etat.INPROGRESS)
+                .type(projet.getType().equals("simulation") ? TypeP.SIMULATION : TypeP.PROJET)
                 .build();
         projetRepository.save(projetEntity);
         return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()), HttpStatus.OK);
@@ -131,20 +154,83 @@ public class ProjetController {
     }
 
     /**
-     * Function to generate a random string
+     * Method to finish a project of a user
      *
-     * @param length the length of the random string
-     * @return the random string
+     * @param authorizationHeader the token of the user
+     * @param projetDto           the project name
+     * @return the project dto id
      */
-    private static String generateRandomString(int length) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var random = new Random();
-        var sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(chars.length());
-            char randomChar = chars.charAt(index);
-            sb.append(randomChar);
+    @PutMapping("/projet/finish")
+    public ResponseEntity<ProjectIdDto> finish(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        var optionalProjet = projetService.finish(mail, projetDto);
+        if (optionalProjet.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
+            var projet = optionalProjet.get();
+            return new ResponseEntity<>(new ProjectIdDto(projet.getId()), HttpStatus.OK);
         }
-        return sb.toString();
+
+    }
+
+    /**
+     * Method to dissociate a project from a user and associate it to a default anonymous
+     *
+     * @param authorizationHeader the token of the user
+     * @param projectIdDto        the projectDTO
+     * @return the project dto id
+     */
+    @PostMapping("/projet/{id}/copy")
+    public ResponseEntity<ProjetDto> copy(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projectIdDto) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        var projet = projetRepository.findByIdProjet(projectIdDto.getId());
+        var mailOwner = projet.getProfil().getMail();
+        var profil = profilRepository.findByMail(mail);
+
+        // if token is not authorized in general or for this project
+        if (profil.isEmpty() || !mailOwner.equals(mail)) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
+        var projetEntity = ProjetEntity.builder()
+                .nomProjet(projectIdDto.getProjectName())
+                .profil(profil.get())
+                .etat(Etat.INPROGRESS)
+                .type(projectIdDto.getProjectType())
+                .build();
+
+        System.out.println("projetEntity = " + projetEntity);
+
+        var projetCopy = projetService.save(projetEntity).orElseThrow();
+
+        System.out.println("projetCopy = " + projetCopy);
+
+        var answers = reponseDonneesService.findReponsesByProject(projet);
+        answers.forEach(answer -> answer.updateReponseDonneeProjectId(projetCopy));
+
+        reponseDonneesService.saveResponseDonnees(answers);
+
+        return new ResponseEntity<>(new ProjetDto(projetCopy), HttpStatus.OK);
+
+    }
+
+    /**
+     * Method to handle DataIntegrityViolationException into an HttpStatus.BAD_REQUEST when a project name already exist
+     * with the same profil id
+     *
+     * @param ex exception
+     * @return Map with the field nom and the message
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({DataIntegrityViolationException.class, IllegalArgumentException.class})
+    @ResponseBody
+    public Map<String, Map<String, String>> handleDataViolationExceptions(RuntimeException ex) {
+        var message = ex.getMessage();
+        if (ex.getMessage().contains("SQL"))
+            message = "Le nom de projet est déjà utilisé, veuillez en choisir un autre";
+
+        return Map.of("fieldErrors", Map.of("nom", message));
     }
 }

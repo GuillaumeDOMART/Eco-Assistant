@@ -63,7 +63,7 @@ function BarNavContent() {
         );
     }
 
-    const listeOnglets = [['Accueil', '/profil'], ['Profil', '/infoProfil'], ['Remplir un questionnaire', '/newproject'], ["Questions proposées", './']];
+    const listeOnglets = [['Accueil', '/profil'], ['Profil', '/infoProfil'], ['Remplir un questionnaire', '/newproject'], ["Questions proposées", './questionsProposees']];
     if (isLoaded && datas.isAdmin) {
         listeOnglets.push(['Moderation', './'])
     }
