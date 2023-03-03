@@ -1,7 +1,7 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Alert, Button, Container, Modal, Table} from "react-bootstrap";
+import {Alert, Button, Container, Modal, Row, Table} from "react-bootstrap";
 
 
 /**
@@ -29,7 +29,8 @@ function ListContainer(){
             <Container className="h-25 w-100">
                 <UsersList selectedUser={selectedUser} setSelectedUser={setSelectedUser} setProjectsOfUser={setProjectsOfUser} setShowSelectedUserProjects={setShowSelectedUserProjects}/>
             </Container>
-            <Container className="p-5 h-25 w-100">
+            <Row className="h-25"></Row>
+            <Container className="h-25 w-100">
                 <ProjectsList selectedUser={selectedUser} projectsOfUser={projectsOfUser} setProjectsOfUser={setProjectsOfUser} showSelectedUserProjects={showSelectedUserProjects} />
             </Container>
 
@@ -37,11 +38,8 @@ function ListContainer(){
     )
 }
 function ProjectsList(props){
-    const [apiError, setApiError] = useState(null);
     const [deletedProject,setDeletedProject] = useState(null);
     const [showDeleteProject, setShowDeleteProject] = useState(false);
-    const [selectedProject,setSelectedProject] = useState(null);
-    const navigate = useNavigate()
 
 
     /**
@@ -49,6 +47,7 @@ function ProjectsList(props){
      * @type {(function(*=): void)|*}
      */
     const handleDeleteProject= useCallback(()=>{
+        console.log(deletedProject.id)
         const token = sessionStorage.getItem("token");
         const jsonBody = {idToBan : deletedProject.id}
         const options = {
@@ -70,14 +69,7 @@ function ProjectsList(props){
 
 
     },[setShowDeleteProject,deletedProject,props])
-    /**
-     * Show the result of the project described by the id
-     * @type {(function(*=): void)|*}
-     */
-    const handleSelectedVisionProject= useCallback(()=>{
-        navigate('/result?id='+selectedProject.id)
 
-    },[navigate,selectedProject])
     console.log(props.showSelectedUserProjects)
 
     if (!props.showSelectedUserProjects){
@@ -100,15 +92,12 @@ function ProjectsList(props){
                         <tbody>
                         {props.projectsOfUser.map((item) => (
                             <LigneTableauProjects key={item.id} {...item}
-                                                  projectSelected={item}
-                                                  setSelectedProject={setSelectedProject}
-                                                  userSelected={props.selectedUser}
+                                                  project={item}
                                                   itemsList={props.projectsOfUser}
                                                   showDeleteProjects={showDeleteProject}
                                                   handleShowDeleteProject={setShowDeleteProject}
                                                   setDeletedProject={setDeletedProject}
                                                   handleDeleteProject={handleDeleteProject}
-                                                  handleSelectedVisionProject={handleSelectedVisionProject}
                                                   handleProjectsOfUser={props.setProjectsOfUser}>{item.nom}</LigneTableauProjects>
                         ))}
                         </tbody>
@@ -228,6 +217,11 @@ function TableauProjectsHeader() {
 
 function LigneTableauProjects(datas) {
 
+    const [selectedProject,setSelectedProject] = useState(null);
+    const navigate = useNavigate()
+
+
+
     /**
      * Hide pop-up if deletion of user is refused
      */
@@ -240,7 +234,9 @@ function LigneTableauProjects(datas) {
      * Show the pop-up when you push the button delete user
      */
     const handleShowDeletePopup = useCallback(() => {
-        datas.setDeletedProject(datas.projectSelected)
+        console.log("handleShowDelete")
+        console.log(datas.project)
+        datas.setDeletedProject(datas.project)
         datas.handleShowDeleteProject(true);
     },[datas])
 
@@ -248,8 +244,9 @@ function LigneTableauProjects(datas) {
      * Show the result of a user
      */
     const handleShowResult = useCallback(() => {
-        datas.setSelectedProject(datas.projectSelected)
-        datas.handleSelectedVisionProject()
+        console.log(datas.project)
+        setSelectedProject(datas.project)
+        navigate('/result?id='+datas.project.id)
     },[datas])
     /*const handleClick = useCallback(() => {
         sessionStorage.setItem("user",datas.id)
@@ -259,8 +256,8 @@ function LigneTableauProjects(datas) {
     return (
         <>
             <tr className='table border-bottom border-2 border-secondary'>
-                <td align={"center"} valign={"middle"}>{datas.itemSelected.nom+" "+datas.itemSelected.prenom}</td>
-                <td align={"center"} valign={"middle"}>{datas.itemSelected.profil.mail}</td>
+                <td align={"center"} valign={"middle"}>{datas.project.nomProjet}</td>
+                <td align={"center"} valign={"middle"}>{datas.project.profil.mail}</td>
                 <td align={"center"} valign={"middle"}>
                     <Button className="m-3" variant="outline-primary" onClick={handleShowResult}>Visionner</Button>
                     <Button className="m-3" variant="outline-danger" onClick={handleShowDeletePopup}>Supprimer</Button>

@@ -4,6 +4,7 @@ import com.ecoassitant.back.dto.BanDto;
 import com.ecoassitant.back.dto.profil.ProfilIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.exception.NoSuchElementInDataBaseException;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -58,6 +59,6 @@ public class AdminServiceImpl implements AdminService {
             throw new NoSuchElementInDataBaseException();
         }
         var selectedProjects = projetRepository.findByProfil_IdProfil(profilId);
-        return Optional.of(selectedProjects.stream().filter(p->p.getEtat().equals(Etat.FINISH)).map(ProjetDto::new).toList());
+        return Optional.of(selectedProjects.stream().filter(p->p.getEtat().equals(Etat.FINISH) && p.getType().equals(TypeP.PROJET)).map(ProjetDto::new).toList());
     }
 }
