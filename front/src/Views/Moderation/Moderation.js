@@ -18,6 +18,12 @@ function Moderation(){
         </div>
     );
 }
+
+/**
+ * Component that holds lists
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function ListContainer(){
     const [selectedUser,setSelectedUser] = useState(null);
     const [showSelectedUserProjects,setShowSelectedUserProjects] = useState(false);
@@ -37,6 +43,13 @@ function ListContainer(){
         </>
     )
 }
+
+/**
+ * Component that holds projectsList
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function ProjectsList(props){
     const [deletedProject,setDeletedProject] = useState(null);
     const [showDeleteProject, setShowDeleteProject] = useState(false);
@@ -47,7 +60,6 @@ function ProjectsList(props){
      * @type {(function(*=): void)|*}
      */
     const handleDeleteProject= useCallback(()=>{
-        console.log(deletedProject.id)
         const token = sessionStorage.getItem("token");
         const jsonBody = {idProjectToBan : deletedProject.id}
         const options = {
@@ -70,20 +82,13 @@ function ProjectsList(props){
 
     },[setShowDeleteProject,deletedProject,props])
 
-    console.log(props.showSelectedUserProjects)
-
     if (!props.showSelectedUserProjects){
-        console.log("je vois rien")
         return (
             <>
             </>
         );
     }
     else {
-        console.log("je vois")
-        console.log(props.projectsOfUser)
-
-
         return (
             <>
                 <Container className="w-100 h-100 navbar-nav-scroll">
@@ -108,6 +113,13 @@ function ProjectsList(props){
     }
 
 }
+
+/**
+ * Function that returns filtered items.
+ * @param items
+ * @param query
+ * @returns {*}
+ */
 const filterItems = (items,query)=>{
     return items.filter((item)=>{
         const itemName = item.nom+" "+item.prenom
@@ -155,7 +167,7 @@ function LigneTableauUsers(datas) {
                 'Authorization': `Bearer ${token}`
             }
         };
-        fetch('/api/admin/projects/user/'+datas.id, options)//TODO
+        fetch('/api/admin/projects/user/'+datas.id, options)
             .then(res => res.json())
             .then((res)=>{
                 datas.setProjectsOfUser(res)
@@ -204,7 +216,6 @@ function LigneTableauUsers(datas) {
  * Header for projects listing table with data or placeholder
  */
 function TableauProjectsHeader() {
-    console.log("c'est moa le header")
     return (
         <thead>
         <tr className='table border-bottom border-3 border-primary'>
@@ -215,9 +226,14 @@ function TableauProjectsHeader() {
     );
 }
 
+/**
+ * Component that represent Line of TableauProjects
+ * @param datas
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function LigneTableauProjects(datas) {
 
-    const [selectedProject,setSelectedProject] = useState(null);
     const navigate = useNavigate()
 
 
@@ -234,8 +250,6 @@ function LigneTableauProjects(datas) {
      * Show the pop-up when you push the button delete user
      */
     const handleShowDeletePopup = useCallback(() => {
-        console.log("handleShowDelete")
-        console.log(datas.project)
         datas.setDeletedProject(datas.project)
         datas.handleShowDeleteProject(true);
     },[datas])
@@ -244,14 +258,8 @@ function LigneTableauProjects(datas) {
      * Show the result of a user
      */
     const handleShowResult = useCallback(() => {
-        console.log(datas.project)
-        setSelectedProject(datas.project)
         navigate('/result?id='+datas.project.id)
     },[datas,navigate])
-    /*const handleClick = useCallback(() => {
-        sessionStorage.setItem("user",datas.id)
-
-    }, [datas.id])*/
 
     return (
         <>
@@ -282,6 +290,13 @@ function LigneTableauProjects(datas) {
 
     );
 }
+
+/**
+ * Component that hold UsersList
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function UsersList(props){
     const [items, setItems] = useState([]);
     const { search } = window.location;
@@ -388,6 +403,13 @@ function UsersList(props){
 
     }
 }
+
+/**
+ * Component that represents searchBar.
+ * @param datas
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function SearchBar(datas) {
     return(
         <>
