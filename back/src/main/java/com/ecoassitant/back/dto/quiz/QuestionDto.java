@@ -16,6 +16,7 @@ public class QuestionDto {
     private String intitule;
     private TypeQ type;
     private Phase phase;
+    private Categorie categorie;
     private  List<ReponsePossibleDto> reponses;
     private Long dependance;
 
@@ -31,12 +32,13 @@ public class QuestionDto {
         this.intitule = question.getIntitule();
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
+        this.categorie = question.getCategorie();
         this.reponses = new ArrayList<>();
         question.getReponses().forEach(reponse -> reponses.add(new ReponsePossibleDto(reponse)));
         if (question.getDependance() == null)
             this.dependance = -1L;
         else
-            this.dependance = question.getDependance().getIdReponsePos();
+            this.dependance = question.getDependance().getIdQuestion();
     }
 
     public String getIntitule() {
@@ -61,6 +63,14 @@ public class QuestionDto {
 
     public void setPhase(Phase phase) {
         this.phase = phase;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
     }
 
     public List<ReponsePossibleDto> getReponses() {

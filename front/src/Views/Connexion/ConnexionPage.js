@@ -1,9 +1,11 @@
-import {Col, Container, Row, Button, Image} from "react-bootstrap";
+import {Col, Container, Row, Button} from "react-bootstrap";
 import {useForm} from "react-hook-form";
 import {TextField} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
-import './ConnexionPage.css'
+import {useState} from "react";
+
+
+
 
 
 /**
@@ -11,64 +13,50 @@ import './ConnexionPage.css'
  * @returns {JSX.Element}
  * @constructor
  */
-function ConnexionPage() {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const value = sessionStorage.getItem('token');
-        if (value) {
-            navigate("/profil")
-        }
-    }, [navigate]);
-
-    /*<Logo/>*/
+function ConnexionPage(){
     return (
-        <Container className="bg-page-as-paysage vh-100 vw-100 d-flex align-items-center" fluid>
-            <Container className="bg-white bg-opacity-75 rounded col-6 p-5 shadow-lg">
+        <>
+            <Logo/>
+            <Container className=" vh-100 vw-100 d-flex align-items-center">
                 <FormContainer/>
             </Container>
-        </Container>
+        </>
     )
 }
 
+/**
+ * The component representing the logo of Eco Assistant
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function Logo(){
+    return (
+        <img className="logo position-absolute top-0 start-0 m-1"  src={require('./logo.PNG')} alt={"logo"} style={{width:'10%',height: 'auto'}}/>
+    );
+}
 
 /**
  * The component representing the form of connexion
  * @returns {JSX.Element}
  * @constructor
  */
-function FormContainer() {
+function FormContainer(){
     return (
-        <>
-            <HeaderAndLogo/>
-            <Row>
-                <Container fluid className="justify-content-center align-content-center">
-                    <Form/>
-                </Container>
-            </Row>
-        </>
+        <Container className= "d-flex align-items-center justify-content-center col-6 border border-5 border-secondary p-5 shadow-lg">
+            <Col>
+                <h1 style={{paddingBottom : "8%"}}>Page de Connexion</h1>
+                <Form/>
+            </Col>
+        </Container>
     );
 }
-
-/**
- * Component containing header and logo
- */
-function HeaderAndLogo() {
-    return (
-        <div className="d-flex flex-row justify-content-center align-items-center">
-            <Image src={require("../../Components/logo/logo.PNG")} fluid className="col-3"/>
-            <h1 className="align-self-center">Page de Connexion</h1>
-        </div>
-    );
-}
-
 
 /**
  * The form of the page
  * @returns {JSX.Element} the jsx element
  * @constructor the constructor
  */
-function Form() {
+function Form(){
     const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();
     const [paragraphContent, setParagraphContent] = useState("")
@@ -89,7 +77,7 @@ function Form() {
         };
 
         const reponse = await fetch("/api/auth/authentication", requestOptions);
-        if (reponse.status === 403) {
+        if(reponse.status === 403){
             setParagraphContent("Informations de connexion non valide, veuillez vérifier les informations renseignées")
             reset();
             return;
@@ -101,18 +89,15 @@ function Form() {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField className="w-75" label="Adresse Mail" type="email" variant="standard"
-                       required {...register('login')}/><br/>
-            <TextField className="w-75" label="Mot de passe" type="password" variant="standard"
-                       required {...register('password')}/><br/>
-            <p className="text-danger w-100 p-3">{paragraphContent}</p>
-            <Row className="p-3">
+            <TextField label="Adresse Mail" type="email" variant="standard" style={{width:"75%"}} required {...register('login')}/><br/>
+            <TextField label="Mot de passe" type="password" variant="standard" style={{width:"75%"}} required {...register('password')}/><br/>
+            <p className="text-danger w-100 h-auto">{paragraphContent}</p>
+            <Row>
                 <Col>
-                    <Button size="lg" href={"/"} variant="outline-danger">Retour</Button><br/>
+                    <Button href={"/"} variant="outline-danger">Retour</Button><br/>
                 </Col>
-                <Col/>
                 <Col>
-                    <Button size="lg" type={"submit"} variant="outline-success">Connexion</Button><br/>
+                    <Button type={"submit"} variant="outline-primary">Connexion</Button><br/>
                 </Col>
             </Row>
 
@@ -120,5 +105,4 @@ function Form() {
         </form>
     );
 }
-
 export default ConnexionPage;

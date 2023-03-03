@@ -1,7 +1,6 @@
 package com.ecoassitant.back.repository;
 
 import com.ecoassitant.back.entity.ProjetEntity;
-import com.ecoassitant.back.entity.tools.TypeP;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -30,11 +29,4 @@ public interface ProjetRepository extends JpaRepository<ProjetEntity, Integer> {
      * @return List<ProjetEntity>
      */
     List<ProjetEntity> findByProfilMail(String mail);
-
-    /**
-     * Get list of projects by type
-     * @param type type wanted
-     * @return list of projet same type
-     */
-    List<ProjetEntity> findByType(TypeP type);
 }

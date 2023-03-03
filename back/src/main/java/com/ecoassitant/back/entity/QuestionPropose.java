@@ -14,13 +14,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "questionpropose")
-public class QuestionProposeEntity implements Serializable {
+public class QuestionPropose implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idquestion", nullable = false)
     private Long idQuestion;
 
-    @Column(name = "intitule", nullable = false)
     private String intitule;
 
     @Enumerated(EnumType.STRING)

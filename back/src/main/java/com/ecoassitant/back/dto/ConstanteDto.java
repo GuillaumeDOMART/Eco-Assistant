@@ -13,7 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class ConstanteDto {
     private Long idConstante;
-    private double constante;
+    private int constante;
     private String tracabilite;
 
     /**

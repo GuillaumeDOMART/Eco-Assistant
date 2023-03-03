@@ -12,8 +12,4 @@ public class Sub implements Operateur{
     public int level() {
         return 1;
     }
-    @Override
-    public String toString(){
-        return "-";
-    }
 }

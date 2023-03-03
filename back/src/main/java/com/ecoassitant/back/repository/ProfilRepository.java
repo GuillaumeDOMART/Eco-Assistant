@@ -16,5 +16,4 @@ public interface ProfilRepository extends JpaRepository<ProfilEntity, Integer> {
      */
     Optional<ProfilEntity> findByMail(String mail);
 
-
 }

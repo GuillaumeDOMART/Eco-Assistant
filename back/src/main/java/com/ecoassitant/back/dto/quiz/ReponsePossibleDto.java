@@ -10,7 +10,7 @@ public class ReponsePossibleDto {
     private Long reponseId;
     private QuestionDto questionSuiv;
     private String intitule;
-    private double constante;
+    private int constante;
 
     /**
      * Constructor of ReponsePossibleDto with a ReponsePossibleEntity
@@ -39,11 +39,11 @@ public class ReponsePossibleDto {
         this.intitule = intitule;
     }
 
-    public double getConstante() {
+    public int getConstante() {
         return constante;
     }
 
-    public void setConstante(double constante) {
+    public void setConstante(int constante) {
         this.constante = constante;
     }
 

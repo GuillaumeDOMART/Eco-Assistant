@@ -18,7 +18,6 @@ function Guest(){
         const json = await response.json();
         const token = json.token
         sessionStorage.setItem("token", token)
-        sessionStorage.setItem("guest",true)
     }
 
     useEffect( () => {

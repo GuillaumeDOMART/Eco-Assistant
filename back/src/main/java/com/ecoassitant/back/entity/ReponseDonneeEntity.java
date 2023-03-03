@@ -19,14 +19,5 @@ public class ReponseDonneeEntity implements Serializable {
 
     @Column(name = "entry", nullable = false)
     private int entry;
-
-    /**
-     * Update the project id related to this answer, used for the copy of the response to another project
-     *
-     * @param project Project about to be copied
-     */
-    public void updateReponseDonneeProjectId(ProjetEntity project) {
-        this.reponseDonneeKey.setProjet(project);
-    }
 }
 

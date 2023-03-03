@@ -10,7 +10,7 @@ function Deconnection() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        sessionStorage.clear()
+        sessionStorage.removeItem("token")
         navigate("/")
     }, [navigate]);
 

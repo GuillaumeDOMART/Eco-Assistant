@@ -19,11 +19,3 @@ code {
 html, body {
   height: 100%;
 }
-
-
-.separation{
-    width:3px;
-    height:100%;
-    position:absolute;
-    margin-left: 212px;
-}

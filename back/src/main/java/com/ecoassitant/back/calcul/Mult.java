@@ -12,8 +12,4 @@ public class Mult implements Operateur{
     public int level() {
         return 2;
     }
-    @Override
-    public String toString(){
-        return "*";
-    }
 }

@@ -31,8 +31,4 @@ public class Operande implements OperationElem {
     public int level() {
         return 0;
     }
-    @Override
-    public String toString(){
-        return value.toString();
-    }
 }

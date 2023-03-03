@@ -1,6 +1,5 @@
-package com.ecoassitant.back.dto.project;
+package com.ecoassitant.back.dto;
 
-import com.ecoassitant.back.entity.tools.TypeP;
 import lombok.Data;
 
 /**
@@ -9,6 +8,5 @@ import lombok.Data;
 @Data
 public class ProjetSimpleDto {
     private String nom;
-    private String type;
 
 }

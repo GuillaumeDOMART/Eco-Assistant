@@ -17,13 +17,11 @@ import Profil from "./Views/InfoProfil/Profil";
 import StepperComponent from "./Views/Quiz/Quiz";
 import CreateProject from "./Views/Quiz/CreateProject";
 import Deconnection from "./Views/Deconnection/LogOut";
-import Guest from "./Views/Guest/Guest";
+import Guest from "./Views/guest/Guest";
 import ForgotPassword from "./Views/ForgotPassword/ForgotPassword";
 import ModifyPassword from "./Views/ModifyPassword/ModifyPassword";
 import ModifyID from "./Views/ModifyID/ModifyID";
 import ForgotPasswordMail from "./Views/ForgotPassword/ForgotPasswordMail";
-import ProfilVerifyMail from "./Views/CreationProfile/VerifyMail";
-import QuestionProposee from "./Views/QuestionProposée/QuestionProposee";
 
 const router = createBrowserRouter([
     {
@@ -80,13 +78,6 @@ const router = createBrowserRouter([
     }, {
         path: "/guest",
         element: <Guest/>
-    },
-    {
-        path: "/verifyMail",
-        element: <ProfilVerifyMail/>
-    }, {
-        path: "/questionsProposees",
-        element: <QuestionProposee/>
     }
 ]);
 

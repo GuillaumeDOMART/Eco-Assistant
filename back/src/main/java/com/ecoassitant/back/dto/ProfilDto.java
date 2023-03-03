@@ -1,4 +1,4 @@
-package com.ecoassitant.back.dto.profil;
+package com.ecoassitant.back.dto;
 
 import com.ecoassitant.back.entity.ProfilEntity;
 import lombok.Data;
@@ -30,8 +30,8 @@ public class ProfilDto {
 
         this.id = entity.getIdProfil();
         this.mail = entity.getMail();
-        this.nom = entity.getLastname();
-        this.prenom = entity.getFirstname();
+        this.nom = entity.getNom();
+        this.prenom = entity.getPrenom();
         this.isAdmin = entity.getIsAdmin();
     }
 }
