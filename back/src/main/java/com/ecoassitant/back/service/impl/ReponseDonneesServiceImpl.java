@@ -52,19 +52,21 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
 
         while (result && reponseDtoIterator.hasNext()){
             var reponseDto = reponseDtoIterator.next();
-            var reponseEntity = new ReponseDonneeEntity();
-            var responseKey = new ReponseDonneeKey();
-
-            responseKey.setProjet(project.get());
+            System.out.println(reponseDto.getQuestionId());
             var question = questionRepository.findById(reponseDto.getQuestionId());
             if (question.isEmpty()) {
                 result = false;
                 break;
             }
-            responseKey.setQuestion(question.get());
-            reponseDonneeRepository.delete(reponseEntity);
+            var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(question.get(), project.get());
+            if (reponseDonnee.isPresent())
+                reponseDonneeRepository.delete(reponseDonnee.get());
             if (!Objects.equals(reponseDto.getEntry(), "")){
+                var reponseEntity = new ReponseDonneeEntity();
+                var responseKey = new ReponseDonneeKey();
 
+                responseKey.setProjet(project.get());
+                responseKey.setQuestion(question.get());
                 var reponsePossibles = reponsePossibleRepository.findByQuestionAsso(question.get());
                 if (reponsePossibles.isEmpty()) {
                     result = false;
