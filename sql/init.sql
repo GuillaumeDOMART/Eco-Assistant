@@ -27,11 +27,9 @@ CREATE TABLE IF NOT EXISTS question
 (
     idquestion  serial PRIMARY KEY,
     intitule    VARCHAR(255) NOT NULL,
-    questionpre INT,
     typeq       VARCHAR(140) NOT NULL,
     phase       VARCHAR(50)  NOT NULL,
-    dependance  INT,
-    CONSTRAINT questionpre FOREIGN KEY (questionpre) REFERENCES question (idquestion)
+    dependance  INT
 );
 CREATE TABLE IF NOT EXISTS constante
 (
@@ -113,105 +111,105 @@ VALUES (1, 'QUESTIONAIRE POUR Administrateur',
        (2, 'QUESTIONAIRE POUR Salarie 2',
         'INPROGRESS', 'SIMULATION');
 -- CREATION DES QUESTIONS
-INSERT INTO question (intitule, questionpre, typeq, phase)
+INSERT INTO question (intitule, typeq, phase)
 VALUES
 
     /*HORS_PHASE*/
-    ('Votre projet nécessite-t-il des trajets en avion ?', null, 'QCM', 'HORS_PHASE'),
-    ('Combien de km en avion sont effectués pour le projet ?', 1, 'NUMERIC', 'HORS_PHASE'),
+    ('Votre projet nécessite-t-il des trajets en avion ?', 'QCM', 'HORS_PHASE'),
+    ('Combien de km en avion sont effectués pour le projet ?', 'NUMERIC', 'HORS_PHASE'),
 
     /*PLANIFICATION*/
-    ('Veux-tu apporté des données concernant la phase de planification ?', 2, 'QCM', 'PLANIFICATION'),
-    ('Combien de jours dure cette phase ?', 3, 'NUMERIC', 'PLANIFICATION'),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 4, 'NUMERIC', 'PLANIFICATION'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 5, 'NUMERIC',
+    ('Veux-tu apporté des données concernant la phase de planification ?', 'QCM', 'PLANIFICATION'),
+    ('Combien de jours dure cette phase ?', 'NUMERIC', 'PLANIFICATION'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 'NUMERIC', 'PLANIFICATION'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 'NUMERIC',
      'PLANIFICATION'),
-    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 6, 'QCM', 'PLANIFICATION'),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 7, 'NUMERIC',
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 'QCM', 'PLANIFICATION'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 'NUMERIC',
      'PLANIFICATION'),
-    ('Combien viennent en voiture ?', 8, 'NUMERIC', 'PLANIFICATION'),
-    ('Combien viennent en vélo ou à pied ?', 9, 'NUMERIC', 'PLANIFICATION'),
-    ('Combien viennent en transport en commun ?', 10, 'NUMERIC', 'PLANIFICATION'),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 11, 'NUMERIC', 'PLANIFICATION'),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 12, 'NUMERIC', 'PLANIFICATION'),
+    ('Combien viennent en voiture ?', 'NUMERIC', 'PLANIFICATION'),
+    ('Combien viennent en vélo ou à pied ?', 'NUMERIC', 'PLANIFICATION'),
+    ('Combien viennent en transport en commun ?', 'NUMERIC', 'PLANIFICATION'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 'NUMERIC', 'PLANIFICATION'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 'NUMERIC', 'PLANIFICATION'),
 
     /*DEVELOPPEMENT*/
-    ('Veux-tu apporté des données concernant la phase de developpement  ?', 13, 'QCM', 'DEVELOPPEMENT'),
-    ('Combien de jours dure cette phase ?', 14, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 15, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 16, 'NUMERIC',
+    ('Veux-tu apporté des données concernant la phase de developpement  ?', 'QCM', 'DEVELOPPEMENT'),
+    ('Combien de jours dure cette phase ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 'NUMERIC',
      'DEVELOPPEMENT'),
-    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 17, 'QCM', 'DEVELOPPEMENT'),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 18, 'NUMERIC',
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 'QCM', 'DEVELOPPEMENT'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 'NUMERIC',
      'DEVELOPPEMENT'),
-    ('Combien viennent en voiture ?', 19, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Combien viennent en vélo ou à pied ?', 20, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Combien viennent en transport en commun ?', 21, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 22, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 23, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Quel langage utilises-tu majoritairement pour le back ?', 24, 'QCM', 'DEVELOPPEMENT'),
-    ('Combien de lignes de code ?', 25, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Quel langage utilises-tu majoritairement pour le front ?', 26, 'QCM', 'DEVELOPPEMENT'),
-    ('Combien de lignes de code ?', 27, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Utilises-tu un DataCenter ?', 28, 'QCM', 'DEVELOPPEMENT'),
-    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 29, 'NUMERIC', 'DEVELOPPEMENT'),
-    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 30, 'QCM',
+    ('Combien viennent en voiture ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien viennent en vélo ou à pied ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien viennent en transport en commun ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Quel langage utilises-tu majoritairement pour le back ?', 'QCM', 'DEVELOPPEMENT'),
+    ('Combien de lignes de code ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Quel langage utilises-tu majoritairement pour le front ?', 'QCM', 'DEVELOPPEMENT'),
+    ('Combien de lignes de code ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Utilises-tu un DataCenter ?', 'QCM', 'DEVELOPPEMENT'),
+    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 'NUMERIC', 'DEVELOPPEMENT'),
+    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 'QCM',
      'DEVELOPPEMENT'),
-    ('Quelle énergie alimente majoritairement ton DataCenter ?', 31, 'QCM', 'DEVELOPPEMENT'),
+    ('Quelle énergie alimente majoritairement ton DataCenter ?', 'QCM', 'DEVELOPPEMENT'),
 
     /*TEST*/
-    ('Veux-tu apporté des données concernant la phase de test  ?', 32, 'QCM', 'TEST'),
-    ('Combien de jours dure cette phase ?', 33, 'NUMERIC', 'TEST'),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 34, 'NUMERIC', 'TEST'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 35, 'NUMERIC',
+    ('Veux-tu apporté des données concernant la phase de test  ?', 'QCM', 'TEST'),
+    ('Combien de jours dure cette phase ?', 'NUMERIC', 'TEST'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 'NUMERIC', 'TEST'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 'NUMERIC',
      'TEST'),
-    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 36, 'QCM', 'TEST'),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 37, 'NUMERIC',
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 'QCM', 'TEST'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 'NUMERIC',
      'TEST'),
-    ('Combien viennent en voiture ?', 38, 'NUMERIC', 'TEST'),
-    ('Combien viennent en vélo ou à pied ?', 39, 'NUMERIC', 'TEST'),
-    ('Combien viennent en transport en commun ?', 40, 'NUMERIC', 'TEST'),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 41, 'NUMERIC', 'TEST'),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 42, 'NUMERIC', 'TEST'),
+    ('Combien viennent en voiture ?', 'NUMERIC', 'TEST'),
+    ('Combien viennent en vélo ou à pied ?', 'NUMERIC', 'TEST'),
+    ('Combien viennent en transport en commun ?', 'NUMERIC', 'TEST'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 'NUMERIC', 'TEST'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 'NUMERIC', 'TEST'),
 
-    ('Utilises-tu un DataCenter ?', 43, 'QCM', 'TEST'),
-    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 44, 'NUMERIC', 'TEST'),
-    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 45, 'QCM', 'TEST'),
-    ('Quelle énergie alimente majoritairement ton DataCenter ?', 46, 'QCM', 'TEST'),
+    ('Utilises-tu un DataCenter ?', 'QCM', 'TEST'),
+    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 'NUMERIC', 'TEST'),
+    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 'QCM', 'TEST'),
+    ('Quelle énergie alimente majoritairement ton DataCenter ?', 'QCM', 'TEST'),
 
     /*DEPLOIEMENT*/
-    ('Veux-tu apporté des données concernant la phase de deploiement  ?', 47, 'QCM', 'DEPLOIEMENT'),
-    ('Combien de jours dure cette phase ?', 48, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 49, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 50, 'NUMERIC',
+    ('Veux-tu apporté des données concernant la phase de deploiement  ?', 'QCM', 'DEPLOIEMENT'),
+    ('Combien de jours dure cette phase ?', 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 'NUMERIC',
      'DEPLOIEMENT'),
-    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 51, 'QCM', 'DEPLOIEMENT'),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 52, 'NUMERIC',
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 'QCM', 'DEPLOIEMENT'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 'NUMERIC',
      'DEPLOIEMENT'),
-    ('Combien viennent en voiture ?', 53, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien viennent en vélo ou à pied ?', 54, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien viennent en transport en commun ?', 55, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 56, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 57, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Utilises-tu un DataCenter ?', 58, 'QCM', 'DEPLOIEMENT'),
-    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 59, 'NUMERIC', 'DEPLOIEMENT'),
-    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 60, 'QCM', 'DEPLOIEMENT'),
-    ('Quelle énergie alimente majoritairement ton DataCenter ?', 61, 'QCM', 'DEPLOIEMENT'),
+    ('Combien viennent en voiture ?', 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien viennent en vélo ou à pied ?', 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien viennent en transport en commun ?', 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 'NUMERIC', 'DEPLOIEMENT'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 'NUMERIC', 'DEPLOIEMENT'),
+    ('Utilises-tu un DataCenter ?', 'QCM', 'DEPLOIEMENT'),
+    ('Combien d’énergie votre Datacenter consomme-t-il (en kWh) ?', 'NUMERIC', 'DEPLOIEMENT'),
+    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 'QCM', 'DEPLOIEMENT'),
+    ('Quelle énergie alimente majoritairement ton DataCenter ?', 'QCM', 'DEPLOIEMENT'),
 
     /*MAINTENANCE*/
-    ('Veux-tu apporté des données concernant la phase de maintenance  ?', 62, 'QCM', 'MAINTENANCE'),
-    ('Combien de jours dure cette phase ?', 63, 'NUMERIC', 'MAINTENANCE'),
-    ('Combien de collaborateurs travaillent sur cette phase ?', 64, 'NUMERIC', 'MAINTENANCE'),
-    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 65, 'NUMERIC',
+    ('Veux-tu apporté des données concernant la phase de maintenance  ?', 'QCM', 'MAINTENANCE'),
+    ('Combien de jours dure cette phase ?', 'NUMERIC', 'MAINTENANCE'),
+    ('Combien de collaborateurs travaillent sur cette phase ?', 'NUMERIC', 'MAINTENANCE'),
+    ('Combien de jours de télé-travail a en moyenne un collaborateur pour la durée de cette phase ?', 'NUMERIC',
      'MAINTENANCE'),
-    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 66, 'QCM', 'MAINTENANCE'),
-    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 67, 'NUMERIC',
+    ('Veux-tu donné la distance de trajet de tes collaborateurs ?', 'QCM', 'MAINTENANCE'),
+    ('Quelle est la distance moyenne de trajet de tes collaborateurs pour aller au travail (en km) ?', 'NUMERIC',
      'MAINTENANCE'),
-    ('Combien viennent en voiture ?', 68, 'NUMERIC', 'MAINTENANCE'),
-    ('Combien viennent en vélo ou à pied ?', 69, 'NUMERIC', 'MAINTENANCE'),
-    ('Combien viennent en transport en commun ?', 70, 'NUMERIC', 'MAINTENANCE'),
-    ('Combien de PC fixes utilises-tu pour cette phase ?', 71, 'NUMERIC', 'MAINTENANCE'),
-    ('Combien de PC portables utilises-tu pour cette phase ?', 72, 'NUMERIC', 'MAINTENANCE');
+    ('Combien viennent en voiture ?', 'NUMERIC', 'MAINTENANCE'),
+    ('Combien viennent en vélo ou à pied ?', 'NUMERIC', 'MAINTENANCE'),
+    ('Combien viennent en transport en commun ?', 'NUMERIC', 'MAINTENANCE'),
+    ('Combien de PC fixes utilises-tu pour cette phase ?', 'NUMERIC', 'MAINTENANCE'),
+    ('Combien de PC portables utilises-tu pour cette phase ?', 'NUMERIC', 'MAINTENANCE');
 
 --- CREATION DES CONSTANTES
 INSERT INTO constante (constante, tracabilite)
@@ -527,188 +525,188 @@ VALUES (5, 3, 1, 1, 'HORS_PHASE'),
        (3, 34, 14, 1, 'DEVELOPPEMENT'),
        (5, 49, 14, 1, 'DEVELOPPEMENT'),
 
-       (3, 35, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 35, 15, 1, 'DEVELOPPEMENT'),
+       (5, 49, 15, 1, 'DEVELOPPEMENT'),
 
-       (3, 36, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 36, 16, 1, 'DEVELOPPEMENT'),
+       (5, 49, 16, 1, 'DEVELOPPEMENT'),
 
-       (3, 37, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 37, 17, 1, 'DEVELOPPEMENT'),
+       (5, 49, 17, 1, 'DEVELOPPEMENT'),
 
-       (3, 38, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 38, 18, 1, 'DEVELOPPEMENT'),
+       (5, 49, 18, 1, 'DEVELOPPEMENT'),
 
-       (3, 39, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 39, 19, 1, 'DEVELOPPEMENT'),
+       (5, 49, 19, 1, 'DEVELOPPEMENT'),
 
-       (3, 40, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 40, 20, 1, 'DEVELOPPEMENT'),
+       (5, 49, 20, 1, 'DEVELOPPEMENT'),
 
-       (3, 41, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 41, 21, 1, 'DEVELOPPEMENT'),
+       (5, 49, 21, 1, 'DEVELOPPEMENT'),
 
-       (3, 42, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 42, 22, 1, 'DEVELOPPEMENT'),
+       (5, 49, 22, 1, 'DEVELOPPEMENT'),
 
-       (3, 43, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 43, 23, 1, 'DEVELOPPEMENT'),
+       (5, 49, 23, 1, 'DEVELOPPEMENT'),
 
-       (3, 44, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 44, 24, 1, 'DEVELOPPEMENT'),
+       (5, 49, 24, 1, 'DEVELOPPEMENT'),
 
-       (3, 45, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 45, 25, 1, 'DEVELOPPEMENT'),
+       (5, 49, 25, 1, 'DEVELOPPEMENT'),
 
-       (3, 46, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 46, 26, 1, 'DEVELOPPEMENT'),
+       (5, 49, 26, 1, 'DEVELOPPEMENT'),
 
-       (3, 47, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 47, 27, 1, 'DEVELOPPEMENT'),
+       (5, 49, 27, 1, 'DEVELOPPEMENT'),
 
-       (3, 48, 14, 1, 'DEVELOPPEMENT'),
-       (5, 49, 14, 1, 'DEVELOPPEMENT'),
+       (3, 48, 28, 1, 'DEVELOPPEMENT'),
+       (5, 49, 28, 1, 'DEVELOPPEMENT'),
 
-       (3, 50, 15, 1, 'DEVELOPPEMENT'),
-       (5, 57, 15, 1, 'DEVELOPPEMENT'),
+       (3, 50, 29, 1, 'DEVELOPPEMENT'),
+       (5, 57, 29, 1, 'DEVELOPPEMENT'),
 
-       (3, 51, 16, 1, 'DEVELOPPEMENT'),
-       (5, 57, 16, 1, 'DEVELOPPEMENT'),
+       (3, 51, 30, 1, 'DEVELOPPEMENT'),
+       (5, 57, 30, 1, 'DEVELOPPEMENT'),
 
-       (3, 52, 17, 1, 'DEVELOPPEMENT'),
-       (5, 57, 17, 1, 'DEVELOPPEMENT'),
+       (3, 52, 31, 1, 'DEVELOPPEMENT'),
+       (5, 57, 31, 1, 'DEVELOPPEMENT'),
 
-       (3, 53, 18, 1, 'DEVELOPPEMENT'),
-       (5, 57, 18, 1, 'DEVELOPPEMENT'),
+       (3, 53, 32, 1, 'DEVELOPPEMENT'),
+       (5, 57, 32, 1, 'DEVELOPPEMENT'),
 
-       (3, 54, 18, 1, 'DEVELOPPEMENT'),
-       (5, 57, 18, 1, 'DEVELOPPEMENT'),
+       (3, 54, 33, 1, 'DEVELOPPEMENT'),
+       (5, 57, 33, 1, 'DEVELOPPEMENT'),
 
-       (3, 55, 18, 1, 'DEVELOPPEMENT'),
-       (5, 57, 18, 1, 'DEVELOPPEMENT'),
+       (3, 55, 34, 1, 'DEVELOPPEMENT'),
+       (5, 57, 34, 1, 'DEVELOPPEMENT'),
 
-       (3, 56, 18, 1, 'DEVELOPPEMENT'),
-       (5, 57, 18, 1, 'DEVELOPPEMENT'),
+       (3, 56, 35, 1, 'DEVELOPPEMENT'),
+       (5, 57, 35, 1, 'DEVELOPPEMENT'),
 
-       (3, 61, 19, 1, 'DEVELOPPEMENT'),
-       (5, 64, 19, 1, 'DEVELOPPEMENT'),
+       (3, 61, 36, 1, 'DEVELOPPEMENT'),
+       (5, 64, 36, 1, 'DEVELOPPEMENT'),
 
-       (3, 61, 20, 1, 'DEVELOPPEMENT'),
-       (5, 65, 20, 1, 'DEVELOPPEMENT'),
+       (3, 61, 37, 1, 'DEVELOPPEMENT'),
+       (5, 65, 37, 1, 'DEVELOPPEMENT'),
 
-       (3, 61, 21, 1, 'DEVELOPPEMENT'),
-       (5, 66, 21, 1, 'DEVELOPPEMENT'),
+       (3, 61, 38, 1, 'DEVELOPPEMENT'),
+       (5, 66, 38, 1, 'DEVELOPPEMENT'),
 
-       (5, 69, 22, 1, 'TEST'),
+       (5, 69, 39, 1, 'TEST'),
 
-       (3, 75, 23, 1, 'TEST'),
-       (3, 74, 23, 1, 'TEST'),
-       (1, 69, 23, 1, 'TEST'),
-       (3, 77, 23, 1, 'TEST'),
-       (3, 74, 23, 1, 'TEST'),
-       (2, 69, 23, 1, 'TEST'),
-       (3, 71, 23, 1, 'TEST'),
-       (3, 75, 23, 1, 'TEST'),
-       (2, 74, 23, 1, 'TEST'),
-       (3, 71, 23, 1, 'TEST'),
-       (3, 77, 23, 1, 'TEST'),
-       (5, 74, 23, 1, 'TEST'),
+       (3, 75, 40, 1, 'TEST'),
+       (3, 74, 40, 1, 'TEST'),
+       (1, 69, 40, 1, 'TEST'),
+       (3, 77, 40, 1, 'TEST'),
+       (3, 74, 40, 1, 'TEST'),
+       (2, 69, 40, 1, 'TEST'),
+       (3, 71, 40, 1, 'TEST'),
+       (3, 75, 40, 1, 'TEST'),
+       (2, 74, 40, 1, 'TEST'),
+       (3, 71, 40, 1, 'TEST'),
+       (3, 77, 40, 1, 'TEST'),
+       (5, 74, 40, 1, 'TEST'),
 
-       (3, 75, 23, 2, 'TEST'),
-       (3, 74, 23, 2, 'TEST'),
-       (1, 69, 23, 2, 'TEST'),
-       (3, 77, 23, 2, 'TEST'),
-       (3, 74, 23, 2, 'TEST'),
-       (5, 69, 23, 2, 'TEST'),
+       (3, 75, 40, 2, 'TEST'),
+       (3, 74, 40, 2, 'TEST'),
+       (1, 69, 40, 2, 'TEST'),
+       (3, 77, 40, 2, 'TEST'),
+       (3, 74, 40, 2, 'TEST'),
+       (5, 69, 40, 2, 'TEST'),
 
-       (3, 70, 23, 3, 'TEST'),
-       (5, 69, 23, 3, 'TEST'),
+       (3, 70, 40, 3, 'TEST'),
+       (5, 69, 40, 3, 'TEST'),
 
-       (3, 78, 24, 1, 'TEST'),
-       (5, 69, 24, 1, 'TEST'),
+       (3, 78, 41, 1, 'TEST'),
+       (5, 69, 41, 1, 'TEST'),
 
-       (3, 79, 25, 1, 'TEST'),
-       (5, 69, 25, 1, 'TEST'),
+       (3, 79, 42, 1, 'TEST'),
+       (5, 69, 42, 1, 'TEST'),
 
-       (3, 83, 26, 1, 'TEST'),
-       (5, 86, 26, 1, 'TEST'),
+       (3, 83, 43, 1, 'TEST'),
+       (5, 86, 43, 1, 'TEST'),
 
-       (3, 83, 27, 1, 'TEST'),
-       (5, 87, 27, 1, 'TEST'),
+       (3, 83, 44, 1, 'TEST'),
+       (5, 87, 44, 1, 'TEST'),
 
-       (3, 83, 28, 1, 'TEST'),
-       (5, 88, 28, 1, 'TEST'),
+       (3, 83, 45, 1, 'TEST'),
+       (5, 88, 45, 1, 'TEST'),
 
-       (5, 91, 29, 1, 'DEPLOIEMENT'),
+       (5, 91, 46, 1, 'DEPLOIEMENT'),
 
-       (3, 97, 30, 1, 'DEPLOIEMENT'),
-       (3, 96, 30, 1, 'DEPLOIEMENT'),
-       (1, 91, 30, 1, 'DEPLOIEMENT'),
-       (3, 99, 30, 1, 'DEPLOIEMENT'),
-       (3, 96, 30, 1, 'DEPLOIEMENT'),
-       (2, 91, 30, 1, 'DEPLOIEMENT'),
-       (3, 93, 30, 1, 'DEPLOIEMENT'),
-       (3, 97, 30, 1, 'DEPLOIEMENT'),
-       (2, 96, 30, 1, 'DEPLOIEMENT'),
-       (3, 93, 30, 1, 'DEPLOIEMENT'),
-       (3, 99, 30, 1, 'DEPLOIEMENT'),
-       (5, 96, 30, 1, 'DEPLOIEMENT'),
+       (3, 97, 47, 1, 'DEPLOIEMENT'),
+       (3, 96, 47, 1, 'DEPLOIEMENT'),
+       (1, 91, 47, 1, 'DEPLOIEMENT'),
+       (3, 99, 47, 1, 'DEPLOIEMENT'),
+       (3, 96, 47, 1, 'DEPLOIEMENT'),
+       (2, 91, 47, 1, 'DEPLOIEMENT'),
+       (3, 93, 47, 1, 'DEPLOIEMENT'),
+       (3, 97, 47, 1, 'DEPLOIEMENT'),
+       (2, 96, 47, 1, 'DEPLOIEMENT'),
+       (3, 93, 47, 1, 'DEPLOIEMENT'),
+       (3, 99, 47, 1, 'DEPLOIEMENT'),
+       (5, 96, 47, 1, 'DEPLOIEMENT'),
 
-       (3, 97, 30, 2, 'DEPLOIEMENT'),
-       (3, 96, 30, 2, 'DEPLOIEMENT'),
-       (1, 91, 30, 2, 'DEPLOIEMENT'),
-       (3, 99, 30, 2, 'DEPLOIEMENT'),
-       (3, 96, 30, 2, 'DEPLOIEMENT'),
-       (5, 91, 30, 2, 'DEPLOIEMENT'),
+       (3, 97, 47, 2, 'DEPLOIEMENT'),
+       (3, 96, 47, 2, 'DEPLOIEMENT'),
+       (1, 91, 47, 2, 'DEPLOIEMENT'),
+       (3, 99, 47, 2, 'DEPLOIEMENT'),
+       (3, 96, 47, 2, 'DEPLOIEMENT'),
+       (5, 91, 47, 2, 'DEPLOIEMENT'),
 
-       (3, 92, 30, 3, 'DEPLOIEMENT'),
-       (5, 91, 30, 3, 'DEPLOIEMENT'),
+       (3, 92, 47, 3, 'DEPLOIEMENT'),
+       (5, 91, 47, 3, 'DEPLOIEMENT'),
 
-       (3, 100, 31, 1, 'DEPLOIEMENT'),
-       (5, 91, 31, 1, 'DEPLOIEMENT'),
+       (3, 100, 48, 1, 'DEPLOIEMENT'),
+       (5, 91, 48, 1, 'DEPLOIEMENT'),
 
-       (3, 101, 32, 1, 'DEPLOIEMENT'),
-       (5, 91, 32, 1, 'DEPLOIEMENT'),
+       (3, 101, 49, 1, 'DEPLOIEMENT'),
+       (5, 91, 49, 1, 'DEPLOIEMENT'),
 
-       (3, 105, 33, 1, 'DEPLOIEMENT'),
-       (5, 108, 33, 1, 'DEPLOIEMENT'),
+       (3, 105, 50, 1, 'DEPLOIEMENT'),
+       (5, 108, 50, 1, 'DEPLOIEMENT'),
 
-       (3, 105, 34, 1, 'DEPLOIEMENT'),
-       (5, 109, 34, 1, 'DEPLOIEMENT'),
+       (3, 105, 51, 1, 'DEPLOIEMENT'),
+       (5, 109, 51, 1, 'DEPLOIEMENT'),
 
-       (3, 105, 35, 1, 'DEPLOIEMENT'),
-       (5, 110, 35, 1, 'DEPLOIEMENT'),
+       (3, 105, 52, 1, 'DEPLOIEMENT'),
+       (5, 110, 52, 1, 'DEPLOIEMENT'),
 
-       (5, 113, 36, 1, 'MAINTENANCE'),
+       (5, 113, 53, 1, 'MAINTENANCE'),
 
-       (3, 119, 37, 1, 'MAINTENANCE'),
-       (3, 118, 37, 1, 'MAINTENANCE'),
-       (1, 113, 37, 1, 'MAINTENANCE'),
-       (3, 121, 37, 1, 'MAINTENANCE'),
-       (3, 118, 37, 1, 'MAINTENANCE'),
-       (2, 113, 37, 1, 'MAINTENANCE'),
-       (3, 115, 37, 1, 'MAINTENANCE'),
-       (3, 119, 37, 1, 'MAINTENANCE'),
-       (2, 118, 37, 1, 'MAINTENANCE'),
-       (3, 113, 37, 1, 'MAINTENANCE'),
-       (3, 121, 37, 1, 'MAINTENANCE'),
-       (5, 118, 37, 1, 'MAINTENANCE'),
+       (3, 119, 54, 1, 'MAINTENANCE'),
+       (3, 118, 54, 1, 'MAINTENANCE'),
+       (1, 113, 54, 1, 'MAINTENANCE'),
+       (3, 121, 54, 1, 'MAINTENANCE'),
+       (3, 118, 54, 1, 'MAINTENANCE'),
+       (2, 113, 54, 1, 'MAINTENANCE'),
+       (3, 115, 54, 1, 'MAINTENANCE'),
+       (3, 119, 54, 1, 'MAINTENANCE'),
+       (2, 118, 54, 1, 'MAINTENANCE'),
+       (3, 113, 54, 1, 'MAINTENANCE'),
+       (3, 121, 54, 1, 'MAINTENANCE'),
+       (5, 118, 54, 1, 'MAINTENANCE'),
 
-       (3, 119, 37, 2, 'MAINTENANCE'),
-       (3, 118, 37, 2, 'MAINTENANCE'),
-       (1, 113, 37, 2, 'MAINTENANCE'),
-       (3, 121, 37, 2, 'MAINTENANCE'),
-       (3, 118, 37, 2, 'MAINTENANCE'),
-       (5, 113, 37, 2, 'MAINTENANCE'),
+       (3, 119, 54, 2, 'MAINTENANCE'),
+       (3, 118, 54, 2, 'MAINTENANCE'),
+       (1, 113, 54, 2, 'MAINTENANCE'),
+       (3, 121, 54, 2, 'MAINTENANCE'),
+       (3, 118, 54, 2, 'MAINTENANCE'),
+       (5, 113, 54, 2, 'MAINTENANCE'),
 
-       (3, 114, 37, 3, 'MAINTENANCE'),
-       (5, 113, 37, 3, 'MAINTENANCE'),
+       (3, 114, 54, 3, 'MAINTENANCE'),
+       (5, 113, 54, 3, 'MAINTENANCE'),
 
-       (3, 122, 38, 1, 'MAINTENANCE'),
-       (5, 113, 38, 1, 'MAINTENANCE'),
+       (3, 122, 55, 1, 'MAINTENANCE'),
+       (5, 113, 55, 1, 'MAINTENANCE'),
 
-       (3, 123, 39, 1, 'MAINTENANCE'),
-       (5, 113, 39, 1, 'MAINTENANCE');
+       (3, 123, 56, 1, 'MAINTENANCE'),
+       (5, 113, 56, 1, 'MAINTENANCE');
 
 
 --Création Questions proposées
@@ -808,13 +806,13 @@ UPDATE question
 SET dependance = 17
 WHERE idquestion = 29;
 UPDATE question
-SET dependance = 41
+SET dependance = 58
 WHERE idquestion = 30;
 UPDATE question
-SET dependance = 41
+SET dependance = 58
 WHERE idquestion = 31;
 UPDATE question
-SET dependance = 44
+SET dependance = 62
 WHERE idquestion = 32;
 
 /*TEST*/
@@ -822,46 +820,46 @@ UPDATE question
 SET dependance = null
 WHERE idquestion = 33;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 34;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 35;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 36;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 37;
 UPDATE question
-SET dependance = 54
+SET dependance = 72
 WHERE idquestion = 38;
 UPDATE question
-SET dependance = 54
+SET dependance = 72
 WHERE idquestion = 39;
 UPDATE question
-SET dependance = 54
+SET dependance = 72
 WHERE idquestion = 40;
 UPDATE question
-SET dependance = 54
+SET dependance = 72
 WHERE idquestion = 41;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 42;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 43;
 UPDATE question
-SET dependance = 49
+SET dependance = 67
 WHERE idquestion = 44;
 UPDATE question
-SET dependance = 62
+SET dependance = 80
 WHERE idquestion = 45;
 UPDATE question
-SET dependance = 62
+SET dependance = 80
 WHERE idquestion = 46;
 UPDATE question
-SET dependance = 65
+SET dependance = 84
 WHERE idquestion = 47;
 
 /*DEPLOIEMENT*/
@@ -869,46 +867,46 @@ UPDATE question
 SET dependance = null
 WHERE idquestion = 48;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 49;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 50;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 51;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 52;
 UPDATE question
-SET dependance = 75
+SET dependance = 94
 WHERE idquestion = 53;
 UPDATE question
-SET dependance = 75
+SET dependance = 94
 WHERE idquestion = 54;
 UPDATE question
-SET dependance = 75
+SET dependance = 94
 WHERE idquestion = 55;
 UPDATE question
-SET dependance = 75
+SET dependance = 94
 WHERE idquestion = 56;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 57;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 58;
 UPDATE question
-SET dependance = 70
+SET dependance = 89
 WHERE idquestion = 59;
 UPDATE question
-SET dependance = 83
+SET dependance = 102
 WHERE idquestion = 60;
 UPDATE question
-SET dependance = 83
+SET dependance = 102
 WHERE idquestion = 61;
 UPDATE question
-SET dependance = 86
+SET dependance = 106
 WHERE idquestion = 62;
 
 /*MAITENANCE*/
@@ -916,32 +914,32 @@ UPDATE question
 SET dependance = null
 WHERE idquestion = 63;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 64;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 65;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 66;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 67;
 UPDATE question
-SET dependance = 96
+SET dependance = 116
 WHERE idquestion = 68;
 UPDATE question
-SET dependance = 96
+SET dependance = 116
 WHERE idquestion = 69;
 UPDATE question
-SET dependance = 96
+SET dependance = 116
 WHERE idquestion = 70;
 UPDATE question
-SET dependance = 96
+SET dependance = 116
 WHERE idquestion = 71;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 72;
 UPDATE question
-SET dependance = 91
+SET dependance = 111
 WHERE idquestion = 73;

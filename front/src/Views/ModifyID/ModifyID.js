@@ -73,11 +73,11 @@ function ModifyID() {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField label="Nouvelle adresse mail" type="email" variant="standard"
                                className="textfield" {...register("newMail")} required
-                               error={!Boolean(fieldErrors.mail)}
+                               error={Boolean(fieldErrors.mail)}
                                helperText={fieldErrors.mail}/><br/>
                     <TextField label="Confirmer l'adresse mail" type="email" variant="standard"
                                className="textfield" {...register("confirmMail")} required onPaste={handlePaste}
-                               error={!Boolean(fieldErrors.mailConfirm)}
+                               error={Boolean(fieldErrors.mailConfirm)}
                                helperText={fieldErrors.mailConfirm}/><br/>
 
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>

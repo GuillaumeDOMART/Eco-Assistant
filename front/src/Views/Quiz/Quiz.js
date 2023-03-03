@@ -26,7 +26,6 @@ function StepperComponent() {
     const handlePhase = useCallback(async () => {
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
-        setSelectedAnswers([])
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -48,21 +47,32 @@ function StepperComponent() {
             const json = await response.json();
             setIsLoaded(true);
             setData(json);
+            const selected = []
+            json.forEach(question => {
+                if(question.type === 'QCM' && question.reponse !== null) {
+                    selected.push({
+                        "question": question.questionId.toString(),
+                        "reponseId": question.reponse.reponse.reponseId
+                    })
+
+                }
+            })
+            await setSelectedAnswers(selected)
         } else {
             setIsLoaded(true);
             setErrorApiGetQuestionnaire("Erreur lors de la récupération du questionnaire");
         }
 
-    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep])
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep, setSelectedAnswers])
 
     /**
      */
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            handlePhase().then(r => r)
+            setSelectedAnswers([])
         },
-        [handlePhase]
+        [setSelectedAnswers]
     );
 
     /**
@@ -71,9 +81,9 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            handlePhase().then(r => r)
+            setSelectedAnswers([])
         },
-        [handlePhase]
+        [setSelectedAnswers]
     );
 
     const handleQuit = useCallback(
@@ -91,25 +101,33 @@ function StepperComponent() {
         }
 
         selectedAnswers.forEach(val => {
-            if (val.question === answer.question)
+            if (val.question === answer.question) {
                 selectedAnswers.splice(selectedAnswers.indexOf(val), 1)
+            }
         })
         setSelectedAnswers([...selectedAnswers, answer])
     }, [selectedAnswers])
+
+    const getDependancy = useCallback((questionId) => {
+        const dependance = data.find((value) => value.questionId.toString() === questionId).dependance
+        if (dependance === -1)
+            return true;
+        return selectedAnswers.find(value => value.reponseId === dependance)
+    }, [data, selectedAnswers])
 
     /**
      * Send responses to the backEnd when Next button is pressed
      * @param dataList
      */
     const onSubmit = useCallback(
-        (dataList) => {
+        async (dataList) => {
             const projectId = sessionStorage.getItem("project")
             const sendToBack = {}
             const responses = []
             for (const [key, value] of Object.entries(dataList)) {
                 const tuple = {}
                 tuple.questionId = key;
-                if (value === null)
+                if (value === null || !getDependancy(key))
                     tuple.entry = "";
                 else
                     tuple.entry = value;
@@ -131,8 +149,7 @@ function StepperComponent() {
                 redirect: 'follow'
             };
 
-            fetch("/api/reponsesDonnees", requestOptions)
-                .then(response => response.text())
+            await fetch("/api/reponsesDonnees", requestOptions)
 
         if (activeStep === steps.length - 1){
 
@@ -162,7 +179,7 @@ function StepperComponent() {
         else{
             handleNext();
         }
-    }, [handleNext, activeStep, navigate]
+        }, [handleNext, activeStep, navigate, getDependancy]
     )
 
     useEffect(() => {

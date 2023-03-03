@@ -21,11 +21,6 @@ export default function Phase({value, register, onChange}) {
     );
     switch (value.type) {
         case 'QCM' :
-            /**
-             * affiche réponses
-             * @param target question lint to the response
-             */
-
             return (
                 <QCM key={value.intitule}
                      question={value}
