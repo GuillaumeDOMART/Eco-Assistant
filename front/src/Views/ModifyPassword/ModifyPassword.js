@@ -71,14 +71,14 @@ function ModifyPassword() {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField label="Mot de passe actuel" type="password" variant="standard"
                                className="textfield" {...register("actualPassword")} required
-                               error={!Boolean(fieldErrors.actualPassword)}
+                               error={Boolean(fieldErrors.actualPassword)}
                                helperText={fieldErrors.actualPassword}/>
 
                     <StrengthMeter register={register} fieldErrors={fieldErrors}></StrengthMeter>
 
                     <TextField label="Confirmer le nouveau mot de passe" type="password" variant="standard"
                                className="textfield" {...register("newPasswordConfirmed")} required
-                               error={!Boolean(fieldErrors.passwordConfirm)}
+                               error={Boolean(fieldErrors.passwordConfirm)}
                                helperText={fieldErrors.passwordConfirm}/><br/>
 
                     <Button href="/infoProfil">Annuler</Button><Button type="submit">Valider</Button><br/>
