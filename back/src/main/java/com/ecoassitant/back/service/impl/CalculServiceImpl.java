@@ -59,7 +59,7 @@ public class CalculServiceImpl implements CalculService {
 
         var currentIdProfil = project.get().getProfil().getIdProfil();
         var projectIdProfil = profil.get().getIdProfil();
-        if (!currentIdProfil.equals(projectIdProfil))
+        if (!currentIdProfil.equals(projectIdProfil) && profil.get().getIsAdmin() < 1)
             return Optional.empty();
 
         var mine = resultatForProject(idProject);
