@@ -1,20 +1,32 @@
 import {NUMERIC, QCM} from "./QuestionType";
-import React from "react";
+import React, {useCallback} from "react";
 
 /**
  * gestion affuchage d'une question
  * @param value question
  * @param register register du quiz
+ * @param setSelectedAnswer
  * @returns {JSX.Element|null}
  * @constructor
  */
-export default function Phase({value, register}){
+export default function Phase({value, register, onChange}) {
+    /**
+     * doc
+     * @param target because
+     */
+    const handleChange = useCallback(
+        (target) => {
+        onChange(target, value)
+    }, [onChange, value]
+    );
     switch (value.type) {
         case 'QCM' :
             return (
                 <QCM key={value.intitule}
                      question={value}
+                     register={register}
                      {...register(value.questionId.toString())}
+                     onVisibility={handleChange}
                 />
             )
         case 'NUMERIC' :
@@ -24,6 +36,7 @@ export default function Phase({value, register}){
                          register={register}
                 />
             )
-        default : return null;
+        default :
+            return null;
     }
 }

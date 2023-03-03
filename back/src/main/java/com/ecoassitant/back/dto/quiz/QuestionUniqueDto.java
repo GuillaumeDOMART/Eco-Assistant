@@ -1,6 +1,7 @@
 package com.ecoassitant.back.dto.quiz;
 
-import com.ecoassitant.back.entity.tools.Categorie;
+import com.ecoassitant.back.entity.QuestionEntity;
+import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeQ;
 
@@ -17,9 +18,9 @@ public class QuestionUniqueDto {
     private final String intitule;
     private final Phase phase;
     private final TypeQ type;
-    private final Categorie categorie;
     private final Long dependance;
     private final List<ReponseUniqueDto> reponses;
+    private ReponseDonneeDtoQuiz reponse;
 
     public Long getDependance() {
         return dependance;
@@ -28,52 +29,26 @@ public class QuestionUniqueDto {
 
     /**
      * create a question with a quiz
-     * @param quiz format tree
+     * @param quiz format Entity
      */
-    public QuestionUniqueDto(QuestionDto quiz) {
-        this.categorie = quiz.getCategorie();
+    public QuestionUniqueDto(QuestionEntity quiz) {
         this.intitule = quiz.getIntitule();
         this.phase = quiz.getPhase();
-        this.questionId = quiz.getQuestionId();
-        this.dependance = quiz.getDependance();
-        this.type = quiz.getType();
+        this.questionId = quiz.getIdQuestion();
+        this.dependance = quiz.getDependance()!= null? quiz.getDependance().getIdReponsePos(): -1;
+        this.type = quiz.getTypeQ();
         this.reponses = new ArrayList<>();
-        quiz.getReponses().forEach(reponsePossibleDto -> {
-            this.reponses.add(new ReponseUniqueDto(reponsePossibleDto));
-        });
+        quiz.getReponses().forEach(reponsePossibleEntity -> reponses.add(new ReponseUniqueDto(reponsePossibleEntity)));
+        this.reponse = null;
     }
 
     /**
-     * create quiz in the map
-     * @param quiz quiz  format tree
-     * @return quiz format map
+     * set the reponse of the previous quiz
+     * @param reponse reponse of the previous quiz
      */
-    public static Map<Phase, List<QuestionUniqueDto>> Mapper(QuestionDto quiz){
-        map.put(Phase.DEPLOIEMENT, new ArrayList<QuestionUniqueDto>());
-        map.put(Phase.DEVELOPPEMENT, new ArrayList<QuestionUniqueDto>());
-        map.put(Phase.MAINTENANCE, new ArrayList<QuestionUniqueDto>());
-        map.put(Phase.PLANIFICATION, new ArrayList<QuestionUniqueDto>());
-        map.put(Phase.TEST, new ArrayList<QuestionUniqueDto>());
-        map.put(Phase.HORS_PHASE, new ArrayList<QuestionUniqueDto>());
-        remplir(quiz);
-        return map;
-        }
-
-    /**
-     * filled the map with the quiz format tree
-     * @param quiz quiz format tree
-     */
-    private static void remplir(QuestionDto quiz) {
-        if (quiz == null)
-            return;
-        if (!map.get(quiz.getPhase()).stream().map(QuestionUniqueDto::getQuestionId).toList().contains(quiz.getQuestionId())) {
-            var question = new QuestionUniqueDto(quiz);
-            map.compute(question.getPhase(), (k, v) -> {
-                v.add(question);
-                return v;
-            });
-        }
-        quiz.getReponses().forEach( reponsePossibleDto -> remplir(reponsePossibleDto.getQuestionSuiv()));
+    public void remplir(ReponseDonneeEntity reponse) {
+        if (questionId == reponse.getReponseDonneeKey().getQuestion().getIdQuestion())
+            this.reponse = new ReponseDonneeDtoQuiz(reponse);
     }
 
     public Long getQuestionId() {
@@ -86,10 +61,6 @@ public class QuestionUniqueDto {
 
     public Phase getPhase() {
         return phase;
-    }
-
-    public Categorie getCategorie() {
-        return categorie;
     }
 
     public List<ReponseUniqueDto> getReponses() {

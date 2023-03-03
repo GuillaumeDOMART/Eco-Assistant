@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.ResultatsPhaseDto;
+import com.ecoassitant.back.dto.resultat.ResultatsPhaseDto;
 
 /**
  * Service of calcul

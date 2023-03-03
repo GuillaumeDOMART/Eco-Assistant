@@ -27,10 +27,6 @@ public class QuestionEntity implements Serializable {
     @Column(name = "intitule", nullable = false)
     private String intitule;
 
-    @ManyToOne
-    @JoinColumn(name = "questionpre")
-    private QuestionEntity questionPre;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "typeq", nullable = false)
     private TypeQ typeQ;
@@ -39,13 +35,10 @@ public class QuestionEntity implements Serializable {
     @Column(name = "phase")
     private Phase phase;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "categorie")
-    private Categorie categorie;
 
     @ManyToOne
     @JoinColumn(name = "dependance")
-    private QuestionEntity dependance;
+    private ReponsePossibleEntity dependance;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionAsso")
     private List<ReponsePossibleEntity> reponses;
@@ -54,19 +47,15 @@ public class QuestionEntity implements Serializable {
      * constructor of questionEntity
      * @param l id
      * @param q1 entitled
-     * @param q previous question
      * @param type type of question
      * @param phase phase of question
-     * @param categorie categorie of question
-     * @param qd dependance of question
+     * @param dep dependance of question
      */
-    public QuestionEntity(long l, String q1, QuestionEntity q, TypeQ type, Phase phase, Categorie categorie, QuestionEntity qd) {
+    public QuestionEntity(long l, String q1, TypeQ type, Phase phase, ReponsePossibleEntity dep) {
         this.idQuestion = l;
         this.intitule = q1;
-        this.questionPre = q;
         this.typeQ = type;
         this.phase = phase;
-        this.categorie = categorie;
-        this.dependance = qd;
+        this.dependance = dep;
     }
 }

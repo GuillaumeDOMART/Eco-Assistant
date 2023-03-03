@@ -20,7 +20,7 @@ public class ConstanteEntity implements Serializable {
     private Long idConstante;
 
     @Column(name = "constante", nullable = false)
-    private int constante;
+    private double constante;
 
     @Column(name = "tracabilite")
     private String tracabilite;

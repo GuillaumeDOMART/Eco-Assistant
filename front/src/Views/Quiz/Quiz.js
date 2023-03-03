@@ -1,16 +1,12 @@
 import {useCallback, useEffect, useState} from 'react';
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import {useNavigate} from "react-router-dom";
 import {Col, Container, Row, Spinner} from "react-bootstrap";
 import {useForm} from "react-hook-form";
-import Phase from "./Phase";
+import StepForm from "./StepForm";
+import StepBox from "./StepBox";
 
-const steps = ["Conception", "Developpement", "Test", "Production", "Maintenance"];
+const steps = ["Hors_Phase", "Planification", "Developpement", "Test", "Deploiement", "Maintenance"];
 
 /**
  * The component representing the Stepper
@@ -22,18 +18,61 @@ function StepperComponent() {
     const [errorApiGetQuestionnaire, setErrorApiGetQuestionnaire] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
+    const [selectedAnswers, setSelectedAnswers] = useState([])
     const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();
 
+
+    const handlePhase = useCallback(async () => {
+        const token = sessionStorage.getItem("token")
+        const id = sessionStorage.getItem("project")
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify({
+            "phase": steps[activeStep].toUpperCase(),
+            id
+        });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        const response = await fetch("/api/questions/phase", requestOptions)
+        if (response.ok) {
+            const json = await response.json();
+            setIsLoaded(true);
+            setData(json);
+            const selected = []
+            json.forEach(question => {
+                if(question.type === 'QCM' && question.reponse !== null) {
+                    selected.push({
+                        "question": question.questionId.toString(),
+                        "reponseId": question.reponse.reponse.reponseId
+                    })
+
+                }
+            })
+            await setSelectedAnswers(selected)
+        } else {
+            setIsLoaded(true);
+            setErrorApiGetQuestionnaire("Erreur lors de la récupération du questionnaire");
+        }
+
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep, setSelectedAnswers])
+
     /**
-     * Go to the next step
      */
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            reset()
+            setSelectedAnswers([])
         },
-        [reset]
+        [setSelectedAnswers]
     );
 
     /**
@@ -42,83 +81,110 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            reset()
+            setSelectedAnswers([])
         },
-        [reset]
+        [setSelectedAnswers]
     );
 
-    /**
-     * Reset the stepper
-     */
-    const handleReset = useCallback(
+    const handleQuit = useCallback(
         () => {
-            const projectId = sessionStorage.getItem("project")
-            sessionStorage.removeItem("project")
-            navigate(`/result?id=${projectId}`)
+            navigate("/profil");
         },
         [navigate]
-    );
+    )
+
+    const handleChange = useCallback((target, value) => {
+        const select = value.reponses.find(val => val.intitule === target.target.value)
+        const answer = {
+            "question": target.target.name,
+            "reponseId": select.reponseId
+        }
+
+        selectedAnswers.forEach(val => {
+            if (val.question === answer.question) {
+                selectedAnswers.splice(selectedAnswers.indexOf(val), 1)
+            }
+        })
+        setSelectedAnswers([...selectedAnswers, answer])
+    }, [selectedAnswers])
+
+    const getDependancy = useCallback((questionId) => {
+        const dependance = data.find((value) => value.questionId.toString() === questionId).dependance
+        if (dependance === -1)
+            return true;
+        return selectedAnswers.find(value => value.reponseId === dependance)
+    }, [data, selectedAnswers])
 
     /**
      * Send responses to the backEnd when Next button is pressed
      * @param dataList
      */
-    const onSubmit = (dataList) => {
-        const projectId = sessionStorage.getItem("project")
-        const sendToBack = {}
-        const responses = []
-        for (const [key, value] of Object.entries(dataList)) {
-            const tuple = {}
-            tuple.questionId = key;
-            tuple.entry = value;
-            responses.push(tuple)
+    const onSubmit = useCallback(
+        async (dataList) => {
+            const projectId = sessionStorage.getItem("project")
+            const sendToBack = {}
+            const responses = []
+            for (const [key, value] of Object.entries(dataList)) {
+                const tuple = {}
+                tuple.questionId = key;
+                if (value === null || !getDependancy(key))
+                    tuple.entry = "";
+                else
+                    tuple.entry = value;
+                responses.push(tuple)
+            }
+            sendToBack.projetId = projectId;
+            sendToBack.reponses = responses;
+
+            const token = sessionStorage.getItem("token")
+
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", `Bearer ${token}`);
+
+            const requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: JSON.stringify(sendToBack),
+                redirect: 'follow'
+            };
+
+            await fetch("/api/reponsesDonnees", requestOptions)
+
+        if (activeStep === steps.length - 1){
+
+            const body = {}
+            body.id= projectId
+            const options = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(body)
+            };
+            fetch('/api/projet/finish', options)
+                .then(res => {
+                    if(res.status === 404 ){
+                        navigate(`/profil`)
+                    }
+                    else{
+                        navigate(`/result?id=${projectId}`)
+                    }
+                })
+
+
+
         }
-        sendToBack.projetId = projectId;
-        sendToBack.reponses = responses;
-
-        const token = sessionStorage.getItem("token")
-
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", `Bearer ${token}`);
-
-        const requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: JSON.stringify(sendToBack),
-            redirect: 'follow'
-        };
-
-        fetch("/api/reponsesDonnees", requestOptions)
-            .then(response => response.text())
-
-        if (activeStep === steps.length - 1)
-            navigate(`/result?id=${projectId}`)
-        else
+        else{
             handleNext();
-    }
+        }
+        }, [handleNext, activeStep, navigate, getDependancy]
+    )
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token")
-        const options = {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-        };
-        fetch("/api/questions", options)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setData(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setErrorApiGetQuestionnaire(error);
-                }
-            )
-    }, [])
+        handlePhase().then(() => reset())
+    }, [handlePhase, reset])
 
     if (errorApiGetQuestionnaire) {
         return <div>Error: {errorApiGetQuestionnaire.message}</div>;
@@ -128,85 +194,32 @@ function StepperComponent() {
                 <Spinner animation="grow" variant="success"/>
             </>
         );
-    } else {
-        let currentPhase = data.PLANIFICATION;
-        switch (activeStep) {
-            case 0:
-                currentPhase = data.PLANIFICATION
-                break;
-            case 1:
-                currentPhase = data.DEVELOPPEMENT
-                break;
-            case 2:
-                currentPhase = data.TEST
-                break;
-            case 3:
-                currentPhase = data.DEPLOIEMENT
-                break;
-            default:
-                break;
-        }
-        return (
-            <Container fluid>
-                <Row>
-                    <Box className="mt-3">
-                        <Stepper activeStep={activeStep} alternativeLabel>
-                            {steps.map((label) => {
-                                const stepProps = {};
-                                const labelProps = {};
-                                return (
-                                    <Step key={label} {...stepProps}>
-                                        <StepLabel {...labelProps}>{label}</StepLabel>
-                                    </Step>
-                                );
-                            })}
-                        </Stepper>
-                    </Box>
-                    <Col></Col>
-                    <form onSubmit={handleSubmit(onSubmit)}
-                          style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
-                          className="navbar-nav-scroll mt-4 col-8"
-                    >
-                        {currentPhase.map(question => <Phase key={question.questionId}
-                                                             register={register}
-                                                             value={question}
-                        />)}
-                        <Box className="">
-                            {activeStep === steps.length ? (
-                                <>
-                                    <Typography sx={{mt: 2, mb: 1}}>
-                                        All steps completed - you&apos;re finished
-                                    </Typography>
-                                    <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                        <Box sx={{flex: '1 1 auto'}}/>
-                                        <Button onClick={handleReset}>Reset</Button>
-                                    </Box>
-                                </>
-                            ) : (
-                                <Box sx={{display: 'flex', flexDirection: 'row', pt: 2}}>
-                                    <Button
-                                        color="inherit"
-                                        disabled={activeStep === 0}
-                                        onClick={handleBack}
-                                        sx={{mr: 1}}
-                                    >
-                                        Back
-                                    </Button>
-                                    <Box sx={{flex: '1 1 auto'}}/>
-
-                                    <Button type={"submit"}>
-                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                    </Button>
-                                </Box>
-                            )}
-                        </Box>
-                    </form>
-                    <Col></Col>
-                </Row>
-            </Container>
-
-        );
     }
+    return (
+        <Container fluid>
+            <Row>
+                <StepBox
+                    activeStep={activeStep}
+                    steps={steps}
+                />
+                <Col></Col>
+                <StepForm
+                    steps={steps}
+                    activeStep={activeStep}
+                    data={data}
+                    selectedAnswers={selectedAnswers}
+                    handleSubmit={handleSubmit}
+                    handleChange={handleChange}
+                    handleBack={handleBack}
+                    register={register}
+                    onSubmit={onSubmit}
+                />
+                <Col>
+                    <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
+                </Col>
+            </Row>
+        </Container>
+    );
 }
 
 export default StepperComponent

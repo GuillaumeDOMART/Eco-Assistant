@@ -8,13 +8,12 @@ import LogoToHome from "../logo/LogoToHome";
  * */
 function BarreNavCore() {
     return (
-        <nav id="sidebarMenu" className="col-2 border border-2 border-secondary">
+        <nav id="sidebarMenu" className="col-2 border-end border-3 border-secondary">
             <div className="position-sticky list-group list-group-flush px-3 pt-4 h-100">
                 <BarNavContent/>
             </div>
-
-            <div className="col-2 fixed-bottom">
-                v0.2-alpha
+            <div className="col-2 fixed-bottom mb-2">
+                v1.0-beta
             </div>
         </nav>
     );
@@ -23,7 +22,7 @@ function BarreNavCore() {
 /**
  * Return what is containted withing the nav bar
  */
-function BarNavContent(){
+function BarNavContent() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [apiError, setApiError] = useState(null);
     const [datas, setDatas] = useState([]);
@@ -52,20 +51,20 @@ function BarNavContent(){
             )
     }, [])
 
-    if(apiError){
+    if (apiError) {
         return (
             <>
                 <LogoToHome/>
                 <Alert variant="danger">
-                    <Alert.Heading >Error API</Alert.Heading>
+                    <Alert.Heading>Error API</Alert.Heading>
                     {apiError.message}
                 </Alert>
             </>
         );
     }
 
-    const listeOnglets = [['Accueil', '/profil'], ['Profil', '/infoProfil'], ['Remplir un questionnaire', '/newproject'], ["Questions proposées", './']];
-    if(isLoaded && datas.isAdmin) {
+    const listeOnglets = [['Accueil', '/profil'], ['Profil', '/infoProfil'], ['Remplir un questionnaire', '/newproject'], ["Questions proposées", './questionsProposees']];
+    if (isLoaded && datas.isAdmin) {
         listeOnglets.push(['Moderation', './'])
     }
     listeOnglets.push(['Se déconnecter', './logout'])
@@ -75,13 +74,13 @@ function BarNavContent(){
         <BarreNavGroupItemPlaceholder key={x[0]}/>
     ));
 
-    if(isLoaded) {
+    if (isLoaded) {
         listeLiens = listeOnglets.map((x) => (
             <BarreNavGroupItem key={x[0]} {...x}/>
         ));
     }
 
-    return(
+    return (
         <>
             <LogoToHome/>
             <ListGroup variant="flush">
@@ -94,17 +93,17 @@ function BarNavContent(){
 /**
  * Return a list group item, with the correct color
  */
-function BarreNavGroupItem(pair){
+function BarreNavGroupItem(pair) {
     const [isActive, setActive] = useState(false)
     const localisation = useLocation()
 
     useEffect(() => {
-        if(pair[0] === localisation.pathname) {
-        setActive(true)
+        if (pair[0] === localisation.pathname) {
+            setActive(true)
         }
     }, [pair, localisation]);
 
-    if(isActive) {
+    if (isActive) {
         return <ListGroup.Item variant="primary" action href={pair[1]}>{pair[0]}</ListGroup.Item>;
     } else return <ListGroup.Item action href={pair[1]}>{pair[0]}</ListGroup.Item>;
 }
@@ -112,7 +111,7 @@ function BarreNavGroupItem(pair){
 /**
  * Return a placeholder for Group Item
  */
-function BarreNavGroupItemPlaceholder(){
+function BarreNavGroupItemPlaceholder() {
     return <Placeholder variant="light" className="m-2" aria-hidden="true" as={ListGroup.Item}/>;
 }
 
