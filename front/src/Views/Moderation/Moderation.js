@@ -49,9 +49,9 @@ function ProjectsList(props){
     const handleDeleteProject= useCallback(()=>{
         console.log(deletedProject.id)
         const token = sessionStorage.getItem("token");
-        const jsonBody = {idToBan : deletedProject.id}
+        const jsonBody = {idProjectToBan : deletedProject.id}
         const options = {
-            method: 'DELETE',
+            method: 'PATCH',
             headers: {
                 'Content-Type' : 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -247,7 +247,7 @@ function LigneTableauProjects(datas) {
         console.log(datas.project)
         setSelectedProject(datas.project)
         navigate('/result?id='+datas.project.id)
-    },[datas])
+    },[datas,navigate])
     /*const handleClick = useCallback(() => {
         sessionStorage.setItem("user",datas.id)
 

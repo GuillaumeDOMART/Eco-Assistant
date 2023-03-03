@@ -1,7 +1,5 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.BanDto;
-import com.ecoassitant.back.dto.profil.ProfilIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.entity.tools.TypeP;
@@ -11,8 +9,6 @@ import com.ecoassitant.back.exception.NoSuchElementInDataBaseException;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.service.AdminService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

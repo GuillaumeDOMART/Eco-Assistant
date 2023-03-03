@@ -2,8 +2,6 @@ package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.admin.BanDto;
 import com.ecoassitant.back.dto.admin.BanProjectDto;
-import com.ecoassitant.back.dto.BanDto;
-import com.ecoassitant.back.dto.profil.ProfilIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
 
 import java.util.List;

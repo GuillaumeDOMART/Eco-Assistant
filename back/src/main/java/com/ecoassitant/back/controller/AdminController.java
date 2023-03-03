@@ -3,8 +3,6 @@ package com.ecoassitant.back.controller;
 import com.ecoassitant.back.dto.admin.BanDto;
 import com.ecoassitant.back.dto.admin.BanProjectDto;
 import com.ecoassitant.back.config.JwtService;
-import com.ecoassitant.back.dto.BanDto;
-import com.ecoassitant.back.dto.profil.ProfilIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +49,7 @@ public class AdminController {
      */
     @PatchMapping("banProject")
     public ResponseEntity<Boolean> banProject(@RequestBody BanProjectDto banDto) {
+        System.out.println(banDto);
         return ResponseEntity.ok(adminService.banProject(banDto));
     }
 

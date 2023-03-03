@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS reponsedonnee
     reponseposid INT NOT NULL,
     entry        INT NOT NULL,
     CONSTRAINT projetid PRIMARY KEY (projetid, questionid),
-    CONSTRAINT fk_projetid FOREIGN KEY (projetid) REFERENCES projet (idprojet),
+    CONSTRAINT fk_projetid FOREIGN KEY (projetid) REFERENCES projet (idprojet) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT questionid FOREIGN KEY (questionid) REFERENCES question (idquestion),
     CONSTRAINT reponseposid FOREIGN KEY (reponseposid) REFERENCES reponsepossible (idreponsepos)
 );
