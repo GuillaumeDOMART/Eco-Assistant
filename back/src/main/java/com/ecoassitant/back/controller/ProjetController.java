@@ -83,7 +83,7 @@ public class ProjetController {
     }
 
     /**
-     * Endpoint to retrieve a projet by it's user's token
+     * Endpoint to retrieve a project by it's user's token
      */
     @GetMapping("/projet/user")
     @ResponseBody
@@ -92,6 +92,8 @@ public class ProjetController {
         var mail = jwtService.extractMail(token);
         return ResponseEntity.ok(projetRepository.findByProfilMail(mail).stream().map(ProjetDto::new).toList());
     }
+
+
 
     /**
      * Endpoint to create a project

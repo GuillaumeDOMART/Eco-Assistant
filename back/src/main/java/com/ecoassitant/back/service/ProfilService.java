@@ -6,6 +6,7 @@ import com.ecoassitant.back.dto.profil.ProfilSimplDto;
 import com.ecoassitant.back.dto.profil.ProfilIdDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,6 +27,13 @@ public interface ProfilService {
      * @return a ProfilDto with the submitted mail, or null if it doesn't exist
      */
     ProfilDto getProfilByMail(String mail);
+
+    /**
+     * Return all users if the user connected represents an admin
+     * @param mail mail of the user connected
+     * @return all users profiles
+     */
+    Optional<List<ProfilDto>> getAllUsersProfil(String mail);
 
     /**
      * Endpoint to create a user admin

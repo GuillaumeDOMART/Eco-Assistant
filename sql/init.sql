@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS reponsedonnee
     reponseposid INT NOT NULL,
     entry        INT NOT NULL,
     CONSTRAINT projetid PRIMARY KEY (projetid, questionid),
-    CONSTRAINT fk_projetid FOREIGN KEY (projetid) REFERENCES projet (idprojet),
+    CONSTRAINT fk_projetid FOREIGN KEY (projetid) REFERENCES projet (idprojet) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT questionid FOREIGN KEY (questionid) REFERENCES question (idquestion),
     CONSTRAINT reponseposid FOREIGN KEY (reponseposid) REFERENCES reponsepossible (idreponsepos)
 );
@@ -101,7 +101,7 @@ VALUES ('admin@demo.fr', '$2a$10$b8qqjDh64vjz2/KsV9Yc8uYKMDTatn3cL6Bp7Uuhcwg/N0l
        ('salarie@demo.fr', '$2a$10$5FQSn68f5IddpjRlc0nxguBSRCLpnMfEsbzqhlK5UPP.GHngu8ADe',
         'DEMO', 'Salarie', 0),
        ('anonyme@demo.fr', 'anonyme',
-        'DEMO', 'Ano', 0);
+        'DEMO', 'Ano', -1);
 -- CREATION DES PROJETS DEVS ET SUPPORT
 INSERT INTO projet(profilid, nomprojet, etat, type)
 VALUES (1, 'QUESTIONAIRE POUR Administrateur',
