@@ -125,7 +125,6 @@ public class CalculServiceImpl implements CalculService {
                 }
                 var intitule = "test" + k;
                 executer.ifPresent(aDouble -> {
-                    System.out.println(calculEntier.getPhase() + " " + intitule + " " + aDouble);
                     switch (calculEntier.getPhase()) {
                         case PLANIFICATION -> resultat.addPlanification(new CalculDto(intitule, aDouble));
                         case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(intitule, aDouble));
