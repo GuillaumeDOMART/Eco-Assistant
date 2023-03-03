@@ -21,5 +21,11 @@ public interface ReponseDonneeRepository extends JpaRepository<ReponseDonneeEnti
      */
     List<ReponseDonneeEntity> findByReponseDonneeKey_Projet(ProjetEntity projet);
 
+    /**
+     * find a reponsedonnee in the data
+     * @param question question of the response
+     * @param projet project of the response
+     * @return optional reponse donnee with the response searched
+     */
     Optional<ReponseDonneeEntity> findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(QuestionEntity question, ProjetEntity projet);
 }
