@@ -124,7 +124,6 @@ public class CalculServiceImpl implements CalculService {
                     phase = Optional.ofNullable(calculEntier.getPhase());
                 }
                 executer.ifPresent(aDouble -> {
-                    System.out.println(calculEntier.getIntitule() + " " + aDouble);
                     switch (calculEntier.getPhase()) {
                         case PLANIFICATION -> resultat.addPlanification(new CalculDto(calculEntier.getIntitule(), aDouble));
                         case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(calculEntier.getIntitule(), aDouble));
