@@ -32,7 +32,6 @@ function StepForm({
               className="navbar-nav-scroll mt-4 col-8"
               style={{paddingLeft: '120px', paddingRight: '120px', marginTop: '20px'}}
         >
-            {activeStep}
             {data.map(question => {
                     const check = selectedAnswers.find(answer => {
                         return question.dependance === answer.reponseId;

@@ -64,7 +64,6 @@ QCM.displayName = 'QCM';
  * @constructor
  */
 export const NUMERIC = ({question, register}) => {
-    console.log(question)
     if (question.reponse === null) {
         return (
             <div style={{marginTop: '20px'}} className="shadow-lg rounded">

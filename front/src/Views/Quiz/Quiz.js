@@ -81,7 +81,7 @@ function StepperComponent() {
         [navigate]
     )
 
-    const handleChange = useCallback((target, value) => {
+    const handleChange = useCallback(async (target, value) => {
         const select = value.reponses.find(val => val.intitule === target.target.value)
         const answer = {
             "question": target.target.name,
@@ -97,7 +97,9 @@ function StepperComponent() {
 
     const getDependancy = useCallback((questionId) => {
         const dependance = data.find((value) => value.questionId.toString() === questionId).dependance
-        return (selectedAnswers.find(value => value.question === dependance.toString()) != null)
+        if (dependance === -1)
+            return true;
+        return selectedAnswers.find(value => value.reponseId === dependance)
     }, [data, selectedAnswers])
 
     /**
@@ -112,13 +114,14 @@ function StepperComponent() {
             for (const [key, value] of Object.entries(dataList)) {
                 const tuple = {}
                 tuple.questionId = key;
-                // if (!getDependancy(key)) {
+                if (getDependancy(key)) {
+                    console.log("envoyé")
                     if (value === null)
                         tuple.entry = "";
                     else
                         tuple.entry = value;
                     responses.push(tuple)
-                // }
+                }
             }
             sendToBack.projetId = projectId;
             sendToBack.reponses = responses;
