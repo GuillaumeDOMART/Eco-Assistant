@@ -208,6 +208,7 @@ function LigneTableauProjet(datas) {
             <tr className='table border-bottom border-2 border-secondary'>
                 <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
                 <td align={"center"} valign={"middle"}>{datas.etat}</td>
+                <td align={"center"} valign={"middle"}>{datas.type}</td>
                 <td align={"center"} valign={"middle"}>
                     <ButtonSet idProject={datas.id} etat={datas.etat} handleClickModifyButton={handleClick} handleShowDissociate={executeHandleShow}/>
                 </td>
@@ -301,6 +302,7 @@ function TableauProjetsHeader() {
         <tr className='table border-bottom border-3 border-primary'>
             <th>Nom du projet</th>
             <th>Etat du Projet</th>
+            <th>Type de Projet</th>
             <th>Actions possibles</th>
         </tr>
         </thead>
