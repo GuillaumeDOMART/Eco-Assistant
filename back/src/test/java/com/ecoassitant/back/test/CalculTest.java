@@ -18,9 +18,9 @@ class CalculTest {
     ConstanteEntity c2 = new ConstanteEntity(2L, 20, "jentends");
     ProjetEntity projet = new ProjetEntity();
 
-    QuestionEntity q1 = new QuestionEntity(1L, "q1", null, TypeQ.NUMERIC, Phase.HORS_PHASE, null);
-    QuestionEntity q2 = new QuestionEntity(2L, "q2", q1, TypeQ.QCM, Phase.HORS_PHASE, null);
-    QuestionEntity q3 = new QuestionEntity(3L, "q3", q2, TypeQ.NUMERIC, Phase.HORS_PHASE, null);
+    QuestionEntity q1 = new QuestionEntity(1L, "q1", TypeQ.NUMERIC, Phase.HORS_PHASE, null);
+    QuestionEntity q2 = new QuestionEntity(2L, "q2", TypeQ.QCM, Phase.HORS_PHASE, null);
+    QuestionEntity q3 = new QuestionEntity(3L, "q3", TypeQ.NUMERIC, Phase.HORS_PHASE, null);
 
 
 
