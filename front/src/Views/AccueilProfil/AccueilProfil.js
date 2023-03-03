@@ -58,7 +58,7 @@ function TableauProjets() {
      * Dissociate the project describe by the id
      * @type {(function(*=): void)|*}
      */
-    const handleDissociate = useCallback((itemsList) => {
+    const handleDissociate = useCallback(() => {
         const token = sessionStorage.getItem("token");
         const jsonBody = {id: selectedProject.id}
         const options = {
@@ -72,13 +72,13 @@ function TableauProjets() {
         fetch('/api/projet/delete', options)
             .then(res => res.json())
             .then(() => {
-                const copyItems = [...itemsList];
-                copyItems.splice(itemsList.indexOf(selectedProject), 1);
+                const copyItems = [...items];
+                copyItems.splice(items.indexOf(selectedProject), 1);
                 setItems(copyItems);
                 setShowDissocier(false);
             })
 
-    }, [setShowDissocier, setItems, selectedProject])
+    }, [setShowDissocier, items, setItems, selectedProject])
 
     const fetchCopy = useCallback(async (formData) => {
         if (errors.type) return;
@@ -122,7 +122,7 @@ function TableauProjets() {
         reset()
         setFieldErrors({})
 
-    }, [items, reeset, selectedProject, setFieldErrors, errors]);
+    }, [items, reset, selectedProject, setFieldErrors, errors]);
 
     /**
      * Navigate to the page to begin the questionnaire
@@ -159,6 +159,10 @@ function TableauProjets() {
                 }
             )
     }, [navigate])
+
+    const executeHandleDissociate = useCallback(() => {
+        handleDissociate()
+    }, [handleDissociate])
 
     if (apiError) {
         return (
@@ -202,11 +206,9 @@ function TableauProjets() {
                                                              itemSelected={item}
                                                              showDissocier={showDissocier}
                                                              handleShowDissocier={handleShowDissocier}
-                                                             handleDissociate={handleDissociate}
                                                              handleShowCopy={handleShowCopy}
                                                              handleCancel={handleCancel}
                                                              setItems={setItems}
-                                                             errors={errors}
                     />)}
                     </tbody>
                 </Table>
@@ -232,9 +234,8 @@ function TableauProjets() {
                                         name="type" {...register("type", {required: true})}>
                                 <FormControlLabel value="simulation" control={<Radio/>} label="Simulation"
                                                   {...register("type", {required: true})}/>
-                                <FormControlLabel value="project" control={<Radio/>}
-                                                  label="Project" {...register("type", {required: true})}
-                                                  required/>
+                                <FormControlLabel value="project" control={<Radio/>} label="Project"
+                                                  {...register("type", {required: true})}/>
                             </RadioGroup>
                             <FormHelperText className={"text-center"}
                                             error>{errors.type && "Veuillez sélectionner une option"}</FormHelperText>
@@ -245,6 +246,21 @@ function TableauProjets() {
                             <Button type="submit">Copier le projet</Button><br/>
                         </Modal.Footer>
                     </form>
+                </Modal>
+
+                <Modal show={showDissocier} onHide={handleCancel}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Dissocier le Projet</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Êtes-vous sûr de vouloir dissocier ce projet ?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCancel}>
+                            Annuler
+                        </Button>
+                        <Button variant="outline-danger" onClick={executeHandleDissociate}>
+                            Supprimer
+                        </Button>
+                    </Modal.Footer>
                 </Modal>
             </>
         );
@@ -309,11 +325,6 @@ function LigneTableauProjet(datas) {
         datas.handleShowDissocier(datas.itemSelected)
     }, [datas])
 
-    const executeHandleDissociate = useCallback(() => {
-        datas.handleDissociate(datas.itemsList)
-    }, [datas])
-
-
     return (
         <>
             <tr className='table border-bottom border-2 border-secondary'>
@@ -328,27 +339,7 @@ function LigneTableauProjet(datas) {
                     />
                 </td>
             </tr>
-
-
-            <Modal show={datas.showDissocier} onHide={datas.handleCancel}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Dissocier le Projet</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Êtes-vous sûr de vouloir dissocier ce projet ?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={datas.handleCancel}>
-                        Annuler
-                    </Button>
-                    <Button variant="outline-danger" onClick={executeHandleDissociate}>
-                        Supprimer
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-
-
         </>
-
-
     );
 }
 
