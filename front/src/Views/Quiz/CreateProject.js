@@ -1,8 +1,9 @@
 import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import {Button, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
+import {Button, FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
 import {Col, Container, Row} from "react-bootstrap";
 import {useCallback, useState} from "react";
+import React from "react";
 
 
 /**
@@ -13,23 +14,26 @@ import {useCallback, useState} from "react";
  * @returns {JSX.Element} the jsx element
  * @constructor the constructor
  */
-function Project({onSubmit, register, fieldErrors}) {
+function Project({onSubmit, register, fieldErrors, errors}) {
     return (
         <Col className="justify-content-center">
             <h1>Nouveau Projet</h1>
             <form onSubmit={onSubmit} className="">
                 <TextField label="Nom du projet" type="text" variant="standard"
                            className="textfield" {...register("nom")} required
-                           error={!Boolean(fieldErrors.nom)}
+                           error={Boolean(fieldErrors.nom)}
                            helperText={fieldErrors.nom}/><br/><br/>
 
                 <FormLabel id="demo-row-radio-buttons-group-label"> Type du projet </FormLabel>
-                <RadioGroup className={"justify-content-center align-items-center"} row aria-label="type" name="type" {...register("type")}>
+                <RadioGroup className={"justify-content-center align-items-center"} row aria-label="type"
+                            name="type" {...register("type", {required: true})}>
                     <FormControlLabel value="simulation" control={<Radio/>} label="Simulation"
-                                      required {...register("type")} />
-                    <FormControlLabel value="project" control={<Radio/>} label="Project" {...register("type")} />
+                                      {...register("type", {required: true})}/>
+                    <FormControlLabel value="project" control={<Radio/>}
+                                      label="Project" {...register("type", {required: true})}
+                                      required/>
                 </RadioGroup>
-
+                <FormHelperText className={"text-center"} error>{errors.type && "Veuillez sélectionner une option"}</FormHelperText>
                 <Button type="submit">Créer le projet</Button><br/>
             </form>
         </Col>
@@ -53,7 +57,7 @@ function handleProjectSubmit(onSubmit, handleSubmit) {
  */
 function CreateProject() {
     const navigate = useNavigate();
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm();
     const [paragraphContent, setParagraphContent] = useState("")
     const [fieldErrors, setfieldErrors] = useState({})
 
@@ -63,6 +67,8 @@ function CreateProject() {
      * @returns {Promise<void>} the promise
      */
     const onSubmit = async (datas) => {
+        if (errors.type) return;
+
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
         myHeaders.append("Content-Type", "application/json");
@@ -113,7 +119,7 @@ function CreateProject() {
             <Row className="border border-5 vh-100">
                 <Col>
                     <Project onSubmit={handleProjectSubmit(onSubmit, handleSubmit)} register={register}
-                             fieldErrors={fieldErrors}/>
+                             fieldErrors={fieldErrors} errors={errors}/>
                     <p className="text-danger w-100 h-auto">{paragraphContent}</p>
                     <Button onClick={handleQuit} type={"button"}>Revenir à l&lsquo;accueil</Button>
                 </Col>

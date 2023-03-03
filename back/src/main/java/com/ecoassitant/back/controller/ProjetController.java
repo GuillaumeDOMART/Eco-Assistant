@@ -9,8 +9,9 @@ import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
-import com.ecoassitant.back.utils.StringGeneratorUtils;
 import com.ecoassitant.back.service.ProjetService;
+import com.ecoassitant.back.service.ReponseDonneesService;
+import com.ecoassitant.back.utils.StringGeneratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -32,21 +33,33 @@ public class ProjetController {
     private final ProfilRepository profilRepository;
     private final ProjetService projetService;
 
-
+    private final ReponseDonneesService reponseDonneesService;
 
     /**
      * Constructor for ProjetController
      *
-     * @param projetRepository ProjetRepository
-     * @param jwtService       JwtService
-     * @param profilRepository ProfilRepository
+     * @param projetRepository      ProjetRepository
+     * @param jwtService            JwtService
+     * @param profilRepository      ProfilRepository
+     * @param reponseDonneesService Service
      */
     @Autowired
-    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository, ProjetService projetService) {
+    public ProjetController(ProjetRepository projetRepository, JwtService jwtService, ProfilRepository profilRepository, ProjetService projetService, ReponseDonneesService reponseDonneesService) {
         this.projetRepository = Objects.requireNonNull(projetRepository);
         this.jwtService = Objects.requireNonNull(jwtService);
         this.profilRepository = Objects.requireNonNull(profilRepository);
         this.projetService = Objects.requireNonNull(projetService);
+        this.reponseDonneesService = Objects.requireNonNull(reponseDonneesService);
+    }
+
+    /**
+     * Function to generate a random string
+     *
+     * @param length the length of the random string
+     * @return the random string
+     */
+    private static String generateRandomString(int length) {
+        return StringGeneratorUtils.generateRandomString(length);
     }
 
     /**
@@ -90,7 +103,7 @@ public class ProjetController {
     @PostMapping("/projet/create")
     public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto projet) {
         if (projet.getNom().length() >= 50) {
-            throw new IllegalArgumentException("Le nom du projet doit avoir une taille inférieur à 50 caractères");
+            throw new IllegalArgumentException("Le nom du projet ne peut pas avoir un nom de plus de 50 caractères");
         }
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
@@ -103,7 +116,7 @@ public class ProjetController {
                 .nomProjet(projet.getNom())
                 .profil(profil)
                 .etat(Etat.INPROGRESS)
-                .type(projet.getType().equals("simulation")? TypeP.SIMULATION:TypeP.PROJET)
+                .type(projet.getType().equals("simulation") ? TypeP.SIMULATION : TypeP.PROJET)
                 .build();
         projetRepository.save(projetEntity);
         return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()), HttpStatus.OK);
@@ -142,18 +155,19 @@ public class ProjetController {
 
     /**
      * Method to finish a project of a user
+     *
      * @param authorizationHeader the token of the user
-     * @param projetDto the project name
+     * @param projetDto           the project name
      * @return the project dto id
      */
     @PutMapping("/projet/finish")
     public ResponseEntity<ProjectIdDto> finish(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
-        var optionalProjet = projetService.finish(mail,projetDto);
-        if(optionalProjet.isEmpty()){
+        var optionalProjet = projetService.finish(mail, projetDto);
+        if (optionalProjet.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }else{
+        } else {
             var projet = optionalProjet.get();
             return new ResponseEntity<>(new ProjectIdDto(projet.getId()), HttpStatus.OK);
         }
@@ -161,15 +175,46 @@ public class ProjetController {
     }
 
     /**
-     * Function to generate a random string
+     * Method to dissociate a project from a user and associate it to a default anonymous
      *
-     * @param length the length of the random string
-     * @return the random string
+     * @param authorizationHeader the token of the user
+     * @param projectIdDto        the projectDTO
+     * @return the project dto id
      */
-    private static String generateRandomString(int length) {
-        return StringGeneratorUtils.generateRandomString(length);
-    }
+    @PostMapping("/projet/{id}/copy")
+    public ResponseEntity<ProjetDto> copy(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projectIdDto) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        var projet = projetRepository.findByIdProjet(projectIdDto.getId());
+        var mailOwner = projet.getProfil().getMail();
+        var profil = profilRepository.findByMail(mail);
 
+        // if token is not authorized in general or for this project
+        if (profil.isEmpty() || !mailOwner.equals(mail)) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
+        var projetEntity = ProjetEntity.builder()
+                .nomProjet(projectIdDto.getProjectName())
+                .profil(profil.get())
+                .etat(Etat.INPROGRESS)
+                .type(projectIdDto.getProjectType())
+                .build();
+
+        System.out.println("projetEntity = " + projetEntity);
+
+        var projetCopy = projetService.save(projetEntity).orElseThrow();
+
+        System.out.println("projetCopy = " + projetCopy);
+
+        var answers = reponseDonneesService.findReponsesByProject(projet);
+        answers.forEach(answer -> answer.updateReponseDonneeProjectId(projetCopy));
+
+        reponseDonneesService.saveResponseDonnees(answers);
+
+        return new ResponseEntity<>(new ProjetDto(projetCopy), HttpStatus.OK);
+
+    }
 
     /**
      * Method to handle DataIntegrityViolationException into an HttpStatus.BAD_REQUEST when a project name already exist

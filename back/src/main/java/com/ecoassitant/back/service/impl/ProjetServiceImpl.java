@@ -2,6 +2,7 @@ package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.project.ProjectIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
+import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -22,6 +23,7 @@ public class ProjetServiceImpl implements ProjetService {
 
     /**
      * Constructor of ConstanteService
+     *
      * @param projetRepository projetRepository composite for using ProjetService methods
      */
     @Autowired
@@ -62,5 +64,11 @@ public class ProjetServiceImpl implements ProjetService {
         projet.setEtat(Etat.FINISH);
         var saveProject = projetRepository.save(projet);
         return Optional.of(new ProjectIdDto(saveProject.getIdProjet()));
+    }
+
+
+    @Override
+    public Optional<ProjetEntity> save(ProjetEntity projet) {
+        return Optional.of(projetRepository.save(projet));
     }
 }
