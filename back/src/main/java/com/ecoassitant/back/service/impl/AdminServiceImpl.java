@@ -1,11 +1,19 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.BanDto;
+import com.ecoassitant.back.dto.profil.ProfilIdDto;
+import com.ecoassitant.back.dto.project.ProjetDto;
+import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.exception.NoSuchElementInDataBaseException;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.service.AdminService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -38,5 +46,18 @@ public class AdminServiceImpl implements AdminService {
         }
 
         return true;
+    }
+
+    @Override
+    public Optional<List<ProjetDto>> getProjectsFinishedFromUserId(String mail, Integer profilId) {
+        var optConnectedProfil = profilRepository.findByMail(mail);
+        var selectedProfil = profilRepository.findById(profilId);
+        System.out.println("toto");
+        if(optConnectedProfil.isEmpty() || selectedProfil.isEmpty()){
+            System.out.println("tata");
+            throw new NoSuchElementInDataBaseException();
+        }
+        var selectedProjects = projetRepository.findByProfil_IdProfil(profilId);
+        return Optional.of(selectedProjects.stream().filter(p->p.getEtat().equals(Etat.FINISH)).map(ProjetDto::new).toList());
     }
 }

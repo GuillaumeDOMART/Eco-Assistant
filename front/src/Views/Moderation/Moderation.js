@@ -19,18 +19,105 @@ function Moderation(){
     );
 }
 function ListContainer(){
-
+    const [selectedUser,setSelectedUser] = useState(null);
+    const [showSelectedUserProjects,setShowSelectedUserProjects] = useState(false);
+    const [projectsOfUser,setProjectsOfUser] = useState([]);
     return (
         <>
             <h1>Modération</h1>
             <br/>
             <Container className="h-25 w-100">
-                <UsersList/>
+                <UsersList selectedUser={selectedUser} setSelectedUser={setSelectedUser} setProjectsOfUser={setProjectsOfUser} setShowSelectedUserProjects={setShowSelectedUserProjects}/>
             </Container>
-            <Container className="p-5 h-25 w-100"/>
+            <Container className="p-5 h-25 w-100">
+                <ProjectsList selectedUser={selectedUser} projectsOfUser={projectsOfUser} setProjectsOfUser={setProjectsOfUser} showSelectedUserProjects={showSelectedUserProjects} />
+            </Container>
 
         </>
     )
+}
+function ProjectsList(props){
+    const [apiError, setApiError] = useState(null);
+    const [deletedProject,setDeletedProject] = useState(null);
+    const [showDeleteProject, setShowDeleteProject] = useState(false);
+    const [selectedProject,setSelectedProject] = useState(null);
+    const navigate = useNavigate()
+
+
+    /**
+     * Delete the user describe by the id
+     * @type {(function(*=): void)|*}
+     */
+    const handleDeleteProject= useCallback(()=>{
+        const token = sessionStorage.getItem("token");
+        const jsonBody = {idToBan : deletedProject.id}
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(jsonBody)
+        };
+        fetch('/api/admin/banProject', options)
+            .then(res => res.json())
+            .then(()=>{
+                const copyItems = [...props.projectsOfUser];
+                copyItems.splice(props.projectsOfUser.indexOf(deletedProject), 1);
+                props.setProjectsOfUser(copyItems);
+                setShowDeleteProject(false);
+            })
+
+
+    },[setShowDeleteProject,deletedProject,props])
+    /**
+     * Show the result of the project described by the id
+     * @type {(function(*=): void)|*}
+     */
+    const handleSelectedVisionProject= useCallback(()=>{
+        navigate('/result?id='+selectedProject.id)
+
+    },[navigate,selectedProject])
+    console.log(props.showSelectedUserProjects)
+
+    if (!props.showSelectedUserProjects){
+        console.log("je vois rien")
+        return (
+            <>
+            </>
+        );
+    }
+    else {
+        console.log("je vois")
+        console.log(props.projectsOfUser)
+
+
+        return (
+            <>
+                <Container className="w-100 h-100 navbar-nav-scroll">
+                    <Table>
+                        <TableauProjectsHeader/>
+                        <tbody>
+                        {props.projectsOfUser.map((item) => (
+                            <LigneTableauProjects key={item.id} {...item}
+                                                  projectSelected={item}
+                                                  setSelectedProject={setSelectedProject}
+                                                  userSelected={props.selectedUser}
+                                                  itemsList={props.projectsOfUser}
+                                                  showDeleteProjects={showDeleteProject}
+                                                  handleShowDeleteProject={setShowDeleteProject}
+                                                  setDeletedProject={setDeletedProject}
+                                                  handleDeleteProject={handleDeleteProject}
+                                                  handleSelectedVisionProject={handleSelectedVisionProject}
+                                                  handleProjectsOfUser={props.setProjectsOfUser}>{item.nom}</LigneTableauProjects>
+                        ))}
+                        </tbody>
+                    </Table>
+                </Container>
+            </>
+        );
+    }
+
 }
 const filterItems = (items,query)=>{
     return items.filter((item)=>{
@@ -65,18 +152,34 @@ function LigneTableauUsers(datas) {
     /**
      * Show the pop-up when you push the button delete user
      */
-    const handleShow = useCallback((itemSelected) => {
-        datas.setDeletedUser(itemSelected)
+    const handleShowDeletePopup = useCallback(() => {
+        datas.setDeletedUser(datas.itemSelected)
         datas.handleShowDeleteUser(true);
     },[datas])
 
+    const handleShowSelectedUserProjects = useCallback(()=>{
+        const token = sessionStorage.getItem("token");
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+        fetch('/api/admin/projects/user/'+datas.id, options)//TODO
+            .then(res => res.json())
+            .then((res)=>{
+                datas.setProjectsOfUser(res)
+                datas.setSelectedUser(datas.id)
+                datas.handleShowSelectedUserProjects(true);
+            })
+
+    },[datas])
     /*const handleClick = useCallback(() => {
         sessionStorage.setItem("user",datas.id)
 
     }, [datas.id])*/
-    const executeHandleShow = useCallback( ()=>{
-        handleShow(datas.itemSelected)
-    },[datas,handleShow])
+
 
     return (
         <>
@@ -84,7 +187,8 @@ function LigneTableauUsers(datas) {
                 <td align={"center"} valign={"middle"}>{datas.nom+" "+datas.prenom}</td>
                 <td align={"center"} valign={"middle"}>{datas.mail}</td>
                 <td align={"center"} valign={"middle"}>
-                    <Button className="m-3" variant="outline-danger" onClick={executeHandleShow}>Supprimer</Button>
+                    <Button className="m-3" variant="secondary" onClick={handleShowSelectedUserProjects}>Visualiser ces projets</Button>
+                    <Button className="m-3" variant="outline-danger" onClick={handleShowDeletePopup}>Supprimer</Button>
                 </td>
             </tr>
             <Modal show={datas.showDeleteUser} onHide={handleCancel}>
@@ -106,17 +210,94 @@ function LigneTableauUsers(datas) {
 
     );
 }
-function UsersList(){
+
+/**
+ * Header for projects listing table with data or placeholder
+ */
+function TableauProjectsHeader() {
+    console.log("c'est moa le header")
+    return (
+        <thead>
+        <tr className='table border-bottom border-3 border-primary'>
+            <th>Nom du projet</th>
+            <th>Mail du propriétaire</th>
+        </tr>
+        </thead>
+    );
+}
+
+function LigneTableauProjects(datas) {
+
+    /**
+     * Hide pop-up if deletion of user is refused
+     */
+    const handleCancel = useCallback(() => {
+        datas.setDeletedProject(null)
+        datas.handleShowDeleteProject(false);
+    },[datas])
+
+    /**
+     * Show the pop-up when you push the button delete user
+     */
+    const handleShowDeletePopup = useCallback(() => {
+        datas.setDeletedProject(datas.projectSelected)
+        datas.handleShowDeleteProject(true);
+    },[datas])
+
+    /**
+     * Show the result of a user
+     */
+    const handleShowResult = useCallback(() => {
+        datas.setSelectedProject(datas.projectSelected)
+        datas.handleSelectedVisionProject()
+    },[datas])
+    /*const handleClick = useCallback(() => {
+        sessionStorage.setItem("user",datas.id)
+
+    }, [datas.id])*/
+
+    return (
+        <>
+            <tr className='table border-bottom border-2 border-secondary'>
+                <td align={"center"} valign={"middle"}>{datas.itemSelected.nom+" "+datas.itemSelected.prenom}</td>
+                <td align={"center"} valign={"middle"}>{datas.itemSelected.profil.mail}</td>
+                <td align={"center"} valign={"middle"}>
+                    <Button className="m-3" variant="outline-primary" onClick={handleShowResult}>Visionner</Button>
+                    <Button className="m-3" variant="outline-danger" onClick={handleShowDeletePopup}>Supprimer</Button>
+                </td>
+            </tr>
+            <Modal show={datas.showDeleteProjects} onHide={handleCancel}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Supprimer l'utilisateur</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Es-tu sûr de vouloir supprimer cet utilisateur ?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCancel}>
+                        Annuler
+                    </Button>
+                    <Button variant="outline-danger" onClick={datas.handleDeleteProject}>
+                        Supprimer
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+
+
+    );
+}
+function UsersList(props){
     const [items, setItems] = useState([]);
     const { search } = window.location;
     const query = new URLSearchParams(search).get('s');
     const [apiError, setApiError] = useState(null);
     const [deletedUser,setDeletedUser] = useState(null);
     const [showDeleteUser, setShowDeleteUser] = useState(false);
+
     const [searchQuery, setSearchQuery] = useState(query || '')
     const handleSearchChange = useCallback((event)=>{
         setSearchQuery(event.target.value)
     },[])
+
     const filteredItems = filterItems(items, searchQuery);
 
     /**
@@ -188,7 +369,19 @@ function UsersList(){
                         <TableauUsersHeader/>
                         <tbody>
                         {filteredItems.map((item) => (
-                            <LigneTableauUsers key={item.id} {...item} itemSelected={item}  itemsList={filteredItems} showDeleteUser={showDeleteUser} handleShowDeleteUser={setShowDeleteUser} setDeletedUser={setDeletedUser} setItems={setItems} handleDeleteUser={handleDeleteUser}>{item.nom}</LigneTableauUsers>
+                            <LigneTableauUsers key={item.id}
+                                               {...item}
+                                               itemSelected={item}
+                                               itemsList={filteredItems}
+                                               setProjectsOfUser={props.setProjectsOfUser}
+                                               showDeleteUser={showDeleteUser}
+                                               handleShowDeleteUser={setShowDeleteUser}
+                                               setDeletedUser={setDeletedUser}
+                                               setItems={setItems}
+                                               handleDeleteUser={handleDeleteUser}
+                                               setSelectedUser={props.setSelectedUser}
+                                               handleShowSelectedUserProjects={props.setShowSelectedUserProjects}
+                            >{item.nom}</LigneTableauUsers>
                         ))}
                         </tbody>
                     </Table>
