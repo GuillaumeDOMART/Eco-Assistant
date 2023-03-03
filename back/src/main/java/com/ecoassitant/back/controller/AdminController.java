@@ -1,5 +1,7 @@
 package com.ecoassitant.back.controller;
 
+import com.ecoassitant.back.dto.admin.BanDto;
+import com.ecoassitant.back.dto.admin.BanProjectDto;
 import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.BanDto;
 import com.ecoassitant.back.dto.profil.ProfilIdDto;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * AdminController for endpoint for only admin
+ */
 @RequestMapping("api/admin")
 @RestController
 public class AdminController {
@@ -19,16 +24,34 @@ public class AdminController {
     private final AdminService adminService;
     private final JwtService jwtService;
 
-
+    /**
+     * Constructor for AdminController
+     * @param adminService AdminService
+     */
     @Autowired
     public AdminController(AdminService adminService, JwtService jwtService) {
         this.adminService = adminService;
         this.jwtService = jwtService;
     }
 
+    /**
+     * Function to ban a user
+     * @param banDto Dto that contain the id of the user
+     * @return if the ban is successful
+     */
     @PatchMapping("ban")
     public ResponseEntity<Boolean> ban(@RequestBody BanDto banDto) {
         return ResponseEntity.ok(adminService.ban(banDto));
+    }
+
+    /**
+     * Function to ban a project
+     * @param banDto Dto that contain the id of the project
+     * @return if the ban is successfully
+     */
+    @PatchMapping("banProject")
+    public ResponseEntity<Boolean> banProject(@RequestBody BanProjectDto banDto) {
+        return ResponseEntity.ok(adminService.banProject(banDto));
     }
 
     /**

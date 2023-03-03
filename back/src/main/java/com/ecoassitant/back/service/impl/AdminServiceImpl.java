@@ -5,6 +5,8 @@ import com.ecoassitant.back.dto.profil.ProfilIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.entity.tools.TypeP;
+import com.ecoassitant.back.dto.admin.BanDto;
+import com.ecoassitant.back.dto.admin.BanProjectDto;
 import com.ecoassitant.back.exception.NoSuchElementInDataBaseException;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjetRepository;
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * AdminService implementation
+ */
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -23,6 +28,11 @@ public class AdminServiceImpl implements AdminService {
 
     private final ProjetRepository projetRepository;
 
+    /**
+     * Constructor for AdminServiceImpl
+     * @param profilRepository ProfilRepository
+     * @param projetRepository ProjetRepository
+     */
     public AdminServiceImpl(ProfilRepository profilRepository, ProjetRepository projetRepository) {
         this.profilRepository = profilRepository;
         this.projetRepository = projetRepository;
@@ -46,6 +56,16 @@ public class AdminServiceImpl implements AdminService {
             projetRepository.delete(project);
         }
 
+        return true;
+    }
+
+    @Override
+    public Boolean banProject(BanProjectDto banDto) {
+        var project = projetRepository.findById(banDto.getIdProjectToBan());
+        if(project.isEmpty()){
+            throw new NoSuchElementInDataBaseException();
+        }
+        projetRepository.delete(project.get());
         return true;
     }
 
