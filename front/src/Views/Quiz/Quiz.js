@@ -26,7 +26,6 @@ function StepperComponent() {
     const handlePhase = useCallback(async () => {
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
-        setSelectedAnswers([])
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -48,20 +47,32 @@ function StepperComponent() {
             const json = await response.json();
             setIsLoaded(true);
             setData(json);
+            const selected = []
+            json.forEach(question => {
+                if(question.type === 'QCM' && question.reponse !== null) {
+                    selected.push({
+                        "question": question.questionId.toString(),
+                        "reponseId": question.reponse.reponse.reponseId
+                    })
+
+                }
+            })
+            await setSelectedAnswers(selected)
         } else {
             setIsLoaded(true);
             setErrorApiGetQuestionnaire("Erreur lors de la récupération du questionnaire");
         }
 
-    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep])
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep, setSelectedAnswers])
 
     /**
      */
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setSelectedAnswers([])
         },
-        []
+        [setSelectedAnswers]
     );
 
     /**
@@ -70,8 +81,9 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
+            setSelectedAnswers([])
         },
-        []
+        [setSelectedAnswers]
     );
 
     const handleQuit = useCallback(
@@ -89,8 +101,15 @@ function StepperComponent() {
         }
 
         selectedAnswers.forEach(val => {
-            if (val.question === answer.question)
+            console.log("answer : ")
+            console.log(answer)
+            console.log("val : ")
+            console.log(val)
+            if (val.question === answer.question) {
+                console.log("supprimé")
                 selectedAnswers.splice(selectedAnswers.indexOf(val), 1)
+            }
+            console.log("----------------")
         })
         setSelectedAnswers([...selectedAnswers, answer])
     }, [selectedAnswers])
