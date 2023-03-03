@@ -52,16 +52,20 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
 
         while (result && reponseDtoIterator.hasNext()){
             var reponseDto = reponseDtoIterator.next();
+            System.out.println(reponseDto.getQuestionId());
+            var question = questionRepository.findById(reponseDto.getQuestionId());
+            if (question.isEmpty()) {
+                result = false;
+                break;
+            }
+            var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(question.get(), project.get());
+            if (reponseDonnee.isPresent())
+                reponseDonneeRepository.delete(reponseDonnee.get());
             if (!Objects.equals(reponseDto.getEntry(), "")){
                 var reponseEntity = new ReponseDonneeEntity();
                 var responseKey = new ReponseDonneeKey();
 
                 responseKey.setProjet(project.get());
-                var question = questionRepository.findById(reponseDto.getQuestionId());
-                if (question.isEmpty()) {
-                    result = false;
-                    break;
-                }
                 responseKey.setQuestion(question.get());
                 var reponsePossibles = reponsePossibleRepository.findByQuestionAsso(question.get());
                 if (reponsePossibles.isEmpty()) {
@@ -86,7 +90,6 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                 }
 
                 reponseEntity.setReponseDonneeKey(responseKey);
-                reponseDonneeRepository.delete(reponseEntity);
                 reponseDonneeRepository.save(reponseEntity);
             }
         }
