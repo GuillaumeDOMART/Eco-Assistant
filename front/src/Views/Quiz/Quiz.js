@@ -157,10 +157,34 @@ function StepperComponent() {
 
             await fetch("/api/reponsesDonnees", requestOptions)
 
-            if (activeStep === steps.length - 1)
-                navigate(`/result?id=${projectId}`)
-            else
-                handleNext();
+        if (activeStep === steps.length - 1){
+
+            const body = {}
+            body.id= projectId
+            const options = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(body)
+            };
+            fetch('/api/projet/finish', options)
+                .then(res => {
+                    if(res.status === 404 ){
+                        navigate(`/profil`)
+                    }
+                    else{
+                        navigate(`/result?id=${projectId}`)
+                    }
+                })
+
+
+
+        }
+        else{
+            handleNext();
+        }
         }, [handleNext, activeStep, navigate, getDependancy]
     )
 

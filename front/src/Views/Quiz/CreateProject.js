@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import {Button, TextField} from "@mui/material";
+import {Button, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
 import {Col, Container, Row} from "react-bootstrap";
 import {useCallback, useState} from "react";
 
@@ -9,18 +9,27 @@ import {useCallback, useState} from "react";
  * Page for create project
  * @param onSubmit the function for the submission
  * @param register the function for the register
+ * @param fieldErrors
  * @returns {JSX.Element} the jsx element
  * @constructor the constructor
  */
 function Project({onSubmit, register, fieldErrors}) {
     return (
-        <Col className="">
+        <Col className="justify-content-center">
             <h1>Nouveau Projet</h1>
             <form onSubmit={onSubmit} className="">
                 <TextField label="Nom du projet" type="text" variant="standard"
                            className="textfield" {...register("nom")} required
                            error={!Boolean(fieldErrors.nom)}
-                           helperText={fieldErrors.nom}/><br/>
+                           helperText={fieldErrors.nom}/><br/><br/>
+
+                <FormLabel id="demo-row-radio-buttons-group-label"> Type du projet </FormLabel>
+                <RadioGroup className={"justify-content-center align-items-center"} row aria-label="type" name="type" {...register("type")}>
+                    <FormControlLabel value="simulation" control={<Radio/>} label="Simulation"
+                                      required {...register("type")} />
+                    <FormControlLabel value="project" control={<Radio/>} label="Project" {...register("type")} />
+                </RadioGroup>
+
                 <Button type="submit">Créer le projet</Button><br/>
             </form>
         </Col>
