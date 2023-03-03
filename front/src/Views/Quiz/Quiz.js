@@ -114,14 +114,11 @@ function StepperComponent() {
             for (const [key, value] of Object.entries(dataList)) {
                 const tuple = {}
                 tuple.questionId = key;
-                if (getDependancy(key)) {
-                    console.log("envoyé")
-                    if (value === null)
-                        tuple.entry = "";
-                    else
-                        tuple.entry = value;
-                    responses.push(tuple)
-                }
+                if (value === null || !getDependancy(key))
+                    tuple.entry = "";
+                else
+                    tuple.entry = value;
+                responses.push(tuple)
             }
             sendToBack.projetId = projectId;
             sendToBack.reponses = responses;
