@@ -177,7 +177,7 @@ public class ProjetController {
     }
 
     /**
-     * Method to dissociate a project from a user and associate it to a default anonymous
+     * Method to copy a project from a user and make a new Project or Simulation with a state INPROGRESS with the same answers
      *
      * @param authorizationHeader the token of the user
      * @param projectIdDto        the projectDTO
