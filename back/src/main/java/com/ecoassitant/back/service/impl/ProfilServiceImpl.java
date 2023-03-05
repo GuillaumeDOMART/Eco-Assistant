@@ -3,6 +3,7 @@ package com.ecoassitant.back.service.impl;
 import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.ForgotPasswordVerifyDto;
 
+import com.ecoassitant.back.dto.TokenDto;
 import com.ecoassitant.back.dto.profil.ProfilDto;
 import com.ecoassitant.back.dto.profil.ProfilIdDto;
 import com.ecoassitant.back.dto.profil.ProfilSimplDto;
@@ -12,13 +13,19 @@ import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.service.ProfilService;
 import com.ecoassitant.back.utils.StringGeneratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 /**
  * Implementation of ProfilService
@@ -27,16 +34,22 @@ import java.util.Random;
 public class ProfilServiceImpl implements ProfilService {
     private final ProfilRepository repository;
     private final JwtService jwtService;
-    private final AuthenticationService authenticationService;
+    private final ProfilRepository profilRepository;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final Validator validator;
 
     /**
      * Default constructor for ProfilServiceImpl
      */
     @Autowired
-    public  ProfilServiceImpl(ProfilRepository repository, JwtService jwtService, AuthenticationService authenticationService){
+    public  ProfilServiceImpl(ProfilRepository repository, JwtService jwtService, ProfilRepository profilRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, Validator validator){
         this.repository = repository;
         this.jwtService=jwtService;
-        this.authenticationService = authenticationService;
+        this.profilRepository = profilRepository;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+        this.validator = validator;
     }
 
     @Override
@@ -130,7 +143,7 @@ public class ProfilServiceImpl implements ProfilService {
     public ResponseEntity<Boolean> forgotMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
-        return authenticationService.changePassword(mail, forgotPasswordVerifyDto.getPassword(), forgotPasswordVerifyDto.getOldPassword());
+        return changePassword(mail, forgotPasswordVerifyDto.getPassword(), forgotPasswordVerifyDto.getOldPassword());
     }
 
     /**
@@ -154,5 +167,87 @@ public class ProfilServiceImpl implements ProfilService {
             ResponseEntity.ok(true);
         }
         return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Function to change password for a user with a token authentication
+     *
+     * @param token    Token of the current uset
+     * @param password new password
+     * @return if the password was change
+     */
+    public ResponseEntity<Boolean> changePasswordWithToken(String token, String password, String oldPassword) {
+        token = token.substring(7);
+        var mail = jwtService.extractMail(token);
+        return changePassword(mail, password, oldPassword);
+    }
+
+    /**
+     * Function to change password for a user
+     *
+     * @param mail     mail
+     * @param password new password
+     * @return if the password was change
+     */
+    public ResponseEntity<Boolean> changePassword(String mail, String password, String oldPassword) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            mail,
+                            oldPassword
+                    )
+            );
+        } catch (AuthenticationException e) {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+
+        var profil = profilRepository.findByMail(mail);
+        if (profil.isEmpty()) {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+
+        var user = profil.get();
+        var encodedPwd = passwordEncoder.encode(password);
+
+        user.setPassword(password);
+        var violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
+        user.setPassword(encodedPwd);
+        profilRepository.save(user);
+        return ResponseEntity.ok(true);
+    }
+
+    /**
+     * Method to change the mail of the current user
+     *
+     * @param token   token of the current user
+     * @param newMail new mail to change
+     * @return the new token of the user based on the new mail
+     */
+    public ResponseEntity<TokenDto> changeMail(String token, String newMail) {
+        var mail = jwtService.extractMail(token);
+        var profil = profilRepository.findByMail(mail);
+        if (profil.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        if (profilRepository.findByMail(newMail).isPresent()) {
+            throw new DataIntegrityViolationException("L'adresse mail est déjà associé à un compte");
+        }
+
+        var user = profil.get();
+        System.out.println("user = " + user);
+        user.setMail(newMail);
+        var violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(violations);
+        }
+        //Envoyer un nouveau mail pour verifier le mail plutôt de le changer ici
+        var newToken = new TokenDto(jwtService.generateToken(user));
+        profilRepository.save(user);
+
+        return ResponseEntity.ok(newToken);
     }
 }

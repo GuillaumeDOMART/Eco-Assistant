@@ -45,7 +45,7 @@ function ModifyID() {
             redirect: 'follow'
         };
 
-        const response = await fetch("api/auth/changeMail", requestOptions);
+        const response = await fetch("api/profil/changeMail", requestOptions);
         const json = await response.json();
         if (response.status > 200) {
             if (response.status === 400) {

@@ -141,4 +141,30 @@ public class ProfilController {
         }
 
     }
+
+    /**
+     * Method to change the mail of the logged user
+     *
+     * @param authorizationToken Authorization token of the logged user
+     * @param mailInput          The new mail of the user
+     * @return True if the mail has been modified, false otherwise
+     */
+    @PatchMapping("/profil/changeMail")
+    public ResponseEntity<TokenDto> changeMail(@RequestHeader("Authorization") String authorizationToken, @RequestBody ForgotMailInput mailInput) {
+        var token = authorizationToken.substring(7);
+        return profilService.changeMail(token, mailInput.getMail());
+    }
+
+    /**
+     * Method to change the password of the logged user
+     *
+     * @param authorizationToken Authorization token of the logged user
+     * @param passwords         Json containing the passwords
+     * @return True if the mail has been modified, false otherwise
+     */
+
+    @PatchMapping("/profil/changePassword")
+    public ResponseEntity<Boolean> changePassword(@RequestHeader("Authorization") String authorizationToken, @RequestBody ForgotPasswordVerifyDto passwords) {
+        return profilService.changePasswordWithToken(authorizationToken, passwords.getPassword(), passwords.getOldPassword());
+    }
 }
