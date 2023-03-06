@@ -1,8 +1,8 @@
 package com.ecoassitant.back.entity.tools;
 
 /**
- * Type projet
+ * Type project
  */
 public enum TypeP {
-    SIMULATION, PROJET
+    SIMULATION, PROJECT
 }

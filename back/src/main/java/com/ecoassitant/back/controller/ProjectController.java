@@ -118,7 +118,7 @@ public class ProjectController {
                 .nomProjet(project.getName())
                 .profil(profil)
                 .state(State.INPROGRESS)
-                .type(project.getType().equals("simulation") ? TypeP.SIMULATION : TypeP.PROJET)
+                .type(project.getType().equals("simulation") ? TypeP.SIMULATION : TypeP.PROJECT)
                 .build();
         projectRepository.save(projectEntity);
         return new ResponseEntity<>(new ProjectIdDto(projectEntity.getIdProjet()), HttpStatus.OK);

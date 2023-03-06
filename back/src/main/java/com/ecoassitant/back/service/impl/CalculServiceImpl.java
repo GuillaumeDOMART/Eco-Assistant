@@ -68,7 +68,7 @@ public class CalculServiceImpl implements CalculService {
         }
 
         var resultat = new ResultatsPhaseDto(mine.get());
-        var projects = projectRepository.findByType(TypeP.PROJET);
+        var projects = projectRepository.findByType(TypeP.PROJECT);
         if (projects.isEmpty()) {
             return Optional.empty();
         }
@@ -126,9 +126,9 @@ public class CalculServiceImpl implements CalculService {
                 executer.ifPresent(aDouble -> {
                     System.out.println(calculEntier.getEntitled() + " " + aDouble);
                     switch (calculEntier.getPhase()) {
-                        case PLANIFICATION -> resultat.addPlanning(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        case DEVELOPPEMENT -> resultat.addDevelopment(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        case DEPLOIEMENT -> resultat.addDeployment(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case PLANNING -> resultat.addPlanning(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case DEVELOPMENT -> resultat.addDevelopment(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case DEPLOYMENT -> resultat.addDeployment(new CalculDto(calculEntier.getEntitled(), aDouble));
                         case TEST -> resultat.addTest(new CalculDto(calculEntier.getEntitled(), aDouble));
                         case MAINTENANCE -> resultat.addMaintenance(new CalculDto(calculEntier.getEntitled(), aDouble));
                         default -> resultat.addOutPhase(new CalculDto(calculEntier.getEntitled(), aDouble));

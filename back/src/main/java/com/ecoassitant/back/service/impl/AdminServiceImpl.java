@@ -75,6 +75,6 @@ public class AdminServiceImpl implements AdminService {
             throw new NoSuchElementInDataBaseException();
         }
         var selectedProjects = projectRepository.findByProfil_IdProfil(profilId);
-        return Optional.of(selectedProjects.stream().filter(p->p.getState().equals(State.FINISH) && p.getType().equals(TypeP.PROJET)).map(ProjectDto::new).toList());
+        return Optional.of(selectedProjects.stream().filter(p->p.getState().equals(State.FINISH) && p.getType().equals(TypeP.PROJECT)).map(ProjectDto::new).toList());
     }
 }
