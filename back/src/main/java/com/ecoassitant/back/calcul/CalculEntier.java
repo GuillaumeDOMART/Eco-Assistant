@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * calcul create with part of calcul(calculEntity) and ReponseDonne for a project
+ * CalculEntier create with  parts of calculation(calculEntity) and ReponseDonne for a project
  */
 public class CalculEntier {
     private final List<ReponsePossibleEntity> dependances;
