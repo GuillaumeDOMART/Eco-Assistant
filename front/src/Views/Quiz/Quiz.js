@@ -22,6 +22,25 @@ function StepperComponent() {
     const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();
 
+    const getMaxDependance = useCallback((dependance) => {
+        if (dependance === -1)
+            return false
+        const check = selectedAnswers.find(answer => {
+            return dependance === answer.reponseId;
+        })
+        if (check) {
+            return true
+        }
+        const question = data.find(question => {
+            return question.reponses.find(value => {
+                return value.reponseId === dependance
+            })
+        })
+        if (question === undefined)
+            return false
+        return getMaxDependance(question.dependance)
+    }, [data, selectedAnswers])
+
 
     const handlePhase = useCallback(async () => {
         const token = sessionStorage.getItem("token")
@@ -49,7 +68,7 @@ function StepperComponent() {
             setData(json);
             const selected = []
             json.forEach(question => {
-                if(question.type === 'QCM' && question.reponse !== null) {
+                if (question.type === 'QCM' && question.reponse !== null) {
                     selected.push({
                         "question": question.questionId.toString(),
                         "reponseId": question.reponse.reponse.reponseId
@@ -98,20 +117,53 @@ function StepperComponent() {
         [navigate]
     )
 
-    const handleChange = useCallback((target, value) => {
-        const select = value.reponses.find(val => val.intitule === target.target.value)
-        const answer = {
-            "question": target.target.name,
-            "reponseId": select.reponseId
-        }
+    const getResponses = useCallback((question) => {
+        return question.reponses.map(response => {
+            return response.reponseId
+        })
+    }, [])
 
+    const getQuestionByResponseId = useCallback((responseId) => {
+        return data.find(question => {
+            return question.reponses.find(response => {
+                return response.reponseId === responseId
+            })
+        })
+    }, [data])
+
+    const highestDepSelected = useCallback((questionMax, question) => {
+        if (question.dependance === -1)
+            return false;
+        if (getResponses(questionMax).includes(question.dependance))
+            return true
+        console.log(typeof(question.dependance))
+        const nextQuestion = getQuestionByResponseId(question.dependance)
+        if (nextQuestion !== undefined)
+            return highestDepSelected(questionMax, nextQuestion)
+    }, [getResponses, getQuestionByResponseId])
+
+    const getQuestion = useCallback((questionId) => {
+        return data.find(value => {
+            return value.questionId === questionId;
+        })
+    }, [data])
+
+    const handleChange = useCallback((target, value) => {
+        //value = question selectionnée
+        const select = value.reponses.find(val => val.intitule === target.target.value) //réponse selectionnée
+        const answer = {
+            "question": target.target.name, //id de la question
+            "reponseId": select.reponseId // id de la réponse
+        }
+        const selectedAnswerCopy = [...selectedAnswers]
         selectedAnswers.forEach(val => {
-            if (val.question === answer.question) {
-                selectedAnswers.splice(selectedAnswers.indexOf(val), 1)
+            const questionVal = getQuestion(+val.question)
+            if (val.question === answer.question || highestDepSelected(value, questionVal)) { // Si l'id de la question de la réponse selectionnée est le même que celui de la value dans Selected
+                selectedAnswerCopy.splice(selectedAnswerCopy.indexOf(val), 1)
             }
         })
-        setSelectedAnswers([...selectedAnswers, answer])
-    }, [selectedAnswers])
+        setSelectedAnswers([...selectedAnswerCopy, answer])
+    }, [selectedAnswers, getQuestion, highestDepSelected])
 
     const getDependancy = useCallback((questionId) => {
         const dependance = data.find((value) => value.questionId.toString() === questionId).dependance
@@ -156,34 +208,31 @@ function StepperComponent() {
 
             await fetch("/api/reponsesDonnees", requestOptions)
 
-        if (activeStep === steps.length - 1){
+            if (activeStep === steps.length - 1) {
 
-            const body = {}
-            body.id= projectId
-            const options = {
-                method: 'PUT',
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(body)
-            };
-            fetch('/api/projet/finish', options)
-                .then(res => {
-                    if(res.status === 404 ){
-                        navigate(`/profil`)
-                    }
-                    else{
-                        navigate(`/result?id=${projectId}`)
-                    }
-                })
-
+                const body = {}
+                body.id = projectId
+                const options = {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(body)
+                };
+                fetch('/api/projet/finish', options)
+                    .then(res => {
+                        if (res.status === 404) {
+                            navigate(`/profil`)
+                        } else {
+                            navigate(`/result?id=${projectId}`)
+                        }
+                    })
 
 
-        }
-        else{
-            handleNext();
-        }
+            } else {
+                handleNext();
+            }
         }, [handleNext, activeStep, navigate, getDependancy]
     )
 
