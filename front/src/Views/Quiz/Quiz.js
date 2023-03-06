@@ -88,7 +88,12 @@ function StepperComponent() {
 
     const handleQuit = useCallback(
         () => {
-            navigate("/profil");
+            if(sessionStorage.getItem("guest")){
+                navigate("/logout")
+            }
+            else {
+                navigate("/profil")
+            }
         },
         [navigate]
     )
