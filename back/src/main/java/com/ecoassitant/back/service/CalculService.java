@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.result.ResultatsPhaseDto;
+import com.ecoassitant.back.dto.result.ResultsPhaseDto;
 
 import java.util.Optional;
 
@@ -13,5 +13,5 @@ public interface CalculService {
      * @param idProject project of wich we want the result
      * @return list of results
      */
-    Optional<ResultatsPhaseDto> calculsForProject(Integer idProject, String mail);
+    Optional<ResultsPhaseDto> calculsForProject(Integer idProject, String mail);
 }

@@ -2,7 +2,7 @@ package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.*;
-import com.ecoassitant.back.dto.result.ResultatsPhaseDto;
+import com.ecoassitant.back.dto.result.ResultsPhaseDto;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,11 +40,11 @@ public class CalcController {
      * @return list of calculs executed
      */
     @PostMapping("/calculs")
-    public ResponseEntity<ResultatsPhaseDto> resultCalc(@RequestHeader("Authorization") String authorizationToken, @RequestBody IdDto projectId) {
+    public ResponseEntity<ResultsPhaseDto> resultCalc(@RequestHeader("Authorization") String authorizationToken, @RequestBody IdDto projectId) {
         var token = authorizationToken.substring(7);
         var mail = jwtService.extractMail(token);
         var resultat = calculService.calculsForProject(projectId.getId(), mail);
-        return resultat.map(resultatsPhaseDto -> new ResponseEntity<>(resultatsPhaseDto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        return resultat.map(resultsPhaseDto -> new ResponseEntity<>(resultsPhaseDto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 }
 

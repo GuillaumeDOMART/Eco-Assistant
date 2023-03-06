@@ -10,16 +10,16 @@ import java.util.Optional;
  * Dto for result of a phase
  */
 @Data
-public class ResultatsPhaseDto {
+public class ResultsPhaseDto {
     private ResultDto mine;
     private final List<ResultDto> others = new ArrayList<>();
 
     /**
-     * Builder of ResultatsPhaseDto
+     * Builder of ResultsPhaseDto
      *
      * @param mine the result Dto
      */
-    public ResultatsPhaseDto(ResultDto mine) {
+    public ResultsPhaseDto(ResultDto mine) {
         this.mine = mine;
     }
 

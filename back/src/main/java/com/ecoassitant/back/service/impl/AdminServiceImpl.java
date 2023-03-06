@@ -1,5 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
+import com.ecoassitant.back.EmailSenderService;
 import com.ecoassitant.back.dto.project.ProjectDto;
 import com.ecoassitant.back.entity.tools.State;
 import com.ecoassitant.back.entity.tools.TypeP;
@@ -24,33 +25,40 @@ public class AdminServiceImpl implements AdminService {
 
     private final ProjectRepository projectRepository;
 
+    private final EmailSenderService emailSenderService;
+
     /**
      * Constructor for AdminServiceImpl
-     * @param profilRepository ProfilRepository
-     * @param projectRepository ProjectRepository
+     *
+     * @param profilRepository   ProfilRepository
+     * @param projectRepository   ProjectRepository
+     * @param emailSenderService EmailSenderService
      */
-    public AdminServiceImpl(ProfilRepository profilRepository, ProjectRepository projectRepository) {
+    public AdminServiceImpl(ProfilRepository profilRepository, ProjectRepository projectRepository, EmailSenderService emailSenderService) {
         this.profilRepository = profilRepository;
         this.projectRepository = projectRepository;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
     public boolean ban(BanDto banDto) {
         var profil = profilRepository.findById(banDto.getIdToBan());
-        var anonyme = profilRepository.findByMail("anonyme@demo.fr");
-        if(profil.isEmpty() || anonyme.isEmpty()){
+
+        if(profil.isEmpty()){
             throw new NoSuchElementInDataBaseException();
         }
+
         var profilValue = profil.get();
         profilValue.setIsAdmin(-3);
         profilRepository.save(profilValue);
 
-        var anonymeValue = anonyme.get();
         var projects = projectRepository.findByProfil_IdProfil(banDto.getIdToBan());
 
         for(var project : projects){
             projectRepository.delete(project);
         }
+
+        emailSenderService.sendEmail(profilValue.getMail(), "Eco-Assistant: Bannissement de votre compte", "Nous vous informons qu'un administrateur a banni votre compte.");
 
         return true;
     }
@@ -61,7 +69,9 @@ public class AdminServiceImpl implements AdminService {
         if(project.isEmpty()){
             throw new NoSuchElementInDataBaseException();
         }
-        projectRepository.delete(project.get());
+        var projectValue = project.get();
+        projectRepository.delete(projectValue);
+        emailSenderService.sendEmail(projectValue.getProfil().getMail(), "Eco-Assistant: Bannissement de votre compte", "Nous vous informons qu'un administrateur a banni votre projet "+projectValue.getNomProjet()+".");
         return true;
     }
 

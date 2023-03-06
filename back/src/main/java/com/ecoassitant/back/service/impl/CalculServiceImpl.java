@@ -1,16 +1,16 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.calcul.ReformedOperation;
-import com.ecoassitant.back.dto.result.ResultatsPhaseDto;
 import com.ecoassitant.back.dto.result.CalculDto;
 import com.ecoassitant.back.dto.result.ResultDto;
+import com.ecoassitant.back.dto.result.ResultsPhaseDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.CalculRepository;
+import com.ecoassitant.back.repository.GivenAnswerRepository;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjectRepository;
-import com.ecoassitant.back.repository.GivenAnswerRepository;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class CalculServiceImpl implements CalculService {
      * Constructor of CalculService
      *
      * @param calculRepository        calculRepository composite for using Service methode
-     * @param givenAnswerRepository givenAnswerRepository composite for using Service methode
+     * @param givenAnswerRepository responseDonneeRepository composite for using Service methode
      * @param projectRepository projectRepository composite for using Service methode
      */
     public CalculServiceImpl(CalculRepository calculRepository, GivenAnswerRepository givenAnswerRepository, ProjectRepository projectRepository, ProfilRepository profilRepository) {
@@ -48,7 +48,7 @@ public class CalculServiceImpl implements CalculService {
      * @return the result
      */
     @Override
-    public Optional<ResultatsPhaseDto> calculsForProject(Integer idProject, String mail) {
+    public Optional<ResultsPhaseDto> calculsForProject(Integer idProject, String mail) {
         var project = projectRepository.findById(idProject);
         if (project.isEmpty())
             return Optional.empty();
@@ -67,7 +67,7 @@ public class CalculServiceImpl implements CalculService {
             return Optional.empty();
         }
 
-        var result = new ResultatsPhaseDto(mine.get());
+        var result = new ResultsPhaseDto(mine.get());
         var projects = projectRepository.findByType(TypeP.PROJECT);
         if (projects.isEmpty()) {
             return Optional.empty();
@@ -78,12 +78,12 @@ public class CalculServiceImpl implements CalculService {
 
     /**
      * Create a map for sort calculs
-     * @param calculs list of calculs entity
+     * @param operations list of calculs entity
      * @return map
      */
-    private Map<Integer, Map<Integer, List<CalculEntity>>> creationResult(List<CalculEntity> calculs) {
+    private Map<Integer, Map<Integer, List<CalculEntity>>> creationResult(List<CalculEntity> operations) {
         var map = new HashMap<Integer, Map<Integer, List<CalculEntity>>>();
-        calculs.forEach(calculEntity -> {
+        operations.forEach(calculEntity -> {
             if (!map.containsKey(calculEntity.getNbCalcul()))
                 map.put(calculEntity.getNbCalcul(), new HashMap<>());
             var priorite = map.get(calculEntity.getNbCalcul());
@@ -114,17 +114,16 @@ public class CalculServiceImpl implements CalculService {
         var calculs = calculRepository.findAll();
         var map = creationResult(calculs);
 
-        map.forEach((k, calculsPriorite) -> {
+        map.forEach((k, calculsPriority) -> {
             Optional<Double> executed = Optional.empty();
             Optional<Phase> phase = Optional.empty();
-            for (var calcul : calculsPriorite.values()) {
+            for (var calcul : calculsPriority.values()) {
                 var reformedOperation = new ReformedOperation(calcul, givenAnswer);
                 executed = reformedOperation.execute();
                 if (executed.isPresent()) {
                     phase = Optional.ofNullable(reformedOperation.getPhase());
                 }
                 executed.ifPresent(aDouble -> {
-                    System.out.println(reformedOperation.getEntitled() + " " + aDouble);
                     switch (reformedOperation.getPhase()) {
                         case PLANNING -> result.addPlanning(new CalculDto(reformedOperation.getEntitled(), aDouble));
                         case DEVELOPMENT -> result.addDevelopment(new CalculDto(reformedOperation.getEntitled(), aDouble));
@@ -145,9 +144,9 @@ public class CalculServiceImpl implements CalculService {
      * @return the result
      */
     public Map<Integer, Map<Integer, List<CalculEntity>>> resultForCalcul(Integer nbCalcul) {
-        var result = new ResultDto();
-        var calculs = calculRepository.findByNbCalcul(nbCalcul);
-        return  creationResult(calculs);
+        var resultDto = new ResultDto();
+        var operations = calculRepository.findByNbCalcul(nbCalcul);
+        return  creationResult(operations);
 
 
     }

@@ -48,7 +48,7 @@ function ModifyPassword() {
             redirect: 'follow'
         }
 
-        const response = await fetch("api/auth/changePassword", requestOptions);
+        const response = await fetch("api/profil/changePassword", requestOptions);
 
         if (response.status > 200) {
             if (response.status === 400) {
