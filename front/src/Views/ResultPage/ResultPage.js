@@ -1,5 +1,5 @@
 import Chart from "chart.js/auto";
-import {useCallback, useEffect, useRef} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import jsPDF from "jspdf";
 import {Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
@@ -26,6 +26,8 @@ function ResultPage() {
     const chartInstanceMaintenance = useRef(null);
 
     const pdfContainer = useRef(null);
+    const [consommationTotal, setConsommationTotal] = useState(0);
+
     const navigate = useNavigate();
     const marginLeft = 15;
     const yText = 25;
@@ -145,7 +147,7 @@ function ResultPage() {
 
         const canvasP = chartContainerPlanification.current;
         const imgDataP = canvasP.toDataURL('image/png', 1.0);
-        pdf.text('Rapport de consommation de CO2 pour la phase de planification!', 15, 66, {
+        pdf.text('Rapport de consommation de CO2 pour la phase de planification', 15, 66, {
             fontSize: 36,
             fontName: 'Helvetica',
             fontStyle: 'bold',
@@ -156,47 +158,49 @@ function ResultPage() {
 
         const canvasD = chartContainerDeveloppement.current;
         const imgDataD = canvasD.toDataURL('image/png', 1.0);
-        pdf.text('Rapport de consommation de CO2 pour la phase de dévelopement', 15, 106, {
+        pdf.text('Rapport de consommation de CO2 pour la phase de dévelopement', 15, 121, {
             fontSize: 36,
             fontName: 'Helvetica',
             fontStyle: 'bold',
             color: '#000000',
             maxWidth: 170
         });
-        pdf.addImage(imgDataD, 'JPEG',15, 110,  pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+        pdf.addImage(imgDataD, 'JPEG',15, 125,  pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
 
         const canvasT = chartContainerTest.current;
         const imgDataT = canvasT.toDataURL('image/png', 1.0);
-        pdf.text('Rapport de consommation de CO2 pour la phase de test', 15, 146, {
+        pdf.text('Rapport de consommation de CO2 pour la phase de test', 15, 176, {
             fontSize: 36,
             fontName: 'Helvetica',
             fontStyle: 'bold',
             color: '#000000',
             maxWidth: 170
         });
-        pdf.addImage(imgDataT, 'JPEG', 15, 150, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+        pdf.addImage(imgDataT, 'JPEG', 15, 180, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
 
         const canvasDE = chartContainerDeploiment.current;
         const imgDataDE = canvasDE.toDataURL('image/png', 1.0);
-        pdf.text('Rapport de consommation de CO2 pour la phase de déploiment!', 15, 186, {
+        pdf.text('Rapport de consommation de CO2 pour la phase de déploiment', 15, 231, {
             fontSize: 36,
             fontName: 'Helvetica',
             fontStyle: 'bold',
             color: '#000000',
             maxWidth: 170
         });
-        pdf.addImage(imgDataDE, 'JPEG', 15, 190,pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+        pdf.addImage(imgDataDE, 'JPEG', 15, 235,pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+
+        pdf.addPage()
 
         const canvasM = chartContainerMaintenance.current;
         const imgDataM = canvasM.toDataURL('image/png', 1.0);
-        pdf.text('Rapport de consommation de CO2 pour la phase de maintenance!', 15, 226, {
+        pdf.text('Rapport de consommation de CO2 pour la phase de maintenance', 15, 25, {
             fontSize: 36,
             fontName: 'Helvetica',
             fontStyle: 'bold',
             color: '#000000',
             maxWidth: 170
         });
-        pdf.addImage(imgDataM, 'JPEG', 15,230, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+        pdf.addImage(imgDataM, 'JPEG', 15,29, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
 
 
         pdf.save('chart.pdf');
@@ -247,7 +251,8 @@ function ResultPage() {
                     }
                 });
                 chart(sums, chartContainerAll, chartInstanceAll);
-
+                const sumAll = Object.values(sums).reduce((acc, val) => acc + val, 0);
+                setConsommationTotal(sumAll)
                 arrays.forEach(array => {
                     const values = []
                     const mineTime = jsonData.mine[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
@@ -283,13 +288,16 @@ function ResultPage() {
     }, [navigate]);
     return (
         <div ref={pdfContainer}>
-            <h1>Rapport de consomation de CO2</h1>
-            <div>
-                <canvas ref={chartContainerAll}/>
-
-            </div>
+            <br/>
             <Button onClick={handleDownloadPDF} type="button">Download PDF</Button>
             <Button onClick={handleQuit} type="button">Retourner au menu</Button>
+            <br/>
+
+            <h1>Rapport de consommation de CO2</h1>
+            <div>
+                <canvas ref={chartContainerAll}/>
+            </div>
+            <h2>Pour une consommation total de {consommationTotal}</h2>
 
             <h1>Rapport de consommation de CO2 pour la phase de planification</h1>
             <div className="divcanvas">
