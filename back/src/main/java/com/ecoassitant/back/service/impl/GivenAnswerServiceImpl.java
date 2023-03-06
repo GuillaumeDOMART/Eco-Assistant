@@ -60,7 +60,7 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
                 result = false;
                 break;
             }
-            var givenAnswer = givenAnswerRepository.findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(question.get(), project.get());
+            var givenAnswer = givenAnswerRepository.findByGivenAnswerKeyQuestionAndAndGivenAnswerKeyProject(question.get(), project.get());
             if (givenAnswer.isPresent())
                 givenAnswerRepository.delete(givenAnswer.get());
             if (!Objects.equals(responseDto.getEntry(), "")){
