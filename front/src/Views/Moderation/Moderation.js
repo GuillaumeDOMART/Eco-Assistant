@@ -185,7 +185,7 @@ function LigneTableauUsers(datas) {
     return (
         <>
             <tr className='table border-bottom border-2 border-secondary'>
-                <td align={"center"} valign={"middle"}>{datas.nom+" "+datas.prenom}</td>
+                <td align={"center"} valign={"middle"}>{datas.lastName+" "+datas.firstName}</td>
                 <td align={"center"} valign={"middle"}>{datas.mail}</td>
                 <td align={"center"} valign={"middle"}>
                     <Button className="m-3" variant="secondary" onClick={handleShowSelectedUserProjects}>Visualiser ces projets</Button>

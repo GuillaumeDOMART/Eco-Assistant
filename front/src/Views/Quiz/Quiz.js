@@ -49,10 +49,10 @@ function StepperComponent() {
             setData(json);
             const selected = []
             json.forEach(question => {
-                if(question.type === 'QCM' && question.reponse !== null) {
+                if(question.type === 'QCM' && question.response !== null) {
                     selected.push({
                         "question": question.questionId.toString(),
-                        "reponseId": question.reponse.reponse.reponseId
+                        "reponseId": question.response.response.responseId
                     })
 
                 }
@@ -94,10 +94,10 @@ function StepperComponent() {
     )
 
     const handleChange = useCallback((target, value) => {
-        const select = value.reponses.find(val => val.intitule === target.target.value)
+        const select = value.responses.find(val => val.entitled === target.target.value)
         const answer = {
             "question": target.target.name,
-            "reponseId": select.reponseId
+            "reponseId": select.responseId
         }
 
         selectedAnswers.forEach(val => {
@@ -109,10 +109,10 @@ function StepperComponent() {
     }, [selectedAnswers])
 
     const getDependancy = useCallback((questionId) => {
-        const dependance = data.find((value) => value.questionId.toString() === questionId).dependance
+        const dependance = data.find((value) => value.questionId.toString() === questionId).dependency
         if (dependance === -1)
             return true;
-        return selectedAnswers.find(value => value.reponseId === dependance)
+        return selectedAnswers.find(value => value.responseId === dependance)
     }, [data, selectedAnswers])
 
     /**

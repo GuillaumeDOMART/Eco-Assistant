@@ -21,9 +21,9 @@ export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, r
                     {question.reponses.map((data) => {
                         return (
                             <FormControlLabel
-                                value={data.intitule}
-                                key={data.intitule}
-                                label={data.intitule}
+                                value={data.entitled}
+                                key={data.entitled}
+                                label={data.entitled}
                                 control={
                                     <Radio ref={ref} name={name} onChange={handleChange}/>
                                 }
@@ -37,13 +37,13 @@ export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, r
     return (
         <div style={{marginTop: '20px'}} className="shadow-lg rounded p-3">
             <h5>{question.intitule}</h5>
-            <RadioGroup className="mx-5" defaultValue={question.reponse.reponse.intitule}>
-                {question.reponses.map((data) => {
+            <RadioGroup className="mx-5" defaultValue={question.response.response.entitled}>
+                {question.responses.map((data) => {
                     return (
                         <FormControlLabel
-                            value={data.intitule}
-                            key={data.intitule}
-                            label={data.intitule}
+                            value={data.entitled}
+                            key={data.entitled}
+                            label={data.entitled}
                             control={
                                 <Radio ref={ref} name={name} onChange={handleChange}/>
                             }
@@ -64,16 +64,16 @@ QCM.displayName = 'QCM';
  * @constructor
  */
 export const NUMERIC = ({question, register}) => {
-    if (question.reponse === null) {
+    if (question.response === null) {
         return (
             <div style={{marginTop: '20px'}} className="shadow-lg rounded">
                 <div className="mx-5 p-3">
-                    <h5>{question.intitule}</h5><br/>
-                    {question.reponses[0].intitule} : <input
+                    <h5>{question.entitled}</h5><br/>
+                    {question.responses[0].entitled} : <input
                     type={"number"}
                     {...register(question.questionId.toString())}
                     min={0}
-                    defaultValue={question.reponse}
+                    defaultValue={question.response}
                 /><br/>
                 </div>
             </div>
@@ -83,11 +83,11 @@ export const NUMERIC = ({question, register}) => {
         <div style={{marginTop: '20px'}} className="shadow-lg rounded">
             <div className="mx-5 p-3">
                 <h5>{question.intitule}</h5><br/>
-                {question.reponses[0].intitule} : <input
+                {question.responses[0].entitled} : <input
                 type={"number"}
                 {...register(question.questionId.toString())}
                 min={0}
-                defaultValue={question.reponse.entry}
+                defaultValue={question.response.entry}
             /><br/>
             </div>
         </div>

@@ -52,7 +52,7 @@ function ResultPage() {
                 datasets: [
                     {
                         label: 'Consommation en CO2',
-                        data: [result.planification, result.developpement, result.test, result.deploiement, result.maintenance],
+                        data: [result.planning, result.development, result.test, result.deployement, result.maintenance],
                         backgroundColor: 'rgba(100, 198, 146, 0.2)',
                         borderWidth: 1
                     }

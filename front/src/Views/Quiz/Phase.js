@@ -22,7 +22,7 @@ export default function Phase({value, register, onChange}) {
     switch (value.type) {
         case 'QCM' :
             return (
-                <QCM key={value.intitule}
+                <QCM key={value.entitled}
                      question={value}
                      register={register}
                      {...register(value.questionId.toString())}
@@ -31,7 +31,7 @@ export default function Phase({value, register, onChange}) {
             )
         case 'NUMERIC' :
             return (
-                <NUMERIC key={value.intitule}
+                <NUMERIC key={value.entitled}
                          question={value}
                          register={register}
                 />

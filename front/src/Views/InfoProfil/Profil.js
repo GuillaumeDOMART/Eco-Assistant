@@ -78,8 +78,8 @@ function Profil() {
  * @constructor
  */
 function InfoProfil(datas) {
-    const prenom = `Prénom : ${datas.prenom}`
-    const nom = `Nom : ${datas.nom}`
+    const prenom = `Prénom : ${datas.firstName}`
+    const nom = `Nom : ${datas.lastName}`
     const email = `Mail : ${datas.mail}`
     const navigate = useNavigate()
     const [show, setShow] = useState(false);
