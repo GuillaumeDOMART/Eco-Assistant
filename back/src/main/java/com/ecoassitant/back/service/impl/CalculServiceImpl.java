@@ -125,9 +125,9 @@ public class CalculServiceImpl implements CalculService {
                 }
                 executed.ifPresent(aDouble -> {
                     switch (reformedOperation.getPhase()) {
-                        case PLANNING -> result.addPlanning(new CalculDto(reformedOperation.getEntitled(), aDouble));
-                        case DEVELOPMENT -> result.addDevelopment(new CalculDto(reformedOperation.getEntitled(), aDouble));
-                        case DEPLOYMENT -> result.addDeployment(new CalculDto(reformedOperation.getEntitled(), aDouble));
+                        case PLANIFICATION -> result.addPlanning(new CalculDto(reformedOperation.getEntitled(), aDouble));
+                        case DEVELOPPEMENT -> result.addDevelopment(new CalculDto(reformedOperation.getEntitled(), aDouble));
+                        case DEPLOIEMENT -> result.addDeployment(new CalculDto(reformedOperation.getEntitled(), aDouble));
                         case TEST -> result.addTest(new CalculDto(reformedOperation.getEntitled(), aDouble));
                         case MAINTENANCE -> result.addMaintenance(new CalculDto(reformedOperation.getEntitled(), aDouble));
                         default -> result.addOutPhase(new CalculDto(reformedOperation.getEntitled(), aDouble));

@@ -17,9 +17,9 @@ class CalculTest {
     ConstantEntity c2 = new ConstantEntity(2L, 20, "jentends");
     ProjectEntity projet = new ProjectEntity();
 
-    QuestionEntity q1 = new QuestionEntity(1L, "q1", TypeQ.NUMERIC, Phase.OUT_PHASE, null);
-    QuestionEntity q2 = new QuestionEntity(2L, "q2", TypeQ.QCM, Phase.OUT_PHASE, null);
-    QuestionEntity q3 = new QuestionEntity(3L, "q3", TypeQ.NUMERIC, Phase.OUT_PHASE, null);
+    QuestionEntity q1 = new QuestionEntity(1L, "q1", TypeQ.NUMERIC, Phase.HORS_PHASE, null);
+    QuestionEntity q2 = new QuestionEntity(2L, "q2", TypeQ.QCM, Phase.HORS_PHASE, null);
+    QuestionEntity q3 = new QuestionEntity(3L, "q3", TypeQ.NUMERIC, Phase.HORS_PHASE, null);
 
 
 
@@ -61,21 +61,21 @@ class CalculTest {
         cl1.setIdCalcul(1L);
         cl1.setCalculOp(add);
         cl1.setResponsePossible(r1);
-        cl1.setPhase(Phase.DEVELOPMENT);
+        cl1.setPhase(Phase.DEVELOPPEMENT);
         cl1.setNbCalcul(1);
 
         var cl2 = new CalculEntity();
         cl2.setIdCalcul(2L);
         cl2.setCalculOp(mult);
         cl2.setResponsePossible(r3);
-        cl2.setPhase(Phase.DEVELOPMENT);
+        cl2.setPhase(Phase.DEVELOPPEMENT);
         cl2.setNbCalcul(1);
 
         var cl3 = new CalculEntity();
         cl3.setIdCalcul(3L);
         cl3.setCalculOp(stop);
         cl3.setResponsePossible(r4);
-        cl3.setPhase(Phase.DEVELOPMENT);
+        cl3.setPhase(Phase.DEVELOPPEMENT);
         cl3.setNbCalcul(1);
 
         listCalcul.add(cl1);

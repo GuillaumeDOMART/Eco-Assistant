@@ -105,11 +105,11 @@ VALUES ('admin@demo.fr', '$2a$10$b8qqjDh64vjz2/KsV9Yc8uYKMDTatn3cL6Bp7Uuhcwg/N0l
 -- CREATION DES PROJETS DEVS ET SUPPORT
 INSERT INTO projet(profilid, nomprojet, etat, type)
 VALUES (1, 'QUESTIONAIRE POUR Administrateur',
-        'INPROGRESS', 'PROJET'),
+        'EN_COURS', 'PROJET'),
        (2, 'QUESTIONAIRE POUR Salarie 1',
-        'INPROGRESS', 'PROJET'),
+        'EN_COURS', 'PROJET'),
        (2, 'QUESTIONAIRE POUR Salarie 2',
-        'INPROGRESS', 'SIMULATION');
+        'EN_COURS', 'SIMULATION');
 -- CREATION DES QUESTIONS
 INSERT INTO question (intitule, typeq, phase)
 VALUES

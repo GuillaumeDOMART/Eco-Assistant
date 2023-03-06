@@ -5,7 +5,6 @@ import com.ecoassitant.back.entity.tools.TypeP;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * repository of Project
@@ -16,7 +15,7 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Integer>
      * @param idProject represents id of project
      * @return ProjectEntity
      */
-    Optional<ProjectEntity> findByIdProject(Integer idProject);
+    ProjectEntity findByIdProject(Integer idProject);
 
     /**
      * Get List<ProjetEntity> associated with idProfil

@@ -328,7 +328,7 @@ function LigneTableauProjet(datas) {
         <>
             <tr className='table border-bottom border-2 border-secondary'>
                 <td align={"center"} valign={"middle"}>{datas.projectName}</td>
-                <td align={"center"} valign={"middle"}>{datas.state()}</td>
+                <td align={"center"} valign={"middle"}>{datas.state}</td>
                 <td align={"center"} valign={"middle"}>{datas.type}</td>
                 <td align={"center"} valign={"middle"}>
                     <ButtonSet idProject={datas.id}

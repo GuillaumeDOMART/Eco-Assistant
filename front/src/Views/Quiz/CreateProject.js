@@ -20,7 +20,7 @@ function Project({onSubmit, register, fieldErrors, errors}) {
             <h1>Nouveau Projet</h1>
             <form onSubmit={onSubmit} className="">
                 <TextField label="Nom du projet" type="text" variant="standard"
-                           className="textfield" {...register("nom")} required
+                           className="textfield" {...register("name")} required
                            error={Boolean(fieldErrors.nom)}
                            helperText={fieldErrors.nom}/><br/><br/>
 

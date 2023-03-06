@@ -42,9 +42,9 @@ QuestionServiceImpl implements QuestionService {
      */
     private List<QuestionUniqueDto> completQuiz(List<QuestionUniqueDto> questions, Integer idProject) {
         var project = projectRepository.findByIdProject(idProject);
-        if (project.isEmpty())
+        if (project == null)
             return new ArrayList<QuestionUniqueDto>();
-        var responses = givenAnswerRepository.findByGivenAnswerKey_Project(project.get());
+        var responses = givenAnswerRepository.findByGivenAnswerKey_Project(project);
         responses.forEach(response ->{
             questions.forEach(question -> question.remplir(response));
         });

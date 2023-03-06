@@ -49,6 +49,7 @@ function StepperComponent() {
             setData(json);
             const selected = []
             json.forEach(question => {
+                console.log("je suis là")
                 if(question.type === 'QCM' && question.response !== null) {
                     selected.push({
                         "question": question.questionId.toString(),
@@ -138,8 +139,8 @@ function StepperComponent() {
                     tuple.entry = value;
                 responses.push(tuple)
             }
-            sendToBack.projetId = projectId;
-            sendToBack.reponses = responses;
+            sendToBack.projectId = projectId;
+            sendToBack.responses = responses;
 
             const token = sessionStorage.getItem("token")
 
