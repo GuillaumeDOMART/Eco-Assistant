@@ -77,7 +77,7 @@ public interface ProfilService {
      * @param forgotPasswordVerifyDto the new password
      * @return if the change was successfully
      */
-    ResponseEntity<Boolean> forgotMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto);
+    ResponseEntity<Boolean> forgotPasswordMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto);
 
     /**
      * Function to finalize account creation

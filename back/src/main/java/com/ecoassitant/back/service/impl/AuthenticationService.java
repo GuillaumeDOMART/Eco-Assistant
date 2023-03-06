@@ -141,6 +141,10 @@ public class AuthenticationService {
         if (profile.isEmpty()) {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
+        var profileValue = profile.get();
+        if(profileValue.getIsAdmin() == -3){
+            throw new ViolationConnectionException();
+        }
         var claims = new HashMap<String, Object>() {{
             put("verify", true);
         }};
@@ -185,10 +189,8 @@ public class AuthenticationService {
     }
 
     /**
-     * Method to handle DataIntegrityViolationException into an HttpStatus.BAD_REQUEST when you try to modify a
-     * mail into an already existing one
+     * Method to handle ViolationConnectionException into an HttpStatus.FORBIDDEN when the user has isadmin < 0
      *
-     * @param ex exception
      * @return Map with the field mail and the message
      */
     @ResponseStatus(HttpStatus.FORBIDDEN)

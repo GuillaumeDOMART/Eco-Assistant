@@ -111,9 +111,12 @@ public class ProjetController {
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
         if (profilEntityOptional.isEmpty()) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         var profil = profilEntityOptional.get();
+        if(profil.getIsAdmin() < 0){
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
         var projetEntity = ProjetEntity.builder()
                 .nomProjet(projet.getNom())
                 .profil(profil)

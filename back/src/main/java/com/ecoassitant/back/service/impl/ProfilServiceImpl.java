@@ -10,6 +10,7 @@ import com.ecoassitant.back.dto.profil.ProfilIdDto;
 import com.ecoassitant.back.dto.profil.ProfilSimplDto;
 import com.ecoassitant.back.entity.ProfilEntity;
 import com.ecoassitant.back.exception.NoSuchElementInDataBaseException;
+import com.ecoassitant.back.exception.ViolationConnectionException;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.service.ProfilService;
 import com.ecoassitant.back.utils.StringGeneratorUtils;
@@ -107,6 +108,9 @@ public class ProfilServiceImpl implements ProfilService {
             return Optional.empty();
         }
        var profilOwner = profilOwnerOpt.get();
+        if(profilOwner.getIsAdmin() < 0){
+            throw new ViolationConnectionException();
+        }
         profilOwner.setFirstname(generateRandomString(8));
         profilOwner.setMail("guest"+generateRandomString(8)+"@eco-assistant-esipe.fr");
         profilOwner.setLastname(generateRandomString(8));
@@ -147,7 +151,7 @@ public class ProfilServiceImpl implements ProfilService {
     }
 
     @Override
-    public ResponseEntity<Boolean> forgotMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto) {
+    public ResponseEntity<Boolean> forgotPasswordMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         return changePassword(mail, forgotPasswordVerifyDto.getPassword(), forgotPasswordVerifyDto.getOldPassword());
@@ -245,6 +249,9 @@ public class ProfilServiceImpl implements ProfilService {
             throw new DataIntegrityViolationException("L'adresse mail est déjà associé à un compte");
         }
         var user = profil.get();
+        if(user.getIsAdmin() < 0){
+            throw new ViolationConnectionException();
+        }
         var violations = validator.validate(user);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);

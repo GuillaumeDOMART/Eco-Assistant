@@ -86,8 +86,8 @@ public class ProfilController {
      * @return if the password was change successfully
      */
     @PatchMapping("/profil/forgotMail")
-    public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
-        return profilService.forgotMail(authorizationHeader, forgotPasswordVerifyDto);
+    public ResponseEntity<Boolean> forgotPasswordMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
+        return profilService.forgotPasswordMail(authorizationHeader, forgotPasswordVerifyDto);
     }
 
     /**
@@ -105,9 +105,8 @@ public class ProfilController {
         var profil = profilService.deleteProfil(mail);
         if (profil.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(profil.get(), HttpStatus.OK);
         }
+        return new ResponseEntity<>(profil.get(), HttpStatus.OK);
 
 
     }
