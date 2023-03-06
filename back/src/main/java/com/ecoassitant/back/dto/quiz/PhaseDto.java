@@ -23,11 +23,11 @@ public class PhaseDto {
         this.phase = phase;
     }
 
-    public Integer getProjetId() {
+    public Integer getProjectId() {
         return id;
     }
 
-    public void setProjetId(Integer id) {
+    public void setProjectId(Integer id) {
         this.id = id;
     }
 }

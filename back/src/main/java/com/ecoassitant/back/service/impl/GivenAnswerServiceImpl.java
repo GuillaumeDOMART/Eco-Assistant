@@ -2,8 +2,8 @@ package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.resultat.GivenAnswerDto;
 import com.ecoassitant.back.dto.resultat.ReponseDto;
+import com.ecoassitant.back.entity.GivenAnswerEntity;
 import com.ecoassitant.back.entity.ProjectEntity;
-import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.tools.TypeQ;
 import com.ecoassitant.back.repository.ProjectRepository;
@@ -64,7 +64,7 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
             if (reponseDonnee.isPresent())
                 reponseDonneeRepository.delete(reponseDonnee.get());
             if (!Objects.equals(reponseDto.getEntry(), "")){
-                var reponseEntity = new ReponseDonneeEntity();
+                var reponseEntity = new GivenAnswerEntity();
                 var responseKey = new ReponseDonneeKey();
 
                 responseKey.setProjet(project.get());
@@ -99,12 +99,12 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
     }
 
     @Override
-    public void saveResponseDonnees(List<ReponseDonneeEntity> responses) {
+    public void saveResponseDonnees(List<GivenAnswerEntity> responses) {
         reponseDonneeRepository.saveAll(responses);
     }
 
     @Override
-    public List<ReponseDonneeEntity> findReponsesByProject(ProjectEntity projet) {
+    public List<GivenAnswerEntity> findReponsesByProject(ProjectEntity projet) {
         return reponseDonneeRepository.findByReponseDonneeKey_Projet(projet);
     }
 }

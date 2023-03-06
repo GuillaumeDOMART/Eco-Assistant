@@ -1,8 +1,8 @@
 package com.ecoassitant.back.repository;
 
+import com.ecoassitant.back.entity.GivenAnswerEntity;
 import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.QuestionEntity;
-import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * repository of ReponseDonnee
  */
-public interface ReponseDonneeRepository extends JpaRepository<ReponseDonneeEntity, Long> {
+public interface ReponseDonneeRepository extends JpaRepository<GivenAnswerEntity, Long> {
 
     /**
      * give a list of ReponseDonne for a project
@@ -19,7 +19,7 @@ public interface ReponseDonneeRepository extends JpaRepository<ReponseDonneeEnti
      * @param projet project linked of the ReponseDonnee
      * @return list ReponseDonnee linked of project
      */
-    List<ReponseDonneeEntity> findByReponseDonneeKey_Projet(ProjectEntity projet);
+    List<GivenAnswerEntity> findByReponseDonneeKey_Projet(ProjectEntity projet);
 
     /**
      * find a reponsedonnee in the data
@@ -27,5 +27,5 @@ public interface ReponseDonneeRepository extends JpaRepository<ReponseDonneeEnti
      * @param projet project of the response
      * @return optional reponse donnee with the response searched
      */
-    Optional<ReponseDonneeEntity> findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(QuestionEntity question, ProjectEntity projet);
+    Optional<GivenAnswerEntity> findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(QuestionEntity question, ProjectEntity projet);
 }

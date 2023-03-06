@@ -2,7 +2,7 @@ package com.ecoassitant.back.calcul;
 
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.ConstanteEntity;
-import com.ecoassitant.back.entity.ReponseDonneeEntity;
+import com.ecoassitant.back.entity.GivenAnswerEntity;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 
@@ -17,7 +17,7 @@ public class ReformedOperation {
 
     private final String entitled;
     private final List<CalculEntity> calculus;
-    private final List<ReponseDonneeEntity> repDon;
+    private final List<GivenAnswerEntity> repDon;
     private final Stack<OperationElem> stack = new Stack<>();
     private final Phase phase;
 
@@ -26,7 +26,7 @@ public class ReformedOperation {
      * @param calculus list of calculations recovery of the data
      * @param givAns list of GivenAnswer for a project
      */
-    public ReformedOperation(List<CalculEntity> calculus, List<ReponseDonneeEntity> givAns){
+    public ReformedOperation(List<CalculEntity> calculus, List<GivenAnswerEntity> givAns){
         Objects.requireNonNull(calculus);
         this.calculus = List.copyOf(calculus);
         this.repDon = List.copyOf(givAns);
@@ -73,7 +73,7 @@ public class ReformedOperation {
      * @return true if all dependencies has a response
      */
     private boolean isPossible(){
-        var list = dependencies.stream().filter(dependency -> repDon.stream().map(ReponseDonneeEntity::getReponsePos)
+        var list = dependencies.stream().filter(dependency -> repDon.stream().map(GivenAnswerEntity::getReponsePos)
                 .map(ReponsePossibleEntity::getIdReponsePos).toList()
                 .contains(dependency.getIdReponsePos())).toList();
         return list.size() == dependencies.size();

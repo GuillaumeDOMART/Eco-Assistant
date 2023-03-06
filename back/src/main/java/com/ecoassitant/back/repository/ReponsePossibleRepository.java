@@ -1,7 +1,6 @@
 package com.ecoassitant.back.repository;
 
 import com.ecoassitant.back.entity.QuestionEntity;
-import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

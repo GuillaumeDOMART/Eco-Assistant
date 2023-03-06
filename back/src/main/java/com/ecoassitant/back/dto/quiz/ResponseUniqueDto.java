@@ -1,31 +1,30 @@
 package com.ecoassitant.back.dto.quiz;
 
-import com.ecoassitant.back.dto.quiz.ReponsePossibleDto;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 
 /**
  * Reponse for QuestionUniqueDto
  */
-public class ReponseUniqueDto {
+public class ResponseUniqueDto {
     private Long questionSuivId;
     private Long reponseId;
     private String intitule;
 
     /**
      * create reponse without questionSuiv
-     * @param reponsePossibleDto reponse format tree
+     * @param responsePossibleDto reponse format tree
      */
-    public ReponseUniqueDto(ReponsePossibleDto reponsePossibleDto) {
-        this.intitule = reponsePossibleDto.getIntitule();
-        this.questionSuivId = reponsePossibleDto.getQuestionSuiv()!= null?reponsePossibleDto.getQuestionSuiv().getQuestionId(): -1L;
-        this.reponseId = reponsePossibleDto.getId();
+    public ResponseUniqueDto(ResponsePossibleDto responsePossibleDto) {
+        this.intitule = responsePossibleDto.getEntitled();
+        this.questionSuivId = responsePossibleDto.getNextQuestion()!= null? responsePossibleDto.getNextQuestion().getQuestionId(): -1L;
+        this.reponseId = responsePossibleDto.getId();
     }
 
     /**
      * create reponse without questionSuiv
      * @param reponsePossible ReponsePossibleEntity
      */
-    public ReponseUniqueDto(ReponsePossibleEntity reponsePossible) {
+    public ResponseUniqueDto(ReponsePossibleEntity reponsePossible) {
         this.intitule = reponsePossible.getIntitule();
         this.questionSuivId = reponsePossible.getQuestionSuiv()!= null?reponsePossible.getQuestionSuiv().getIdQuestion(): -1L;
         this.reponseId = reponsePossible.getIdReponsePos();

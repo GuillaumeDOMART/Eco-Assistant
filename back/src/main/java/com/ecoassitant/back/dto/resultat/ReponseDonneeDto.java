@@ -1,13 +1,10 @@
 package com.ecoassitant.back.dto.resultat;
 
-import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Objects;
-
 /**
- * DTO of a ReponseDonneeEntity
+ * DTO of a GivenAnswerEntity
  */
 @Data
 @AllArgsConstructor
@@ -16,7 +13,7 @@ public class ReponseDonneeDto {
     private String entry;
 
     /**
-     * Generate a DTO from a ReponseDonneeEntity
+     * Generate a DTO from a GivenAnswerEntity
      *
      * @throws IllegalArgumentException if entity is null
      */

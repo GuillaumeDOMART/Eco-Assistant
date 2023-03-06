@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "reponsedonnee")
-public class ReponseDonneeEntity implements Serializable {
+public class GivenAnswerEntity implements Serializable {
 
     @EmbeddedId
     private ReponseDonneeKey reponseDonneeKey;

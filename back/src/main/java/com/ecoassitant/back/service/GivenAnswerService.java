@@ -2,7 +2,7 @@ package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.resultat.GivenAnswerDto;
 import com.ecoassitant.back.entity.ProjectEntity;
-import com.ecoassitant.back.entity.ReponseDonneeEntity;
+import com.ecoassitant.back.entity.GivenAnswerEntity;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface GivenAnswerService {
      * @param projet project entity
      * @return a list of responseDonne from the projet
      */
-    List<ReponseDonneeEntity> findReponsesByProject(ProjectEntity projet);
+    List<GivenAnswerEntity> findReponsesByProject(ProjectEntity projet);
 
     /**
      * Service for save list of already checked reponseDonneeEntity
@@ -33,5 +33,5 @@ public interface GivenAnswerService {
      * @param responses list of reponseDonnee and id project
      * @return true if save in bdd has been successfull
      */
-    void saveResponseDonnees(List<ReponseDonneeEntity> responses);
+    void saveResponseDonnees(List<GivenAnswerEntity> responses);
 }

@@ -1,8 +1,7 @@
 package com.ecoassitant.back.dto.quiz;
 
+import com.ecoassitant.back.entity.GivenAnswerEntity;
 import com.ecoassitant.back.entity.QuestionEntity;
-import com.ecoassitant.back.entity.ReponseDonneeEntity;
-import com.ecoassitant.back.entity.tools.Categorie;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeQ;
 
@@ -14,12 +13,12 @@ import java.util.List;
  */
 public class QuestionDto {
     private Long questionId;
-    private String intitule;
+    private String entitled;
     private TypeQ type;
     private Phase phase;
-    private  List<ReponsePossibleDto> reponses;
-    private Long dependance;
-    private ReponseDonneeDtoQuiz reponse;
+    private  List<ResponsePossibleDto> responses;
+    private Long dependency;
+    private GivenAnswerDtoQuiz response;
 
 
     /**
@@ -30,24 +29,24 @@ public class QuestionDto {
         if (question == null)
             return;
         this.questionId = question.getIdQuestion();
-        this.intitule = question.getIntitule();
-        this.reponse = null;
+        this.entitled = question.getIntitule();
+        this.response = null;
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
-        this.reponses = new ArrayList<>();
-        question.getReponses().forEach(reponse -> reponses.add(new ReponsePossibleDto(reponse)));
+        this.responses = new ArrayList<>();
+        question.getReponses().forEach(response -> responses.add(new ResponsePossibleDto(response)));
         if (question.getDependance() == null)
-            this.dependance = -1L;
+            this.dependency = -1L;
         else
-            this.dependance = question.getDependance().getIdReponsePos();
+            this.dependency = question.getDependance().getIdReponsePos();
     }
 
-    public String getIntitule() {
-        return intitule;
+    public String getEntitled() {
+        return entitled;
     }
 
-    public void setIntitule(String intitule) {
-        this.intitule = intitule;
+    public void setEntitled(String entitled) {
+        this.entitled = entitled;
     }
 
     public TypeQ getType() {
@@ -66,12 +65,12 @@ public class QuestionDto {
         this.phase = phase;
     }
 
-    public List<ReponsePossibleDto> getReponses() {
-        return reponses;
+    public List<ResponsePossibleDto> getResponses() {
+        return responses;
     }
 
-    public void setReponses(List<ReponsePossibleDto> reponses) {
-        this.reponses = List.copyOf(reponses);
+    public void setResponses(List<ResponsePossibleDto> responses) {
+        this.responses = List.copyOf(responses);
     }
 
     public Long getQuestionId() {
@@ -82,42 +81,42 @@ public class QuestionDto {
         this.questionId = questionId;
     }
 
-    public Long getDependance() {
-        return dependance;
+    public Long getDependency() {
+        return dependency;
     }
 
-    public void setDependance(Long dependance) {
-        this.dependance = dependance;
+    public void setDependency(Long dependency) {
+        this.dependency = dependency;
     }
 
     /**
      * add all responses in the quiz
-     * @param reponses list of response of th previous quiz
+     * @param responses list of response of th previous quiz
      */
-    public void addReponses(List<ReponseDonneeEntity> reponses){
-        reponses.forEach(reponseDonneeEntity -> addReponse(this, reponseDonneeEntity));
+    public void addResponses(List<GivenAnswerEntity> responses){
+        responses.forEach(responseDonneeEntity -> addReponse(this, responseDonneeEntity));
     }
 
     /**
      * add a response in the quiz
      * @param question a question
-     * @param reponse response of th previous quiz
+     * @param response response of th previous quiz
      */
-    private void addReponse(QuestionDto question, ReponseDonneeEntity reponse){
+    private void addReponse(QuestionDto question, GivenAnswerEntity response){
         if (question == null)
             return;
-        if (question.questionId == reponse.getReponseDonneeKey().getQuestion().getIdQuestion()){
-            question.reponse = new ReponseDonneeDtoQuiz(reponse);
+        if (question.questionId == response.getReponseDonneeKey().getQuestion().getIdQuestion()){
+            question.response = new GivenAnswerDtoQuiz(response);
             return;
         }
-        question.reponses.forEach(reponsePossibleDto -> addReponse(reponsePossibleDto.getQuestionSuiv(),reponse));
+        question.responses.forEach(responsePossibleDto -> addReponse(responsePossibleDto.getNextQuestion(),response));
     }
 
     /**
      * get the response of the question complete previously else null
      * @return response of the previous quiz
      */
-    public ReponseDonneeDtoQuiz getReponse() {
-        return reponse;
+    public GivenAnswerDtoQuiz getResponse() {
+        return response;
     }
 }
