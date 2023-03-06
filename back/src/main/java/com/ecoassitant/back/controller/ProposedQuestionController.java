@@ -2,7 +2,7 @@ package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.dao.ProposedQuestionDao;
 import com.ecoassitant.back.dto.IdDto;
-import com.ecoassitant.back.dto.QuestionProposeDto;
+import com.ecoassitant.back.dto.ProposedQuestionDto;
 import com.ecoassitant.back.service.ProposedQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -38,8 +38,8 @@ public class ProposedQuestionController {
      * @return submitted question associated with id
     */
     @GetMapping("/proposition/{id}")
-    public ResponseEntity<QuestionProposeDto> getProposition(@PathVariable("id") int id){
-        QuestionProposeDto qpdto = proposedQuestionService.getQuestionProposeByID(id);
+    public ResponseEntity<ProposedQuestionDto> getProposition(@PathVariable("id") int id){
+        ProposedQuestionDto qpdto = proposedQuestionService.getQuestionProposeByID(id);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         if(qpdto==null){
@@ -56,8 +56,8 @@ public class ProposedQuestionController {
      */
 
     @GetMapping("/propositions")
-    public ResponseEntity<List<QuestionProposeDto>> getAllPropositions(){
-        List<QuestionProposeDto> qps = proposedQuestionService.findAll();
+    public ResponseEntity<List<ProposedQuestionDto>> getAllPropositions(){
+        List<ProposedQuestionDto> qps = proposedQuestionService.findAll();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         if(qps.isEmpty()){

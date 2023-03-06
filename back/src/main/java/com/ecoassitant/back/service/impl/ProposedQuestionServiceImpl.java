@@ -1,7 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dao.ProposedQuestionDao;
-import com.ecoassitant.back.dto.QuestionProposeDto;
+import com.ecoassitant.back.dto.ProposedQuestionDto;
 import com.ecoassitant.back.entity.QuestionProposeEntity;
 import com.ecoassitant.back.repository.QuestionProposeRepository;
 import com.ecoassitant.back.service.ProposedQuestionService;
@@ -28,14 +28,14 @@ public class ProposedQuestionServiceImpl implements ProposedQuestionService {
     }
 
     @Override
-    public QuestionProposeDto getQuestionProposeByID(Integer id) {
+    public ProposedQuestionDto getQuestionProposeByID(Integer id) {
         var qp = repository.findById(Long.parseLong(id.toString()));
-        return qp.map(QuestionProposeDto::new).orElse(null);
+        return qp.map(ProposedQuestionDto::new).orElse(null);
     }
 
     @Override
-    public List<QuestionProposeDto> findAll() {
-        return repository.findAll().stream().map(QuestionProposeDto::new).toList();
+    public List<ProposedQuestionDto> findAll() {
+        return repository.findAll().stream().map(ProposedQuestionDto::new).toList();
     }
 
     @Override

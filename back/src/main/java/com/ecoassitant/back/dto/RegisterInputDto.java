@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class RegisterInputDto {
     private String mail;
     private String password;
-    private String nom;
-    private String prenom;
+    private String lastName;
+    private String firstName;
 }

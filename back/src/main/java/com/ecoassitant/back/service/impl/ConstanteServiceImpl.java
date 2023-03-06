@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.ConstanteDto;
+import com.ecoassitant.back.dto.ConstantDto;
 import com.ecoassitant.back.repository.ConstantRepository;
 import com.ecoassitant.back.service.ConstanteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +26,15 @@ public class ConstanteServiceImpl implements ConstanteService {
 
 
     @Override
-    public ConstanteDto getConstante(Long constanteId) {
+    public ConstantDto getConstante(Long constanteId) {
         var constante = constanteRepo.findByIdConstante(constanteId);
-        return new ConstanteDto(constante);
+        return new ConstantDto(constante);
 
     }
 
     @Override
-    public List<ConstanteDto> findAll() {
-        return constanteRepo.findAll().stream().map(ConstanteDto::new).toList();
+    public List<ConstantDto> findAll() {
+        return constanteRepo.findAll().stream().map(ConstantDto::new).toList();
     }
 
 }

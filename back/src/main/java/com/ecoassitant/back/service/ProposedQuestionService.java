@@ -1,7 +1,7 @@
 package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dao.ProposedQuestionDao;
-import com.ecoassitant.back.dto.QuestionProposeDto;
+import com.ecoassitant.back.dto.ProposedQuestionDto;
 
 import java.util.List;
 
@@ -14,13 +14,13 @@ public interface ProposedQuestionService {
      * @param id the profil id
      * @return a ProfilDto with the submitted ID, or null if it doesn't exist
      */
-    QuestionProposeDto getQuestionProposeByID(Integer id);
+    ProposedQuestionDto getQuestionProposeByID(Integer id);
 
     /**
-     * Get List<QuestionProposeDto>in the DB
-     * @return List<QuestionProposeDto>
+     * Get List<ProposedQuestionDto>in the DB
+     * @return List<ProposedQuestionDto>
      */
-    List<QuestionProposeDto> findAll();
+    List<ProposedQuestionDto> findAll();
 
     /**
      * Save a Question Proposé (proposition)

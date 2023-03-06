@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.ConstanteDto;
+import com.ecoassitant.back.dto.ConstantDto;
 
 import java.util.List;
 
@@ -9,15 +9,15 @@ import java.util.List;
  */
 public interface ConstanteService {
     /**
-     * Get ConstanteDto associated with constanteId
+     * Get ConstantDto associated with constanteId
      * @param constanteId represents id of constante
-     * @return ConstanteDto
+     * @return ConstantDto
      */
-    ConstanteDto getConstante(Long constanteId);
+    ConstantDto getConstante(Long constanteId);
 
     /**
-     * Get List<ConstanteDto> in the DB
-     * @return List<ConstanteDto>
+     * Get List<ConstantDto> in the DB
+     * @return List<ConstantDto>
      */
-    List<ConstanteDto> findAll();
+    List<ConstantDto> findAll();
 }

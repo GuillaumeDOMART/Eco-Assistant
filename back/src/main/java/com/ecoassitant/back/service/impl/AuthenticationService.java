@@ -30,7 +30,6 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -64,8 +63,8 @@ public class AuthenticationService {
         var profile = ProfilEntity.builder()
                 .mail(registerInputDto.getMail())
                 .password(registerInputDto.getPassword())
-                .lastname(registerInputDto.getNom())
-                .firstname(registerInputDto.getPrenom())
+                .lastname(registerInputDto.getLastName())
+                .firstname(registerInputDto.getFirstName())
                 .isAdmin(-2)
                 .build();
 

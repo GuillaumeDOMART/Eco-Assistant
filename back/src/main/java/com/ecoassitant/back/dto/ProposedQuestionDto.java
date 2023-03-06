@@ -8,21 +8,21 @@ import lombok.Data;
  * DTO for QuestionPropose
  */
 @Data
-public class QuestionProposeDto {
+public class ProposedQuestionDto {
     private Long idQuestion;
 
-    private String intitule;
+    private String entitled;
     private Phase phase;
     private int vote;
     private boolean isApprove;
 
     /**
-     * Constructor to create QuestionProposeDto with a QuestionProposeEntity
+     * Constructor to create ProposedQuestionDto with a QuestionProposeEntity
      * @param qp the entity
      */
-    public QuestionProposeDto(QuestionProposeEntity qp){
+    public ProposedQuestionDto(QuestionProposeEntity qp){
         this.idQuestion = qp.getIdQuestion();
-        this.intitule = qp.getIntitule();
+        this.entitled = qp.getIntitule();
         this.phase = qp.getPhase();
         this.vote = qp.getVote();
         this.isApprove = qp.isApprove();
