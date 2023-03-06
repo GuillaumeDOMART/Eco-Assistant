@@ -7,15 +7,15 @@ public class Operande implements OperationElem {
     private final Double value;
 
     /**
-     * constructor of Operande
-     * @param value Double of the value of the operande
+     * constructor of Operand
+     * @param value Double of the value of the operand
      */
     public Operande(Double value) {
         this.value = value;
     }
 
     /**
-     *  Value of the Operande
+     *  Value of the Operand
      * @return the value
      */
     public Double val(){

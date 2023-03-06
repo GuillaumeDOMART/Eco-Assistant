@@ -124,14 +124,14 @@ public class CalculServiceImpl implements CalculService {
                     phase = Optional.ofNullable(calculEntier.getPhase());
                 }
                 executer.ifPresent(aDouble -> {
-                    System.out.println(calculEntier.getIntitule() + " " + aDouble);
+                    System.out.println(calculEntier.getEntitled() + " " + aDouble);
                     switch (calculEntier.getPhase()) {
-                        case PLANIFICATION -> resultat.addPlanification(new CalculDto(calculEntier.getIntitule(), aDouble));
-                        case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(calculEntier.getIntitule(), aDouble));
-                        case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(calculEntier.getIntitule(), aDouble));
-                        case TEST -> resultat.addTest(new CalculDto(calculEntier.getIntitule(), aDouble));
-                        case MAINTENANCE -> resultat.addMaintenance(new CalculDto(calculEntier.getIntitule(), aDouble));
-                        default -> resultat.addHorsPhase(new CalculDto(calculEntier.getIntitule(), aDouble));
+                        case PLANIFICATION -> resultat.addPlanification(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case TEST -> resultat.addTest(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case MAINTENANCE -> resultat.addMaintenance(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        default -> resultat.addHorsPhase(new CalculDto(calculEntier.getEntitled(), aDouble));
                     }
                 });
             }

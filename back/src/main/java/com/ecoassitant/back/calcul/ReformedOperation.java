@@ -10,30 +10,30 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * ReformedOperation create with  parts of calculation(calculEntity) and ReponseDonne for a project
+ * ReformedOperation create with  parts of calculation(calculationEntity) and GivenAnswer for a project
  */
 public class ReformedOperation {
-    private final List<ReponsePossibleEntity> dependances;
+    private final List<ReponsePossibleEntity> dependencies;
 
-    private final String intitule;
-    private final List<CalculEntity> calculs;
+    private final String entitled;
+    private final List<CalculEntity> calculus;
     private final List<ReponseDonneeEntity> repDon;
     private final Stack<OperationElem> stack = new Stack<>();
     private final Phase phase;
 
     /**
-     * Constructor of CalculEntier
-     * @param calculs list of calculs recovery of the data
-     * @param repDon list of reponseDonnee for a project
+     * Constructor of ReformedOperation
+     * @param calculus list of calculations recovery of the data
+     * @param givAns list of GivenAnswer for a project
      */
-    public ReformedOperation(List<CalculEntity> calculs, List<ReponseDonneeEntity> repDon){
-        Objects.requireNonNull(calculs);
-        this.calculs = List.copyOf(calculs);
-        this.repDon = List.copyOf(repDon);
-        dependances = new ArrayList<>();
-        phase = calculs.get(0).getPhase();
-        calculs.forEach(calculEntity -> dependances.add(calculEntity.getReponsePossible()));
-        intitule = calculs.stream()
+    public ReformedOperation(List<CalculEntity> calculus, List<ReponseDonneeEntity> givAns){
+        Objects.requireNonNull(calculus);
+        this.calculus = List.copyOf(calculus);
+        this.repDon = List.copyOf(givAns);
+        dependencies = new ArrayList<>();
+        phase = calculus.get(0).getPhase();
+        calculus.forEach(calculEntity -> dependencies.add(calculEntity.getReponsePossible()));
+        entitled = calculus.stream()
                 .map(CalculEntity::getReponsePossible)
                 .map(ReponsePossibleEntity::getConstante)
                 .map(ConstanteEntity::getTracabilite)
@@ -41,13 +41,13 @@ public class ReformedOperation {
     }
 
     /**
-     * Try to execute the calcul if it has all dependances
-     * @return the result of the calcul if possible
+     * Try to execute the calculation if it has all dependencies
+     * @return the result of the calculation if possible
      */
     public Optional<Double> execute(){
         if(!isPossible())
             return Optional.empty();
-        poloniser(join());
+        polishCalculator(join());
         var stack2 = new Stack<Double>();
         var stack3 = new Stack<OperationElem>();
         while (!stack.isEmpty())
@@ -69,82 +69,72 @@ public class ReformedOperation {
     }
 
     /**
-     * check if the calcul have all dependances
-     * @return true if all depandances has a response
+     * check if the operation have all dependencies
+     * @return true if all dependencies has a response
      */
     private boolean isPossible(){
-        var list = dependances.stream().filter(dependance -> {
-            return repDon.stream().map(ReponseDonneeEntity::getReponsePos)
-                    .map(ReponsePossibleEntity::getIdReponsePos).toList()
-                    .contains(dependance.getIdReponsePos());
-        }).toList();
-        return list.size() == dependances.size();
-        /*dependances.forEach(dependance ->{
-            var str = repDon.stream().map(ReponseDonneeEntity::getReponsePos)
-                    .map(ReponsePossibleEntity::getIdReponsePos).toList();
-            if(!str.contains(dependance.getIdReponsePos())){
-
-            }
-        });
-       return true;*/
+        var list = dependencies.stream().filter(dependency -> repDon.stream().map(ReponseDonneeEntity::getReponsePos)
+                .map(ReponsePossibleEntity::getIdReponsePos).toList()
+                .contains(dependency.getIdReponsePos())).toList();
+        return list.size() == dependencies.size();
     }
 
     /**
      * link the RepPoss with the value for this response
-     * @return a map with un idRepPos for key and a value of the response donne for this id
+     * @return a map with un idRepPos for key and a value of the response given for this id
      */
     private Map<Long,Double> join(){
         var map = new HashMap<Long, Double>();
-        dependances.forEach(rP ->{
-            var rD = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponsePos().equals(rP)).findFirst();
-            if (rD.isEmpty())
+        dependencies.forEach(rP ->{
+            var ga = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponsePos().equals(rP)).findFirst();
+            if (ga.isEmpty())
                 throw new IllegalStateException();
-            map.put(rP.getIdReponsePos(),(rP.getConstante().getConstante() * rD.get().getEntry()));
+            map.put(rP.getIdReponsePos(),(rP.getConstante().getConstante() * ga.get().getEntry()));
         });
         return map;
     }
 
     /**
-     * insert the calcul in the stack in the order of polish calculator inverse
+     * insert the calculation in the stack in the order of polish calculator inverse
      * @param val map create with join()
      */
-    private void poloniser(Map<Long, Double> val){
-        var iterateur =  calculs.iterator();
-        var calcul = iterateur.next();
+    private void polishCalculator(Map<Long, Double> val){
+        var iterator =  calculus.iterator();
+        var calculus = iterator.next();
         if(val.size() == 1){
-            var operande = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
+            var operande = new Operande(val.get(calculus.getReponsePossible().getIdReponsePos()));
             stack.push(operande);
         }
-        while (iterateur.hasNext()){
-            Operateur operateur;
-            switch (calcul.getCalculOp().getOperateur()){
-                case ADD -> operateur = new Add();
-                case SUB -> operateur = new Sub();
-                case DIV -> operateur = new Div();
-                case MULT -> operateur = new Mult();
-                default -> operateur = null;
+        while (iterator.hasNext()){
+            Operateur operator;
+            switch (calculus.getCalculOp().getOperateur()){
+                case ADD -> operator = new Add();
+                case SUB -> operator = new Sub();
+                case DIV -> operator = new Div();
+                case MULT -> operator = new Mult();
+                default -> operator = null;
             }
-            var operande = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
-            calcul = iterateur.next();
-            var operande2 = new Operande(val.get(calcul.getReponsePossible().getIdReponsePos()).doubleValue());
+            var operand = new Operande(val.get(calculus.getReponsePossible().getIdReponsePos()));
+            calculus = iterator.next();
+            var operand2 = new Operande(val.get(calculus.getReponsePossible().getIdReponsePos()));
 
             if (stack.isEmpty()){
 
-                stack.push(operande);
-                stack.push(operande2);
-                stack.push(operateur);
+                stack.push(operand);
+                stack.push(operand2);
+                stack.push(operator);
             }
             else {
-                var operateur2 = stack.pop();
-                if (operateur != null) {
-                    if (operateur.level() > operateur2.level()) {
-                        stack.push(operande2);
-                        stack.push(operateur);
-                        stack.push(operateur2);
+                var operator2 = stack.pop();
+                if (operator != null) {
+                    if (operator.level() > operator2.level()) {
+                        stack.push(operand2);
+                        stack.push(operator);
+                        stack.push(operator2);
                     } else {
-                        stack.push(operateur2);
-                        stack.push(operande2);
-                        stack.push(operateur);
+                        stack.push(operator2);
+                        stack.push(operand2);
+                        stack.push(operator);
                     }
                 }
             }
@@ -159,7 +149,7 @@ public class ReformedOperation {
         return phase;
     }
 
-    public String getIntitule() {
-        return intitule;
+    public String getEntitled() {
+        return entitled;
     }
 }
