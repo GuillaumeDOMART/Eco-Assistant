@@ -7,7 +7,7 @@ import com.ecoassitant.back.dto.admin.BanDto;
 import com.ecoassitant.back.dto.admin.BanProjectDto;
 import com.ecoassitant.back.exception.NoSuchElementInDataBaseException;
 import com.ecoassitant.back.repository.ProfilRepository;
-import com.ecoassitant.back.repository.ProjetRepository;
+import com.ecoassitant.back.repository.ProjectRepository;
 import com.ecoassitant.back.service.AdminService;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +22,16 @@ public class AdminServiceImpl implements AdminService {
 
     private final ProfilRepository profilRepository;
 
-    private final ProjetRepository projetRepository;
+    private final ProjectRepository projectRepository;
 
     /**
      * Constructor for AdminServiceImpl
      * @param profilRepository ProfilRepository
-     * @param projetRepository ProjetRepository
+     * @param projectRepository ProjetRepository
      */
-    public AdminServiceImpl(ProfilRepository profilRepository, ProjetRepository projetRepository) {
+    public AdminServiceImpl(ProfilRepository profilRepository, ProjectRepository projectRepository) {
         this.profilRepository = profilRepository;
-        this.projetRepository = projetRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -46,10 +46,10 @@ public class AdminServiceImpl implements AdminService {
         profilRepository.save(profilValue);
 
         var anonymeValue = anonyme.get();
-        var projects = projetRepository.findByProfil_IdProfil(banDto.getIdToBan());
+        var projects = projectRepository.findByProfil_IdProfil(banDto.getIdToBan());
 
         for(var project : projects){
-            projetRepository.delete(project);
+            projectRepository.delete(project);
         }
 
         return true;
@@ -57,11 +57,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Boolean banProject(BanProjectDto banDto) {
-        var project = projetRepository.findById(banDto.getIdProjectToBan());
+        var project = projectRepository.findById(banDto.getIdProjectToBan());
         if(project.isEmpty()){
             throw new NoSuchElementInDataBaseException();
         }
-        projetRepository.delete(project.get());
+        projectRepository.delete(project.get());
         return true;
     }
 
@@ -74,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
             System.out.println("tata");
             throw new NoSuchElementInDataBaseException();
         }
-        var selectedProjects = projetRepository.findByProfil_IdProfil(profilId);
+        var selectedProjects = projectRepository.findByProfil_IdProfil(profilId);
         return Optional.of(selectedProjects.stream().filter(p->p.getEtat().equals(Etat.FINISH) && p.getType().equals(TypeP.PROJET)).map(ProjetDto::new).toList());
     }
 }

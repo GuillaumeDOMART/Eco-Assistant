@@ -6,11 +6,11 @@ import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.tools.TypeQ;
-import com.ecoassitant.back.repository.ProjetRepository;
+import com.ecoassitant.back.repository.ProjectRepository;
 import com.ecoassitant.back.repository.QuestionRepository;
 import com.ecoassitant.back.repository.ReponseDonneeRepository;
 import com.ecoassitant.back.repository.ReponsePossibleRepository;
-import com.ecoassitant.back.service.ReponseDonneesService;
+import com.ecoassitant.back.service.GivenAnswerService;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -21,10 +21,10 @@ import java.util.Objects;
  * Implementation of ReponseDonnees Service
  */
 @Service
-public class ReponseDonneesServiceImpl implements ReponseDonneesService {
+public class GivenAnswerServiceImpl implements GivenAnswerService {
     private final ReponseDonneeRepository reponseDonneeRepository;
     private final ReponsePossibleRepository reponsePossibleRepository;
-    private final ProjetRepository projetRepository;
+    private final ProjectRepository projectRepository;
     private final QuestionRepository questionRepository;
 
     /**
@@ -32,19 +32,19 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
      *
      * @param reponseDonneeRepository   the ReponseDonneeRepository
      * @param reponsePossibleRepository the ReponsePossibleRepository
-     * @param projetRepository          the ProjetRepository
+     * @param projectRepository          the ProjetRepository
      * @param questionRepository        the QuestionRepository
      */
-    public ReponseDonneesServiceImpl(ReponseDonneeRepository reponseDonneeRepository, ReponsePossibleRepository reponsePossibleRepository, ProjetRepository projetRepository, QuestionRepository questionRepository) {
+    public GivenAnswerServiceImpl(ReponseDonneeRepository reponseDonneeRepository, ReponsePossibleRepository reponsePossibleRepository, ProjectRepository projectRepository, QuestionRepository questionRepository) {
         this.reponseDonneeRepository = reponseDonneeRepository;
         this.reponsePossibleRepository = reponsePossibleRepository;
-        this.projetRepository = projetRepository;
+        this.projectRepository = projectRepository;
         this.questionRepository = questionRepository;
     }
 
     @Override
     public boolean saveResponseDonnees(ReponseDonneesDto responses) {
-        var project = projetRepository.findById(responses.getProjetId());
+        var project = projectRepository.findById(responses.getProjetId());
         if (project.isEmpty()) {
             return false;
             //throw new IllegalArgumentException();

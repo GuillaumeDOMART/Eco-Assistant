@@ -54,21 +54,21 @@ public interface ProfilService {
      * @param id of the profile
      * @return the profile
      */
-    ProfilDto recupererProfilAvecId(Integer id);
+    ProfilDto recoverProfilWithId(Integer id);
 
     /**
      * Function to get profile with his mail
      * @param mail of the profile
      * @return the profile
      */
-    ProfilDto recupererProfilAvecMail(String mail);
+    ProfilDto recoverProfilWithMail(String mail);
 
     /**
      * Function to get profile with a token
      * @param authorizationHeader the token
      * @return the profile
      */
-    ProfilDto recupererProfilAvecToken(String authorizationHeader);
+    ProfilDto recoverProfilWithToken(String authorizationHeader);
 
     /**
      * Function to change password with a specific token

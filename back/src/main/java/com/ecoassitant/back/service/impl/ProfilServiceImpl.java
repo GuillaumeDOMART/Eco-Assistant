@@ -97,7 +97,7 @@ public class ProfilServiceImpl implements ProfilService {
     }
 
     @Override
-    public ProfilDto recupererProfilAvecId(Integer id) {
+    public ProfilDto recoverProfilWithId(Integer id) {
         var profil =  repository.findById(id);
         if(profil.isEmpty()){
             throw new NoSuchElementInDataBaseException();
@@ -106,7 +106,7 @@ public class ProfilServiceImpl implements ProfilService {
     }
 
     @Override
-    public ProfilDto recupererProfilAvecMail(String mail) {
+    public ProfilDto recoverProfilWithMail(String mail) {
         var profil =  repository.findByMail(mail);
         if(profil.isEmpty()){
             throw new NoSuchElementInDataBaseException();
@@ -115,7 +115,7 @@ public class ProfilServiceImpl implements ProfilService {
     }
 
     @Override
-    public ProfilDto recupererProfilAvecToken(String authorizationHeader) {
+    public ProfilDto recoverProfilWithToken(String authorizationHeader) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profil = repository.findByMail(mail);

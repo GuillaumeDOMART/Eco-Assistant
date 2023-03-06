@@ -21,20 +21,20 @@ import java.util.Objects;
  */
 @RequestMapping("api/")
 @RestController
-public class ProfilController {
+public class ProfileController {
     private final JwtService jwtService;
     private final ProfilService profilService;
     private final AuthenticationService authenticationService;
 
     /**
-     * Constructor of ProfilController
+     * Constructor of ProfileController
      *
      * @param jwtService            for decipher the token
      * @param profilService         Service of Profil
      * @param authenticationService AuthenticationService
      */
     @Autowired
-    public ProfilController(JwtService jwtService, ProfilService profilService, AuthenticationService authenticationService) {
+    public ProfileController(JwtService jwtService, ProfilService profilService, AuthenticationService authenticationService) {
         this.jwtService = Objects.requireNonNull(jwtService);
         this.profilService = Objects.requireNonNull(profilService);
         this.authenticationService = authenticationService;
@@ -46,8 +46,8 @@ public class ProfilController {
      */
     @GetMapping("profil/{id}")
     @ResponseBody
-    public ResponseEntity<ProfilDto> recupererProfilAvecId(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(profilService.recupererProfilAvecId(id));
+    public ResponseEntity<ProfilDto> recoverProfilWithId(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(profilService.recoverProfilWithId(id));
     }
 
     /**
@@ -55,8 +55,8 @@ public class ProfilController {
      */
     @GetMapping("profil/search/{mail}")
     @ResponseBody
-    public ResponseEntity<ProfilDto> recupererProfilAvecMail(@PathVariable("mail") String mail) {
-        return ResponseEntity.ok(profilService.recupererProfilAvecMail(mail));
+    public ResponseEntity<ProfilDto> recoverProfilWithMail(@PathVariable("mail") String mail) {
+        return ResponseEntity.ok(profilService.recoverProfilWithMail(mail));
     }
 
     /**
@@ -75,8 +75,8 @@ public class ProfilController {
      */
     @GetMapping("/profil/user")
     @ResponseBody
-    public ResponseEntity<ProfilDto> recupererProfilAvecToken(@RequestHeader("Authorization") String authorizationHeader){
-        return new ResponseEntity<>(profilService.recupererProfilAvecToken(authorizationHeader), HttpStatus.OK);
+    public ResponseEntity<ProfilDto> recoverProfilWithToken(@RequestHeader("Authorization") String authorizationHeader){
+        return new ResponseEntity<>(profilService.recoverProfilWithToken(authorizationHeader), HttpStatus.OK);
     }
 
     /**
@@ -103,11 +103,7 @@ public class ProfilController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         var profil = profilService.deleteProfil(mail);
-        if (profil.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(profil.get(), HttpStatus.OK);
-        }
+        return profil.map(profilIdDto -> new ResponseEntity<>(profilIdDto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
 
     }

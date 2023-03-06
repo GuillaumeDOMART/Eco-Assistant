@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Service of ReponseDonnees
  */
-public interface ReponseDonneesService {
+public interface GivenAnswerService {
     /**
      * Service for save list of reponseDonnee
      *

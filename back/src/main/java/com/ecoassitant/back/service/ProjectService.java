@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * Service of ProjetService
  */
-public interface ProjetService {
+public interface ProjectService {
     /**
      * Get ProjetDto associated with the id
      * @param id represents id of project

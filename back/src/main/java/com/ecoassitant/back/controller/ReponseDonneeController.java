@@ -2,7 +2,7 @@ package com.ecoassitant.back.controller;
 
 
 import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
-import com.ecoassitant.back.service.ReponseDonneesService;
+import com.ecoassitant.back.service.GivenAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +19,16 @@ import java.util.Objects;
 @RequestMapping("api")
 @RestController
 public class ReponseDonneeController {
-    private final ReponseDonneesService reponseDonneesService;
+    private final GivenAnswerService givenAnswerService;
 
     /**
      * Constructor ReponseDonneeController
-     * @param reponseDonneesService ReponseDonneesService
+     * @param givenAnswerService ReponseDonneesService
      */
     @Autowired
-    public ReponseDonneeController(ReponseDonneesService reponseDonneesService) {
-        Objects.requireNonNull(reponseDonneesService);
-        this.reponseDonneesService = reponseDonneesService;
+    public ReponseDonneeController(GivenAnswerService givenAnswerService) {
+        Objects.requireNonNull(givenAnswerService);
+        this.givenAnswerService = givenAnswerService;
     }
 
     /**
@@ -39,7 +39,7 @@ public class ReponseDonneeController {
      */
     @PostMapping("/reponsesDonnees")
     public ResponseEntity<Boolean> saveReponseDonnees(@RequestBody ReponseDonneesDto reponseDonneesDto) {
-        var isSave = reponseDonneesService.saveResponseDonnees(reponseDonneesDto);
+        var isSave = givenAnswerService.saveResponseDonnees(reponseDonneesDto);
         return isSave ? new ResponseEntity<>(isSave, HttpStatus.OK) : new ResponseEntity<>(isSave, HttpStatus.UNAUTHORIZED);
     }
 

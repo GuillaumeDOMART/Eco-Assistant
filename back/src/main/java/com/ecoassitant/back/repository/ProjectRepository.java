@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * repository of Project
  */
-public interface ProjetRepository extends JpaRepository<ProjetEntity, Integer> {
+public interface ProjectRepository extends JpaRepository<ProjetEntity, Integer> {
     /**
      * Get ProjetEntity associated with the idProjet
      * @param idProjet represents id of project

@@ -54,17 +54,14 @@ public class AdminController {
     }
 
     /**
-     * Endpoint to retrieve prjects by it's user's id
+     * Endpoint to retrieve projects by its user's id
      */
     @GetMapping("/projects/user/{id}")
     @ResponseBody
-    public ResponseEntity<List<ProjetDto>> getProjectsFinishedWithUserId(@RequestHeader("Authorization") String authorizationHeader, @PathVariable("id") Integer profilId) {
+    public ResponseEntity<List<ProjetDto>> getProjectsFinishedWithUserId(@RequestHeader("Authorization") String authorizationHeader, @PathVariable("id") Integer profileId) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
-        var projets = adminService.getProjectsFinishedFromUserId(mail,profilId);
-        if(projets.isEmpty()){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(projets.get(),HttpStatus.OK);
+        var projects = adminService.getProjectsFinishedFromUserId(mail,profileId);
+        return projects.map(projetDTOs -> new ResponseEntity<>(projetDTOs, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 }

@@ -17,30 +17,30 @@ import java.util.Objects;
  */
 @RequestMapping("api")
 @RestController
-public class CalculController {
+public class CalcController {
     private final CalculService calculService;
     private final JwtService jwtService;
 
     /**
-     * idProjet
-     * Initalise the calculService
+     * idProject
+     * Initialise the calculService
      *
      * @param calculService composite for using Service methode
      */
     @Autowired
-    public CalculController(CalculService calculService, JwtService jwtService) {
+    public CalcController(CalculService calculService, JwtService jwtService) {
         this.calculService = Objects.requireNonNull(calculService);
         this.jwtService = Objects.requireNonNull(jwtService);
     }
 
     /**
-     * list of calcul for a resultat
+     * list of calcul for a result
      *
-     * @param projectId id of the resultat
+     * @param projectId id of the result
      * @return list of calculs executed
      */
     @PostMapping("/calculs")
-    public ResponseEntity<ResultatsPhaseDto> resultatsCalcul(@RequestHeader("Authorization") String authorizationToken, @RequestBody IdDto projectId) {
+    public ResponseEntity<ResultatsPhaseDto> resultCalc(@RequestHeader("Authorization") String authorizationToken, @RequestBody IdDto projectId) {
         var token = authorizationToken.substring(7);
         var mail = jwtService.extractMail(token);
         var resultat = calculService.calculsForProject(projectId.getId(), mail);

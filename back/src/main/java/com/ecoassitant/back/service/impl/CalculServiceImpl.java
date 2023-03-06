@@ -9,7 +9,7 @@ import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.CalculRepository;
 import com.ecoassitant.back.repository.ProfilRepository;
-import com.ecoassitant.back.repository.ProjetRepository;
+import com.ecoassitant.back.repository.ProjectRepository;
 import com.ecoassitant.back.repository.ReponseDonneeRepository;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.*;
 public class CalculServiceImpl implements CalculService {
     private final CalculRepository calculRepository;
     private final ReponseDonneeRepository reponseDonneeRepository;
-    private final ProjetRepository projetRepository;
+    private final ProjectRepository projectRepository;
 
     private final ProfilRepository profilRepository;
 
@@ -32,12 +32,12 @@ public class CalculServiceImpl implements CalculService {
      *
      * @param calculRepository        calculRepository composite for using Service methode
      * @param reponseDonneeRepository reponseDonneeRepository composite for using Service methode
-     * @param projetRepository projetRepository composite for using Service methode
+     * @param projectRepository projetRepository composite for using Service methode
      */
-    public CalculServiceImpl(CalculRepository calculRepository, ReponseDonneeRepository reponseDonneeRepository, ProjetRepository projetRepository, ProfilRepository profilRepository) {
+    public CalculServiceImpl(CalculRepository calculRepository, ReponseDonneeRepository reponseDonneeRepository, ProjectRepository projectRepository, ProfilRepository profilRepository) {
         this.calculRepository = calculRepository;
         this.reponseDonneeRepository = reponseDonneeRepository;
-        this.projetRepository = projetRepository;
+        this.projectRepository = projectRepository;
         this.profilRepository = profilRepository;
     }
 
@@ -49,7 +49,7 @@ public class CalculServiceImpl implements CalculService {
      */
     @Override
     public Optional<ResultatsPhaseDto> calculsForProject(Integer idProject, String mail) {
-        var project = projetRepository.findById(idProject);
+        var project = projectRepository.findById(idProject);
         if (project.isEmpty())
             return Optional.empty();
 
@@ -68,7 +68,7 @@ public class CalculServiceImpl implements CalculService {
         }
 
         var resultat = new ResultatsPhaseDto(mine.get());
-        var projects = projetRepository.findByType(TypeP.PROJET);
+        var projects = projectRepository.findByType(TypeP.PROJET);
         if (projects.isEmpty()) {
             return Optional.empty();
         }
@@ -105,7 +105,7 @@ public class CalculServiceImpl implements CalculService {
      */
     private Optional<ResultatDto> resultatForProject(Integer idProject) {
         var resultat = new ResultatDto();
-        var projet = projetRepository.findById(idProject);
+        var projet = projectRepository.findById(idProject);
         if (projet.isEmpty())
             return Optional.empty();
         var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
