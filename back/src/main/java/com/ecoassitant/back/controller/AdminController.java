@@ -61,10 +61,7 @@ public class AdminController {
     public ResponseEntity<List<ProjectDto>> getProjectsFinishedWithUserId(@RequestHeader("Authorization") String authorizationHeader, @PathVariable("id") Integer profileId) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
-        var projets = adminService.getProjectsFinishedFromUserId(mail,profilId);
-        if(projets.isEmpty()){
-            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(projets.get(),HttpStatus.OK);
+        var projects = adminService.getProjectsFinishedFromUserId(mail,profileId);
+        return projects.map(projectDtos -> new ResponseEntity<>(projectDtos, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 }
