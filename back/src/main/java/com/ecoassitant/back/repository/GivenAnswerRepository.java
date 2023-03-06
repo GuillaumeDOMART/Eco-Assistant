@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * repository of ReponseDonnee
  */
-public interface ReponseDonneeRepository extends JpaRepository<GivenAnswerEntity, Long> {
+public interface GivenAnswerRepository extends JpaRepository<GivenAnswerEntity, Long> {
 
     /**
      * give a list of ReponseDonne for a project

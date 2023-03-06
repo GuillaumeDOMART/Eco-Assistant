@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * repository of ReponsePossible
+ * repository of ResponsePossible
  */
-public interface ReponsePossibleRepository extends JpaRepository<ResponsePossibleEntity, Long> {
+public interface ResponsePossibleRepository extends JpaRepository<ResponsePossibleEntity, Long> {
 
     /**
      * Get List<ResponsePossibleEntity> associated with question associate

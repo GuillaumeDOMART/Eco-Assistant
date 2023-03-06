@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface CalculRepository extends JpaRepository<CalculEntity, Long> {
     /**
      * Find list of CalculEntity associated to a nbCalcul
-     * @param nbCalcul represents the id of the group of calcul
+     * @param nbCalcul represents the id of the group of calculation
      * @return List<CalculEntity>
      */
     List<CalculEntity> findByNbCalcul(int nbCalcul);

@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface ProfilRepository extends JpaRepository<ProfilEntity, Integer> {
 
     /**
-     * Retrieve a ProfilEntity by it's mail
+     * Retrieve a ProfilEntity by its mail
      */
     Optional<ProfilEntity> findByMail(String mail);
 

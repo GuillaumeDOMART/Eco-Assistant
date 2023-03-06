@@ -6,10 +6,10 @@ import com.ecoassitant.back.entity.GivenAnswerEntity;
 import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.GivenAnswerKey;
 import com.ecoassitant.back.entity.tools.TypeQ;
+import com.ecoassitant.back.repository.GivenAnswerRepository;
 import com.ecoassitant.back.repository.ProjectRepository;
 import com.ecoassitant.back.repository.QuestionRepository;
-import com.ecoassitant.back.repository.ReponseDonneeRepository;
-import com.ecoassitant.back.repository.ReponsePossibleRepository;
+import com.ecoassitant.back.repository.ResponsePossibleRepository;
 import com.ecoassitant.back.service.GivenAnswerService;
 import org.springframework.stereotype.Service;
 
@@ -18,26 +18,26 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Implementation of ReponseDonnees Service
+ * Implementation of GivenAnswer Service
  */
 @Service
 public class GivenAnswerServiceImpl implements GivenAnswerService {
-    private final ReponseDonneeRepository reponseDonneeRepository;
-    private final ReponsePossibleRepository reponsePossibleRepository;
+    private final GivenAnswerRepository givenAnswerRepository;
+    private final ResponsePossibleRepository responsePossibleRepository;
     private final ProjectRepository projectRepository;
     private final QuestionRepository questionRepository;
 
     /**
-     * Function to create ReponseDonneesServiceImpl with ReponseDonneeRepository, ReponsePossibleRepository, ProjetRepository and QuestionRepository
+     * Function to create GivenAnswerServiceImpl with GivenAnswerRepository, ResponsePossibleRepository, ProjectRepository and QuestionRepository
      *
-     * @param reponseDonneeRepository   the ReponseDonneeRepository
-     * @param reponsePossibleRepository the ReponsePossibleRepository
-     * @param projectRepository          the ProjetRepository
+     * @param givenAnswerRepository   the GivenAnswerRepository
+     * @param responsePossibleRepository the ResponsePossibleRepository
+     * @param projectRepository          the ProjectRepository
      * @param questionRepository        the QuestionRepository
      */
-    public GivenAnswerServiceImpl(ReponseDonneeRepository reponseDonneeRepository, ReponsePossibleRepository reponsePossibleRepository, ProjectRepository projectRepository, QuestionRepository questionRepository) {
-        this.reponseDonneeRepository = reponseDonneeRepository;
-        this.reponsePossibleRepository = reponsePossibleRepository;
+    public GivenAnswerServiceImpl(GivenAnswerRepository givenAnswerRepository, ResponsePossibleRepository responsePossibleRepository, ProjectRepository projectRepository, QuestionRepository questionRepository) {
+        this.givenAnswerRepository = givenAnswerRepository;
+        this.responsePossibleRepository = responsePossibleRepository;
         this.projectRepository = projectRepository;
         this.questionRepository = questionRepository;
     }
@@ -54,45 +54,45 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
         Iterator<ResponseDto> reponseDtoIterator = list.iterator();
 
         while (result && reponseDtoIterator.hasNext()) {
-            var reponseDto = reponseDtoIterator.next();
-            var question = questionRepository.findById(reponseDto.getQuestionId());
+            var responseDto = reponseDtoIterator.next();
+            var question = questionRepository.findById(responseDto.getQuestionId());
             if (question.isEmpty()) {
                 result = false;
                 break;
             }
-            var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(question.get(), project.get());
-            if (reponseDonnee.isPresent())
-                reponseDonneeRepository.delete(reponseDonnee.get());
-            if (!Objects.equals(reponseDto.getEntry(), "")){
-                var reponseEntity = new GivenAnswerEntity();
+            var givenAnswer = givenAnswerRepository.findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(question.get(), project.get());
+            if (givenAnswer.isPresent())
+                givenAnswerRepository.delete(givenAnswer.get());
+            if (!Objects.equals(responseDto.getEntry(), "")){
+                var responseEntity = new GivenAnswerEntity();
                 var responseKey = new GivenAnswerKey();
 
                 responseKey.setProjet(project.get());
                 responseKey.setQuestion(question.get());
-                var reponsePossibles = reponsePossibleRepository.findByQuestionAsso(question.get());
-                if (reponsePossibles.isEmpty()) {
+                var responsePossibles = responsePossibleRepository.findByQuestionAsso(question.get());
+                if (responsePossibles.isEmpty()) {
                     result = false;
                     break;
                 }
 
                 if (question.get().getTypeQ().equals(TypeQ.NUMERIC)) { //NUMERIC
-                    reponseEntity.setReponsePos(reponsePossibles.get(0));
-                    if (!Objects.equals(reponseDto.getEntry(), ""))
-                        reponseEntity.setEntry(Integer.parseInt(reponseDto.getEntry()));
+                    responseEntity.setReponsePos(responsePossibles.get(0));
+                    if (!Objects.equals(responseDto.getEntry(), ""))
+                        responseEntity.setEntry(Integer.parseInt(responseDto.getEntry()));
                 } else { //TypeQ.QCM
-                    var reponsePossible = reponsePossibles.stream()
-                            .filter(reponse -> reponse.getIntitule().equals(reponseDto.getEntry())).findFirst();
-                    if (reponsePossible.isEmpty()) {
+                    var responsePossible = responsePossibles.stream()
+                            .filter(response -> response.getIntitule().equals(responseDto.getEntry())).findFirst();
+                    if (responsePossible.isEmpty()) {
                         // CA PETE ICI
                         result = false;
                         break;
                     }
-                    reponseEntity.setReponsePos(reponsePossible.get());
-                    reponseEntity.setEntry(1);
+                    responseEntity.setReponsePos(responsePossible.get());
+                    responseEntity.setEntry(1);
                 }
 
-                reponseEntity.setGivenAnswerKey(responseKey);
-                reponseDonneeRepository.save(reponseEntity);
+                responseEntity.setGivenAnswerKey(responseKey);
+                givenAnswerRepository.save(responseEntity);
             }
         }
         return result;
@@ -100,11 +100,11 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
 
     @Override
     public void saveResponseDonnees(List<GivenAnswerEntity> responses) {
-        reponseDonneeRepository.saveAll(responses);
+        givenAnswerRepository.saveAll(responses);
     }
 
     @Override
-    public List<GivenAnswerEntity> findReponsesByProject(ProjectEntity projet) {
-        return reponseDonneeRepository.findByReponseDonneeKey_Projet(projet);
+    public List<GivenAnswerEntity> findReponsesByProject(ProjectEntity project) {
+        return givenAnswerRepository.findByReponseDonneeKey_Projet(project);
     }
 }

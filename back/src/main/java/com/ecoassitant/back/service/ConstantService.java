@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Service of ConstanteController
  */
-public interface ConstanteService {
+public interface ConstantService {
     /**
      * Get ConstantDto associated with constanteId
      * @param constanteId represents id of constante

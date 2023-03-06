@@ -2,9 +2,9 @@ package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.quiz.PhaseDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
+import com.ecoassitant.back.repository.GivenAnswerRepository;
 import com.ecoassitant.back.repository.ProjectRepository;
 import com.ecoassitant.back.repository.QuestionRepository;
-import com.ecoassitant.back.repository.ReponseDonneeRepository;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.stereotype.Service;
 
@@ -19,34 +19,34 @@ public class
 QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final ProjectRepository projectRepository;
-    private final ReponseDonneeRepository reponseDonneeRepository;
+    private final GivenAnswerRepository givenAnswerRepository;
 
     /**
      * Function to create QuestionServiceImpl with QuestionRepository
      *
      * @param questionRepository      the QuestionRepository
-     * @param projectRepository        the ProjetRepository
-     * @param reponseDonneeRepository the ReponseDonneeRepository
+     * @param projectRepository        the ProjectRepository
+     * @param givenAnswerRepository the GivenAnswerRepository
      */
-    public QuestionServiceImpl(QuestionRepository questionRepository, ProjectRepository projectRepository, ReponseDonneeRepository reponseDonneeRepository) {
+    public QuestionServiceImpl(QuestionRepository questionRepository, ProjectRepository projectRepository, GivenAnswerRepository givenAnswerRepository) {
         this.questionRepository = questionRepository;
         this.projectRepository = projectRepository;
-        this.reponseDonneeRepository = reponseDonneeRepository;
+        this.givenAnswerRepository = givenAnswerRepository;
     }
 
     /**
-     * add reponse of previous quiz to the currently quiz
+     * add response of previous quiz to the currently quiz
      * @param questions list of question
      * @param idProject idProject of the previous quiz
      * @return questions with the response of the previous quiz
      */
     private List<QuestionUniqueDto> completQuiz(List<QuestionUniqueDto> questions, Integer idProject) {
-        var projet = projectRepository.findById(idProject);
-        if (projet.isEmpty())
+        var project = projectRepository.findById(idProject);
+        if (project.isEmpty())
             return new ArrayList<QuestionUniqueDto>();
-        var reponses = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
-        reponses.forEach(reponse ->{
-            questions.forEach(question -> question.remplir(reponse));
+        var responses = givenAnswerRepository.findByReponseDonneeKey_Projet(project.get());
+        responses.forEach(response ->{
+            questions.forEach(question -> question.remplir(response));
         });
         return questions;
     }

@@ -4,7 +4,7 @@ import com.ecoassitant.back.entity.CalculOperatorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * repository of CalculOperateur
+ * repository of CalculOperator
  */
-public interface CalculOperateurRepository extends JpaRepository<CalculOperatorEntity, Long> {
+public interface CalculOperatorRepository extends JpaRepository<CalculOperatorEntity, Long> {
 }

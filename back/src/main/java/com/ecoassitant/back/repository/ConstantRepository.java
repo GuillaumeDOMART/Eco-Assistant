@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ConstantRepository extends JpaRepository<ConstantEntity, Long> {
     /**
      * Get ConstantEntity associated with id
-     * @param idConstante represents id of constante
+     * @param idConstante represents id of constant
      * @return ConstantEntity
      */
     ConstantEntity findByIdConstante(Long idConstante);

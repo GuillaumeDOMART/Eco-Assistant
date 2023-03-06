@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementation of a ProjetService
+ * Implementation of a ProjectService
  */
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -22,9 +22,9 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProfilRepository profilRepository;
 
     /**
-     * Constructor of ConstanteService
+     * Constructor of ConstantService
      *
-     * @param projectRepository projetRepository composite for using ProjetService methods
+     * @param projectRepository projectRepository composite for using ProjectService methods
      */
     @Autowired
     public ProjectServiceImpl(ProjectRepository projectRepository, ProfilRepository profilRepository) {
@@ -35,8 +35,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDto getProject(Integer id) {
-        var projet = projectRepository.findByIdProjet(id);
-        return new ProjectDto(projet);
+        var project = projectRepository.findByIdProject(id);
+        return new ProjectDto(project);
     }
 
     @Override
@@ -51,24 +51,24 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Optional<ProjectIdDto> finish(String mail, ProjectIdDto projetDto) {
+    public Optional<ProjectIdDto> finish(String mail, ProjectIdDto projectIdDto) {
         var profilEntityOptional = profilRepository.findByMail(mail);
         if (profilEntityOptional.isEmpty()) {
             return Optional.empty();
         }
-        var projet = projectRepository.findByIdProjet(projetDto.getId());
-        var mailOwner = projet.getProfil().getMail();
+        var project = projectRepository.findByIdProject(projectIdDto.getId());
+        var mailOwner = project.getProfil().getMail();
         if (!mailOwner.equals(mail)) {
             return Optional.empty();
         }
-        projet.setState(State.FINISH);
-        var saveProject = projectRepository.save(projet);
+        project.setState(State.FINISH);
+        var saveProject = projectRepository.save(project);
         return Optional.of(new ProjectIdDto(saveProject.getIdProjet()));
     }
 
 
     @Override
-    public Optional<ProjectEntity> save(ProjectEntity projet) {
-        return Optional.of(projectRepository.save(projet));
+    public Optional<ProjectEntity> save(ProjectEntity project) {
+        return Optional.of(projectRepository.save(project));
     }
 }

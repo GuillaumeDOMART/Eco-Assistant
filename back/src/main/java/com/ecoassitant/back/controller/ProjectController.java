@@ -139,7 +139,7 @@ public class ProjectController {
         if (profilEntityOptional.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        var project = projectRepository.findByIdProjet(projectIdDto.getId());
+        var project = projectRepository.findByIdProject(projectIdDto.getId());
         var mailOwner = project.getProfil().getMail();
         if (!mailOwner.equals(mail)) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -187,7 +187,7 @@ public class ProjectController {
     public ResponseEntity<ProjectDto> copy(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projectIdDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
-        var idProjet = projectRepository.findByIdProjet(projectIdDto.getId());
+        var idProjet = projectRepository.findByIdProject(projectIdDto.getId());
         var mailOwner = idProjet.getProfil().getMail();
         var profile = profilRepository.findByMail(mail);
 

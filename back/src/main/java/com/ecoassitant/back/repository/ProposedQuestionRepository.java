@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Repository of QuestionPropose
  */
-public interface QuestionProposeRepository extends JpaRepository<ProposedQuestionEntity, Long> {
+public interface ProposedQuestionRepository extends JpaRepository<ProposedQuestionEntity, Long> {
 }

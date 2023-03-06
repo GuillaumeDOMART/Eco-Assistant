@@ -10,7 +10,7 @@ import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.CalculRepository;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjectRepository;
-import com.ecoassitant.back.repository.ReponseDonneeRepository;
+import com.ecoassitant.back.repository.GivenAnswerRepository;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ import java.util.*;
 @Service
 public class CalculServiceImpl implements CalculService {
     private final CalculRepository calculRepository;
-    private final ReponseDonneeRepository reponseDonneeRepository;
+    private final GivenAnswerRepository givenAnswerRepository;
     private final ProjectRepository projectRepository;
 
     private final ProfilRepository profilRepository;
@@ -31,12 +31,12 @@ public class CalculServiceImpl implements CalculService {
      * Constructor of CalculService
      *
      * @param calculRepository        calculRepository composite for using Service methode
-     * @param reponseDonneeRepository reponseDonneeRepository composite for using Service methode
-     * @param projectRepository projetRepository composite for using Service methode
+     * @param givenAnswerRepository givenAnswerRepository composite for using Service methode
+     * @param projectRepository projectRepository composite for using Service methode
      */
-    public CalculServiceImpl(CalculRepository calculRepository, ReponseDonneeRepository reponseDonneeRepository, ProjectRepository projectRepository, ProfilRepository profilRepository) {
+    public CalculServiceImpl(CalculRepository calculRepository, GivenAnswerRepository givenAnswerRepository, ProjectRepository projectRepository, ProfilRepository profilRepository) {
         this.calculRepository = calculRepository;
-        this.reponseDonneeRepository = reponseDonneeRepository;
+        this.givenAnswerRepository = givenAnswerRepository;
         this.projectRepository = projectRepository;
         this.profilRepository = profilRepository;
     }
@@ -62,18 +62,18 @@ public class CalculServiceImpl implements CalculService {
         if (!currentIdProfil.equals(projectIdProfil) && profil.get().getIsAdmin() < 1)
             return Optional.empty();
 
-        var mine = resultatForProject(idProject);
+        var mine = resultForProject(idProject);
         if (mine.isEmpty()) {
             return Optional.empty();
         }
 
-        var resultat = new ResultatsPhaseDto(mine.get());
+        var result = new ResultatsPhaseDto(mine.get());
         var projects = projectRepository.findByType(TypeP.PROJECT);
         if (projects.isEmpty()) {
             return Optional.empty();
         }
-        projects.forEach(projetEntity -> resultat.addOther(resultatForProject(projetEntity.getIdProjet())));
-        return Optional.of(resultat);
+        projects.forEach(projectEntity -> result.addOther(resultForProject(projectEntity.getIdProjet())));
+        return Optional.of(result);
     }
 
     /**
@@ -81,7 +81,7 @@ public class CalculServiceImpl implements CalculService {
      * @param calculs list of calculs entity
      * @return map
      */
-    private Map<Integer, Map<Integer, List<CalculEntity>>> creationResultat(List<CalculEntity> calculs) {
+    private Map<Integer, Map<Integer, List<CalculEntity>>> creationResult(List<CalculEntity> calculs) {
         var map = new HashMap<Integer, Map<Integer, List<CalculEntity>>>();
         calculs.forEach(calculEntity -> {
             if (!map.containsKey(calculEntity.getNbCalcul()))
@@ -103,40 +103,40 @@ public class CalculServiceImpl implements CalculService {
      * @param idProject the id of the project
      * @return the result
      */
-    private Optional<ResultDto> resultatForProject(Integer idProject) {
-        var resultat = new ResultDto();
-        var projet = projectRepository.findById(idProject);
-        if (projet.isEmpty())
+    private Optional<ResultDto> resultForProject(Integer idProject) {
+        var result = new ResultDto();
+        var project = projectRepository.findById(idProject);
+        if (project.isEmpty())
             return Optional.empty();
-        var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKey_Projet(projet.get());
-        if (reponseDonnee.isEmpty())
-            return Optional.of(resultat);
+        var givenAnswer = givenAnswerRepository.findByReponseDonneeKey_Projet(project.get());
+        if (givenAnswer.isEmpty())
+            return Optional.of(result);
         var calculs = calculRepository.findAll();
-        var map = creationResultat(calculs);
+        var map = creationResult(calculs);
 
         map.forEach((k, calculsPriorite) -> {
-            Optional<Double> executer = Optional.empty();
+            Optional<Double> executed = Optional.empty();
             Optional<Phase> phase = Optional.empty();
             for (var calcul : calculsPriorite.values()) {
-                var calculEntier = new ReformedOperation(calcul, reponseDonnee);
-                executer = calculEntier.execute();
-                if (executer.isPresent()) {
-                    phase = Optional.ofNullable(calculEntier.getPhase());
+                var reformedOperation = new ReformedOperation(calcul, givenAnswer);
+                executed = reformedOperation.execute();
+                if (executed.isPresent()) {
+                    phase = Optional.ofNullable(reformedOperation.getPhase());
                 }
-                executer.ifPresent(aDouble -> {
-                    System.out.println(calculEntier.getEntitled() + " " + aDouble);
-                    switch (calculEntier.getPhase()) {
-                        case PLANNING -> resultat.addPlanning(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        case DEVELOPMENT -> resultat.addDevelopment(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        case DEPLOYMENT -> resultat.addDeployment(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        case TEST -> resultat.addTest(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        case MAINTENANCE -> resultat.addMaintenance(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        default -> resultat.addOutPhase(new CalculDto(calculEntier.getEntitled(), aDouble));
+                executed.ifPresent(aDouble -> {
+                    System.out.println(reformedOperation.getEntitled() + " " + aDouble);
+                    switch (reformedOperation.getPhase()) {
+                        case PLANNING -> result.addPlanning(new CalculDto(reformedOperation.getEntitled(), aDouble));
+                        case DEVELOPMENT -> result.addDevelopment(new CalculDto(reformedOperation.getEntitled(), aDouble));
+                        case DEPLOYMENT -> result.addDeployment(new CalculDto(reformedOperation.getEntitled(), aDouble));
+                        case TEST -> result.addTest(new CalculDto(reformedOperation.getEntitled(), aDouble));
+                        case MAINTENANCE -> result.addMaintenance(new CalculDto(reformedOperation.getEntitled(), aDouble));
+                        default -> result.addOutPhase(new CalculDto(reformedOperation.getEntitled(), aDouble));
                     }
                 });
             }
         });
-            return Optional.of(resultat);
+            return Optional.of(result);
     }
     /**
      * Function to get the result for a calcul
@@ -144,10 +144,10 @@ public class CalculServiceImpl implements CalculService {
      * @param nbCalcul the id of the group of response of the same calcul
      * @return the result
      */
-    public Map<Integer, Map<Integer, List<CalculEntity>>> resultatForCalcul(Integer nbCalcul) {
-        var resultat = new ResultDto();
+    public Map<Integer, Map<Integer, List<CalculEntity>>> resultForCalcul(Integer nbCalcul) {
+        var result = new ResultDto();
         var calculs = calculRepository.findByNbCalcul(nbCalcul);
-        return  creationResultat(calculs);
+        return  creationResult(calculs);
 
 
     }

@@ -27,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * Constructor for AdminServiceImpl
      * @param profilRepository ProfilRepository
-     * @param projectRepository ProjetRepository
+     * @param projectRepository ProjectRepository
      */
     public AdminServiceImpl(ProfilRepository profilRepository, ProjectRepository projectRepository) {
         this.profilRepository = profilRepository;

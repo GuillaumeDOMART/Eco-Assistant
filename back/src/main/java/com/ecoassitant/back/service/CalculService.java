@@ -9,7 +9,7 @@ import java.util.Optional;
  */
 public interface CalculService {
     /**
-     * List of calculs executed for a project
+     * List of operations executed for a project
      * @param idProject project of wich we want the result
      * @return list of results
      */
