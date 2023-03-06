@@ -1,17 +1,21 @@
 package com.ecoassitant.back.calcul;
 
 import com.ecoassitant.back.entity.CalculEntity;
+import com.ecoassitant.back.entity.ConstanteEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * calcul create with part of calcul(calculEntity) and ReponseDonne for a project
  */
 public class CalculEntier {
     private final List<ReponsePossibleEntity> dependances;
+
+    private final String intitule;
     private final List<CalculEntity> calculs;
     private final List<ReponseDonneeEntity> repDon;
     private final Stack<OperationElem> stack = new Stack<>();
@@ -29,6 +33,11 @@ public class CalculEntier {
         dependances = new ArrayList<>();
         phase = calculs.get(0).getPhase();
         calculs.forEach(calculEntity -> dependances.add(calculEntity.getReponsePossible()));
+        intitule = calculs.stream()
+                .map(CalculEntity::getReponsePossible)
+                .map(ReponsePossibleEntity::getConstante)
+                .map(ConstanteEntity::getTracabilite)
+                .collect(Collectors.joining("\n"));
     }
 
     /**
@@ -148,5 +157,9 @@ public class CalculEntier {
      */
     public Phase getPhase() {
         return phase;
+    }
+
+    public String getIntitule() {
+        return intitule;
     }
 }
