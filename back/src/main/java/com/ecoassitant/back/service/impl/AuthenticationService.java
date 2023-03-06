@@ -7,6 +7,7 @@ import com.ecoassitant.back.dto.AuthenticationOutPutDto;
 import com.ecoassitant.back.dto.RegisterInputDto;
 import com.ecoassitant.back.dto.TokenDto;
 import com.ecoassitant.back.entity.ProfilEntity;
+import com.ecoassitant.back.exception.ViolationConnectionException;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.utils.StringGeneratorUtils;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,7 +30,6 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -96,6 +95,10 @@ public class AuthenticationService {
         );
         var profile = profilRepository.findByMail(authenticationInputDto.getLogin()).orElseThrow();
 
+        if(profile.getIsAdmin() < 0){
+            throw new ViolationConnectionException();
+        }
+
         var token = jwtService.generateToken(profile);
         return new AuthenticationOutPutDto(profile.getMail(), token);
     }
@@ -138,6 +141,10 @@ public class AuthenticationService {
         if (profile.isEmpty()) {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
+        var profileValue = profile.get();
+        if(profileValue.getIsAdmin() == -3){
+            throw new ViolationConnectionException();
+        }
         var claims = new HashMap<String, Object>() {{
             put("verify", true);
         }};
@@ -150,87 +157,6 @@ public class AuthenticationService {
         return ResponseEntity.ok(true);
     }
 
-    /**
-     * Function to change password for a user with a token authentication
-     *
-     * @param token    Token of the current uset
-     * @param password new password
-     * @return if the password was change
-     */
-    public ResponseEntity<Boolean> changePasswordWithToken(String token, String password, String oldPassword) {
-        token = token.substring(7);
-        var mail = jwtService.extractMail(token);
-        return changePassword(mail, password, oldPassword);
-    }
-
-    /**
-     * Function to change password for a user
-     *
-     * @param mail     mail
-     * @param password new password
-     * @return if the password was change
-     */
-    public ResponseEntity<Boolean> changePassword(String mail, String password, String oldPassword) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            mail,
-                            oldPassword
-                    )
-            );
-        } catch (AuthenticationException e) {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
-
-        var profil = profilRepository.findByMail(mail);
-        if (profil.isEmpty()) {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
-
-        var user = profil.get();
-        var encodedPwd = passwordEncoder.encode(password);
-
-        user.setPassword(password);
-        var violations = validator.validate(user);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
-        }
-        user.setPassword(encodedPwd);
-        profilRepository.save(user);
-        return ResponseEntity.ok(true);
-    }
-
-    /**
-     * Method to change the mail of the current user
-     *
-     * @param token   token of the current user
-     * @param newMail new mail to change
-     * @return the new token of the user based on the new mail
-     */
-    public ResponseEntity<TokenDto> changeMail(String token, String newMail) {
-        var mail = jwtService.extractMail(token);
-        var profil = profilRepository.findByMail(mail);
-        if (profil.isEmpty()) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-
-        if (profilRepository.findByMail(newMail).isPresent()) {
-            throw new DataIntegrityViolationException("L'adresse mail est déjà associé à un compte");
-        }
-
-        var user = profil.get();
-        System.out.println("user = " + user);
-        user.setMail(newMail);
-        var violations = validator.validate(user);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(violations);
-        }
-        //Envoyer un nouveau mail pour verifier le mail plutôt de le changer ici
-        var newToken = new TokenDto(jwtService.generateToken(user));
-        profilRepository.save(user);
-
-        return ResponseEntity.ok(newToken);
-    }
 
     /**
      * Method to handle ${ConstraintViolationException} into an ${HttpStatus.BAD_REQUEST} When a validator find
@@ -260,5 +186,17 @@ public class AuthenticationService {
     @ResponseBody
     public Map<String, String> handleDataViolationExceptions(DataIntegrityViolationException ex) {
         return Map.of("newMail", "L'adresse mail est déjà associé à un compte");
+    }
+
+    /**
+     * Method to handle ViolationConnectionException into an HttpStatus.FORBIDDEN when the user has isadmin < 0
+     *
+     * @return Map with the field mail and the message
+     */
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(ViolationConnectionException.class)
+    @ResponseBody
+    public Map<String, String> handleViolationConnection() {
+        return Map.of("error", "L'utilisateur ne peut pas ce connecter");
     }
 }
