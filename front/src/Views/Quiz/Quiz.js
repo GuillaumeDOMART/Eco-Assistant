@@ -49,7 +49,6 @@ function StepperComponent() {
             setData(json);
             const selected = []
             json.forEach(question => {
-                console.log("je suis là")
                 if(question.type === 'QCM' && question.response !== null) {
                     selected.push({
                         "question": question.questionId.toString(),
