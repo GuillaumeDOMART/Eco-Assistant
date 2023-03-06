@@ -1,7 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.project.ProjetDto;
-import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.dto.project.ProjectDto;
+import com.ecoassitant.back.entity.tools.State;
 import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.dto.admin.BanDto;
 import com.ecoassitant.back.dto.admin.BanProjectDto;
@@ -66,7 +66,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Optional<List<ProjetDto>> getProjectsFinishedFromUserId(String mail, Integer profilId) {
+    public Optional<List<ProjectDto>> getProjectsFinishedFromUserId(String mail, Integer profilId) {
         var optConnectedProfil = profilRepository.findByMail(mail);
         var selectedProfil = profilRepository.findById(profilId);
         System.out.println("toto");
@@ -75,6 +75,6 @@ public class AdminServiceImpl implements AdminService {
             throw new NoSuchElementInDataBaseException();
         }
         var selectedProjects = projectRepository.findByProfil_IdProfil(profilId);
-        return Optional.of(selectedProjects.stream().filter(p->p.getEtat().equals(Etat.FINISH) && p.getType().equals(TypeP.PROJET)).map(ProjetDto::new).toList());
+        return Optional.of(selectedProjects.stream().filter(p->p.getState().equals(State.FINISH) && p.getType().equals(TypeP.PROJET)).map(ProjectDto::new).toList());
     }
 }

@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dao.QuestionProposeDao;
+import com.ecoassitant.back.dao.ProposedQuestionDao;
 import com.ecoassitant.back.dto.QuestionProposeDto;
 import com.ecoassitant.back.entity.QuestionProposeEntity;
 import com.ecoassitant.back.repository.QuestionProposeRepository;
@@ -39,10 +39,10 @@ public class ProposedQuestionServiceImpl implements ProposedQuestionService {
     }
 
     @Override
-    public Integer saveQuestionPropose(QuestionProposeDao qpdao) {
+    public Integer saveQuestionPropose(ProposedQuestionDao qpdao) {
         var entity = new QuestionProposeEntity();
         entity.setVote(0);
-        entity.setIntitule(qpdao.getIntitule());
+        entity.setIntitule(qpdao.getEntitled());
         entity.setApprove(false);
         entity.setPhase(qpdao.getPhase());
 

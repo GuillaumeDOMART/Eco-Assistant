@@ -1,8 +1,8 @@
 package com.ecoassitant.back.entity.tools;
 
 /**
- * Etat of projet
+ * State of projet
  */
-public enum Etat {
+public enum State {
     INPROGRESS, FINISH
 }

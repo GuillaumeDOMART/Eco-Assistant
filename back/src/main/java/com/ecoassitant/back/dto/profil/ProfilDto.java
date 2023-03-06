@@ -15,9 +15,9 @@ public class ProfilDto {
 
     private String mail;
 
-    private String nom;
+    private String lastName;
 
-    private String prenom;
+    private String firstName;
 
     private Integer isAdmin;
 
@@ -30,8 +30,8 @@ public class ProfilDto {
 
         this.id = entity.getIdProfil();
         this.mail = entity.getMail();
-        this.nom = entity.getLastname();
-        this.prenom = entity.getFirstname();
+        this.lastName = entity.getLastname();
+        this.firstName = entity.getFirstname();
         this.isAdmin = entity.getIsAdmin();
     }
 }

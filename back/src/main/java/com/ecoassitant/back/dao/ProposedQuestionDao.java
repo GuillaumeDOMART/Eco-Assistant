@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionProposeDao {
-    private String intitule;
+public class ProposedQuestionDao {
+    private String entitled;
     private Phase phase;
 }
 

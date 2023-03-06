@@ -1,8 +1,8 @@
 package com.ecoassitant.back.service;
 
 
+import com.ecoassitant.back.dto.project.ProjectDto;
 import com.ecoassitant.back.dto.project.ProjectIdDto;
-import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.entity.ProjectEntity;
 
 import java.util.List;
@@ -13,24 +13,24 @@ import java.util.Optional;
  */
 public interface ProjectService {
     /**
-     * Get ProjetDto associated with the id
+     * Get ProjectDto associated with the id
      * @param id represents id of project
-     * @return ProjetDto
+     * @return ProjectDto
      */
-    ProjetDto getProject(Integer id);
+    ProjectDto getProject(Integer id);
 
     /**
-     * Get List<ProjetDto> associated with the Profil id
+     * Get List<ProjectDto> associated with the Profil id
      * @param id represents id of profil
-     * @return List<ProjetDto>
+     * @return List<ProjectDto>
      */
-    List<ProjetDto> findProjectByProfilId(Integer id);
+    List<ProjectDto> findProjectByProfilId(Integer id);
 
     /**
      * Get all ProjetDTO in the DB
-     * @return List<ProjetDto>
+     * @return List<ProjectDto>
      */
-    List<ProjetDto> findAll();
+    List<ProjectDto> findAll();
 
     /**
      * Endpoint to anonymize a profile

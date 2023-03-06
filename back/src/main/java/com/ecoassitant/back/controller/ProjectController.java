@@ -1,11 +1,11 @@
 package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
+import com.ecoassitant.back.dto.project.ProjectDto;
 import com.ecoassitant.back.dto.project.ProjectIdDto;
-import com.ecoassitant.back.dto.project.ProjetDto;
-import com.ecoassitant.back.dto.project.ProjetSimpleDto;
+import com.ecoassitant.back.dto.project.ProjectSimpleDto;
 import com.ecoassitant.back.entity.ProjectEntity;
-import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.entity.tools.State;
 import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjectRepository;
@@ -67,8 +67,8 @@ public class ProjectController {
      */
     @GetMapping("/projets")
     @ResponseBody
-    public List<ProjetDto> listerLesProjets() {
-        return projectRepository.findAll().stream().map(ProjetDto::new).toList();
+    public List<ProjectDto> listerLesProjets() {
+        return projectRepository.findAll().stream().map(ProjectDto::new).toList();
     }
 
     /**
@@ -76,9 +76,9 @@ public class ProjectController {
      */
     @GetMapping("/projet/{id}")
     @ResponseBody
-    public ResponseEntity<ProjetDto> recoverProjectWithId(@PathVariable("id") Integer id) {
+    public ResponseEntity<ProjectDto> recoverProjectWithId(@PathVariable("id") Integer id) {
         var entity = projectRepository.findById(id);
-        var dto = entity.map(ProjetDto::new).orElse(null);
+        var dto = entity.map(ProjectDto::new).orElse(null);
         return dto != null ? new ResponseEntity<>(dto, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
@@ -87,10 +87,10 @@ public class ProjectController {
      */
     @GetMapping("/projet/user")
     @ResponseBody
-    public ResponseEntity<List<ProjetDto>> recoverProjectWithToken(@RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<List<ProjectDto>> recoverProjectWithToken(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
-        return ResponseEntity.ok(projectRepository.findByProfilMail(mail).stream().map(ProjetDto::new).toList());
+        return ResponseEntity.ok(projectRepository.findByProfilMail(mail).stream().map(ProjectDto::new).toList());
     }
 
 
@@ -103,8 +103,8 @@ public class ProjectController {
      * @return the project id
      */
     @PostMapping("/projet/create")
-    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjetSimpleDto project) {
-        if (project.getNom().length() >= 50) {
+    public ResponseEntity<ProjectIdDto> createProject(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectSimpleDto project) {
+        if (project.getName().length() >= 50) {
             throw new IllegalArgumentException("Le nom du projet ne peut pas avoir un nom de plus de 50 caractères");
         }
         String token = authorizationHeader.substring(7);
@@ -115,9 +115,9 @@ public class ProjectController {
         }
         var profil = profilEntityOptional.get();
         var projectEntity = ProjectEntity.builder()
-                .nomProjet(project.getNom())
+                .nomProjet(project.getName())
                 .profil(profil)
-                .etat(Etat.INPROGRESS)
+                .state(State.INPROGRESS)
                 .type(project.getType().equals("simulation") ? TypeP.SIMULATION : TypeP.PROJET)
                 .build();
         projectRepository.save(projectEntity);
@@ -184,7 +184,7 @@ public class ProjectController {
      * @return the project dto id
      */
     @PostMapping("/projet/{id}/copy")
-    public ResponseEntity<ProjetDto> copy(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projectIdDto) {
+    public ResponseEntity<ProjectDto> copy(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projectIdDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var idProjet = projectRepository.findByIdProjet(projectIdDto.getId());
@@ -199,7 +199,7 @@ public class ProjectController {
         var projetEntity = ProjectEntity.builder()
                 .nomProjet(projectIdDto.getProjectName())
                 .profil(profile.get())
-                .etat(Etat.INPROGRESS)
+                .state(State.INPROGRESS)
                 .type(projectIdDto.getProjectType())
                 .build();
 
@@ -214,7 +214,7 @@ public class ProjectController {
 
         givenAnswerService.saveResponseDonnees(answers);
 
-        return new ResponseEntity<>(new ProjetDto(projectCopy), HttpStatus.OK);
+        return new ResponseEntity<>(new ProjectDto(projectCopy), HttpStatus.OK);
 
     }
 

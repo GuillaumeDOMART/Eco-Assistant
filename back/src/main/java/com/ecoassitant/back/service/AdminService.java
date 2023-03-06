@@ -2,7 +2,7 @@ package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.admin.BanDto;
 import com.ecoassitant.back.dto.admin.BanProjectDto;
-import com.ecoassitant.back.dto.project.ProjetDto;
+import com.ecoassitant.back.dto.project.ProjectDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,5 +32,5 @@ public interface AdminService {
      * @param profilId represents profile which we search the projects
      * @return finished projects (not simulations) from a profile
      */
-    Optional<List<ProjetDto>> getProjectsFinishedFromUserId(String mail, Integer profilId);
+    Optional<List<ProjectDto>> getProjectsFinishedFromUserId(String mail, Integer profilId);
 }

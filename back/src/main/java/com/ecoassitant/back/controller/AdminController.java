@@ -3,7 +3,7 @@ package com.ecoassitant.back.controller;
 import com.ecoassitant.back.dto.admin.BanDto;
 import com.ecoassitant.back.dto.admin.BanProjectDto;
 import com.ecoassitant.back.config.JwtService;
-import com.ecoassitant.back.dto.project.ProjetDto;
+import com.ecoassitant.back.dto.project.ProjectDto;
 import com.ecoassitant.back.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,7 +58,7 @@ public class AdminController {
      */
     @GetMapping("/projects/user/{id}")
     @ResponseBody
-    public ResponseEntity<List<ProjetDto>> getProjectsFinishedWithUserId(@RequestHeader("Authorization") String authorizationHeader, @PathVariable("id") Integer profileId) {
+    public ResponseEntity<List<ProjectDto>> getProjectsFinishedWithUserId(@RequestHeader("Authorization") String authorizationHeader, @PathVariable("id") Integer profileId) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var projects = adminService.getProjectsFinishedFromUserId(mail,profileId);

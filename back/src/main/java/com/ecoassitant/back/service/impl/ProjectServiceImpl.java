@@ -1,9 +1,9 @@
 package com.ecoassitant.back.service.impl;
 
+import com.ecoassitant.back.dto.project.ProjectDto;
 import com.ecoassitant.back.dto.project.ProjectIdDto;
-import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.entity.ProjectEntity;
-import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.entity.tools.State;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjectRepository;
 import com.ecoassitant.back.service.ProjectService;
@@ -34,20 +34,20 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public ProjetDto getProject(Integer id) {
+    public ProjectDto getProject(Integer id) {
         var projet = projectRepository.findByIdProjet(id);
-        return new ProjetDto(projet);
+        return new ProjectDto(projet);
     }
 
     @Override
-    public List<ProjetDto> findProjectByProfilId(Integer id) {
-        return projectRepository.findByProfil_IdProfil(id).stream().map(ProjetDto::new).toList();
+    public List<ProjectDto> findProjectByProfilId(Integer id) {
+        return projectRepository.findByProfil_IdProfil(id).stream().map(ProjectDto::new).toList();
 
     }
 
     @Override
-    public List<ProjetDto> findAll() {
-        return projectRepository.findAll().stream().map(ProjetDto::new).toList();
+    public List<ProjectDto> findAll() {
+        return projectRepository.findAll().stream().map(ProjectDto::new).toList();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (!mailOwner.equals(mail)) {
             return Optional.empty();
         }
-        projet.setEtat(Etat.FINISH);
+        projet.setState(State.FINISH);
         var saveProject = projectRepository.save(projet);
         return Optional.of(new ProjectIdDto(saveProject.getIdProjet()));
     }

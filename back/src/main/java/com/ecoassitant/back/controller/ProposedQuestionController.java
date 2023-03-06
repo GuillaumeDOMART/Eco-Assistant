@@ -1,6 +1,6 @@
 package com.ecoassitant.back.controller;
 
-import com.ecoassitant.back.dao.QuestionProposeDao;
+import com.ecoassitant.back.dao.ProposedQuestionDao;
 import com.ecoassitant.back.dto.IdDto;
 import com.ecoassitant.back.dto.QuestionProposeDto;
 import com.ecoassitant.back.service.ProposedQuestionService;
@@ -71,7 +71,7 @@ public class ProposedQuestionController {
      * Create a proposition onto the database
      * */
     @PostMapping("/proposition")
-    public ResponseEntity<IdDto> createProposition(@RequestBody QuestionProposeDao qp){
+    public ResponseEntity<IdDto> createProposition(@RequestBody ProposedQuestionDao qp){
         var canBeSaved = proposedQuestionService.saveQuestionPropose(qp);
 
         HttpHeaders headers = new HttpHeaders();

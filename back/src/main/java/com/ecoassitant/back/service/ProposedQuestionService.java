@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dao.QuestionProposeDao;
+import com.ecoassitant.back.dao.ProposedQuestionDao;
 import com.ecoassitant.back.dto.QuestionProposeDto;
 
 import java.util.List;
@@ -27,6 +27,6 @@ public interface ProposedQuestionService {
      * @param qpdao A question proposée
      * @return the ID of thr newly created resources if save in bdd is successed, -1 otherwhise
      */
-    Integer saveQuestionPropose(QuestionProposeDao qpdao);
+    Integer saveQuestionPropose(ProposedQuestionDao qpdao);
 
 }
