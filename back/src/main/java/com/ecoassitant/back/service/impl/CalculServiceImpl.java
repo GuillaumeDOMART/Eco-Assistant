@@ -72,7 +72,7 @@ public class CalculServiceImpl implements CalculService {
         if (projects.isEmpty()) {
             return Optional.empty();
         }
-        projects.forEach(projectEntity -> result.addOther(resultForProject(projectEntity.getIdProjet())));
+        projects.forEach(projectEntity -> result.addOther(resultForProject(projectEntity.getIdProject())));
         return Optional.of(result);
     }
 
