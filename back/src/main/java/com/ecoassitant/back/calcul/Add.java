@@ -1,6 +1,6 @@
 package com.ecoassitant.back.calcul;
 /**
- * Object for represente addition of a calcul
+ * Object to represent addition of a calculation
  */
 public class Add implements Operateur{
     @Override
