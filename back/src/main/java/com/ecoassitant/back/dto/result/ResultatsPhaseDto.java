@@ -1,6 +1,5 @@
-package com.ecoassitant.back.dto.resultat;
+package com.ecoassitant.back.dto.result;
 
-import com.ecoassitant.back.dto.resultat.ResultatDto;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -12,15 +11,15 @@ import java.util.Optional;
  */
 @Data
 public class ResultatsPhaseDto {
-    private ResultatDto mine;
-    private final List<ResultatDto> others = new ArrayList<>();
+    private ResultDto mine;
+    private final List<ResultDto> others = new ArrayList<>();
 
     /**
      * Builder of ResultatsPhaseDto
      *
      * @param mine the result Dto
      */
-    public ResultatsPhaseDto(ResultatDto mine) {
+    public ResultatsPhaseDto(ResultDto mine) {
         this.mine = mine;
     }
 
@@ -29,7 +28,7 @@ public class ResultatsPhaseDto {
      *
      * @param resultatDto the other Dto
      */
-    public void addOther(Optional<ResultatDto> resultatDto) {
+    public void addOther(Optional<ResultDto> resultatDto) {
         resultatDto.ifPresent(others::add);
 
     }

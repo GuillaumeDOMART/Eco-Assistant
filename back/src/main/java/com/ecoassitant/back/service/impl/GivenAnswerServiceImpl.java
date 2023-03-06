@@ -1,7 +1,7 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.resultat.GivenAnswerDto;
-import com.ecoassitant.back.dto.resultat.ReponseDto;
+import com.ecoassitant.back.dto.result.GivenAnswersDto;
+import com.ecoassitant.back.dto.result.ResponseDto;
 import com.ecoassitant.back.entity.GivenAnswerEntity;
 import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
@@ -43,15 +43,15 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
     }
 
     @Override
-    public boolean saveResponseDonnees(GivenAnswerDto responses) {
-        var project = projectRepository.findById(responses.getProjetId());
+    public boolean saveResponseDonnees(GivenAnswersDto responses) {
+        var project = projectRepository.findById(responses.getProjectId());
         if (project.isEmpty()) {
             return false;
             //throw new IllegalArgumentException();
         }
-        var list = responses.getReponses();
+        var list = responses.getResponses();
         boolean result = true;
-        Iterator<ReponseDto> reponseDtoIterator = list.iterator();
+        Iterator<ResponseDto> reponseDtoIterator = list.iterator();
 
         while (result && reponseDtoIterator.hasNext()) {
             var reponseDto = reponseDtoIterator.next();

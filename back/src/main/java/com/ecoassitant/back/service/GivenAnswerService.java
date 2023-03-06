@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service;
 
-import com.ecoassitant.back.dto.resultat.GivenAnswerDto;
+import com.ecoassitant.back.dto.result.GivenAnswersDto;
 import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.GivenAnswerEntity;
 
@@ -16,7 +16,7 @@ public interface GivenAnswerService {
      * @param responses payload with list of reponseDonnee and id project
      * @return true if save in bdd is successed
      */
-    boolean saveResponseDonnees(GivenAnswerDto responses);
+    boolean saveResponseDonnees(GivenAnswersDto responses);
 
     /**
      * Method to find the responses associated with the given project
@@ -28,7 +28,7 @@ public interface GivenAnswerService {
 
     /**
      * Service for save list of already checked reponseDonneeEntity
-     * If the reponses are not checked, uses saveResponseDonnees(GivenAnswerDto responses) instead
+     * If the reponses are not checked, uses saveResponseDonnees(GivenAnswersDto responses) instead
      *
      * @param responses list of reponseDonnee and id project
      * @return true if save in bdd has been successfull

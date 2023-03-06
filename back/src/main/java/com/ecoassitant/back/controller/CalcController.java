@@ -2,7 +2,7 @@ package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.*;
-import com.ecoassitant.back.dto.resultat.ResultatsPhaseDto;
+import com.ecoassitant.back.dto.result.ResultatsPhaseDto;
 import com.ecoassitant.back.service.CalculService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

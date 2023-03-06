@@ -1,9 +1,9 @@
 package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.calcul.ReformedOperation;
-import com.ecoassitant.back.dto.resultat.ResultatsPhaseDto;
-import com.ecoassitant.back.dto.resultat.CalculDto;
-import com.ecoassitant.back.dto.resultat.ResultatDto;
+import com.ecoassitant.back.dto.result.ResultatsPhaseDto;
+import com.ecoassitant.back.dto.result.CalculDto;
+import com.ecoassitant.back.dto.result.ResultDto;
 import com.ecoassitant.back.entity.CalculEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeP;
@@ -103,8 +103,8 @@ public class CalculServiceImpl implements CalculService {
      * @param idProject the id of the project
      * @return the result
      */
-    private Optional<ResultatDto> resultatForProject(Integer idProject) {
-        var resultat = new ResultatDto();
+    private Optional<ResultDto> resultatForProject(Integer idProject) {
+        var resultat = new ResultDto();
         var projet = projectRepository.findById(idProject);
         if (projet.isEmpty())
             return Optional.empty();
@@ -126,12 +126,12 @@ public class CalculServiceImpl implements CalculService {
                 executer.ifPresent(aDouble -> {
                     System.out.println(calculEntier.getEntitled() + " " + aDouble);
                     switch (calculEntier.getPhase()) {
-                        case PLANIFICATION -> resultat.addPlanification(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case PLANIFICATION -> resultat.addPlanning(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case DEVELOPPEMENT -> resultat.addDevelopment(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        case DEPLOIEMENT -> resultat.addDeployment(new CalculDto(calculEntier.getEntitled(), aDouble));
                         case TEST -> resultat.addTest(new CalculDto(calculEntier.getEntitled(), aDouble));
                         case MAINTENANCE -> resultat.addMaintenance(new CalculDto(calculEntier.getEntitled(), aDouble));
-                        default -> resultat.addHorsPhase(new CalculDto(calculEntier.getEntitled(), aDouble));
+                        default -> resultat.addOutPhase(new CalculDto(calculEntier.getEntitled(), aDouble));
                     }
                 });
             }
@@ -145,7 +145,7 @@ public class CalculServiceImpl implements CalculService {
      * @return the result
      */
     public Map<Integer, Map<Integer, List<CalculEntity>>> resultatForCalcul(Integer nbCalcul) {
-        var resultat = new ResultatDto();
+        var resultat = new ResultDto();
         var calculs = calculRepository.findByNbCalcul(nbCalcul);
         return  creationResultat(calculs);
 

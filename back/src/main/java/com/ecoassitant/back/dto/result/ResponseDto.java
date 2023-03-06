@@ -1,9 +1,9 @@
-package com.ecoassitant.back.dto.resultat;
+package com.ecoassitant.back.dto.result;
 
 /**
- * A reponse of a question for a project
+ * A response of a question for a project
  */
-public class ReponseDto {
+public class ResponseDto {
     private String questionId;
     private String entry;
 
