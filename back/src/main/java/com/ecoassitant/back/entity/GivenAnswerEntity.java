@@ -29,7 +29,7 @@ public class GivenAnswerEntity implements Serializable {
      * @param project Project about to be copied
      */
     public void updateGivenAnswerProjectId(ProjectEntity project) {
-        this.givenAnswerKey.setProjet(project);
+        this.givenAnswerKey.setProject(project);
     }
 }
 

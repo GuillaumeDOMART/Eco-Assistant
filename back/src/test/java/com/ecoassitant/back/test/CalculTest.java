@@ -42,13 +42,13 @@ class CalculTest {
     List<CalculEntity> listCalcul = new ArrayList<>();
     @Test
     void creationCalculEntier() {
-        rdk1.setProjet(projet);
+        rdk1.setProject(projet);
         rdk1.setQuestion(q1);
 
-        rdk2.setProjet(projet);
+        rdk2.setProject(projet);
         rdk2.setQuestion(q2);
 
-        rdk3.setProjet(projet);
+        rdk3.setProject(projet);
         rdk3.setQuestion(q3);
         GivenAnswerEntity rd3 = new GivenAnswerEntity(rdk3, r4, 1);
 

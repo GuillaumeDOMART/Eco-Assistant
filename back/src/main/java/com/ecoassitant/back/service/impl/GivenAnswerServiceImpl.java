@@ -67,7 +67,7 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
                 var responseEntity = new GivenAnswerEntity();
                 var responseKey = new GivenAnswerKey();
 
-                responseKey.setProjet(project.get());
+                responseKey.setProject(project.get());
                 responseKey.setQuestion(question.get());
                 var responsePossibles = responsePossibleRepository.findByQuestionAsso(question.get());
                 if (responsePossibles.isEmpty()) {

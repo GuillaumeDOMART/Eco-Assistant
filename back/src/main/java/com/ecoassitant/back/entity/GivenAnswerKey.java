@@ -20,12 +20,12 @@ public class GivenAnswerKey implements Serializable {
     @JoinColumn(name = "questionid", nullable = false)
     private QuestionEntity question;
 
-    public ProjectEntity getProjet() {
+    public ProjectEntity getProject() {
         return project;
     }
 
-    public void setProjet(ProjectEntity projet) {
-        this.project = projet;
+    public void setProject(ProjectEntity project) {
+        this.project = project;
     }
 
     public QuestionEntity getQuestion() {
