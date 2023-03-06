@@ -76,7 +76,7 @@ public class AuthenticationService {
 
         profilRepository.save(profile);
         var token = jwtService.generateShortToken(profile);
-        emailSenderService.sendEmail(registerInputDto.getMail(), "Eco-Assistant: Création de compte", "Voici le liens pour crée votre compte: https://" + domain + "/verifyMail?token=" + token);
+        emailSenderService.sendEmail(registerInputDto.getMail(), "Eco-Assistant: Création de compte", "Voici le lien pour créer votre compte: https://" + domain + "/verifyMail?token=" + token);
         return ResponseEntity.ok(true);
     }
 
