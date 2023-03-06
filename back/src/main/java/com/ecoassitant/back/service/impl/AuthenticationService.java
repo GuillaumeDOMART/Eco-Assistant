@@ -7,6 +7,7 @@ import com.ecoassitant.back.dto.AuthenticationOutPutDto;
 import com.ecoassitant.back.dto.RegisterInputDto;
 import com.ecoassitant.back.dto.TokenDto;
 import com.ecoassitant.back.entity.ProfilEntity;
+import com.ecoassitant.back.exception.ViolationConnectionException;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.utils.StringGeneratorUtils;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,7 +30,6 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -95,6 +94,10 @@ public class AuthenticationService {
                 )
         );
         var profile = profilRepository.findByMail(authenticationInputDto.getLogin()).orElseThrow();
+
+        if(profile.getIsAdmin() < 0){
+            throw new ViolationConnectionException();
+        }
 
         var token = jwtService.generateToken(profile);
         return new AuthenticationOutPutDto(profile.getMail(), token);
@@ -179,5 +182,19 @@ public class AuthenticationService {
     @ResponseBody
     public Map<String, String> handleDataViolationExceptions(DataIntegrityViolationException ex) {
         return Map.of("newMail", "L'adresse mail est déjà associé à un compte");
+    }
+
+    /**
+     * Method to handle DataIntegrityViolationException into an HttpStatus.BAD_REQUEST when you try to modify a
+     * mail into an already existing one
+     *
+     * @param ex exception
+     * @return Map with the field mail and the message
+     */
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(ViolationConnectionException.class)
+    @ResponseBody
+    public Map<String, String> handleViolationConnection() {
+        return Map.of("error", "L'utilisateur ne peut pas ce connecter");
     }
 }
