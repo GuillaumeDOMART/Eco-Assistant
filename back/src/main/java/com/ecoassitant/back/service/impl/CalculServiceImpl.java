@@ -68,7 +68,7 @@ public class CalculServiceImpl implements CalculService {
         }
 
         var result = new ResultsPhaseDto(mine.get());
-        var projects = projectRepository.findByType(TypeP.PROJECT);
+        var projects = projectRepository.findByType(TypeP.PROJET);
         if (projects.isEmpty()) {
             return Optional.empty();
         }

@@ -83,12 +83,12 @@ function TableauProjets() {
     const fetchCopy = useCallback(async (formData) => {
         if (errors.type) return;
 
-        if (formData.nom && formData.nom.length >= 50) {
-            setFieldErrors({"nom": "Le nom du projet ne peut pas avoir un nom de plus de 50 caractères"})
+        if (formData.name && formData.name.length >= 50) {
+            setFieldErrors({"name": "Le nom du projet ne peut pas avoir un nom de plus de 50 caractères"})
             return;
         }
 
-        if (formData.nom === selectedProject.nomProjet) {
+        if (formData.name === selectedProject.projectName) {
             setFieldErrors({"nom": "Le nouveau projet ne peux avoir le même nom que le projet précédent"})
             return;
         }
@@ -101,7 +101,7 @@ function TableauProjets() {
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            body: JSON.stringify({id: selectedProject.id, projectName: formData.nom, projectType: formData.type}),
+            body: JSON.stringify({id: selectedProject.id, projectName: formData.name, projectType: formData.type}),
             redirect: 'follow'
         };
 
@@ -222,7 +222,7 @@ function TableauProjets() {
                     <form onSubmit={handleSubmit(fetchCopy)}>
                         <Modal.Body>
                             <p>Veuillez donner un nom à la nouvelle copie du
-                                projet &quot;{selectedProject !== null && selectedProject.nomProjet}&quot;</p>
+                                projet &quot;{selectedProject !== null && selectedProject.projectName}&quot;</p>
 
                             <TextField label="Nom du projet" type="text" variant="standard"
                                        className="textfield" {...register("nom")} required
@@ -277,10 +277,10 @@ function TableauProjets() {
 function ButtonSet(datas) {
     return (
         <>
-            {datas.etat === "INPROGRESS" &&
+            {datas.state === "INPROGRESS" &&
                 <Button className="m-3" variant="secondary" onClick={datas.handleClickModifyButton}>Modifier</Button>}
 
-            {datas.etat === "FINISH" &&
+            {datas.state === "FINISH" &&
                 <Button className="m-3" variant="primary" href={`/result?id=${datas.idProject}`}>Visionner</Button>}
 
             <Button className="m-3" variant="outline-primary" onClick={datas.handleShowCopy}>Créer une copie</Button>
@@ -299,12 +299,12 @@ function ButtonSet(datas) {
         "profil": {
             "id": 2,
             "mail": "createur-dev@demo.fr",
-            "nom": "DEMO",
-            "prenom": "Createur Dev",
+            "lastName": "DEMO",
+            "firstName": "Createur Dev",
             "admin": false
         },
-        "nomProjet": "QUESTIONAIRE POUR DEVELOPPEURS",
-        "etat": "INPROGRESS"
+        "projectName": "QUESTIONAIRE POUR DEVELOPPEURS",
+        "state": "INPROGRESS"
     }
  ```
  * @param datas
@@ -328,12 +328,12 @@ function LigneTableauProjet(datas) {
     return (
         <>
             <tr className='table border-bottom border-2 border-secondary'>
-                <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
-                <td align={"center"} valign={"middle"}>{datas.etat}</td>
+                <td align={"center"} valign={"middle"}>{datas.projectName}</td>
+                <td align={"center"} valign={"middle"}>{datas.state()}</td>
                 <td align={"center"} valign={"middle"}>{datas.type}</td>
                 <td align={"center"} valign={"middle"}>
                     <ButtonSet idProject={datas.id}
-                               etat={datas.etat}
+                               etat={datas.state}
                                handleClickModifyButton={handleClick}
                                handleShowDissociate={executeHandleShowDissociate}
                                handleShowCopy={executeHandleShowCopy}

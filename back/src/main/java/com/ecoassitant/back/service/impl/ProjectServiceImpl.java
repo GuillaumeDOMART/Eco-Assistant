@@ -61,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
         if (!mailOwner.equals(mail)) {
             return Optional.empty();
         }
-        project.setState(State.FINISH);
+        project.setState(State.FINI);
         var saveProject = projectRepository.save(project);
         return Optional.of(new ProjectIdDto(saveProject.getIdProjet()));
     }
