@@ -63,7 +63,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
         project.setState(State.FINI);
         var saveProject = projectRepository.save(project);
-        return Optional.of(new ProjectIdDto(saveProject.getIdProjet()));
+        return Optional.of(new ProjectIdDto(saveProject.getIdProject()));
     }
 
 
