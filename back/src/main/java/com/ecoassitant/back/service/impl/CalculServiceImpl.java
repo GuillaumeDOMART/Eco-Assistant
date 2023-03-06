@@ -108,7 +108,7 @@ public class CalculServiceImpl implements CalculService {
         var project = projectRepository.findById(idProject);
         if (project.isEmpty())
             return Optional.empty();
-        var givenAnswer = givenAnswerRepository.findByReponseDonneeKey_Projet(project.get());
+        var givenAnswer = givenAnswerRepository.findByGivenAnswerKey_Project(project.get());
         if (givenAnswer.isEmpty())
             return Optional.of(result);
         var calculs = calculRepository.findAll();

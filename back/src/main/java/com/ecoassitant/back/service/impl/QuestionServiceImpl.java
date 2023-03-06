@@ -44,7 +44,7 @@ QuestionServiceImpl implements QuestionService {
         var project = projectRepository.findById(idProject);
         if (project.isEmpty())
             return new ArrayList<QuestionUniqueDto>();
-        var responses = givenAnswerRepository.findByReponseDonneeKey_Projet(project.get());
+        var responses = givenAnswerRepository.findByGivenAnswerKey_Project(project.get());
         responses.forEach(response ->{
             questions.forEach(question -> question.remplir(response));
         });

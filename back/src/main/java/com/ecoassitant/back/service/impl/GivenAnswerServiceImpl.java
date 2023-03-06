@@ -105,6 +105,6 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
 
     @Override
     public List<GivenAnswerEntity> findReponsesByProject(ProjectEntity project) {
-        return givenAnswerRepository.findByReponseDonneeKey_Projet(project);
+        return givenAnswerRepository.findByGivenAnswerKey_Project(project);
     }
 }
