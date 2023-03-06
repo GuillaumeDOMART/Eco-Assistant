@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.calcul.CalculEntier;
+import com.ecoassitant.back.calcul.ReformedOperation;
 import com.ecoassitant.back.dto.resultat.ResultatsPhaseDto;
 import com.ecoassitant.back.dto.resultat.CalculDto;
 import com.ecoassitant.back.dto.resultat.ResultatDto;
@@ -118,7 +118,7 @@ public class CalculServiceImpl implements CalculService {
             Optional<Double> executer = Optional.empty();
             Optional<Phase> phase = Optional.empty();
             for (var calcul : calculsPriorite.values()) {
-                var calculEntier = new CalculEntier(calcul, reponseDonnee);
+                var calculEntier = new ReformedOperation(calcul, reponseDonnee);
                 executer = calculEntier.execute();
                 if (executer.isPresent()) {
                     phase = Optional.ofNullable(calculEntier.getPhase());

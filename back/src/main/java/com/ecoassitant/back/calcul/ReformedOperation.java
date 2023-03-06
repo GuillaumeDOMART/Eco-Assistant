@@ -10,9 +10,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * CalculEntier create with  parts of calculation(calculEntity) and ReponseDonne for a project
+ * ReformedOperation create with  parts of calculation(calculEntity) and ReponseDonne for a project
  */
-public class CalculEntier {
+public class ReformedOperation {
     private final List<ReponsePossibleEntity> dependances;
 
     private final String intitule;
@@ -26,7 +26,7 @@ public class CalculEntier {
      * @param calculs list of calculs recovery of the data
      * @param repDon list of reponseDonnee for a project
      */
-    public CalculEntier(List<CalculEntity> calculs, List<ReponseDonneeEntity> repDon){
+    public ReformedOperation(List<CalculEntity> calculs, List<ReponseDonneeEntity> repDon){
         Objects.requireNonNull(calculs);
         this.calculs = List.copyOf(calculs);
         this.repDon = List.copyOf(repDon);

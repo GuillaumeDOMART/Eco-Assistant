@@ -1,8 +1,7 @@
 package com.ecoassitant.back.test;
 
-import com.ecoassitant.back.calcul.CalculEntier;
+import com.ecoassitant.back.calcul.ReformedOperation;
 import com.ecoassitant.back.entity.*;
-import com.ecoassitant.back.entity.tools.Categorie;
 import com.ecoassitant.back.entity.tools.Operator;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeQ;
@@ -83,13 +82,13 @@ class CalculTest {
         listCalcul.add(cl2);
         listCalcul.add(cl3);
 
-        var calcul = new CalculEntier(listCalcul, listRd);
+        var calcul = new ReformedOperation(listCalcul, listRd);
         Double executer = calcul.execute().get();
         Double test =  110D;
         Assert.assertEquals(test, executer);
     }
     @Test
     void creationCalculNull() {
-        Assert.assertThrows(NullPointerException.class, () -> new CalculEntier(null, listRd));
+        Assert.assertThrows(NullPointerException.class, () -> new ReformedOperation(null, listRd));
     }
 }
