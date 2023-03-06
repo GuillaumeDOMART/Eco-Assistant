@@ -55,13 +55,13 @@ public class ReformedOperation {
         while (!stack3.isEmpty()){
             var op = stack3.pop();
             if(op.type().equals(TypeOp.OPERANDE)) {
-                Operande operande = (Operande) op;
-                stack2.push(operande.val());
+                Operand operand = (Operand) op;
+                stack2.push(operand.val());
             }
             else {
                 var y = stack2.pop();
                 var x = stack2.pop();
-                Operateur operateur = (Operateur) op;
+                Operator operateur = (Operator) op;
                 stack2.push(operateur.execute(x,y));
             }
         }
@@ -102,11 +102,11 @@ public class ReformedOperation {
         var iterator =  calculus.iterator();
         var calculus = iterator.next();
         if(val.size() == 1){
-            var operande = new Operande(val.get(calculus.getReponsePossible().getIdReponsePos()));
+            var operande = new Operand(val.get(calculus.getReponsePossible().getIdReponsePos()));
             stack.push(operande);
         }
         while (iterator.hasNext()){
-            Operateur operator;
+            Operator operator;
             switch (calculus.getCalculOp().getOperateur()){
                 case ADD -> operator = new Add();
                 case SUB -> operator = new Sub();
@@ -114,9 +114,9 @@ public class ReformedOperation {
                 case MULT -> operator = new Mult();
                 default -> operator = null;
             }
-            var operand = new Operande(val.get(calculus.getReponsePossible().getIdReponsePos()));
+            var operand = new Operand(val.get(calculus.getReponsePossible().getIdReponsePos()));
             calculus = iterator.next();
-            var operand2 = new Operande(val.get(calculus.getReponsePossible().getIdReponsePos()));
+            var operand2 = new Operand(val.get(calculus.getReponsePossible().getIdReponsePos()));
 
             if (stack.isEmpty()){
 

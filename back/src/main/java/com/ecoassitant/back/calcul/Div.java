@@ -2,7 +2,7 @@ package com.ecoassitant.back.calcul;
 /**
  * Object to represent division of a calculation
  */
-public class Div implements Operateur{
+public class Div implements Operator {
     @Override
     public Double execute(Double x, Double y) {
         if (y == 0)

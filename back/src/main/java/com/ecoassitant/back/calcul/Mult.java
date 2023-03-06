@@ -2,7 +2,7 @@ package com.ecoassitant.back.calcul;
 /**
  * Object to represent multiplication of a calculation
  */
-public class Mult implements Operateur{
+public class Mult implements Operator {
     @Override
     public Double execute(Double x, Double y) {
         return x * y;

@@ -2,7 +2,7 @@ package com.ecoassitant.back.calcul;
 /**
  * Object to represent addition of a calculation
  */
-public class Add implements Operateur{
+public class Add implements Operator {
     @Override
     public Double execute(Double x, Double y) {
         return x + y;

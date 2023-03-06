@@ -2,7 +2,7 @@ package com.ecoassitant.back.calcul;
 /**
  * Object to represent subtraction of a calculation
  */
-public class Sub implements Operateur{
+public class Sub implements Operator {
     @Override
     public Double execute(Double x, Double y) {
         return x - y;

@@ -1,9 +1,9 @@
 package com.ecoassitant.back.calcul;
 
 /**
- * Object for represente addition, substraction...  of a calcul
+ * Object for represent addition, subtraction...  of a operation
  */
-public interface Operateur extends OperationElem {
+public interface Operator extends OperationElem {
     /**
      * execute the operation with x and y
      * @param x first value
@@ -13,7 +13,7 @@ public interface Operateur extends OperationElem {
     Double execute(Double x, Double y);
 
     /**
-     * indicate the type of the Operateur
+     * indicate the type of the Operate
      * @return  TypeOp.OPERATEUR
      */
     default TypeOp type() {
