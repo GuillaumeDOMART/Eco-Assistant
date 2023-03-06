@@ -174,7 +174,7 @@ VALUES
 
     ('Utilises-tu un DataCenter ?', 'QCM', 'TEST'),
     ('Combien d’énergie votre DataCenter consomme-t-il (en kWh) ?', 'NUMERIC', 'TEST'),
-    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 'QCM', 'TEST'),
+    ('Sais-tu comment est produite l''énergie qui alimente majoritairement ton DataCenter ?', 'QCM', 'TEST'),
     ('Quelle énergie alimente majoritairement ton DataCenter ?', 'QCM', 'TEST'),
 
     /*DEPLOIEMENT*/
@@ -193,7 +193,7 @@ VALUES
     ('Combien de PC portables utilises-tu pour le déploiement ?', 'NUMERIC', 'DEPLOIEMENT'),
     ('Utilises-tu un DataCenter ?', 'QCM', 'DEPLOIEMENT'),
     ('Combien d’énergie votre DataCenter consomme-t-il (en kWh) ?', 'NUMERIC', 'DEPLOIEMENT'),
-    ('Sais-tu comment est produite l énergie qui alimente majoritairement ton DataCenter ?', 'QCM', 'DEPLOIEMENT'),
+    ('Sais-tu comment est produite l''énergie qui alimente majoritairement ton DataCenter ?', 'QCM', 'DEPLOIEMENT'),
     ('Quelle énergie alimente majoritairement ton DataCenter ?', 'QCM', 'DEPLOIEMENT'),
 
     /*MAINTENANCE*/
@@ -218,89 +218,89 @@ VALUES (0, 'Constante neutre'),
        (0.178, 'https://datagir.ademe.fr/apps/mon-impact-transport/ '),
     /*C*/
        (0.005,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*C++*/
        (0.0067,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Java*/
        (0.0099,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Python*/
        (0.3794,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Moyenne*/
        (0.0806,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*PHP*/
        (0.1465,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*JavaScript*/
        (0.02225,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*TypeScript*/
        (0.1075,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur 0.005'),
-       (0.2, 'Voiture par kilometre, https://datagir.ademe.fr/apps/mon-impact-transport/'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+       (0.2, 'Voiture par kilomètre, https://datagir.ademe.fr/apps/mon-impact-transport/'),
        (0.0168, 'Transport en commun, https://datagir.ademe.fr/apps/mon-impact-transport/'),
-       (7.66, 'Moyenne des transports d un salarié en une journée,https://culture-rh.com/empreinte-carbone-salarie/'),
-       (0.67, 'Empreinte carbonne d un ordinateur fixe pour 1 journée, https://impactco2.fr/usagenumerique '),
-       (0.25, 'Empreinte carbonne d un ordinateur portable pour 1 journée, https://impactco2.fr/usagenumerique '),
-       (0.006, 'Émissions de CO2 (kgCO2e/kWh) du nucleaire, https://climate.selectra.com/fr/empreinte-carbone/energie'),
+       (7.66, 'Moyenne des transports d''un salarié en une journée,https://culture-rh.com/empreinte-carbone-salarie/'),
+       (0.67, 'Empreinte carbonne d''un ordinateur fixe pour une journée, https://impactco2.fr/usagenumerique '),
+       (0.25, 'Empreinte carbonne d''un ordinateur portable pour une journée, https://impactco2.fr/usagenumerique '),
+       (0.006, 'Émissions de CO2 (kgCO2e/kWh) du nucléaire, https://climate.selectra.com/fr/empreinte-carbone/energie'),
        (0.025,
-        'Émissions de CO2 (kgCO2e/kWh) de energie renouvlable, https://climate.selectra.com/fr/empreinte-carbone/energie'),
+        'Émissions de CO2 (kgCO2e/kWh) des énergies renouvelables, https://climate.selectra.com/fr/empreinte-carbone/energie'),
        (0.6515,
-        'Émissions de CO2 (kgCO2e/kWh) de energie fossile, https://climate.selectra.com/fr/empreinte-carbone/energie'),
+        'Émissions de CO2 (kgCO2e/kWh) des energies fossiles, https://climate.selectra.com/fr/empreinte-carbone/energie'),
     /*Perl*/
        (79.58 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Ruby*/
        (69.91 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Jruby*/
        (46.54 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Lua*/
        (48.98 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Erlang*/
        (42.23 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Hack*/
        (24.02 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Racket*/
        (7.91 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*F#*/
        (4.13 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Haskell*/
        (3.10 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Swift*/
        (2.79 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Fortran*/
        (2.52 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*OCaml*/
        (2.40 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Lisp*/
        (2.27 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Chapel*/
        (2.18 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Pascal*/
        (2.14 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Ada*/
        (1.70 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base'),
     /*Rust*/
        (1.03 / 200,
-        'conjecture fait pour 1 ligne de code afin de pouvoir avoir une idée de la difference entre 2 langages. C étant la valeur de base');
+        'Conjecture faite pour une ligne de code afin d''avoir une idée de la difference entre 2 langages. C étant la valeur de base');
 
 --- CREATION DES REPONSES POSSIBLE
 INSERT INTO reponsepossible (questionasso, questionsuiv, intitule,
