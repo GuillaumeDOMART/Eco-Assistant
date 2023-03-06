@@ -1,7 +1,7 @@
 package com.ecoassitant.back.dto.project;
 
 import com.ecoassitant.back.dto.profil.ProfilDto;
-import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.entity.tools.TypeP;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class ProjetDto {
      *
      * @throws IllegalArgumentException if entity is null
      */
-    public ProjetDto(ProjetEntity entity) {
+    public ProjetDto(ProjectEntity entity) {
         Objects.requireNonNull(entity);
         this.id = entity.getIdProjet();
         this.profil = new ProfilDto(entity.getProfil());

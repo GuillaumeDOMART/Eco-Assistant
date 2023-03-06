@@ -3,7 +3,7 @@ package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.project.ProjectIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
-import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.entity.ProjectEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,5 +45,5 @@ public interface ProjectService {
      * @param projet project that needs to be saved
      * @return the savec project
      */
-    Optional<ProjetEntity> save(ProjetEntity projet);
+    Optional<ProjectEntity> save(ProjectEntity projet);
 }

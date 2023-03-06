@@ -2,7 +2,7 @@ package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
 import com.ecoassitant.back.dto.resultat.ReponseDto;
-import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.tools.TypeQ;
@@ -104,7 +104,7 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
     }
 
     @Override
-    public List<ReponseDonneeEntity> findReponsesByProject(ProjetEntity projet) {
+    public List<ReponseDonneeEntity> findReponsesByProject(ProjectEntity projet) {
         return reponseDonneeRepository.findByReponseDonneeKey_Projet(projet);
     }
 }

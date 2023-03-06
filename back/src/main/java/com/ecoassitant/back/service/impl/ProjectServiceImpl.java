@@ -2,7 +2,7 @@ package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.project.ProjectIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
-import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.repository.ProjectRepository;
@@ -68,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public Optional<ProjetEntity> save(ProjetEntity projet) {
+    public Optional<ProjectEntity> save(ProjectEntity projet) {
         return Optional.of(projectRepository.save(projet));
     }
 }

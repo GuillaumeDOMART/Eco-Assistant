@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Service for QuestionProposeController
  */
-public interface QuestionProposeService {
+public interface ProposedQuestionService {
     /**
      * Retrieve a question proposée by it id
      * @param id the profil id

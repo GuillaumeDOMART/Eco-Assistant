@@ -28,7 +28,7 @@ public class ReponseDonneeEntity implements Serializable {
      *
      * @param project Project about to be copied
      */
-    public void updateReponseDonneeProjectId(ProjetEntity project) {
+    public void updateReponseDonneeProjectId(ProjectEntity project) {
         this.reponseDonneeKey.setProjet(project);
     }
 }

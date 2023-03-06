@@ -4,7 +4,7 @@ import com.ecoassitant.back.dao.QuestionProposeDao;
 import com.ecoassitant.back.dto.QuestionProposeDto;
 import com.ecoassitant.back.entity.QuestionProposeEntity;
 import com.ecoassitant.back.repository.QuestionProposeRepository;
-import com.ecoassitant.back.service.QuestionProposeService;
+import com.ecoassitant.back.service.ProposedQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * Implementation for QuestionProposeService
  */
 @Service
-public class QuestionProposeServiceImpl implements QuestionProposeService {
+public class ProposedQuestionServiceImpl implements ProposedQuestionService {
 
     private final QuestionProposeRepository repository;
 
@@ -23,7 +23,7 @@ public class QuestionProposeServiceImpl implements QuestionProposeService {
      * @param repository A repository for QuestionPropose
      */
     @Autowired
-    public QuestionProposeServiceImpl(QuestionProposeRepository repository) {
+    public ProposedQuestionServiceImpl(QuestionProposeRepository repository) {
         this.repository = repository;
     }
 

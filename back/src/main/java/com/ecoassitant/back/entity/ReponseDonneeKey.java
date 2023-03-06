@@ -14,17 +14,17 @@ public class ReponseDonneeKey implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "projetid", nullable = false)
-    private ProjetEntity projet;
+    private ProjectEntity projet;
 
     @OneToOne
     @JoinColumn(name = "questionid", nullable = false)
     private QuestionEntity question;
 
-    public ProjetEntity getProjet() {
+    public ProjectEntity getProjet() {
         return projet;
     }
 
-    public void setProjet(ProjetEntity projet) {
+    public void setProjet(ProjectEntity projet) {
         this.projet = projet;
     }
 

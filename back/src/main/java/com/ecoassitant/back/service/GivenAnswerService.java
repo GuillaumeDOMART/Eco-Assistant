@@ -1,7 +1,7 @@
 package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
-import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public interface GivenAnswerService {
      * @param projet project entity
      * @return a list of responseDonne from the projet
      */
-    List<ReponseDonneeEntity> findReponsesByProject(ProjetEntity projet);
+    List<ReponseDonneeEntity> findReponsesByProject(ProjectEntity projet);
 
     /**
      * Service for save list of already checked reponseDonneeEntity

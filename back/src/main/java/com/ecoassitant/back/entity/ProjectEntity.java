@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Builder
 @Entity
 @Table(name = "projet")
-public class ProjetEntity implements Serializable {
+public class ProjectEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_sequence")

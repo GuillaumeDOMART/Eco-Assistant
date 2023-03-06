@@ -3,7 +3,7 @@ package com.ecoassitant.back.controller;
 import com.ecoassitant.back.dao.QuestionProposeDao;
 import com.ecoassitant.back.dto.IdDto;
 import com.ecoassitant.back.dto.QuestionProposeDto;
-import com.ecoassitant.back.service.QuestionProposeService;
+import com.ecoassitant.back.service.ProposedQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,17 +18,17 @@ import java.util.List;
 
 @RequestMapping("api")
 @RestController
-public class QuestionProposeController {
+public class ProposedQuestionController {
 
-    private final QuestionProposeService questionProposeService;
+    private final ProposedQuestionService proposedQuestionService;
 
     /**
-     * Initialize the constanteService
-     * @param questionProposeService composite for using Service methods
+     * Initialize the constantService
+     * @param proposedQuestionService composite for using Service methods
      */
     @Autowired
-    public QuestionProposeController(QuestionProposeService questionProposeService) {
-        this.questionProposeService = questionProposeService;
+    public ProposedQuestionController(ProposedQuestionService proposedQuestionService) {
+        this.proposedQuestionService = proposedQuestionService;
     }
 
 
@@ -39,7 +39,7 @@ public class QuestionProposeController {
     */
     @GetMapping("/proposition/{id}")
     public ResponseEntity<QuestionProposeDto> getProposition(@PathVariable("id") int id){
-        QuestionProposeDto qpdto = questionProposeService.getQuestionProposeByID(id);
+        QuestionProposeDto qpdto = proposedQuestionService.getQuestionProposeByID(id);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         if(qpdto==null){
@@ -57,7 +57,7 @@ public class QuestionProposeController {
 
     @GetMapping("/propositions")
     public ResponseEntity<List<QuestionProposeDto>> getAllPropositions(){
-        List<QuestionProposeDto> qps = questionProposeService.findAll();
+        List<QuestionProposeDto> qps = proposedQuestionService.findAll();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         if(qps.isEmpty()){
@@ -72,7 +72,7 @@ public class QuestionProposeController {
      * */
     @PostMapping("/proposition")
     public ResponseEntity<IdDto> createProposition(@RequestBody QuestionProposeDao qp){
-        var canBeSaved = questionProposeService.saveQuestionPropose(qp);
+        var canBeSaved = proposedQuestionService.saveQuestionPropose(qp);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");

@@ -4,7 +4,7 @@ import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.project.ProjectIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.dto.project.ProjetSimpleDto;
-import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.ProfilRepository;
@@ -114,33 +114,33 @@ public class ProjectController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         var profil = profilEntityOptional.get();
-        var projetEntity = ProjetEntity.builder()
+        var projectEntity = ProjectEntity.builder()
                 .nomProjet(project.getNom())
                 .profil(profil)
                 .etat(Etat.INPROGRESS)
                 .type(project.getType().equals("simulation") ? TypeP.SIMULATION : TypeP.PROJET)
                 .build();
-        projectRepository.save(projetEntity);
-        return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()), HttpStatus.OK);
+        projectRepository.save(projectEntity);
+        return new ResponseEntity<>(new ProjectIdDto(projectEntity.getIdProjet()), HttpStatus.OK);
     }
 
     /**
      * Method to dissociate a project from a user and associate it to a default anonymous
      *
      * @param authorizationHeader the token of the user
-     * @param projetDto           the project name
+     * @param projectIdDto           the project name
      * @return the project dto id
      */
     @PutMapping("/projet/delete")
-    public ResponseEntity<ProjectIdDto> delete(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projetDto) {
+    public ResponseEntity<ProjectIdDto> delete(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ProjectIdDto projectIdDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         var profilEntityOptional = profilRepository.findByMail(mail);
         if (profilEntityOptional.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        var projet = projectRepository.findByIdProjet(projetDto.getId());
-        var mailOwner = projet.getProfil().getMail();
+        var project = projectRepository.findByIdProjet(projectIdDto.getId());
+        var mailOwner = project.getProfil().getMail();
         if (!mailOwner.equals(mail)) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
@@ -148,10 +148,10 @@ public class ProjectController {
         if (anoProfilOptional.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        projet.setNomProjet(generateRandomString(8));
-        projet.setProfil(anoProfilOptional.get());
-        projectRepository.save(projet);
-        return new ResponseEntity<>(new ProjectIdDto(projet.getIdProjet()), HttpStatus.OK);
+        project.setNomProjet(generateRandomString(8));
+        project.setProfil(anoProfilOptional.get());
+        projectRepository.save(project);
+        return new ResponseEntity<>(new ProjectIdDto(project.getIdProjet()), HttpStatus.OK);
 
     }
 
@@ -196,7 +196,7 @@ public class ProjectController {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
 
-        var projetEntity = ProjetEntity.builder()
+        var projetEntity = ProjectEntity.builder()
                 .nomProjet(projectIdDto.getProjectName())
                 .profil(profile.get())
                 .etat(Etat.INPROGRESS)
