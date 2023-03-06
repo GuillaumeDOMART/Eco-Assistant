@@ -4,7 +4,7 @@ import com.ecoassitant.back.dto.result.GivenAnswersDto;
 import com.ecoassitant.back.dto.result.ResponseDto;
 import com.ecoassitant.back.entity.GivenAnswerEntity;
 import com.ecoassitant.back.entity.ProjectEntity;
-import com.ecoassitant.back.entity.ReponseDonneeKey;
+import com.ecoassitant.back.entity.GivenAnswerKey;
 import com.ecoassitant.back.entity.tools.TypeQ;
 import com.ecoassitant.back.repository.ProjectRepository;
 import com.ecoassitant.back.repository.QuestionRepository;
@@ -65,7 +65,7 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
                 reponseDonneeRepository.delete(reponseDonnee.get());
             if (!Objects.equals(reponseDto.getEntry(), "")){
                 var reponseEntity = new GivenAnswerEntity();
-                var responseKey = new ReponseDonneeKey();
+                var responseKey = new GivenAnswerKey();
 
                 responseKey.setProjet(project.get());
                 responseKey.setQuestion(question.get());
@@ -91,7 +91,7 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
                     reponseEntity.setEntry(1);
                 }
 
-                reponseEntity.setReponseDonneeKey(responseKey);
+                reponseEntity.setGivenAnswerKey(responseKey);
                 reponseDonneeRepository.save(reponseEntity);
             }
         }

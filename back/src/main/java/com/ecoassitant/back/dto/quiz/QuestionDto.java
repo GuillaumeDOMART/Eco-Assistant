@@ -29,16 +29,16 @@ public class QuestionDto {
         if (question == null)
             return;
         this.questionId = question.getIdQuestion();
-        this.entitled = question.getIntitule();
+        this.entitled = question.getEntitled();
         this.response = null;
         this.type = question.getTypeQ();
         this.phase = question.getPhase();
         this.responses = new ArrayList<>();
-        question.getReponses().forEach(response -> responses.add(new ResponsePossibleDto(response)));
-        if (question.getDependance() == null)
+        question.getResponses().forEach(response -> responses.add(new ResponsePossibleDto(response)));
+        if (question.getDependency() == null)
             this.dependency = -1L;
         else
-            this.dependency = question.getDependance().getIdReponsePos();
+            this.dependency = question.getDependency().getIdReponsePos();
     }
 
     public String getEntitled() {
@@ -105,7 +105,7 @@ public class QuestionDto {
     private void addReponse(QuestionDto question, GivenAnswerEntity response){
         if (question == null)
             return;
-        if (question.questionId == response.getReponseDonneeKey().getQuestion().getIdQuestion()){
+        if (question.questionId == response.getGivenAnswerKey().getQuestion().getIdQuestion()){
             question.response = new GivenAnswerDtoQuiz(response);
             return;
         }

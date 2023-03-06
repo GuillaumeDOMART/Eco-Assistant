@@ -32,13 +32,13 @@ public class QuestionUniqueDto {
      * @param quiz format Entity
      */
     public QuestionUniqueDto(QuestionEntity quiz) {
-        this.entitled = quiz.getIntitule();
+        this.entitled = quiz.getEntitled();
         this.phase = quiz.getPhase();
         this.questionId = quiz.getIdQuestion();
-        this.dependency = quiz.getDependance()!= null? quiz.getDependance().getIdReponsePos(): -1;
+        this.dependency = quiz.getDependency()!= null? quiz.getDependency().getIdReponsePos(): -1;
         this.type = quiz.getTypeQ();
         this.responses = new ArrayList<>();
-        quiz.getReponses().forEach(reponsePossibleEntity -> responses.add(new ResponseUniqueDto(reponsePossibleEntity)));
+        quiz.getResponses().forEach(reponsePossibleEntity -> responses.add(new ResponseUniqueDto(reponsePossibleEntity)));
         this.response = null;
     }
 
@@ -47,7 +47,7 @@ public class QuestionUniqueDto {
      * @param response response of the previous quiz
      */
     public void remplir(GivenAnswerEntity response) {
-        if (questionId == response.getReponseDonneeKey().getQuestion().getIdQuestion())
+        if (questionId == response.getGivenAnswerKey().getQuestion().getIdQuestion())
             this.response = new GivenAnswerDtoQuiz(response);
     }
 

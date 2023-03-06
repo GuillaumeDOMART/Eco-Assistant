@@ -1,18 +1,18 @@
 package com.ecoassitant.back.repository;
 
-import com.ecoassitant.back.entity.ConstanteEntity;
+import com.ecoassitant.back.entity.ConstantEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * repository of Constant
  */
-public interface ConstantRepository extends JpaRepository<ConstanteEntity, Long> {
+public interface ConstantRepository extends JpaRepository<ConstantEntity, Long> {
     /**
-     * Get ConstanteEntity associated with id
+     * Get ConstantEntity associated with id
      * @param idConstante represents id of constante
-     * @return ConstanteEntity
+     * @return ConstantEntity
      */
-    ConstanteEntity findByIdConstante(Long idConstante);
+    ConstantEntity findByIdConstante(Long idConstante);
 
 
 

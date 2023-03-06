@@ -1,6 +1,6 @@
 package com.ecoassitant.back.dto;
 
-import com.ecoassitant.back.entity.QuestionProposeEntity;
+import com.ecoassitant.back.entity.ProposedQuestionEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import lombok.Data;
 
@@ -17,12 +17,12 @@ public class ProposedQuestionDto {
     private boolean isApprove;
 
     /**
-     * Constructor to create ProposedQuestionDto with a QuestionProposeEntity
+     * Constructor to create ProposedQuestionDto with a ProposedQuestionEntity
      * @param qp the entity
      */
-    public ProposedQuestionDto(QuestionProposeEntity qp){
+    public ProposedQuestionDto(ProposedQuestionEntity qp){
         this.idQuestion = qp.getIdQuestion();
-        this.entitled = qp.getIntitule();
+        this.entitled = qp.getEntitled();
         this.phase = qp.getPhase();
         this.vote = qp.getVote();
         this.isApprove = qp.isApprove();

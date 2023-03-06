@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Class Entity of table Profil
+ * Class Entity of table Profile
  */
 @Data
 @NoArgsConstructor
@@ -25,16 +25,16 @@ public class CalculEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "calculopid", nullable = false)
-    private CalculOperateurEntity calculOp;
+    private CalculOperatorEntity calculOp;
 
     @OneToOne
     @JoinColumn(name = "reponsepossibleid", nullable = false)
-    private ReponsePossibleEntity reponsePossible;
+    private ResponsePossibleEntity responsePossible;
 
     @Column(name = "nbcalcul", nullable = false)
     private int nbCalcul;
     @Column(name = "priorite", nullable = false)
-    private int priorite;
+    private int priority;
     @Enumerated(EnumType.STRING)
     @Column(name = "phase")
     private Phase phase;

@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "constante")
-public class ConstanteEntity implements Serializable {
+public class ConstantEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,8 +20,8 @@ public class ConstanteEntity implements Serializable {
     private Long idConstante;
 
     @Column(name = "constante", nullable = false)
-    private double constante;
+    private double constant;
 
     @Column(name = "tracabilite")
-    private String tracabilite;
+    private String source;
 }

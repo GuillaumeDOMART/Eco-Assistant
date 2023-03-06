@@ -1,9 +1,9 @@
 package com.ecoassitant.back.calcul;
 
 import com.ecoassitant.back.entity.CalculEntity;
-import com.ecoassitant.back.entity.ConstanteEntity;
+import com.ecoassitant.back.entity.ConstantEntity;
 import com.ecoassitant.back.entity.GivenAnswerEntity;
-import com.ecoassitant.back.entity.ReponsePossibleEntity;
+import com.ecoassitant.back.entity.ResponsePossibleEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 
 import java.util.*;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * ReformedOperation create with  parts of calculation(calculationEntity) and GivenAnswer for a project
  */
 public class ReformedOperation {
-    private final List<ReponsePossibleEntity> dependencies;
+    private final List<ResponsePossibleEntity> dependencies;
 
     private final String entitled;
     private final List<CalculEntity> calculus;
@@ -32,11 +32,11 @@ public class ReformedOperation {
         this.repDon = List.copyOf(givAns);
         dependencies = new ArrayList<>();
         phase = calculus.get(0).getPhase();
-        calculus.forEach(calculEntity -> dependencies.add(calculEntity.getReponsePossible()));
+        calculus.forEach(calculEntity -> dependencies.add(calculEntity.getResponsePossible()));
         entitled = calculus.stream()
-                .map(CalculEntity::getReponsePossible)
-                .map(ReponsePossibleEntity::getConstante)
-                .map(ConstanteEntity::getTracabilite)
+                .map(CalculEntity::getResponsePossible)
+                .map(ResponsePossibleEntity::getConstante)
+                .map(ConstantEntity::getSource)
                 .collect(Collectors.joining("\n"));
     }
 
@@ -74,7 +74,7 @@ public class ReformedOperation {
      */
     private boolean isPossible(){
         var list = dependencies.stream().filter(dependency -> repDon.stream().map(GivenAnswerEntity::getReponsePos)
-                .map(ReponsePossibleEntity::getIdReponsePos).toList()
+                .map(ResponsePossibleEntity::getIdReponsePos).toList()
                 .contains(dependency.getIdReponsePos())).toList();
         return list.size() == dependencies.size();
     }
@@ -89,7 +89,7 @@ public class ReformedOperation {
             var ga = repDon.stream().filter(reponseDonneeEntity -> reponseDonneeEntity.getReponsePos().equals(rP)).findFirst();
             if (ga.isEmpty())
                 throw new IllegalStateException();
-            map.put(rP.getIdReponsePos(),(rP.getConstante().getConstante() * ga.get().getEntry()));
+            map.put(rP.getIdReponsePos(),(rP.getConstante().getConstant() * ga.get().getEntry()));
         });
         return map;
     }
@@ -102,21 +102,21 @@ public class ReformedOperation {
         var iterator =  calculus.iterator();
         var calculus = iterator.next();
         if(val.size() == 1){
-            var operande = new Operand(val.get(calculus.getReponsePossible().getIdReponsePos()));
+            var operande = new Operand(val.get(calculus.getResponsePossible().getIdReponsePos()));
             stack.push(operande);
         }
         while (iterator.hasNext()){
             Operator operator;
-            switch (calculus.getCalculOp().getOperateur()){
+            switch (calculus.getCalculOp().getOperator()){
                 case ADD -> operator = new Add();
                 case SUB -> operator = new Sub();
                 case DIV -> operator = new Div();
                 case MULT -> operator = new Mult();
                 default -> operator = null;
             }
-            var operand = new Operand(val.get(calculus.getReponsePossible().getIdReponsePos()));
+            var operand = new Operand(val.get(calculus.getResponsePossible().getIdReponsePos()));
             calculus = iterator.next();
-            var operand2 = new Operand(val.get(calculus.getReponsePossible().getIdReponsePos()));
+            var operand2 = new Operand(val.get(calculus.getResponsePossible().getIdReponsePos()));
 
             if (stack.isEmpty()){
 

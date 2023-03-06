@@ -2,7 +2,7 @@ package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dao.ProposedQuestionDao;
 import com.ecoassitant.back.dto.ProposedQuestionDto;
-import com.ecoassitant.back.entity.QuestionProposeEntity;
+import com.ecoassitant.back.entity.ProposedQuestionEntity;
 import com.ecoassitant.back.repository.QuestionProposeRepository;
 import com.ecoassitant.back.service.ProposedQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +40,9 @@ public class ProposedQuestionServiceImpl implements ProposedQuestionService {
 
     @Override
     public Integer saveQuestionPropose(ProposedQuestionDao qpdao) {
-        var entity = new QuestionProposeEntity();
+        var entity = new ProposedQuestionEntity();
         entity.setVote(0);
-        entity.setIntitule(qpdao.getEntitled());
+        entity.setEntitled(qpdao.getEntitled());
         entity.setApprove(false);
         entity.setPhase(qpdao.getPhase());
 

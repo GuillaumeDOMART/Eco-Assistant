@@ -1,6 +1,6 @@
 package com.ecoassitant.back.dto;
 
-import com.ecoassitant.back.entity.ConstanteEntity;
+import com.ecoassitant.back.entity.ConstantEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,11 +21,11 @@ public class ConstantDto {
      *
      * @throws IllegalArgumentException if entity is null
      */
-    public ConstantDto(ConstanteEntity constanteEntity) {
-        Objects.requireNonNull(constanteEntity);
-        this.idConstant = constanteEntity.getIdConstante();
-        this.constant = constanteEntity.getConstante();
-        this.source = constanteEntity.getTracabilite();
+    public ConstantDto(ConstantEntity constantEntity) {
+        Objects.requireNonNull(constantEntity);
+        this.idConstant = constantEntity.getIdConstante();
+        this.constant = constantEntity.getConstant();
+        this.source = constantEntity.getSource();
     }
 
 

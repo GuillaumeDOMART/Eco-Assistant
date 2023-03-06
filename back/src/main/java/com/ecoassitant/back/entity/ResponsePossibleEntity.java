@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "reponsepossible")
-public class ReponsePossibleEntity implements Serializable {
+public class ResponsePossibleEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +32,5 @@ public class ReponsePossibleEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "constanteid", nullable = false)
-    private ConstanteEntity constante;
+    private ConstantEntity constante;
 }

@@ -210,7 +210,7 @@ public class ProjectController {
         System.out.println("projetCopy = " + projectCopy);
 
         var answers = givenAnswerService.findReponsesByProject(idProjet);
-        answers.forEach(answer -> answer.updateReponseDonneeProjectId(projectCopy));
+        answers.forEach(answer -> answer.updateGivenAnswerProjectId(projectCopy));
 
         givenAnswerService.saveResponseDonnees(answers);
 

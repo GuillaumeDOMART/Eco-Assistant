@@ -1,6 +1,6 @@
 package com.ecoassitant.back.dto.quiz;
 
-import com.ecoassitant.back.entity.ReponsePossibleEntity;
+import com.ecoassitant.back.entity.ResponsePossibleEntity;
 
 /**
  * ResponsePossible build with ResponsePossibleEntity for use in app
@@ -15,10 +15,10 @@ public class ResponsePossibleDto {
      * Constructor of ResponsePossibleDto with a ResponsePossibleEntity
      * @param response ResponsePossible entity change int ResponsePossibleDto
      */
-    public ResponsePossibleDto(ReponsePossibleEntity response) {
+    public ResponsePossibleDto(ResponsePossibleEntity response) {
         this.nextQuestion = response.getQuestionSuiv() != null? new QuestionDto(response.getQuestionSuiv()) : null;
         this.entitled = response.getIntitule();
-        this.constant = response.getConstante().getConstante();
+        this.constant = response.getConstante().getConstant();
         this.responseId = response.getIdReponsePos();
     }
 

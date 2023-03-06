@@ -1,6 +1,6 @@
 package com.ecoassitant.back.dto.quiz;
 
-import com.ecoassitant.back.entity.ReponsePossibleEntity;
+import com.ecoassitant.back.entity.ResponsePossibleEntity;
 
 /**
  * Reponse for QuestionUniqueDto
@@ -22,9 +22,9 @@ public class ResponseUniqueDto {
 
     /**
      * create reponse without questionSuiv
-     * @param reponsePossible ReponsePossibleEntity
+     * @param reponsePossible ResponsePossibleEntity
      */
-    public ResponseUniqueDto(ReponsePossibleEntity reponsePossible) {
+    public ResponseUniqueDto(ResponsePossibleEntity reponsePossible) {
         this.intitule = reponsePossible.getIntitule();
         this.questionSuivId = reponsePossible.getQuestionSuiv()!= null?reponsePossible.getQuestionSuiv().getIdQuestion(): -1L;
         this.reponseId = reponsePossible.getIdReponsePos();

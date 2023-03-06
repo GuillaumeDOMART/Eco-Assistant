@@ -13,8 +13,8 @@ import java.util.List;
 
 class CalculTest {
 
-    ConstanteEntity c1 = new ConstanteEntity(1L, 1, "oui");
-    ConstanteEntity c2 = new ConstanteEntity(2L, 20, "jentends");
+    ConstantEntity c1 = new ConstantEntity(1L, 1, "oui");
+    ConstantEntity c2 = new ConstantEntity(2L, 20, "jentends");
     ProjectEntity projet = new ProjectEntity();
 
     QuestionEntity q1 = new QuestionEntity(1L, "q1", TypeQ.NUMERIC, Phase.OUT_PHASE, null);
@@ -23,22 +23,22 @@ class CalculTest {
 
 
 
-    ReponsePossibleEntity r1 = new ReponsePossibleEntity(1L, q1, q2, "rentre une valeur", c1);
-    ReponsePossibleEntity r2 = new ReponsePossibleEntity(2L, q2, q3, "oui", c1);
-    ReponsePossibleEntity r3 = new ReponsePossibleEntity(3L, q2, q3, "non", c1);
-    ReponsePossibleEntity r4 = new ReponsePossibleEntity(4L, q3, null, "rentre une valeur", c2);
+    ResponsePossibleEntity r1 = new ResponsePossibleEntity(1L, q1, q2, "rentre une valeur", c1);
+    ResponsePossibleEntity r2 = new ResponsePossibleEntity(2L, q2, q3, "oui", c1);
+    ResponsePossibleEntity r3 = new ResponsePossibleEntity(3L, q2, q3, "non", c1);
+    ResponsePossibleEntity r4 = new ResponsePossibleEntity(4L, q3, null, "rentre une valeur", c2);
 
-    CalculOperateurEntity add = new CalculOperateurEntity(1L, Operator.ADD);
-    CalculOperateurEntity sub = new CalculOperateurEntity(2L, Operator.SUB);
-    CalculOperateurEntity mult = new CalculOperateurEntity(3L, Operator.MULT);
-    CalculOperateurEntity div = new CalculOperateurEntity(4L, Operator.DIV);
-    CalculOperateurEntity stop = new CalculOperateurEntity(5L, Operator.NOTHING);
+    CalculOperatorEntity add = new CalculOperatorEntity(1L, Operator.ADD);
+    CalculOperatorEntity sub = new CalculOperatorEntity(2L, Operator.SUB);
+    CalculOperatorEntity mult = new CalculOperatorEntity(3L, Operator.MULT);
+    CalculOperatorEntity div = new CalculOperatorEntity(4L, Operator.DIV);
+    CalculOperatorEntity stop = new CalculOperatorEntity(5L, Operator.NOTHING);
     List<GivenAnswerEntity> listRd = new ArrayList<>();
-    ReponseDonneeKey rdk1 = new ReponseDonneeKey();
+    GivenAnswerKey rdk1 = new GivenAnswerKey();
     GivenAnswerEntity rd1 = new GivenAnswerEntity(rdk1,r1, 10);
-    ReponseDonneeKey rdk2 = new ReponseDonneeKey();
+    GivenAnswerKey rdk2 = new GivenAnswerKey();
     GivenAnswerEntity rd2 = new GivenAnswerEntity(rdk2, r3, 5);
-    ReponseDonneeKey rdk3 = new ReponseDonneeKey();
+    GivenAnswerKey rdk3 = new GivenAnswerKey();
     List<CalculEntity> listCalcul = new ArrayList<>();
     @Test
     void creationCalculEntier() {
@@ -60,21 +60,21 @@ class CalculTest {
         var cl1 = new CalculEntity();
         cl1.setIdCalcul(1L);
         cl1.setCalculOp(add);
-        cl1.setReponsePossible(r1);
+        cl1.setResponsePossible(r1);
         cl1.setPhase(Phase.DEVELOPMENT);
         cl1.setNbCalcul(1);
 
         var cl2 = new CalculEntity();
         cl2.setIdCalcul(2L);
         cl2.setCalculOp(mult);
-        cl2.setReponsePossible(r3);
+        cl2.setResponsePossible(r3);
         cl2.setPhase(Phase.DEVELOPMENT);
         cl2.setNbCalcul(1);
 
         var cl3 = new CalculEntity();
         cl3.setIdCalcul(3L);
         cl3.setCalculOp(stop);
-        cl3.setReponsePossible(r4);
+        cl3.setResponsePossible(r4);
         cl3.setPhase(Phase.DEVELOPMENT);
         cl3.setNbCalcul(1);
 

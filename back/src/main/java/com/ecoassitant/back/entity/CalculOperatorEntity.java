@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "calculoperateur")
-public class CalculOperateurEntity implements Serializable {
+public class CalculOperatorEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +22,5 @@ public class CalculOperateurEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "operateur")
-    private Operator operateur;
+    private Operator operator;
 }

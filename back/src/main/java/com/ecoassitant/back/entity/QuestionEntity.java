@@ -23,7 +23,7 @@ public class QuestionEntity implements Serializable {
     private Long idQuestion;
 
     @Column(name = "intitule", nullable = false)
-    private String intitule;
+    private String entitled;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "typeq", nullable = false)
@@ -36,10 +36,10 @@ public class QuestionEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "dependance")
-    private ReponsePossibleEntity dependance;
+    private ResponsePossibleEntity dependency;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "questionAsso")
-    private List<ReponsePossibleEntity> reponses;
+    private List<ResponsePossibleEntity> responses;
 
     /**
      * constructor of questionEntity
@@ -49,11 +49,11 @@ public class QuestionEntity implements Serializable {
      * @param phase phase of question
      * @param dep dependance of question
      */
-    public QuestionEntity(long l, String q1, TypeQ type, Phase phase, ReponsePossibleEntity dep) {
+    public QuestionEntity(long l, String q1, TypeQ type, Phase phase, ResponsePossibleEntity dep) {
         this.idQuestion = l;
-        this.intitule = q1;
+        this.entitled = q1;
         this.typeQ = type;
         this.phase = phase;
-        this.dependance = dep;
+        this.dependency = dep;
     }
 }

@@ -15,10 +15,10 @@ import java.io.Serializable;
 public class GivenAnswerEntity implements Serializable {
 
     @EmbeddedId
-    private ReponseDonneeKey reponseDonneeKey;
+    private GivenAnswerKey givenAnswerKey;
     @OneToOne
     @JoinColumn(name = "reponseposid", nullable = false)
-    private ReponsePossibleEntity reponsePos;
+    private ResponsePossibleEntity reponsePos;
 
     @Column(name = "entry", nullable = false)
     private int entry;
@@ -28,8 +28,8 @@ public class GivenAnswerEntity implements Serializable {
      *
      * @param project Project about to be copied
      */
-    public void updateReponseDonneeProjectId(ProjectEntity project) {
-        this.reponseDonneeKey.setProjet(project);
+    public void updateGivenAnswerProjectId(ProjectEntity project) {
+        this.givenAnswerKey.setProjet(project);
     }
 }
 

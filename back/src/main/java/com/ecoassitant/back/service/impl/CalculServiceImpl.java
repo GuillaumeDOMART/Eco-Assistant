@@ -87,11 +87,11 @@ public class CalculServiceImpl implements CalculService {
             if (!map.containsKey(calculEntity.getNbCalcul()))
                 map.put(calculEntity.getNbCalcul(), new HashMap<>());
             var priorite = map.get(calculEntity.getNbCalcul());
-            if (!priorite.containsKey(calculEntity.getPriorite()))
-                priorite.put(calculEntity.getPriorite(), new ArrayList<>());
-            var list = priorite.get(calculEntity.getPriorite());
+            if (!priorite.containsKey(calculEntity.getPriority()))
+                priorite.put(calculEntity.getPriority(), new ArrayList<>());
+            var list = priorite.get(calculEntity.getPriority());
             list.add(calculEntity);
-            priorite.put(calculEntity.getPriorite(), list);
+            priorite.put(calculEntity.getPriority(), list);
             map.put(calculEntity.getNbCalcul(), priorite);
         });
         return map;

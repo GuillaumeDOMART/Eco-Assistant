@@ -10,7 +10,7 @@ import java.io.Serializable;
  * primary key of ReponseDonnee
  */
 @Embeddable
-public class ReponseDonneeKey implements Serializable {
+public class GivenAnswerKey implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "projetid", nullable = false)
