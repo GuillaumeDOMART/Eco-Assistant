@@ -93,7 +93,6 @@ function TableauProjets() {
             return;
         }
 
-
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${sessionStorage.getItem("token")}`);
         myHeaders.append("Content-Type", "application/json");
@@ -232,9 +231,9 @@ function TableauProjets() {
                             <FormLabel id="demo-row-radio-buttons-group-label"> Type du projet </FormLabel>
                             <RadioGroup className={"justify-content-center align-items-center"} row aria-label="type"
                                         name="type" {...register("type", {required: true})}>
-                                <FormControlLabel value="simulation" control={<Radio/>} label="Simulation"
+                                <FormControlLabel value="SIMULATION" control={<Radio/>} label="Simulation"
                                                   {...register("type", {required: true})}/>
-                                <FormControlLabel value="project" control={<Radio/>} label="Project"
+                                <FormControlLabel value="PROJET" control={<Radio/>} label="Project"
                                                   {...register("type", {required: true})}/>
                             </RadioGroup>
                             <FormHelperText className={"text-center"}

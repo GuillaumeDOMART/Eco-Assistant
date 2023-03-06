@@ -7,7 +7,7 @@ import {Alert, Button, Container, Modal, Row, Table} from "react-bootstrap";
 /**
  * Generate a web page containing a navigation bar and a project listing table
  */
-function Moderation(){
+function Moderation() {
 
     return (
         <div id="app" className="container-fluid row w-100 h-100 m-0 p-0">
@@ -24,22 +24,25 @@ function Moderation(){
  * @returns {JSX.Element}
  * @constructor
  */
-function ListContainer(){
-    const [selectedUser,setSelectedUser] = useState(null);
-    const [showSelectedUserProjects,setShowSelectedUserProjects] = useState(false);
-    const [projectsOfUser,setProjectsOfUser] = useState([]);
+function ListContainer() {
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [showSelectedUserProjects, setShowSelectedUserProjects] = useState(false);
+    const [projectsOfUser, setProjectsOfUser] = useState([]);
     return (
         <>
             <h1>Modération</h1>
             <br/>
             <Container className="h-25 w-100">
-                <UsersList selectedUser={selectedUser} setSelectedUser={setSelectedUser} setProjectsOfUser={setProjectsOfUser} setShowSelectedUserProjects={setShowSelectedUserProjects}/>
+                <UsersList selectedUser={selectedUser} setSelectedUser={setSelectedUser}
+                           setProjectsOfUser={setProjectsOfUser}
+                           setShowSelectedUserProjects={setShowSelectedUserProjects}/>
             </Container>
             <Row className="h-25"></Row>
             <Container className="h-25 w-100">
-                <ProjectsList selectedUser={selectedUser} projectsOfUser={projectsOfUser} setProjectsOfUser={setProjectsOfUser} showSelectedUserProjects={showSelectedUserProjects} />
+                <ProjectsList selectedUser={selectedUser} projectsOfUser={projectsOfUser}
+                              setProjectsOfUser={setProjectsOfUser}
+                              showSelectedUserProjects={showSelectedUserProjects}/>
             </Container>
-
         </>
     )
 }
@@ -50,8 +53,8 @@ function ListContainer(){
  * @returns {JSX.Element}
  * @constructor
  */
-function ProjectsList(props){
-    const [deletedProject,setDeletedProject] = useState(null);
+function ProjectsList(props) {
+    const [deletedProject, setDeletedProject] = useState(null);
     const [showDeleteProject, setShowDeleteProject] = useState(false);
 
 
@@ -59,20 +62,20 @@ function ProjectsList(props){
      * Delete the user describe by the id
      * @type {(function(*=): void)|*}
      */
-    const handleDeleteProject= useCallback(()=>{
+    const handleDeleteProject = useCallback(() => {
         const token = sessionStorage.getItem("token");
-        const jsonBody = {idProjectToBan : deletedProject.id}
+        const jsonBody = {idProjectToBan: deletedProject.id}
         const options = {
             method: 'PATCH',
             headers: {
-                'Content-Type' : 'application/json',
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(jsonBody)
         };
         fetch('/api/admin/banProject', options)
             .then(res => res.json())
-            .then(()=>{
+            .then(() => {
                 const copyItems = [...props.projectsOfUser];
                 copyItems.splice(props.projectsOfUser.indexOf(deletedProject), 1);
                 props.setProjectsOfUser(copyItems);
@@ -80,15 +83,22 @@ function ProjectsList(props){
             })
 
 
-    },[setShowDeleteProject,deletedProject,props])
+    }, [setShowDeleteProject, deletedProject, props])
 
-    if (!props.showSelectedUserProjects){
+    /**
+     * Hide pop-up if deletion of user is refused
+     */
+    const handleCancel = useCallback(() => {
+        setDeletedProject(null)
+        setShowDeleteProject(false);
+    }, [setShowDeleteProject, setDeletedProject])
+
+    if (!props.showSelectedUserProjects) {
         return (
             <>
             </>
         );
-    }
-    else {
+    } else {
         return (
             <>
                 <Container className="w-100 h-100 navbar-nav-scroll">
@@ -99,15 +109,28 @@ function ProjectsList(props){
                             <LigneTableauProjects key={item.id} {...item}
                                                   project={item}
                                                   itemsList={props.projectsOfUser}
-                                                  showDeleteProjects={showDeleteProject}
-                                                  handleShowDeleteProject={setShowDeleteProject}
                                                   setDeletedProject={setDeletedProject}
-                                                  handleDeleteProject={handleDeleteProject}
+                                                  handleShowDeleteProject={setShowDeleteProject}
                                                   handleProjectsOfUser={props.setProjectsOfUser}>{item.nom}</LigneTableauProjects>
                         ))}
                         </tbody>
                     </Table>
                 </Container>
+
+                <Modal show={showDeleteProject} onHide={handleCancel}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Supprimer l'utilisateur</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Es-tu sûr de vouloir supprimer cet utilisateur ?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCancel}>
+                            Annuler
+                        </Button>
+                        <Button variant="outline-danger" onClick={handleDeleteProject}>
+                            Supprimer
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
     }
@@ -120,13 +143,14 @@ function ProjectsList(props){
  * @param query
  * @returns {*}
  */
-const filterItems = (items,query)=>{
-    return items.filter((item)=>{
-        const itemName = item.nom+" "+item.prenom
+const filterItems = (items, query) => {
+    return items.filter((item) => {
+        const itemName = item.nom + " " + item.prenom
         const lowerCaseName = itemName.toLowerCase()
         return lowerCaseName.includes(query.toLowerCase())
     })
 }
+
 /**
  * Header for users listing table with data or placeholder
  */
@@ -140,15 +164,9 @@ function TableauUsersHeader() {
         </thead>
     );
 }
+
 function LigneTableauUsers(datas) {
 
-    /**
-     * Hide pop-up if deletion of user is refused
-     */
-    const handleCancel = useCallback(() => {
-        datas.setDeletedUser(null)
-        datas.handleShowDeleteUser(false);
-    },[datas])
 
     /**
      * Show the pop-up when you push the button delete user
@@ -156,56 +174,42 @@ function LigneTableauUsers(datas) {
     const handleShowDeletePopup = useCallback(() => {
         datas.setDeletedUser(datas.itemSelected)
         datas.handleShowDeleteUser(true);
-    },[datas])
+    }, [datas])
 
-    const handleShowSelectedUserProjects = useCallback(()=>{
+    const handleShowSelectedUserProjects = useCallback(() => {
         const token = sessionStorage.getItem("token");
         const options = {
             method: 'GET',
             headers: {
-                'Content-Type' : 'application/json',
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
         };
-        fetch('/api/admin/projects/user/'+datas.id, options)
+        fetch('/api/admin/projects/user/' + datas.id, options)
             .then(res => res.json())
-            .then((res)=>{
+            .then((res) => {
                 datas.setProjectsOfUser(res)
                 datas.setSelectedUser(datas.id)
                 datas.handleShowSelectedUserProjects(true);
             })
 
-    },[datas])
+    }, [datas])
     /*const handleClick = useCallback(() => {
         sessionStorage.setItem("user",datas.id)
 
     }, [datas.id])*/
 
-
     return (
         <>
             <tr className='table border-bottom border-2 border-secondary'>
-                <td align={"center"} valign={"middle"}>{datas.lastName+" "+datas.firstName}</td>
+                <td align={"center"} valign={"middle"}>{datas.nom + " " + datas.prenom}</td>
                 <td align={"center"} valign={"middle"}>{datas.mail}</td>
                 <td align={"center"} valign={"middle"}>
-                    <Button className="m-3" variant="secondary" onClick={handleShowSelectedUserProjects}>Visualiser ces projets</Button>
+                    <Button className="m-3" variant="secondary" onClick={handleShowSelectedUserProjects}>Visualiser ces
+                        projets</Button>
                     <Button className="m-3" variant="outline-danger" onClick={handleShowDeletePopup}>Supprimer</Button>
                 </td>
             </tr>
-            <Modal show={datas.showDeleteUser} onHide={handleCancel}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Supprimer l'utilisateur</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Es-tu sûr de vouloir supprimer cet utilisateur ?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCancel}>
-                        Annuler
-                    </Button>
-                    <Button variant="outline-danger" onClick={datas.handleDeleteUser}>
-                        Supprimer
-                    </Button>
-                </Modal.Footer>
-            </Modal>
         </>
 
 
@@ -236,30 +240,20 @@ function LigneTableauProjects(datas) {
 
     const navigate = useNavigate()
 
-
-
-    /**
-     * Hide pop-up if deletion of user is refused
-     */
-    const handleCancel = useCallback(() => {
-        datas.setDeletedProject(null)
-        datas.handleShowDeleteProject(false);
-    },[datas])
-
     /**
      * Show the pop-up when you push the button delete user
      */
     const handleShowDeletePopup = useCallback(() => {
         datas.setDeletedProject(datas.project)
         datas.handleShowDeleteProject(true);
-    },[datas])
+    }, [datas])
 
     /**
      * Show the result of a user
      */
     const handleShowResult = useCallback(() => {
-        navigate('/result?id='+datas.project.id)
-    },[datas,navigate])
+        navigate('/result?id=' + datas.project.id)
+    }, [datas, navigate])
 
     return (
         <>
@@ -271,23 +265,7 @@ function LigneTableauProjects(datas) {
                     <Button className="m-3" variant="outline-danger" onClick={handleShowDeletePopup}>Supprimer</Button>
                 </td>
             </tr>
-            <Modal show={datas.showDeleteProjects} onHide={handleCancel}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Supprimer l'utilisateur</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Es-tu sûr de vouloir supprimer cet utilisateur ?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCancel}>
-                        Annuler
-                    </Button>
-                    <Button variant="outline-danger" onClick={datas.handleDeleteProject}>
-                        Supprimer
-                    </Button>
-                </Modal.Footer>
-            </Modal>
         </>
-
-
     );
 }
 
@@ -297,18 +275,18 @@ function LigneTableauProjects(datas) {
  * @returns {JSX.Element}
  * @constructor
  */
-function UsersList(props){
+function UsersList(props) {
     const [items, setItems] = useState([]);
-    const { search } = window.location;
+    const {search} = window.location;
     const query = new URLSearchParams(search).get('s');
     const [apiError, setApiError] = useState(null);
-    const [deletedUser,setDeletedUser] = useState(null);
+    const [deletedUser, setDeletedUser] = useState(null);
     const [showDeleteUser, setShowDeleteUser] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState(query || '')
-    const handleSearchChange = useCallback((event)=>{
+    const handleSearchChange = useCallback((event) => {
         setSearchQuery(event.target.value)
-    },[])
+    }, [])
 
     const filteredItems = filterItems(items, searchQuery);
 
@@ -316,20 +294,20 @@ function UsersList(props){
      * Dissociate the project describe by the id
      * @type {(function(*=): void)|*}
      */
-    const handleDeleteUser= useCallback(()=>{
+    const handleDeleteUser = useCallback(() => {
         const token = sessionStorage.getItem("token");
-        const jsonBody = {idToBan : deletedUser.id}
+        const jsonBody = {idToBan: deletedUser.id}
         const options = {
             method: 'PATCH',
             headers: {
-                'Content-Type' : 'application/json',
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(jsonBody)
         };
         fetch('/api/admin/ban', options)
             .then(res => res.json())
-            .then(()=>{
+            .then(() => {
                 const copyItems = [...filteredItems];
                 copyItems.splice(filteredItems.indexOf(deletedUser), 1);
                 setItems(copyItems);
@@ -337,7 +315,7 @@ function UsersList(props){
             })
 
 
-    },[setShowDeleteUser,deletedUser,filteredItems])
+    }, [setShowDeleteUser, deletedUser, filteredItems])
     const navigate = useNavigate()
     useEffect(() => {
         const token = sessionStorage.getItem("token")
@@ -350,7 +328,7 @@ function UsersList(props){
         };
         fetch('/api/profil/users', options)
             .then(res => {
-                if(res.status === 403){
+                if (res.status === 403) {
                     navigate("/logout")
                 }
                 return res.json()
@@ -364,6 +342,15 @@ function UsersList(props){
                 }
             )
     }, [navigate])
+
+
+    /**
+     * Hide pop-up if deletion of user is refused
+     */
+    const handleCancel = useCallback(() => {
+        setDeletedUser(null)
+        setShowDeleteUser(false);
+    }, [setDeletedUser, setShowDeleteUser])
 
     if (apiError) {
         return (
@@ -386,18 +373,31 @@ function UsersList(props){
                                                itemSelected={item}
                                                itemsList={filteredItems}
                                                setProjectsOfUser={props.setProjectsOfUser}
-                                               showDeleteUser={showDeleteUser}
-                                               handleShowDeleteUser={setShowDeleteUser}
                                                setDeletedUser={setDeletedUser}
                                                setItems={setItems}
-                                               handleDeleteUser={handleDeleteUser}
                                                setSelectedUser={props.setSelectedUser}
                                                handleShowSelectedUserProjects={props.setShowSelectedUserProjects}
+                                               handleShowDeleteUser={setShowDeleteUser}
                             >{item.nom}</LigneTableauUsers>
                         ))}
                         </tbody>
                     </Table>
                 </Container>
+
+                <Modal show={showDeleteUser} onHide={handleCancel}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Supprimer l'utilisateur</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Es-tu sûr de vouloir supprimer cet utilisateur ?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCancel}>
+                            Annuler
+                        </Button>
+                        <Button variant="outline-danger" onClick={handleDeleteUser}>
+                            Supprimer
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </>
         );
 
@@ -411,7 +411,7 @@ function UsersList(props){
  * @constructor
  */
 function SearchBar(datas) {
-    return(
+    return (
         <>
             <label htmlFor="header-search">
                 <span className="visually-hidden">Recherchez des utilisateurs</span>

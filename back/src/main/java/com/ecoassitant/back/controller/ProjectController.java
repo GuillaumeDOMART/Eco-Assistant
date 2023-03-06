@@ -114,7 +114,7 @@ public class ProjectController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         var profil = profilEntityOptional.get();
-        if(profil.getIsAdmin() < 0){
+        if(profil.getIsAdmin() == -3 || profil.getIsAdmin() == -2){
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
         var projetEntity = ProjectEntity.builder()
