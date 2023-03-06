@@ -46,7 +46,6 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
     public boolean saveResponseDonnees(ReponseDonneesDto responses) {
         var project = projetRepository.findById(responses.getProjetId());
         if (project.isEmpty()) {
-            System.out.println("4");
             return false;
             //throw new IllegalArgumentException();
         }
@@ -56,7 +55,6 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
 
         while (result && reponseDtoIterator.hasNext()) {
             var reponseDto = reponseDtoIterator.next();
-            System.out.println(reponseDto.getQuestionId());
             var question = questionRepository.findById(reponseDto.getQuestionId());
             if (question.isEmpty()) {
                 result = false;

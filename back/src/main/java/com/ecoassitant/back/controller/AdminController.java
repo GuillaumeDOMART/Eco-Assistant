@@ -65,6 +65,7 @@ public class AdminController {
         if(projets.isEmpty()){
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
+        System.out.println("projets = " + projets);
         return new ResponseEntity<>(projets.get(),HttpStatus.OK);
     }
 }

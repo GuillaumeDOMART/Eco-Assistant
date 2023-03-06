@@ -24,18 +24,17 @@ function ProfilVerifyMail() {
             headers: myHeaders,
             redirect: 'follow'
         };
-        fetch("/api/profil/register", requestOptions)
+        fetch("/api/profil/changeMailVerify", requestOptions)
             .then(response => {
                 if (response.status === 403) {
                     setShowAlert(true);
                 } else {
-                    return response.json()
+                    return response.json();
                 }
-            })
-            .then(json => {
-                sessionStorage.setItem("token", json.token)
-                navigate("/profil");
-            })
+            }).then(json => {
+                sessionStorage.setItem("token",json.token);
+                navigate("/profil")
+        })
     }, [navigate]);
 
     return (
