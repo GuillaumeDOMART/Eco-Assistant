@@ -24,7 +24,7 @@ public class Operand implements OperationElem {
 
     @Override
     public TypeOp type() {
-        return TypeOp.OPERANDE;
+        return TypeOp.OPERAND;
     }
 
     @Override

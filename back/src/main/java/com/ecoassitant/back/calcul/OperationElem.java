@@ -5,7 +5,7 @@ package com.ecoassitant.back.calcul;
  */
 public interface OperationElem {
     /**
-     * type of the OperationElem (OPERANDE or OPERATEUR)
+     * type of the OperationElem (OPERAND or OPERATOR)
      * @return Enum for type
      */
     TypeOp type();

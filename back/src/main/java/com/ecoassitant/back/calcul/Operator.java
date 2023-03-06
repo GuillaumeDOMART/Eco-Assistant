@@ -14,9 +14,9 @@ public interface Operator extends OperationElem {
 
     /**
      * indicate the type of the Operate
-     * @return  TypeOp.OPERATEUR
+     * @return  TypeOp.OPERATOR
      */
     default TypeOp type() {
-        return TypeOp.OPERATEUR;
+        return TypeOp.OPERATOR;
     }
 }

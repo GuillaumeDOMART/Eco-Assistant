@@ -54,7 +54,7 @@ public class ReformedOperation {
             stack3.push(stack.pop());
         while (!stack3.isEmpty()){
             var op = stack3.pop();
-            if(op.type().equals(TypeOp.OPERANDE)) {
+            if(op.type().equals(TypeOp.OPERAND)) {
                 Operand operand = (Operand) op;
                 stack2.push(operand.val());
             }
