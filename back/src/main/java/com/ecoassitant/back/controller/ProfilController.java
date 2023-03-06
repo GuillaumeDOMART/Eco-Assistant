@@ -114,11 +114,12 @@ public class ProfilController {
 
     /**
      * Function to finalize profile creation
+     *
      * @param authorizationHeader bearer token
      * @return if the account was created
      */
     @PatchMapping("profil/register")
-    public ResponseEntity<Boolean> register(@RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<TokenDto> register(@RequestHeader("Authorization") String authorizationHeader) {
         return profilService.register(authorizationHeader.substring(7));
     }
     /**
@@ -150,7 +151,7 @@ public class ProfilController {
      * @return True if the mail has been modified, false otherwise
      */
     @PatchMapping("/profil/changeMail")
-    public ResponseEntity<TokenDto> changeMail(@RequestHeader("Authorization") String authorizationToken, @RequestBody ForgotMailInput mailInput) {
+    public ResponseEntity<Boolean> changeMail(@RequestHeader("Authorization") String authorizationToken, @RequestBody ForgotMailInput mailInput) {
         var token = authorizationToken.substring(7);
         return profilService.changeMail(token, mailInput.getMail());
     }
@@ -166,5 +167,17 @@ public class ProfilController {
     @PatchMapping("/profil/changePassword")
     public ResponseEntity<Boolean> changePassword(@RequestHeader("Authorization") String authorizationToken, @RequestBody ForgotPasswordVerifyDto passwords) {
         return profilService.changePasswordWithToken(authorizationToken, passwords.getPassword(), passwords.getOldPassword());
+    }
+
+    /**
+     * Method to change the mail of the logged user
+     *
+     * @param authorizationToken Authorization token of the logged user
+     * @return True if the mail has been modified, false otherwise
+     */
+    @PatchMapping("/profil/changeMailVerify")
+    public ResponseEntity<TokenDto> changeMailVerify(@RequestHeader("Authorization") String authorizationToken) {
+        var token = authorizationToken.substring(7);
+        return profilService.changeMailVerify(token);
     }
 }

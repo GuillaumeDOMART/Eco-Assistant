@@ -1,5 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
+import com.ecoassitant.back.EmailSenderService;
 import com.ecoassitant.back.config.JwtService;
 import com.ecoassitant.back.dto.ForgotPasswordVerifyDto;
 
@@ -13,6 +14,7 @@ import com.ecoassitant.back.repository.ProfilRepository;
 import com.ecoassitant.back.service.ProfilService;
 import com.ecoassitant.back.utils.StringGeneratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,18 +40,23 @@ public class ProfilServiceImpl implements ProfilService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final Validator validator;
+    private final EmailSenderService emailSenderService;
+
+    @Value("${DOMAIN}")
+    private String domain;
 
     /**
      * Default constructor for ProfilServiceImpl
      */
     @Autowired
-    public  ProfilServiceImpl(ProfilRepository repository, JwtService jwtService, ProfilRepository profilRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, Validator validator){
+    public  ProfilServiceImpl(ProfilRepository repository, JwtService jwtService, ProfilRepository profilRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, Validator validator, EmailSenderService emailSenderService){
         this.repository = repository;
         this.jwtService=jwtService;
         this.profilRepository = profilRepository;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.validator = validator;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -157,16 +164,17 @@ public class ProfilServiceImpl implements ProfilService {
     }
 
     @Override
-    public ResponseEntity<Boolean> register(String token) {
+    public ResponseEntity<TokenDto> register(String token) {
         var mail = jwtService.extractMail(token);
         var profil = repository.findByMail(mail);
         if (profil.isPresent() && profil.get().getIsAdmin() == -2){
             var profilValue = profil.get();
             profilValue.setIsAdmin(0);
             repository.save(profilValue);
-            ResponseEntity.ok(true);
+            var newToken  = jwtService.generateToken(profilValue);
+            return ResponseEntity.ok(new TokenDto(newToken));
         }
-        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -226,7 +234,7 @@ public class ProfilServiceImpl implements ProfilService {
      * @param newMail new mail to change
      * @return the new token of the user based on the new mail
      */
-    public ResponseEntity<TokenDto> changeMail(String token, String newMail) {
+    public ResponseEntity<Boolean> changeMail(String token, String newMail) {
         var mail = jwtService.extractMail(token);
         var profil = profilRepository.findByMail(mail);
         if (profil.isEmpty()) {
@@ -236,17 +244,44 @@ public class ProfilServiceImpl implements ProfilService {
         if (profilRepository.findByMail(newMail).isPresent()) {
             throw new DataIntegrityViolationException("L'adresse mail est déjà associé à un compte");
         }
-
         var user = profil.get();
-        System.out.println("user = " + user);
-        user.setMail(newMail);
         var violations = validator.validate(user);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
-        //Envoyer un nouveau mail pour verifier le mail plutôt de le changer ici
+
+        var tokenChangeMail = jwtService.generateShortTokenChangeMail(user,newMail);
+
+        emailSenderService.sendEmail(newMail, "Eco-Assistant: Changement de mail", "Voici le lien pour changer votre mail : https://"+domain+"/modifyIDVerify?token="+tokenChangeMail);
+
+        return ResponseEntity.ok(true);
+    }
+
+    /**
+     * Method to change the mail of the current user
+     *
+     * @param token   token of the current user
+     * @return the new token of the user based on the new mail
+     */
+    public ResponseEntity<TokenDto> changeMailVerify(String token) {
+        var oldMail = jwtService.extractMail(token);
+        var newMail = jwtService.extractNewMail(token);
+        if(newMail == null){
+            return new ResponseEntity<>(null,HttpStatus.FORBIDDEN);
+        }
+        var profil = profilRepository.findByMail(oldMail);
+
+       if(profil.isEmpty()){
+           throw new NoSuchElementInDataBaseException();
+       }
+
+       var user = profil.get();
+
+
+       user.setMail(newMail);
+       profilRepository.save(user);
+
         var newToken = new TokenDto(jwtService.generateToken(user));
-        profilRepository.save(user);
 
         return ResponseEntity.ok(newToken);
     }

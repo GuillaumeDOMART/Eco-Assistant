@@ -81,10 +81,11 @@ public interface ProfilService {
 
     /**
      * Function to finalize account creation
+     *
      * @param token then token
      * @return is the creation was successfully
      */
-    ResponseEntity<Boolean> register(String token);
+    ResponseEntity<TokenDto> register(String token);
 
     /**
      * Function to change password for a user with a token authentication
@@ -102,5 +103,13 @@ public interface ProfilService {
      * @param newMail new mail to change
      * @return the new token of the user based on the new mail
      */
-    ResponseEntity<TokenDto> changeMail(String token, String newMail);
+    ResponseEntity<Boolean> changeMail(String token, String newMail);
+
+    /**
+     * Method to change the mail of the current user
+     *
+     * @param token   token of the current user
+     * @return the new token of the user based on the new mail
+     */
+    ResponseEntity<TokenDto> changeMailVerify(String token);
 }

@@ -46,7 +46,6 @@ public class JwtService {
      * @return the token
      */
     public String generateToken(ProfilEntity profilEntity, Map<String, Object> claims, int time){
-        System.out.println(SECRET_KEY);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(profilEntity.getMail())
@@ -63,6 +62,16 @@ public class JwtService {
      */
     public String generateShortToken(ProfilEntity profilEntity){
         return generateToken(profilEntity, new HashMap<>(),900000);
+    }
+
+    /**
+     * Function for generate token with an expiration of 15min from a profile for change password
+     * @param profilEntity profile use for generate token
+     * @return the token
+     */
+    public String generateShortTokenChangeMail(ProfilEntity profilEntity, String email){
+        Map<String, Object> hashMap = Map.of("newMail",email);
+        return generateToken(profilEntity, hashMap,900000);
     }
 
     /**
@@ -154,6 +163,15 @@ public class JwtService {
      */
     public boolean extractVerify(String token){
         return (boolean) extractClaim(token, claims -> claims.get("verify"));
+    }
+
+    /**
+     * Function to extract newMail claims
+     * @param token the token of the user
+     * @return return newMail claim.
+     */
+    public String extractNewMail(String token){
+        return (String) extractClaim(token, claims -> claims.get("newMail"));
     }
 
     /**
