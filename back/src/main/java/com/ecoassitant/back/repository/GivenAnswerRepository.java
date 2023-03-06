@@ -19,7 +19,7 @@ public interface GivenAnswerRepository extends JpaRepository<GivenAnswerEntity, 
      * @param projet project linked of the ReponseDonnee
      * @return list ReponseDonnee linked of project
      */
-    List<GivenAnswerEntity> findByReponseDonneeKey_Projet(ProjectEntity projet);
+    List<GivenAnswerEntity> findByGivenAnswerKey_Project(ProjectEntity project);
 
     /**
      * find a reponsedonnee in the data

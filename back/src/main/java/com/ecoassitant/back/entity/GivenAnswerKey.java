@@ -14,18 +14,18 @@ public class GivenAnswerKey implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "projetid", nullable = false)
-    private ProjectEntity projet;
+    private ProjectEntity project;
 
     @OneToOne
     @JoinColumn(name = "questionid", nullable = false)
     private QuestionEntity question;
 
     public ProjectEntity getProjet() {
-        return projet;
+        return project;
     }
 
     public void setProjet(ProjectEntity projet) {
-        this.projet = projet;
+        this.project = projet;
     }
 
     public QuestionEntity getQuestion() {
