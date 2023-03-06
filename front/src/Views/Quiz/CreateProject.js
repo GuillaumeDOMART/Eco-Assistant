@@ -27,13 +27,14 @@ function Project({onSubmit, register, fieldErrors, errors}) {
                 <FormLabel id="demo-row-radio-buttons-group-label"> Type du projet </FormLabel>
                 <RadioGroup className={"justify-content-center align-items-center"} row aria-label="type"
                             name="type" {...register("type", {required: true})}>
-                    <FormControlLabel value="simulation" control={<Radio/>} label="Simulation"
+                    <FormControlLabel value="SIMULATION" control={<Radio/>} label="Simulation"
                                       {...register("type", {required: true})}/>
-                    <FormControlLabel value="project" control={<Radio/>}
+                    <FormControlLabel value="PROJET" control={<Radio/>}
                                       label="Project" {...register("type", {required: true})}
                                       required/>
                 </RadioGroup>
-                <FormHelperText className={"text-center"} error>{errors.type && "Veuillez sélectionner une option"}</FormHelperText>
+                <FormHelperText className={"text-center"}
+                                error>{errors.type && "Veuillez sélectionner une option"}</FormHelperText>
                 <Button type="submit">Créer le projet</Button><br/>
             </form>
         </Col>
