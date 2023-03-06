@@ -22,14 +22,14 @@ public class ProjectEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_sequence")
     @SequenceGenerator(name = "project_sequence", sequenceName = "project_sequence", allocationSize = 1)
     @Column(name = "idprojet", nullable = false)
-    private Integer idProjet;
+    private Integer idProject;
 
     @ManyToOne
     @JoinColumn(name = "profilid", nullable = false)
     private ProfilEntity profil;
 
     @Column(name = "nomprojet", nullable = false)
-    private String nomProjet;
+    private String nomProject;
 
     @Column(name = "state", nullable = false)
     @Enumerated(EnumType.STRING)
