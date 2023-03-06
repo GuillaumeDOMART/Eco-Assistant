@@ -71,7 +71,7 @@ public class AdminServiceImpl implements AdminService {
         }
         var projectValue = project.get();
         projectRepository.delete(projectValue);
-        emailSenderService.sendEmail(projectValue.getProfil().getMail(), "Eco-Assistant: Bannissement de votre compte", "Nous vous informons qu'un administrateur a banni votre projet "+projectValue.getNomProjet()+".");
+        emailSenderService.sendEmail(projectValue.getProfil().getMail(), "Eco-Assistant: Bannissement de votre compte", "Nous vous informons qu'un administrateur a banni votre projet "+projectValue.getProjectName()+".");
         return true;
     }
 

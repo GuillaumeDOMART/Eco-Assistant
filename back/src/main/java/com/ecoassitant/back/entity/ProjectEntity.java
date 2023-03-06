@@ -29,7 +29,7 @@ public class ProjectEntity implements Serializable {
     private ProfilEntity profil;
 
     @Column(name = "nomprojet", nullable = false)
-    private String nomProject;
+    private String projectName;
 
     @Column(name = "state", nullable = false)
     @Enumerated(EnumType.STRING)

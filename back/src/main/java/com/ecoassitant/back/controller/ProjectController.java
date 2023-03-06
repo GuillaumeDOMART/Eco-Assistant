@@ -118,13 +118,13 @@ public class ProjectController {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
         var projetEntity = ProjectEntity.builder()
-                .nomProjet(project.getName())
+                .projectName(project.getName())
                 .profil(profil)
                 .state(State.EN_COURS)
                 .type(project.getType().equals("simulation") ? TypeP.SIMULATION : TypeP.PROJET)
                 .build();
         projectRepository.save(projetEntity);
-        return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProjet()), HttpStatus.OK);
+        return new ResponseEntity<>(new ProjectIdDto(projetEntity.getIdProject()), HttpStatus.OK);
     }
 
     /**
@@ -151,10 +151,10 @@ public class ProjectController {
         if (anoProfilOptional.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        project.setNomProjet(generateRandomString(8));
+        project.setProjectName(generateRandomString(8));
         project.setProfil(anoProfilOptional.get());
         projectRepository.save(project);
-        return new ResponseEntity<>(new ProjectIdDto(project.getIdProjet()), HttpStatus.OK);
+        return new ResponseEntity<>(new ProjectIdDto(project.getIdProject()), HttpStatus.OK);
 
     }
 
@@ -200,7 +200,7 @@ public class ProjectController {
         }
 
         var projectEntity = ProjectEntity.builder()
-                .nomProjet(projectIdDto.getProjectName())
+                .projectName(projectIdDto.getProjectName())
                 .profil(profile.get())
                 .state(State.EN_COURS)
                 .type(projectIdDto.getProjectType())
