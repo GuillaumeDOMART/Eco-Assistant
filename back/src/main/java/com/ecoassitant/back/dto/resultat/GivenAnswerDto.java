@@ -8,7 +8,7 @@ import java.util.List;
  * Reponses of a project
  */
 @NoArgsConstructor
-public class ReponseDonneesDto {
+public class GivenAnswerDto {
     private String projetId;
     private List<ReponseDto> reponses;
 

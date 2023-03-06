@@ -1,6 +1,6 @@
 package com.ecoassitant.back.service.impl;
 
-import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
+import com.ecoassitant.back.dto.resultat.GivenAnswerDto;
 import com.ecoassitant.back.dto.resultat.ReponseDto;
 import com.ecoassitant.back.entity.ProjectEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
@@ -43,7 +43,7 @@ public class GivenAnswerServiceImpl implements GivenAnswerService {
     }
 
     @Override
-    public boolean saveResponseDonnees(ReponseDonneesDto responses) {
+    public boolean saveResponseDonnees(GivenAnswerDto responses) {
         var project = projectRepository.findById(responses.getProjetId());
         if (project.isEmpty()) {
             return false;
