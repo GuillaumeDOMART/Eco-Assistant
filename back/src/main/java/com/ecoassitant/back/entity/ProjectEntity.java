@@ -31,7 +31,7 @@ public class ProjectEntity implements Serializable {
     @Column(name = "nomprojet", nullable = false)
     private String projectName;
 
-    @Column(name = "state", nullable = false)
+    @Column(name = "etat", nullable = false)
     @Enumerated(EnumType.STRING)
     private State state;
 

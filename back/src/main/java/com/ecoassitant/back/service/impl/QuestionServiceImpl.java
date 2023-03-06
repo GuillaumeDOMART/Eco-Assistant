@@ -41,7 +41,7 @@ QuestionServiceImpl implements QuestionService {
      * @return questions with the response of the previous quiz
      */
     private List<QuestionUniqueDto> completQuiz(List<QuestionUniqueDto> questions, Integer idProject) {
-        var project = projectRepository.findById(idProject);
+        var project = projectRepository.findByIdProject(idProject);
         if (project.isEmpty())
             return new ArrayList<QuestionUniqueDto>();
         var responses = givenAnswerRepository.findByGivenAnswerKey_Project(project.get());
