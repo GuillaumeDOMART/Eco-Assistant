@@ -183,7 +183,7 @@ public class JwtService {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler({JwtException.class, IllegalArgumentException.class})
     @ResponseBody
-    public Map<String, String> handleDataViolationExceptions(DataIntegrityViolationException ex) {
+    public Map<String, String> handleJWTExceptions(DataIntegrityViolationException ex) {
         return Map.of("error", "invalid token");
     }
 }
