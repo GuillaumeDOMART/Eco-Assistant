@@ -103,6 +103,17 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
         reponseDonneeRepository.saveAll(responses);
     }
 
+    /**
+     * save responseDonneeEntity in BDD
+     * @param answer ResponseDonnee
+     * @return the ResponseDonnee save
+     */
+    @Override
+    public ReponseDonneeEntity saveResponse(ReponseDonneeEntity answer) {
+        System.out.println("toto");
+        return reponseDonneeRepository.save(answer);
+    }
+
     @Override
     public List<ReponseDonneeEntity> findReponsesByProject(ProjetEntity projet) {
         return reponseDonneeRepository.findByReponseDonneeKey_Projet(projet);

@@ -31,5 +31,14 @@ public class ReponseDonneeEntity implements Serializable {
     public void updateReponseDonneeProjectId(ProjetEntity project) {
         this.reponseDonneeKey.setProjet(project);
     }
+
+    @Override
+    public String toString() {
+        return "ReponseDonneeEntity{" +
+                "projetId=" + reponseDonneeKey.getProjet().getIdProjet() +
+                ", reponsePos=" + reponsePos.getIntitule() +
+                ", entry=" + entry +
+                '}';
+    }
 }
 
