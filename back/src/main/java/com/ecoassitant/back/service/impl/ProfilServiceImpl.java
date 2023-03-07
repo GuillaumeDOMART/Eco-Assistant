@@ -111,10 +111,10 @@ public class ProfilServiceImpl implements ProfilService {
         if(profilOwner.getIsAdmin() < 0){
             throw new ViolationConnectionException();
         }
-        profilOwner.setFirstname(generateRandomString(8));
-        profilOwner.setMail("guest"+generateRandomString(8)+"@eco-assistant-esipe.fr");
-        profilOwner.setLastname(generateRandomString(8));
-        profilOwner.setPassword(generateRandomString(8));
+        profilOwner.setFirstname(StringGeneratorUtils.generateRandomString(8));
+        profilOwner.setMail("guest"+StringGeneratorUtils.generateRandomString(8)+"@eco-assistant-esipe.fr");
+        profilOwner.setLastname(StringGeneratorUtils.generateRandomString(8));
+        profilOwner.setPassword(StringGeneratorUtils.generateRandomPassword());
         profilOwner.setIsAdmin(-1);
         var savedEntity = repository.save(profilOwner);
         return Optional.of(new ProfilIdDto(savedEntity.getIdProfil()));
@@ -155,16 +155,6 @@ public class ProfilServiceImpl implements ProfilService {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
         return changePassword(mail, forgotPasswordVerifyDto.getPassword());
-    }
-
-    /**
-     * Function to generate a random string
-     *
-     * @param length the length of the random string
-     * @return the random string
-     */
-    private static String generateRandomString(int length) {
-        return StringGeneratorUtils.generateRandomString(length);
     }
 
     @Override
