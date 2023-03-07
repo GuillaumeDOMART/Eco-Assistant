@@ -1,7 +1,7 @@
 package com.ecoassitant.back.calcul;
 
 /**
- * Object for represente addition, substraction...  of a calcul
+ * Object to represent addition, substraction...  of a operation
  */
 public interface Operateur extends OperationElem {
     /**

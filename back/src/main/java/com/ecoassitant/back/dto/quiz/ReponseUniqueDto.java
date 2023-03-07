@@ -1,10 +1,9 @@
 package com.ecoassitant.back.dto.quiz;
 
-import com.ecoassitant.back.dto.quiz.ReponsePossibleDto;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 
 /**
- * Reponse for QuestionUniqueDto
+ * Response for QuestionUniqueDto
  */
 public class ReponseUniqueDto {
     private Long questionSuivId;
