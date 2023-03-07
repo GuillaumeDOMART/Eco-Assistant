@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -84,7 +85,7 @@ public class ProfilServiceImpl implements ProfilService {
         if(connectedProfil.getIsAdmin()!=1){
             return Optional.empty();
         }
-        var profilUsersEntityList = repository.findByIsAdmin(0);
+        var profilUsersEntityList = repository.findByIsAdminIn(List.of(0,-1));
         var profilUsersDtoList = profilUsersEntityList.stream().map(ProfilDto::new).toList();
         return Optional.of(profilUsersDtoList);
     }
@@ -155,6 +156,14 @@ public class ProfilServiceImpl implements ProfilService {
     public ResponseEntity<Boolean> forgotPasswordMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
+        var profil = profilRepository.findByMail(mail);
+        if(profil.isPresent()) {
+            var profilValue = profil.get();
+            if(profilValue.getIsAdmin() == -2){
+                profilValue.setIsAdmin(0);
+                profilRepository.save(profilValue);
+            }
+        }
         return changePassword(mail, forgotPasswordVerifyDto.getPassword());
     }
 
