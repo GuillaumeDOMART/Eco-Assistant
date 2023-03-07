@@ -35,5 +35,10 @@ public interface ReponseDonneesService {
      */
     void saveResponseDonnees(List<ReponseDonneeEntity> responses);
 
+    /**
+     * save responseDonneeEntity in BDD
+     * @param answer ResponseDonnee
+     * @return the ResponseDonnee save
+     */
     ReponseDonneeEntity saveResponse(ReponseDonneeEntity answer);
 }
