@@ -189,7 +189,10 @@ function StepperComponent() {
 
     useEffect(() => {
         handlePhase().then(() => reset())
-    }, [handlePhase, reset])
+        if (!sessionStorage.getItem("project")) {
+            navigate("/")
+        }
+    }, [handlePhase, reset, navigate])
 
     if (errorApiGetQuestionnaire) {
         return <div>Error: {errorApiGetQuestionnaire.message}</div>;

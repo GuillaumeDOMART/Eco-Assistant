@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {Button, FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup, TextField} from "@mui/material";
 import {Col, Container, Row} from "react-bootstrap";
-import {useCallback, useState} from "react";
+import {useCallback, useState, useEffect} from "react";
 import React from "react";
 
 
@@ -114,6 +114,13 @@ function CreateProject() {
             navigate("/profil")
         }
     }, [navigate]);
+
+
+    useEffect(() => {
+        if (!sessionStorage.getItem("token")) {
+            navigate("/")
+        }
+        }, [navigate])
 
     return (
         <Container fluid>
