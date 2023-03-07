@@ -29,6 +29,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Implementation of ProfilService
@@ -237,10 +238,12 @@ public class ProfilServiceImpl implements ProfilService {
         if (profilRepository.findByMail(newMail).isPresent()) {
             throw new DataIntegrityViolationException("L'adresse mail est déjà associé à un compte");
         }
+
         var user = profil.get();
         if(user.getIsAdmin() < 0){
             throw new ViolationConnectionException();
         }
+
         var violations = validator.validate(user);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);

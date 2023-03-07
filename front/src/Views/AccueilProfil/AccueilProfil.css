@@ -1,0 +1,31 @@
+/* CSS for personalized radio buttons */
+.form-check-input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #6B7280;
+    background-color: #fff;
+    margin-right: 8px;
+    position: relative;
+    top: 3px;
+    cursor: pointer;
+}
+
+.form-check-input[type="radio"]:checked:before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: #6B7280;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+}
+
+.error-message {
+    font-size: 14px;
+    color: red;
+}
