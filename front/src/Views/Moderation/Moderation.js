@@ -205,7 +205,7 @@ function LigneTableauUsers(datas) {
                 <td align={"center"} valign={"middle"}>{datas.nom + " " + datas.prenom}</td>
                 <td align={"center"} valign={"middle"}>{datas.mail}</td>
                 <td align={"center"} valign={"middle"}>
-                    <Button className="m-3" variant="secondary" onClick={handleShowSelectedUserProjects}>Visualiser ces
+                    <Button className="m-3" variant="secondary" onClick={handleShowSelectedUserProjects}>Visualiser ses
                         projets</Button>
                     <Button className="m-3" variant="outline-danger" onClick={handleShowDeletePopup}>Supprimer</Button>
                 </td>
@@ -312,10 +312,11 @@ function UsersList(props) {
                 copyItems.splice(filteredItems.indexOf(deletedUser), 1);
                 setItems(copyItems);
                 setShowDeleteUser(false);
+                props.setProjectsOfUser([]);
             })
 
 
-    }, [setShowDeleteUser, deletedUser, filteredItems])
+    }, [setShowDeleteUser, deletedUser, filteredItems, props])
     const navigate = useNavigate()
     useEffect(() => {
         const token = sessionStorage.getItem("token")
