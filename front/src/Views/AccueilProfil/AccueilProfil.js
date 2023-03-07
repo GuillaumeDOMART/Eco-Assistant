@@ -235,7 +235,6 @@ function TableauProjets() {
                                        helperText={fieldErrors.nom}/><br/>
 
                             <div id="demo-row-radio-buttons-group-label"> Type du projet</div>
-                            <RadioGroup>
                                 <div className="form-check form-check-inline">
                                     <label>
                                         <input
@@ -268,7 +267,6 @@ function TableauProjets() {
                                     <div className="error-message" style={{fontSize: '14px', color: 'red'}}>
                                         Veuillez sélectionner un type de projet.</div>
                                 )}
-                            </RadioGroup>
                         </Modal.Body>
 
                         <Modal.Footer>
@@ -359,7 +357,7 @@ function LigneTableauProjet(datas) {
         <>
             <tr className='table border-bottom border-2 border-secondary'>
                 <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
-                <td align={"center"} valign={"middle"}>{datas.etat}</td>
+                <td align={"center"} valign={"middle"}>{datas.etat === "INPROGRESS" ? "En cours" : "Terminer"}</td>
                 <td align={"center"} valign={"middle"}>{datas.type}</td>
                 <td align={"center"} valign={"middle"}>
                     <ButtonSet idProject={datas.id}
