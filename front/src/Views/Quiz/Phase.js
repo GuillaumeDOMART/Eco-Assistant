@@ -2,7 +2,7 @@ import {NUMERIC, QCM} from "./QuestionType";
 import React, {useCallback} from "react";
 
 /**
- * gestion affuchage d'une question
+ * management display of a question
  * @param value question
  * @param register register du quiz
  * @param setSelectedAnswer
