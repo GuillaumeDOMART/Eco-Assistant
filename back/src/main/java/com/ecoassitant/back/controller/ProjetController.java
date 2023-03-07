@@ -5,6 +5,8 @@ import com.ecoassitant.back.dto.project.ProjectIdDto;
 import com.ecoassitant.back.dto.project.ProjetDto;
 import com.ecoassitant.back.dto.project.ProjetSimpleDto;
 import com.ecoassitant.back.entity.ProjetEntity;
+import com.ecoassitant.back.entity.ReponseDonneeEntity;
+import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.tools.Etat;
 import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.repository.ProfilRepository;
@@ -213,9 +215,15 @@ public class ProjetController {
         System.out.println("projetCopy = " + projetCopy);
 
         var answers = reponseDonneesService.findReponsesByProject(projet);
-        answers.forEach(answer -> answer.updateReponseDonneeProjectId(projetCopy));
-
-        reponseDonneesService.saveResponseDonnees(answers);
+        answers.forEach(answer -> {
+            var tmpRes = new ReponseDonneeEntity();
+            var tmp = new ReponseDonneeKey();
+            tmp.setProjet(projetCopy);
+            tmp.setQuestion(answer.getReponseDonneeKey().getQuestion());
+            tmpRes.setReponseDonneeKey(tmp);
+            tmpRes.setEntry(answer.getEntry());
+            tmpRes.setReponsePos(answer.getReponsePos());
+        });
 
         return new ResponseEntity<>(new ProjetDto(projetCopy), HttpStatus.OK);
 

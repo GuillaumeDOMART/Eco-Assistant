@@ -34,4 +34,6 @@ public interface ReponseDonneesService {
      * @return true if save in bdd has been successfull
      */
     void saveResponseDonnees(List<ReponseDonneeEntity> responses);
+
+    ReponseDonneeEntity saveResponse(ReponseDonneeEntity answer);
 }
