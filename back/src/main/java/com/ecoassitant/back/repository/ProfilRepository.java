@@ -3,6 +3,7 @@ package com.ecoassitant.back.repository;
 import com.ecoassitant.back.entity.ProfilEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,6 @@ public interface ProfilRepository extends JpaRepository<ProfilEntity, Integer> {
      * @param isAdmin represents the state of the user (admin, anonymous...)
      * @return List of profil not admin and not anonymous
      */
-    List<ProfilEntity> findByIsAdmin(Integer isAdmin);
+    List<ProfilEntity> findByIsAdminIn(Collection<Integer> isAdmin);
 
 }
