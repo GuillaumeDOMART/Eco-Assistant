@@ -22,7 +22,6 @@ function TableauProjets() {
 
     const handleRadioChange = useCallback((event) => {
         setSelectedValue(event.target.value);
-        console.log(event.target.value)
     }, [setSelectedValue]);
 
 
