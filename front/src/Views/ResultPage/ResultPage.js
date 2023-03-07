@@ -52,7 +52,7 @@ function ResultPage() {
                 datasets: [
                     {
                         label: 'Consommation en CO2',
-                        data: [result.planning, result.development, result.test, result.deployement, result.maintenance],
+                        data: [result.planning, result.development, result.test, result.deployment, result.maintenance],
                         backgroundColor: 'rgba(100, 198, 146, 0.2)',
                         borderWidth: 1
                     }
@@ -71,13 +71,13 @@ function ResultPage() {
      */
     const chartbulet = (phase, data) => {
         const instance = {
-            planification: [chartContainerPlanification, chartInstancePlanification],
-            developpement: [chartContainerDeveloppement, chartInstanceDeveloppement],
+            planning: [chartContainerPlanification, chartInstancePlanification],
+            development: [chartContainerDeveloppement, chartInstanceDeveloppement],
             test: [chartContainerTest, chartInstanceTest],
-            deploiement: [chartContainerDeploiment, chartInstanceDeploiement],
+            deployment: [chartContainerDeploiment, chartInstanceDeploiement],
             maintenance: [chartContainerMaintenance, chartInstanceMaintenance]
         }
-
+        console.log(phase)
         const chartContainer = instance[phase][0]
         const chartInstance = instance[phase][1]
         if (chartInstance.current) {
@@ -236,7 +236,8 @@ function ResultPage() {
                 navigate("/profil")
             })
             .then(jsonData => {
-                const arrays = ['planification', 'developpement', 'test', 'deploiement', 'maintenance'];
+                console.log(jsonData)
+                const arrays = ['planning', 'development', 'test', 'deployment', 'maintenance'];
                 const sums = {};
                 arrays.forEach(array => {
                     if (jsonData.mine[array]) {
@@ -253,6 +254,7 @@ function ResultPage() {
                     const mineTime = jsonData.mine[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
                     const mineTimeValue = mineTime === null ? 0 : mineTime;
                    jsonData.others.forEach(other => {
+                       console.log(other[array])
                        const results = other[array].map(item => item.result);
                        const sum = results.reduce((acc, current) => acc + current, 0);
                        const time = other[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]

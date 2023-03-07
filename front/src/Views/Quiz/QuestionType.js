@@ -9,21 +9,22 @@ import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
  */
 export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, ref) => {
 
+    console.log(question)
     const handleChange = useCallback((event) => {
         onChange(event);
         onVisibility(event)
     }, [onVisibility, onChange])
-    if (question.reponse === null) {
+    if (question.response === null) {
         return (
             <div style={{marginTop: '20px'}} className="shadow-lg rounded p-3">
-                <h5>{question.intitule}</h5>
+                <h5>{question.entitled}</h5>
                 <RadioGroup className="mx-5">
-                    {question.reponses.map((data) => {
+                    {question.responses.map((data) => {
                         return (
                             <FormControlLabel
-                                value={data.entitled}
-                                key={data.entitled}
-                                label={data.entitled}
+                                value={data.intitule}
+                                key={data.intitule}
+                                label={data.intitule}
                                 control={
                                     <Radio ref={ref} name={name} onChange={handleChange}/>
                                 }
@@ -36,14 +37,14 @@ export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, r
     }
     return (
         <div style={{marginTop: '20px'}} className="shadow-lg rounded p-3">
-            <h5>{question.intitule}</h5>
+            <h5>{question.entitled}</h5>
             <RadioGroup className="mx-5" defaultValue={question.response.response.entitled}>
                 {question.responses.map((data) => {
                     return (
                         <FormControlLabel
-                            value={data.entitled}
-                            key={data.entitled}
-                            label={data.entitled}
+                            value={data.intitule}
+                            key={data.intitule}
+                            label={data.intitule}
                             control={
                                 <Radio ref={ref} name={name} onChange={handleChange}/>
                             }
@@ -69,7 +70,7 @@ export const NUMERIC = ({question, register}) => {
             <div style={{marginTop: '20px'}} className="shadow-lg rounded">
                 <div className="mx-5 p-3">
                     <h5>{question.entitled}</h5><br/>
-                    {question.responses[0].entitled} : <input
+                    {question.responses[0].intitule} : <input
                     type={"number"}
                     {...register(question.questionId.toString())}
                     min={0}
@@ -83,7 +84,7 @@ export const NUMERIC = ({question, register}) => {
         <div style={{marginTop: '20px'}} className="shadow-lg rounded">
             <div className="mx-5 p-3">
                 <h5>{question.intitule}</h5><br/>
-                {question.responses[0].entitled} : <input
+                {question.responses[0].intitule} : <input
                 type={"number"}
                 {...register(question.questionId.toString())}
                 min={0}

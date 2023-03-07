@@ -34,9 +34,9 @@ function StepForm({
         >
             {data.map(question => {
                     const check = selectedAnswers.find(answer => {
-                        return question.dependance === answer.reponseId;
+                        return question.dependency === answer.reponseId;
                     })
-                    if (question.dependance === -1 || check) {
+                    if (question.dependency === -1 || check) {
                         return (
                             <Phase key={question.questionId}
                                    register={register}

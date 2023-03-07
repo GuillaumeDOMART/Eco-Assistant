@@ -276,10 +276,10 @@ function TableauProjets() {
 function ButtonSet(datas) {
     return (
         <>
-            {datas.state === "INPROGRESS" &&
+            {datas.state === "EN_COURS" &&
                 <Button className="m-3" variant="secondary" onClick={datas.handleClickModifyButton}>Modifier</Button>}
 
-            {datas.state === "FINISH" &&
+            {datas.state === "FINI" &&
                 <Button className="m-3" variant="primary" href={`/result?id=${datas.idProject}`}>Visionner</Button>}
 
             <Button className="m-3" variant="outline-primary" onClick={datas.handleShowCopy}>Créer une copie</Button>
@@ -332,7 +332,7 @@ function LigneTableauProjet(datas) {
                 <td align={"center"} valign={"middle"}>{datas.type}</td>
                 <td align={"center"} valign={"middle"}>
                     <ButtonSet idProject={datas.id}
-                               etat={datas.state}
+                               state={datas.state}
                                handleClickModifyButton={handleClick}
                                handleShowDissociate={executeHandleShowDissociate}
                                handleShowCopy={executeHandleShowCopy}

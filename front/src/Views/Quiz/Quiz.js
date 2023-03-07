@@ -47,6 +47,7 @@ function StepperComponent() {
             const json = await response.json();
             setIsLoaded(true);
             setData(json);
+            console.log(json)
             const selected = []
             json.forEach(question => {
                 if(question.type === 'QCM' && question.response !== null) {
@@ -99,10 +100,11 @@ function StepperComponent() {
     )
 
     const handleChange = useCallback((target, value) => {
-        const select = value.responses.find(val => val.entitled === target.target.value)
+        const select = value.responses.find(val => val.intitule === target.target.value)
+        console.log(select)
         const answer = {
             "question": target.target.name,
-            "reponseId": select.responseId
+            "reponseId": select.reponseId
         }
 
         selectedAnswers.forEach(val => {
@@ -200,6 +202,11 @@ function StepperComponent() {
             </>
         );
     }
+    console.log(steps)
+    console.log(activeStep)
+    console.log(data)
+    console.log(register)
+
     return (
         <Container fluid>
             <Row>
