@@ -121,7 +121,7 @@ function ResultPage() {
                         beginAtZero: true,
                         ticks: {
                             callback(value, __, ___) {
-                                return  `${value}kg CO2e`;
+                                return `${value}kg CO2e`;
                             }
                         },
                         title: {
@@ -129,7 +129,7 @@ function ResultPage() {
                             text: 'Consomation de la phase en kg CO2e'
                         }
                     },
-                    x:{
+                    x: {
                         beginAtZero: true,
                         ticks: {
                             callback(value, __, ___) {
@@ -151,7 +151,7 @@ function ResultPage() {
     /**
      * Function to create the pdf
      */
-    const handleDownloadPDF =  useCallback(() => {
+    const handleDownloadPDF = useCallback(() => {
         const canvas = chartContainerAll.current;
         const imgData = canvas.toDataURL('image/png', 1.0);
         const pdf = new jsPDF("p", "mm", "a4");
@@ -164,7 +164,7 @@ function ResultPage() {
             maxWidth: 170
         });
         pdf.addImage(imgData, 'JPEG', 15, 40, pdf.getImageProperties(imgData).width / diviseur, pdf.getImageProperties(imgData).height / diviseur);
-        pdf.text('Pour une consommation total de '+consommationTotal, marginLeft, 66, {
+        pdf.text(`Pour une consommation totale de ${consommationTotal} kg CO2e`, marginLeft, 66, {
             fontSize: 18,
             fontName: 'Helvetica',
             fontStyle: 'bold',
@@ -181,7 +181,7 @@ function ResultPage() {
             color: '#000000',
             maxWidth: 170
         });
-        pdf.addImage(imgDataP, 'JPEG',15,80, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+        pdf.addImage(imgDataP, 'JPEG', 15, 80, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur) * 2.5);
 
         const canvasD = chartContainerDeveloppement.current;
         const imgDataD = canvasD.toDataURL('image/png', 1.0);
@@ -192,7 +192,7 @@ function ResultPage() {
             color: '#000000',
             maxWidth: 170
         });
-        pdf.addImage(imgDataD, 'JPEG',15, 135,  pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+        pdf.addImage(imgDataD, 'JPEG', 15, 135, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur) * 2.5);
 
         const canvasT = chartContainerTest.current;
         const imgDataT = canvasT.toDataURL('image/png', 1.0);
@@ -203,7 +203,7 @@ function ResultPage() {
             color: '#000000',
             maxWidth: 170
         });
-        pdf.addImage(imgDataT, 'JPEG', 15, 190, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+        pdf.addImage(imgDataT, 'JPEG', 15, 190, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur) * 2.5);
 
         const canvasDE = chartContainerDeploiment.current;
         const imgDataDE = canvasDE.toDataURL('image/png', 1.0);
@@ -214,7 +214,7 @@ function ResultPage() {
             color: '#000000',
             maxWidth: 170
         });
-        pdf.addImage(imgDataDE, 'JPEG', 15, 245,pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+        pdf.addImage(imgDataDE, 'JPEG', 15, 245, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur) * 2.5);
 
         pdf.addPage()
 
@@ -227,23 +227,22 @@ function ResultPage() {
             color: '#000000',
             maxWidth: 170
         });
-        pdf.addImage(imgDataM, 'JPEG', 15,29, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur)*2.5);
+        pdf.addImage(imgDataM, 'JPEG', 15, 29, pdf.getImageProperties(imgData).width / diviseur, (pdf.getImageProperties(imgData).height / diviseur) * 2.5);
 
 
         pdf.save('chart.pdf');
-    }, [consommationTotal,A4.w])
+    }, [consommationTotal, A4.w])
 
     /**
      * the function to quit
      */
-    const handleQuit = useCallback(() =>  {
-        if(sessionStorage.getItem("guest")){
+    const handleQuit = useCallback(() => {
+        if (sessionStorage.getItem("guest")) {
             navigate("/logout")
-        }
-        else {
+        } else {
             navigate("/profil")
         }
-    },[navigate])
+    }, [navigate])
 
     useEffect(() => {
         const id = new URLSearchParams(window.location.search).get('id');
@@ -263,9 +262,9 @@ function ResultPage() {
             },
             body: JSON.stringify({id})
         };
-        fetch('api/calculs',options)
+        fetch('api/calculs', options)
             .then(response => {
-                if(response.status === 403) {
+                if (response.status === 403) {
                     navigate("/")
                 }
                 return response.json();
@@ -293,18 +292,18 @@ function ResultPage() {
                     const values = []
                     const mineTime = jsonData.mine[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
                     const mineTimeValue = mineTime === null ? 0 : mineTime;
-                   jsonData.others.forEach(other => {
-                       const results = other[array].map(item => item.result);
-                       const sum = results.reduce((acc, current) => acc + current, 0);
-                       const time = other[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
-                       const timeValue = time === null ? 0 : time;
-                       values.push({y: sum,x: timeValue})
-                   })
-                    const data =  [
+                    jsonData.others.forEach(other => {
+                        const results = other[array].map(item => item.result);
+                        const sum = results.reduce((acc, current) => acc + current, 0);
+                        const time = other[`duration${array.charAt(0).toUpperCase()}${array.slice(1)}`]
+                        const timeValue = time === null ? 0 : time;
+                        values.push({y: sum, x: timeValue})
+                    })
+                    const data = [
                         {
                             label: 'Votre projet',
                             data: [
-                                { y: sums[array], x: mineTimeValue }
+                                {y: sums[array], x: mineTimeValue}
                             ],
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             borderColor: 'rgba(255, 99, 132, 1)',
