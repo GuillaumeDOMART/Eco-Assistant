@@ -333,7 +333,7 @@ function ResultPage() {
             <div>
                 <canvas ref={chartContainerAll}/>
             </div>
-            <h2>Pour une consommation total de {consommationTotal.toFixed(2)} kg CO2e</h2>
+            <h2>Pour une consommation totale de {consommationTotal.toFixed(2)} kg CO2e</h2>
 
             <h1>Rapport de consommation de CO2 pour la phase de planification</h1>
             <div className="divcanvas">
