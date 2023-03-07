@@ -283,7 +283,7 @@ function ResultPage() {
     }, [navigate]);
     return (
         <div ref={pdfContainer}>
-            <h1>Rapport de consomation de CO2</h1>
+            <h1>Rapport de consommation de CO2</h1>
             <div>
                 <canvas ref={chartContainerAll}/>
 

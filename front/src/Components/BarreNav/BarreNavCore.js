@@ -8,12 +8,12 @@ import LogoToHome from "../logo/LogoToHome";
  * */
 function BarreNavCore() {
     return (
-        <nav id="sidebarMenu" className="col-2 border-end border-3 border-secondary">
+        <nav id="sidebarMenu" className="col-2 border-end border-3 border-secondary shadow-lg rounded-3">
             <div className="position-sticky list-group list-group-flush px-3 pt-4 h-100">
                 <BarNavContent/>
             </div>
             <div className="col-2 fixed-bottom mb-2">
-                v1.0-beta
+                v1.0-RELEASE
             </div>
         </nav>
     );

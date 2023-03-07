@@ -14,48 +14,20 @@ export default function QuestionProposee() {
 }
 
 function QuestionProposeeFromApi() {
-    /*const [isLoaded, setIsLoaded] = useState(false);
-    const [apiError, setApiError] = useState(null);
-    const [datas, setDatas] = useState([]);
-
-    useEffect(() => {
-        const token = sessionStorage.getItem("token")
-        const options = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-
-            }
-        };
-        fetch(`/api/profil/user`, options)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setDatas(result);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setApiError(error);
-                }
-            )
-    }, [])
-    */
 
     return (
         <>
             <Row className="justify-content-start p-3">
                 <h1 className="text-start">Questions proposées</h1>
             </Row>
-            <Container className="d-flex align-items-center" style={{height:"93%"}}>
+            <Container className="d-flex align-items-center" style={{height:"50%"}}>
                     <Row className="">
-                        <h4>Si tu as des idées de questions à ajouter à Eco-assistant, envoie un mail à:
-                            <br/>
-                            admin@demo.fr
-                            <br/>
-                            Ajoute en sujet du mail "Proposer une question" pour que l'on puisse prendre en compte ta proposition.
-                            <br/>
+                        <h4>Si tu as des idées de questions à ajouter au questionnaaire Eco-Assistant, envoie un mail à :
+                            <br/><br/>
+                            <b>eco.assistant.esipe.lp@gmail.com</b>
+                            <br/><br/>
+                            Ajoute en sujet du mail "[Proposer une question]" pour que l'on puisse prendre en compte ta proposition.
+                            <br/><br/>
                             N'hésite pas à proposer des sources et des données pour appuyer ta proposition et à mentionner une
                             phase dans laquelle elle pourrait s'insérer dans le questionnaire.
                         </h4>
