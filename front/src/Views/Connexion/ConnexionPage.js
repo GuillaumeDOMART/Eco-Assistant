@@ -1,6 +1,6 @@
-import {Col, Container, Row, Button, Image} from "react-bootstrap";
+import {Col, Container, Row, Image} from "react-bootstrap";
 import {useForm} from "react-hook-form";
-import {TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import './ConnexionPage.css'
@@ -40,7 +40,12 @@ function ConnexionPage() {
 function FormContainer() {
     return (
         <>
-            <HeaderAndLogo/>
+            <Row>
+                <Container fluid className="d-flex flex-row justify-content-center align-content-center">
+                    <Image src={require("../../Components/logo/logo.PNG")} fluid className="col-3"/>
+                    <h1 className="align-self-center">Page de Connexion</h1>
+                </Container>
+            </Row>
             <Row>
                 <Container fluid className="justify-content-center align-content-center">
                     <Form/>
@@ -49,19 +54,6 @@ function FormContainer() {
         </>
     );
 }
-
-/**
- * Component containing header and logo
- */
-function HeaderAndLogo() {
-    return (
-        <div className="d-flex flex-row justify-content-center align-items-center">
-            <Image src={require("../../Components/logo/logo.PNG")} fluid className="col-3"/>
-            <h1 className="align-self-center">Page de Connexion</h1>
-        </div>
-    );
-}
-
 
 /**
  * The form of the page
@@ -106,16 +98,16 @@ function Form() {
             <TextField className="w-75" label="Mot de passe" type="password" variant="standard"
                        required {...register('password')}/><br/>
             <p className="text-danger w-100 p-3">{paragraphContent}</p>
-            <Row className="p-3">
+            <Row>
                 <Col>
-                    <Button size="lg" href={"/"} variant="outline-danger">Retour</Button><br/>
+                    <Button size="lg" href={"/"} className="text-black">Retour</Button><br/>
                 </Col>
                 <Col/>
                 <Col>
-                    <Button size="lg" type={"submit"} variant="outline-success">Connexion</Button><br/>
+                    <Button size="lg" type={"submit"} className="text-black">Connexion</Button><br/>
                 </Col>
             </Row>
-
+            <br/>
             <a href="/ForgotPasswordMail">Mot de passe oublié ?</a>
         </form>
     );

@@ -6,14 +6,6 @@
     background-size: cover;
 }
 
-.bgQuestionnaire {
-    background-image: url("/src/Components/Pictures/accueilSite.png");
-    height: 100vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 body {
     font-weight: bold;
     text-align: center;
@@ -82,7 +74,7 @@ a {
 }
 .label {
     margin-top: 10px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 .strength-faible::-webkit-progress-value {
     background-color: #e20b07;

@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
  * @param handleBack handleBack
  * @param register register
  * @param onSubmit onSubmit
+ * @param checkDependancy
  * @returns {JSX.Element} oui
  * @constructor
  */
@@ -25,7 +26,7 @@ function StepForm({
                       handleChange,
                       handleBack,
                       register,
-                      onSubmit
+                      onSubmit,
                   }) {
     return (
         <form onSubmit={handleSubmit(onSubmit)}
