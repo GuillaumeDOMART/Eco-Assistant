@@ -31,14 +31,14 @@ function StepperComponent() {
         if (check) {
             return true
         }
-        const question = data.find(question => {
+        const questionGet = data.find(question => {
             return question.reponses.find(value => {
                 return value.reponseId === dependance
             })
         })
-        if (question === undefined)
+        if (questionGet === undefined)
             return false
-        return getMaxDependance(question.dependance)
+        return getMaxDependance(questionGet.dependance)
     }, [data, selectedAnswers])
 
 
@@ -85,6 +85,7 @@ function StepperComponent() {
     }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep, setSelectedAnswers])
 
     /**
+     * Go to the next step
      */
     const handleNext = useCallback(
         () => {
@@ -105,6 +106,10 @@ function StepperComponent() {
         [setSelectedAnswers]
     );
 
+    /**
+     * Leave the quiz
+     * @type {(function(): void)|*}
+     */
     const handleQuit = useCallback(
         () => {
             if (sessionStorage.getItem("guest")) {
@@ -116,12 +121,20 @@ function StepperComponent() {
         [navigate]
     )
 
+    /**
+     * Return an array containing the id of the responses of the given question
+     * @type {function(*): *[]}
+     */
     const getResponses = useCallback((question) => {
         return question.reponses.map(response => {
             return response.reponseId
         })
     }, [])
 
+    /**
+     * Return the question associated with the given responseId
+     * @type {function(*): *}
+     */
     const getQuestionByResponseId = useCallback((responseId) => {
         return data.find(question => {
             return question.reponses.find(response => {
@@ -130,6 +143,10 @@ function StepperComponent() {
         })
     }, [data])
 
+    /**
+     * Check if the given question depends on the given questionMax
+     * @type {(function(*, *): (boolean|boolean|*|undefined|undefined))|*}
+     */
     const highestDepSelected = useCallback((questionMax, question) => {
         if (question.dependance === -1)
             return false;
@@ -140,12 +157,19 @@ function StepperComponent() {
             return highestDepSelected(questionMax, nextQuestion)
     }, [getResponses, getQuestionByResponseId])
 
+    /**
+     * Return the question associated with the given questionId
+     */
     const getQuestion = useCallback((questionId) => {
         return data.find(value => {
             return value.questionId === questionId;
         })
     }, [data])
 
+    /**
+     * Update the array containing answers selected
+     * @type {(function(*, *): Promise<void>)|*}
+     */
     const handleChange = useCallback(async (target, value) => {
         //value = question selectionnée
         const select = value.reponses.find(val => val.intitule === target.target.value) //réponse selectionnée
@@ -161,7 +185,6 @@ function StepperComponent() {
             }
         })
         await setSelectedAnswers([...selectedAnswerCopy, answer])
-        console.log(selectedAnswers)
     }, [selectedAnswers, getQuestion, highestDepSelected])
 
     const getDependancy = useCallback((questionId) => {

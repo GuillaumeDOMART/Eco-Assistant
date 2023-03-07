@@ -27,7 +27,6 @@ function StepForm({
                       handleBack,
                       register,
                       onSubmit,
-                      checkDependancy
                   }) {
     return (
         <form onSubmit={handleSubmit(onSubmit)}
