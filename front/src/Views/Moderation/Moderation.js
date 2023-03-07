@@ -119,9 +119,9 @@ function ProjectsList(props) {
 
                 <Modal show={showDeleteProject} onHide={handleCancel}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Supprimer l'utilisateur</Modal.Title>
+                        <Modal.Title>Supprimer un projet</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Es-tu sûr de vouloir supprimer cet utilisateur ?</Modal.Body>
+                    <Modal.Body>Es-tu sûr de vouloir supprimer ce projet ?</Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleCancel}>
                             Annuler
