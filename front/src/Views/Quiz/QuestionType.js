@@ -17,6 +17,7 @@ export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, r
         return (
             <div style={{marginTop: '20px'}} className="shadow-lg rounded p-3">
                 <h5>{question.intitule}</h5>
+
                 <RadioGroup className="mx-5">
                     {question.reponses.map((data) => {
                         return (

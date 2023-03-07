@@ -1,6 +1,6 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useCallback, useEffect, useState} from "react";
-import {FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup, Table, TextField} from "@mui/material";
+import {RadioGroup, Table, TextField} from "@mui/material";
 import {Alert, Button, Container, Image, Modal, Placeholder, Row} from "react-bootstrap";
 import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
 import {useNavigate} from "react-router-dom";
@@ -18,6 +18,11 @@ function TableauProjets() {
     const [selectedProject, setSelectedProject] = useState(null);
     const [fieldErrors, setFieldErrors] = useState({});
     const {register, reset, handleSubmit, formState: {errors}} = useForm();
+    const [selectedValue, setSelectedValue] = useState("");
+
+    const handleRadioChange = useCallback((event) => {
+        setSelectedValue(event.target.value);
+    }, [setSelectedValue]);
 
 
     const navigate = useNavigate()
@@ -81,8 +86,6 @@ function TableauProjets() {
     }, [setShowDissocier, items, setItems, selectedProject])
 
     const fetchCopy = useCallback(async (formData) => {
-        if (errors.type) return;
-
         if (formData.nom && formData.nom.length >= 50) {
             setFieldErrors({"nom": "Le nom du projet ne peut pas avoir un nom de plus de 50 caractères"})
             return;
@@ -120,8 +123,9 @@ function TableauProjets() {
 
         reset()
         setFieldErrors({})
+        setSelectedValue("")
 
-    }, [items, reset, selectedProject, setFieldErrors, errors]);
+    }, [items, reset, selectedProject, setSelectedValue, setFieldErrors]);
 
     /**
      * Navigate to the page to begin the questionnaire
@@ -185,8 +189,10 @@ function TableauProjets() {
                 <Row className="p-4 align-items-center">
                     <Container className="w-50 h-50 align-items-center p-4">
                         <Image className="opacity-75 p-4 se" fluid src={logo} alt="logo eco-assistant"/>
-                        <p>Eco-Assistant est là pour toi. Calcule l&lsquo;empreinte carbone de l&lsquo;un de tes
-                            projets informatiques.</p>
+                        <p>
+                            Eco-Assistant vous permet de calculer l'empreinte carbone de vos projets informatique.
+                            Commencez dès maintenant !
+                        </p>
                         <Button onClick={handleBegin} variant="secondary"> Commence le questionnaire ici !</Button>
                     </Container>
                 </Row>
@@ -228,16 +234,41 @@ function TableauProjets() {
                                        error={Boolean(fieldErrors.nom)}
                                        helperText={fieldErrors.nom}/><br/>
 
-                            <FormLabel id="demo-row-radio-buttons-group-label"> Type du projet </FormLabel>
-                            <RadioGroup className={"justify-content-center align-items-center"} row aria-label="type"
-                                        name="type" {...register("type", {required: true})}>
-                                <FormControlLabel value="SIMULATION" control={<Radio/>} label="Simulation"
-                                                  {...register("type", {required: true})}/>
-                                <FormControlLabel value="PROJET" control={<Radio/>} label="Project"
-                                                  {...register("type", {required: true})}/>
+                            <div id="demo-row-radio-buttons-group-label"> Type du projet</div>
+                            <RadioGroup>
+                                <div className="form-check form-check-inline">
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="type"
+                                            value="SIMULATION"
+                                            checked={selectedValue === "SIMULATION"}
+                                            className="form-check-input"
+                                            onClick={handleRadioChange}
+                                            {...register("type", {required: true})}
+                                        />
+                                        Simulation
+                                    </label>
+                                </div>
+                                <div className="form-check form-check-inline">
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            name="type"
+                                            value="PROJET"
+                                            checked={selectedValue === "PROJET"}
+                                            className="form-check-input"
+                                            onClick={handleRadioChange}
+                                            {...register("type", {required: true})}
+                                        />
+                                        Projet
+                                    </label>
+                                </div>
+                                {errors.type && (
+                                    <div className="error-message" style={{fontSize: '14px', color: 'red'}}>
+                                        Veuillez sélectionner un type de projet.</div>
+                                )}
                             </RadioGroup>
-                            <FormHelperText className={"text-center"}
-                                            error>{errors.type && "Veuillez sélectionner une option"}</FormHelperText>
                         </Modal.Body>
 
                         <Modal.Footer>
