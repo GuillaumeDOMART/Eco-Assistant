@@ -154,7 +154,7 @@ public class ProfilServiceImpl implements ProfilService {
     public ResponseEntity<Boolean> forgotPasswordMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto) {
         String token = authorizationHeader.substring(7);
         var mail = jwtService.extractMail(token);
-        return changePassword(mail, forgotPasswordVerifyDto.getPassword(), forgotPasswordVerifyDto.getOldPassword());
+        return changePassword(mail, forgotPasswordVerifyDto.getPassword());
     }
 
     /**
@@ -191,17 +191,6 @@ public class ProfilServiceImpl implements ProfilService {
     public ResponseEntity<Boolean> changePasswordWithToken(String token, String password, String oldPassword) {
         token = token.substring(7);
         var mail = jwtService.extractMail(token);
-        return changePassword(mail, password, oldPassword);
-    }
-
-    /**
-     * Function to change password for a user
-     *
-     * @param mail     mail
-     * @param password new password
-     * @return if the password was change
-     */
-    public ResponseEntity<Boolean> changePassword(String mail, String password, String oldPassword) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -212,7 +201,17 @@ public class ProfilServiceImpl implements ProfilService {
         } catch (AuthenticationException e) {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
+        return changePassword(mail, password);
+    }
 
+    /**
+     * Function to change password for a user
+     *
+     * @param mail     mail
+     * @param password new password
+     * @return if the password was change
+     */
+    public ResponseEntity<Boolean> changePassword(String mail, String password) {
         var profil = profilRepository.findByMail(mail);
         if (profil.isEmpty()) {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);

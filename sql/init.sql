@@ -96,20 +96,20 @@ VALUES ('ADD'),
        ('DIV'),
        ('NOTHING');
 INSERT INTO profil(mail, mdp, nom, prenom, isadmin)
-VALUES ('admin@demo.fr', '$2a$10$b8qqjDh64vjz2/KsV9Yc8uYKMDTatn3cL6Bp7Uuhcwg/N0lKPxf2m',
+VALUES ('admin@demo.fr', '$2a$10$6C7SRKH3V4uP2hYDG9WSZ.9EhGQPuQk6Ras8KilaAUg/LYizVMQNC',
         'DEMO', 'Admin', 1),
        ('salarie@demo.fr', '$2a$10$5FQSn68f5IddpjRlc0nxguBSRCLpnMfEsbzqhlK5UPP.GHngu8ADe',
         'DEMO', 'Salarie', 0),
        ('anonyme@demo.fr', 'anonyme',
         'DEMO', 'Ano', -1);
 -- CREATION DES PROJETS DEVS ET SUPPORT
-INSERT INTO projet(profilid, nomprojet, etat, type)
+/*INSERT INTO projet(profilid, nomprojet, etat, type)
 VALUES (1, 'QUESTIONAIRE POUR Administrateur',
         'INPROGRESS', 'PROJET'),
        (2, 'QUESTIONAIRE POUR Salarie 1',
         'INPROGRESS', 'PROJET'),
        (2, 'QUESTIONAIRE POUR Salarie 2',
-        'INPROGRESS', 'SIMULATION');
+        'INPROGRESS', 'SIMULATION');*/
 -- CREATION DES QUESTIONS
 INSERT INTO question (intitule, typeq, phase)
 VALUES

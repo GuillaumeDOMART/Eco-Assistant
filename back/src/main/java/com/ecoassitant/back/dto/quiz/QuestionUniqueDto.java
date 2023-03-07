@@ -42,8 +42,8 @@ public class QuestionUniqueDto {
     }
 
     /**
-     * set the reponse of the previous quiz
-     * @param reponse reponse of the previous quiz
+     * set the response of the previous quiz
+     * @param reponse response of the previous quiz
      */
     public void remplir(ReponseDonneeEntity reponse) {
         if (Objects.equals(questionId, reponse.getReponseDonneeKey().getQuestion().getIdQuestion()))

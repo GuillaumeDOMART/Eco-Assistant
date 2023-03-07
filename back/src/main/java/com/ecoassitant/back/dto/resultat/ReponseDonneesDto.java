@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * Reponses of a project
+ * Responses of a project
  */
 @NoArgsConstructor
 public class ReponseDonneesDto {

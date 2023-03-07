@@ -127,7 +127,7 @@ function Form(){
             </form>
 
             <Modal show={show} size="lg" centered>
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Modification mot de passe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Un mail pour modifier votre mot de passe vient d&apos;être envoyé</Modal.Body>

@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * calcul create with part of calcul(calculEntity) and ReponseDonne for a project
+ * operation create with part of operation(calculEntity) and ReponseDonne for a project
  */
 public class CalculEntier {
     private final List<ReponsePossibleEntity> dependances;
@@ -23,7 +23,7 @@ public class CalculEntier {
 
     /**
      * Constructor of CalculEntier
-     * @param calculs list of calculs recovery of the data
+     * @param calculs list of operations recovery of the data
      * @param repDon list of reponseDonnee for a project
      */
     public CalculEntier(List<CalculEntity> calculs, List<ReponseDonneeEntity> repDon){
@@ -41,8 +41,8 @@ public class CalculEntier {
     }
 
     /**
-     * Try to execute the calcul if it has all dependances
-     * @return the result of the calcul if possible
+     * Try to execute the operation if it has all dependencies
+     * @return the result of the operation if possible
      */
     public Optional<Double> execute(){
         if(!isPossible())
