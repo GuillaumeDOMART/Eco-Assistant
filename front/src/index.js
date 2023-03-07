@@ -24,6 +24,8 @@ import ModifyID from "./Views/ModifyID/ModifyID";
 import ForgotPasswordMail from "./Views/ForgotPassword/ForgotPasswordMail";
 import ProfilVerifyMail from "./Views/CreationProfile/VerifyMail";
 import QuestionProposee from "./Views/QuestionProposée/QuestionProposee";
+import Moderation from "./Views/Moderation/Moderation";
+import ModifyIDVerify from "./Views/ModifyID/ModifyIDVerify";
 
 const router = createBrowserRouter([
     {
@@ -87,6 +89,13 @@ const router = createBrowserRouter([
     }, {
         path: "/questionsProposees",
         element: <QuestionProposee/>
+    }, {
+        path: "/moderation",
+        element: <Moderation/>
+    },
+    {
+        path: "/modifyIDVerify",
+        element: <ModifyIDVerify/>
     }
 ]);
 

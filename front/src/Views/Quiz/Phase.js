@@ -2,7 +2,7 @@ import {NUMERIC, QCM} from "./QuestionType";
 import React, {useCallback} from "react";
 
 /**
- * gestion affuchage d'une question
+ * management display of a question
  * @param value question
  * @param register register du quiz
  * @param setSelectedAnswer
@@ -21,11 +21,6 @@ export default function Phase({value, register, onChange}) {
     );
     switch (value.type) {
         case 'QCM' :
-            /**
-             * affiche réponses
-             * @param target question lint to the response
-             */
-
             return (
                 <QCM key={value.intitule}
                      question={value}

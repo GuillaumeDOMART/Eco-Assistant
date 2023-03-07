@@ -35,7 +35,7 @@ QuestionServiceImpl implements QuestionService {
     }
 
     /**
-     * add reponse of previous quiz to the currently quiz
+     * add response of previous quiz to the currently quiz
      * @param questions list of question
      * @param idProject idProject of the previous quiz
      * @return questions with the response of the previous quiz

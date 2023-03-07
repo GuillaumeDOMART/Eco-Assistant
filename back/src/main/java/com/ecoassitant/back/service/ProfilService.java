@@ -1,11 +1,13 @@
 package com.ecoassitant.back.service;
 
 import com.ecoassitant.back.dto.ForgotPasswordVerifyDto;
+import com.ecoassitant.back.dto.TokenDto;
 import com.ecoassitant.back.dto.profil.ProfilDto;
 import com.ecoassitant.back.dto.profil.ProfilSimplDto;
 import com.ecoassitant.back.dto.profil.ProfilIdDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,6 +28,13 @@ public interface ProfilService {
      * @return a ProfilDto with the submitted mail, or null if it doesn't exist
      */
     ProfilDto getProfilByMail(String mail);
+
+    /**
+     * Return all users if the user connected represents an admin
+     * @param mail mail of the user connected
+     * @return all users profiles
+     */
+    Optional<List<ProfilDto>> getAllUsersProfil(String mail);
 
     /**
      * Endpoint to create a user admin
@@ -68,12 +77,39 @@ public interface ProfilService {
      * @param forgotPasswordVerifyDto the new password
      * @return if the change was successfully
      */
-    ResponseEntity<Boolean> forgotMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto);
+    ResponseEntity<Boolean> forgotPasswordMail(String authorizationHeader, ForgotPasswordVerifyDto forgotPasswordVerifyDto);
 
     /**
      * Function to finalize account creation
+     *
      * @param token then token
      * @return is the creation was successfully
      */
-    ResponseEntity<Boolean> register(String token);
+    ResponseEntity<TokenDto> register(String token);
+
+    /**
+     * Function to change password for a user with a token authentication
+     *
+     * @param token    Token of the current uset
+     * @param password new password
+     * @return if the password was change
+     */
+    ResponseEntity<Boolean> changePasswordWithToken(String token, String password, String oldPassword);
+
+    /**
+     * Method to change the mail of the current user
+     *
+     * @param token   token of the current user
+     * @param newMail new mail to change
+     * @return the new token of the user based on the new mail
+     */
+    ResponseEntity<Boolean> changeMail(String token, String newMail);
+
+    /**
+     * Method to change the mail of the current user
+     *
+     * @param token   token of the current user
+     * @return the new token of the user based on the new mail
+     */
+    ResponseEntity<TokenDto> changeMailVerify(String token);
 }

@@ -22,11 +22,29 @@ function StepperComponent() {
     const {register, handleSubmit, reset} = useForm();
     const navigate = useNavigate();
 
+    const getMaxDependance = useCallback((dependance) => {
+        if (dependance === -1)
+            return false
+        const check = selectedAnswers.find(answer => {
+            return dependance === answer.reponseId;
+        })
+        if (check) {
+            return true
+        }
+        const questionGet = data.find(question => {
+            return question.reponses.find(value => {
+                return value.reponseId === dependance
+            })
+        })
+        if (questionGet === undefined)
+            return false
+        return getMaxDependance(questionGet.dependance)
+    }, [data, selectedAnswers])
+
 
     const handlePhase = useCallback(async () => {
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
-        setSelectedAnswers([])
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         myHeaders.append("Content-Type", "application/json");
@@ -48,21 +66,33 @@ function StepperComponent() {
             const json = await response.json();
             setIsLoaded(true);
             setData(json);
+            const selected = []
+            json.forEach(question => {
+                if (question.type === 'QCM' && question.reponse !== null) {
+                    selected.push({
+                        "question": question.questionId.toString(),
+                        "reponseId": question.reponse.reponse.reponseId
+                    })
+
+                }
+            })
+            await setSelectedAnswers(selected)
         } else {
             setIsLoaded(true);
             setErrorApiGetQuestionnaire("Erreur lors de la récupération du questionnaire");
         }
 
-    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep])
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep, setSelectedAnswers])
 
     /**
+     * Go to the next step
      */
     const handleNext = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            handlePhase().then(r => r)
+            setSelectedAnswers([])
         },
-        [handlePhase]
+        [setSelectedAnswers]
     );
 
     /**
@@ -71,45 +101,112 @@ function StepperComponent() {
     const handleBack = useCallback(
         () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1);
-            handlePhase().then(r => r)
+            setSelectedAnswers([])
         },
-        [handlePhase]
+        [setSelectedAnswers]
     );
 
+    /**
+     * Leave the quiz
+     * @type {(function(): void)|*}
+     */
     const handleQuit = useCallback(
         () => {
-            navigate("/profil");
+            if (sessionStorage.getItem("guest")) {
+                navigate("/logout")
+            } else {
+                navigate("/profil")
+            }
         },
         [navigate]
     )
 
-    const handleChange = useCallback((target, value) => {
-        const select = value.reponses.find(val => val.intitule === target.target.value)
-        const answer = {
-            "question": target.target.name,
-            "reponseId": select.reponseId
-        }
-
-        selectedAnswers.forEach(val => {
-            if (val.question === answer.question)
-                selectedAnswers.splice(selectedAnswers.indexOf(val), 1)
+    /**
+     * Return an array containing the id of the responses of the given question
+     * @type {function(*): *[]}
+     */
+    const getResponses = useCallback((question) => {
+        return question.reponses.map(response => {
+            return response.reponseId
         })
-        setSelectedAnswers([...selectedAnswers, answer])
-    }, [selectedAnswers])
+    }, [])
+
+    /**
+     * Return the question associated with the given responseId
+     * @type {function(*): *}
+     */
+    const getQuestionByResponseId = useCallback((responseId) => {
+        return data.find(question => {
+            return question.reponses.find(response => {
+                return response.reponseId === responseId
+            })
+        })
+    }, [data])
+
+    /**
+     * Check if the given question depends on the given questionMax
+     * @type {(function(*, *): (boolean|boolean|*|undefined|undefined))|*}
+     */
+    const highestDepSelected = useCallback((questionMax, question) => {
+        if (question.dependance === -1)
+            return false;
+        if (getResponses(questionMax).includes(question.dependance))
+            return true
+        const nextQuestion = getQuestionByResponseId(question.dependance)
+        if (nextQuestion !== undefined)
+            return highestDepSelected(questionMax, nextQuestion)
+    }, [getResponses, getQuestionByResponseId])
+
+    /**
+     * Return the question associated with the given questionId
+     */
+    const getQuestion = useCallback((questionId) => {
+        return data.find(value => {
+            return value.questionId === questionId;
+        })
+    }, [data])
+
+    /**
+     * Update the array containing answers selected
+     * @type {(function(*, *): Promise<void>)|*}
+     */
+    const handleChange = useCallback(async (target, value) => {
+        //value = question selectionnée
+        const select = value.reponses.find(val => val.intitule === target.target.value) //réponse selectionnée
+        const answer = {
+            "question": target.target.name, //id de la question
+            "reponseId": select.reponseId // id de la réponse
+        }
+        const selectedAnswerCopy = [...selectedAnswers]
+        selectedAnswers.forEach(val => {
+            const questionVal = getQuestion(+val.question)
+            if (val.question === answer.question || highestDepSelected(value, questionVal)) { // Si l'id de la question de la réponse selectionnée est le même que celui de la value dans Selected
+                selectedAnswerCopy.splice(selectedAnswerCopy.indexOf(val), 1)
+            }
+        })
+        await setSelectedAnswers([...selectedAnswerCopy, answer])
+    }, [selectedAnswers, getQuestion, highestDepSelected])
+
+    const getDependancy = useCallback((questionId) => {
+        const dependance = data.find((value) => value.questionId.toString() === questionId).dependance
+        if (dependance === -1)
+            return true;
+        return selectedAnswers.find(value => value.reponseId === dependance)
+    }, [data, selectedAnswers])
 
     /**
      * Send responses to the backEnd when Next button is pressed
      * @param dataList
      */
     const onSubmit = useCallback(
-        (dataList) => {
+        async (dataList) => {
             const projectId = sessionStorage.getItem("project")
             const sendToBack = {}
             const responses = []
             for (const [key, value] of Object.entries(dataList)) {
                 const tuple = {}
                 tuple.questionId = key;
-                if (value === null)
+                if (value === null || !getDependancy(key))
                     tuple.entry = "";
                 else
                     tuple.entry = value;
@@ -131,43 +228,42 @@ function StepperComponent() {
                 redirect: 'follow'
             };
 
-            fetch("/api/reponsesDonnees", requestOptions)
-                .then(response => response.text())
+            await fetch("/api/reponsesDonnees", requestOptions)
 
-        if (activeStep === steps.length - 1){
+            if (activeStep === steps.length - 1) {
 
-            const body = {}
-            body.id= projectId
-            const options = {
-                method: 'PUT',
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(body)
-            };
-            fetch('/api/projet/finish', options)
-                .then(res => {
-                    if(res.status === 404 ){
-                        navigate(`/profil`)
-                    }
-                    else{
-                        navigate(`/result?id=${projectId}`)
-                    }
-                })
+                const body = {}
+                body.id = projectId
+                const options = {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(body)
+                };
+                fetch('/api/projet/finish', options)
+                    .then(res => {
+                        if (res.status === 404) {
+                            navigate(`/profil`)
+                        } else {
+                            navigate(`/result?id=${projectId}`)
+                        }
+                    })
 
 
-
-        }
-        else{
-            handleNext();
-        }
-    }, [handleNext, activeStep, navigate]
+            } else {
+                handleNext();
+            }
+        }, [handleNext, activeStep, navigate, getDependancy]
     )
 
     useEffect(() => {
         handlePhase().then(() => reset())
-    }, [handlePhase, reset])
+        if (!sessionStorage.getItem("project")) {
+            navigate("/")
+        }
+    }, [handlePhase, reset, navigate])
 
     if (errorApiGetQuestionnaire) {
         return <div>Error: {errorApiGetQuestionnaire.message}</div>;
@@ -198,7 +294,11 @@ function StepperComponent() {
                     onSubmit={onSubmit}
                 />
                 <Col>
-                    <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Button className="align-items-center mt-2" onClick={handleQuit}>Quitter</Button>
                 </Col>
             </Row>
         </Container>

@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 
 /**
  * FormConponnents
+ * @param steps
  * @param activeStep activeStep
  * @param data data
  * @param selectedAnswers selectedAnswers
@@ -12,6 +13,7 @@ import Button from "@mui/material/Button";
  * @param handleBack handleBack
  * @param register register
  * @param onSubmit onSubmit
+ * @param checkDependancy
  * @returns {JSX.Element} oui
  * @constructor
  */
@@ -24,7 +26,7 @@ function StepForm({
                       handleChange,
                       handleBack,
                       register,
-                      onSubmit
+                      onSubmit,
                   }) {
     return (
         <form onSubmit={handleSubmit(onSubmit)}
@@ -57,12 +59,12 @@ function StepForm({
                         onClick={handleBack}
                         sx={{mr: 1}}
                     >
-                        Back
+                        Retour
                     </Button>
                     <Box sx={{flex: '1 1 auto'}}/>
 
                     <Button type={"submit"}>
-                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                        {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
                     </Button>
                 </Box>
             </Box>

@@ -1,17 +1,21 @@
 package com.ecoassitant.back.calcul;
 
 import com.ecoassitant.back.entity.CalculEntity;
+import com.ecoassitant.back.entity.ConstanteEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponsePossibleEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
- * calcul create with part of calcul(calculEntity) and ReponseDonne for a project
+ * operation create with part of operation(calculEntity) and ReponseDonne for a project
  */
 public class CalculEntier {
     private final List<ReponsePossibleEntity> dependances;
+
+    private final String intitule;
     private final List<CalculEntity> calculs;
     private final List<ReponseDonneeEntity> repDon;
     private final Stack<OperationElem> stack = new Stack<>();
@@ -19,7 +23,7 @@ public class CalculEntier {
 
     /**
      * Constructor of CalculEntier
-     * @param calculs list of calculs recovery of the data
+     * @param calculs list of operations recovery of the data
      * @param repDon list of reponseDonnee for a project
      */
     public CalculEntier(List<CalculEntity> calculs, List<ReponseDonneeEntity> repDon){
@@ -29,11 +33,16 @@ public class CalculEntier {
         dependances = new ArrayList<>();
         phase = calculs.get(0).getPhase();
         calculs.forEach(calculEntity -> dependances.add(calculEntity.getReponsePossible()));
+        intitule = calculs.stream()
+                .map(CalculEntity::getReponsePossible)
+                .map(ReponsePossibleEntity::getConstante)
+                .map(ConstanteEntity::getTracabilite)
+                .collect(Collectors.joining("\n"));
     }
 
     /**
-     * Try to execute the calcul if it has all dependances
-     * @return the result of the calcul if possible
+     * Try to execute the operation if it has all dependencies
+     * @return the result of the operation if possible
      */
     public Optional<Double> execute(){
         if(!isPossible())
@@ -148,5 +157,9 @@ public class CalculEntier {
      */
     public Phase getPhase() {
         return phase;
+    }
+
+    public String getIntitule() {
+        return intitule;
     }
 }

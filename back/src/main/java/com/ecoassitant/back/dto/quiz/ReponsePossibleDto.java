@@ -56,7 +56,7 @@ public class ReponsePossibleDto {
     }
 
     /**
-     * ser id
+     * set id
      * @param id of the response
      */
     public void setId(Long id) {

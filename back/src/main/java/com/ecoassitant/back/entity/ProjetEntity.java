@@ -38,4 +38,6 @@ public class ProjetEntity implements Serializable {
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeP type;
+
+
 }

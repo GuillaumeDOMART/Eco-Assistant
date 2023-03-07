@@ -59,7 +59,7 @@ public class CalculServiceImpl implements CalculService {
 
         var currentIdProfil = project.get().getProfil().getIdProfil();
         var projectIdProfil = profil.get().getIdProfil();
-        if (!currentIdProfil.equals(projectIdProfil))
+        if (!currentIdProfil.equals(projectIdProfil) && profil.get().getIsAdmin() < 1)
             return Optional.empty();
 
         var mine = resultatForProject(idProject);
@@ -123,16 +123,14 @@ public class CalculServiceImpl implements CalculService {
                 if (executer.isPresent()) {
                     phase = Optional.ofNullable(calculEntier.getPhase());
                 }
-                var intitule = "test" + k;
                 executer.ifPresent(aDouble -> {
-                    System.out.println(calculEntier.getPhase() + " " + intitule + " " + aDouble);
                     switch (calculEntier.getPhase()) {
-                        case PLANIFICATION -> resultat.addPlanification(new CalculDto(intitule, aDouble));
-                        case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(intitule, aDouble));
-                        case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(intitule, aDouble));
-                        case TEST -> resultat.addTest(new CalculDto(intitule, aDouble));
-                        case MAINTENANCE -> resultat.addMaintenance(new CalculDto(intitule, aDouble));
-                        default -> resultat.addHorsPhase(new CalculDto(intitule, aDouble));
+                        case PLANIFICATION -> resultat.addPlanification(new CalculDto(calculEntier.getIntitule(), aDouble));
+                        case DEVELOPPEMENT -> resultat.addDeveloppement(new CalculDto(calculEntier.getIntitule(), aDouble));
+                        case DEPLOIEMENT -> resultat.addDeploiement(new CalculDto(calculEntier.getIntitule(), aDouble));
+                        case TEST -> resultat.addTest(new CalculDto(calculEntier.getIntitule(), aDouble));
+                        case MAINTENANCE -> resultat.addMaintenance(new CalculDto(calculEntier.getIntitule(), aDouble));
+                        default -> resultat.addHorsPhase(new CalculDto(calculEntier.getIntitule(), aDouble));
                     }
                 });
             }

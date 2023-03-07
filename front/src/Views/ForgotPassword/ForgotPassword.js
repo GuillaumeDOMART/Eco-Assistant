@@ -100,7 +100,11 @@ function Form(){
                 .then(response => {
                     if (response.status === 403) {
                         setParagraphContent("Le lien n'est plus valide")
-                    } else {
+                    }
+                    if (response.status !== 200){
+                        setParagraphContent("Le nouveau mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et doit être d'une longueur d'au moins 8 caractères. ")
+                    }
+                    else {
                         setShow(true)
                     }
                 })
@@ -121,7 +125,7 @@ function Form(){
             </form>
 
             <Modal show={show} size="lg" centered>
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Modification mot de passe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Votre mot de passe à été modifié, vous allez être redirigé vers la page d&apos;accueil</Modal.Body>

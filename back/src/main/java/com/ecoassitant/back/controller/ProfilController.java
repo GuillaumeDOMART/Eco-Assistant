@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -85,8 +86,8 @@ public class ProfilController {
      * @return if the password was change successfully
      */
     @PatchMapping("/profil/forgotMail")
-    public ResponseEntity<Boolean> forgotMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
-        return profilService.forgotMail(authorizationHeader, forgotPasswordVerifyDto);
+    public ResponseEntity<Boolean> forgotPasswordMail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody ForgotPasswordVerifyDto forgotPasswordVerifyDto){
+        return profilService.forgotPasswordMail(authorizationHeader, forgotPasswordVerifyDto);
     }
 
     /**
@@ -104,20 +105,78 @@ public class ProfilController {
         var profil = profilService.deleteProfil(mail);
         if (profil.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(profil.get(), HttpStatus.OK);
         }
+        return new ResponseEntity<>(profil.get(), HttpStatus.OK);
 
 
     }
 
     /**
      * Function to finalize profile creation
+     *
      * @param authorizationHeader bearer token
      * @return if the account was created
      */
     @PatchMapping("profil/register")
-    public ResponseEntity<Boolean> register(@RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<TokenDto> register(@RequestHeader("Authorization") String authorizationHeader) {
         return profilService.register(authorizationHeader.substring(7));
+    }
+    /**
+     * Function to delete the profile of the user currently connected
+     * @param authorizationHeader the token of the user
+     * @return ResponseEntity of ProfilIdDto of profile deleted
+     */
+    @GetMapping("/profil/users")
+    public ResponseEntity<List<ProfilDto>> getAllUsersProfil(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.substring(7);
+        var mail = jwtService.extractMail(token);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        var profil = profilService.getAllUsersProfil(mail);
+        if(profil.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else{
+            return new ResponseEntity<>(profil.get(), HttpStatus.OK);
+        }
+
+    }
+
+    /**
+     * Method to change the mail of the logged user
+     *
+     * @param authorizationToken Authorization token of the logged user
+     * @param mailInput          The new mail of the user
+     * @return True if the mail has been modified, false otherwise
+     */
+    @PatchMapping("/profil/changeMail")
+    public ResponseEntity<Boolean> changeMail(@RequestHeader("Authorization") String authorizationToken, @RequestBody ForgotMailInput mailInput) {
+        var token = authorizationToken.substring(7);
+        return profilService.changeMail(token, mailInput.getMail());
+    }
+
+    /**
+     * Method to change the password of the logged user
+     *
+     * @param authorizationToken Authorization token of the logged user
+     * @param passwords         Json containing the passwords
+     * @return True if the mail has been modified, false otherwise
+     */
+
+    @PatchMapping("/profil/changePassword")
+    public ResponseEntity<Boolean> changePassword(@RequestHeader("Authorization") String authorizationToken, @RequestBody ForgotPasswordVerifyDto passwords) {
+        return profilService.changePasswordWithToken(authorizationToken, passwords.getPassword(), passwords.getOldPassword());
+    }
+
+    /**
+     * Method to change the mail of the logged user
+     *
+     * @param authorizationToken Authorization token of the logged user
+     * @return True if the mail has been modified, false otherwise
+     */
+    @PatchMapping("/profil/changeMailVerify")
+    public ResponseEntity<TokenDto> changeMailVerify(@RequestHeader("Authorization") String authorizationToken) {
+        var token = authorizationToken.substring(7);
+        return profilService.changeMailVerify(token);
     }
 }

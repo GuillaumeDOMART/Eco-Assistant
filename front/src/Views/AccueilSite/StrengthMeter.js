@@ -61,7 +61,7 @@ const StrengthMeter = ({register, fieldErrors}) => {
                 <TextField label="Mot de passe" type="password" variant="standard"
                            className="textfield " {...register("password")} value={password} onChange={pwdChecker}
                            required
-                           error={!Boolean(fieldErrors.password)}
+                           error={Boolean(fieldErrors.password)}
                            helperText={fieldErrors.password}/>
             </Tooltip><br/>
 

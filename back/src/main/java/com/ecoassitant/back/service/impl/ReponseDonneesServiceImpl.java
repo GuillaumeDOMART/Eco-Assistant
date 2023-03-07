@@ -2,6 +2,7 @@ package com.ecoassitant.back.service.impl;
 
 import com.ecoassitant.back.dto.resultat.ReponseDonneesDto;
 import com.ecoassitant.back.dto.resultat.ReponseDto;
+import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
 import com.ecoassitant.back.entity.tools.TypeQ;
@@ -13,6 +14,7 @@ import com.ecoassitant.back.service.ReponseDonneesService;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,10 +29,11 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
 
     /**
      * Function to create ReponseDonneesServiceImpl with ReponseDonneeRepository, ReponsePossibleRepository, ProjetRepository and QuestionRepository
-     * @param reponseDonneeRepository the ReponseDonneeRepository
+     *
+     * @param reponseDonneeRepository   the ReponseDonneeRepository
      * @param reponsePossibleRepository the ReponsePossibleRepository
-     * @param projetRepository the ProjetRepository
-     * @param questionRepository the QuestionRepository
+     * @param projetRepository          the ProjetRepository
+     * @param questionRepository        the QuestionRepository
      */
     public ReponseDonneesServiceImpl(ReponseDonneeRepository reponseDonneeRepository, ReponsePossibleRepository reponsePossibleRepository, ProjetRepository projetRepository, QuestionRepository questionRepository) {
         this.reponseDonneeRepository = reponseDonneeRepository;
@@ -43,25 +46,28 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
     public boolean saveResponseDonnees(ReponseDonneesDto responses) {
         var project = projetRepository.findById(responses.getProjetId());
         if (project.isEmpty()) {
-            System.out.println("4");
             return false;
+            //throw new IllegalArgumentException();
         }
         var list = responses.getReponses();
         boolean result = true;
         Iterator<ReponseDto> reponseDtoIterator = list.iterator();
 
-        while (result && reponseDtoIterator.hasNext()){
+        while (result && reponseDtoIterator.hasNext()) {
             var reponseDto = reponseDtoIterator.next();
+            var question = questionRepository.findById(reponseDto.getQuestionId());
+            if (question.isEmpty()) {
+                result = false;
+                break;
+            }
+            var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(question.get(), project.get());
+            if (reponseDonnee.isPresent())
+                reponseDonneeRepository.delete(reponseDonnee.get());
             if (!Objects.equals(reponseDto.getEntry(), "")){
                 var reponseEntity = new ReponseDonneeEntity();
                 var responseKey = new ReponseDonneeKey();
 
                 responseKey.setProjet(project.get());
-                var question = questionRepository.findById(reponseDto.getQuestionId());
-                if (question.isEmpty()) {
-                    result = false;
-                    break;
-                }
                 responseKey.setQuestion(question.get());
                 var reponsePossibles = reponsePossibleRepository.findByQuestionAsso(question.get());
                 if (reponsePossibles.isEmpty()) {
@@ -86,10 +92,30 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                 }
 
                 reponseEntity.setReponseDonneeKey(responseKey);
-                reponseDonneeRepository.delete(reponseEntity);
                 reponseDonneeRepository.save(reponseEntity);
             }
         }
         return result;
+    }
+
+    @Override
+    public void saveResponseDonnees(List<ReponseDonneeEntity> responses) {
+        reponseDonneeRepository.saveAll(responses);
+    }
+
+    /**
+     * save responseDonneeEntity in BDD
+     * @param answer ResponseDonnee
+     * @return the ResponseDonnee save
+     */
+    @Override
+    public ReponseDonneeEntity saveResponse(ReponseDonneeEntity answer) {
+        System.out.println("toto");
+        return reponseDonneeRepository.save(answer);
+    }
+
+    @Override
+    public List<ReponseDonneeEntity> findReponsesByProject(ProjetEntity projet) {
+        return reponseDonneeRepository.findByReponseDonneeKey_Projet(projet);
     }
 }

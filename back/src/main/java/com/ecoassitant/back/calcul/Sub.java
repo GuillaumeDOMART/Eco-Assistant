@@ -1,6 +1,6 @@
 package com.ecoassitant.back.calcul;
 /**
- * Object for represente substraction of a calcul
+ * Object to represent the substraction of a operation
  */
 public class Sub implements Operateur{
     @Override

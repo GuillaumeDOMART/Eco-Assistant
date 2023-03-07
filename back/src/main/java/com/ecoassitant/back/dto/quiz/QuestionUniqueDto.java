@@ -5,10 +5,7 @@ import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.tools.Phase;
 import com.ecoassitant.back.entity.tools.TypeQ;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Question with Id for questionSuiv
@@ -45,11 +42,11 @@ public class QuestionUniqueDto {
     }
 
     /**
-     * set the reponse of the previous quiz
-     * @param reponse reponse of the previous quiz
+     * set the response of the previous quiz
+     * @param reponse response of the previous quiz
      */
     public void remplir(ReponseDonneeEntity reponse) {
-        if (questionId == reponse.getReponseDonneeKey().getQuestion().getIdQuestion())
+        if (Objects.equals(questionId, reponse.getReponseDonneeKey().getQuestion().getIdQuestion()))
             this.reponse = new ReponseDonneeDtoQuiz(reponse);
     }
 
@@ -69,7 +66,7 @@ public class QuestionUniqueDto {
     }
 
     public List<ReponseUniqueDto> getReponses() {
-        return reponses;
+        return reponses.stream().sorted(Comparator.comparingLong(ReponseUniqueDto::getReponseId)).toList();
     }
 
     public TypeQ getType() {
