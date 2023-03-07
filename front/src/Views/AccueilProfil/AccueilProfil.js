@@ -1,6 +1,6 @@
 import BarreNavCore from "../../Components/BarreNav/BarreNavCore";
 import React, {useCallback, useEffect, useState} from "react";
-import {RadioGroup, Table, TextField} from "@mui/material";
+import {Table, TextField} from "@mui/material";
 import {Alert, Button, Container, Image, Modal, Placeholder, Row} from "react-bootstrap";
 import logo from "../../Components/logo/Eco-Assistant_transparent.PNG";
 import {useNavigate} from "react-router-dom";
@@ -235,40 +235,38 @@ function TableauProjets() {
                                        helperText={fieldErrors.nom}/><br/>
 
                             <div id="demo-row-radio-buttons-group-label"> Type du projet</div>
-                            <RadioGroup>
-                                <div className="form-check form-check-inline">
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="type"
-                                            value="SIMULATION"
-                                            checked={selectedValue === "SIMULATION"}
-                                            className="form-check-input"
-                                            onClick={handleRadioChange}
-                                            {...register("type", {required: true})}
-                                        />
-                                        Simulation
-                                    </label>
-                                </div>
-                                <div className="form-check form-check-inline">
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="type"
-                                            value="PROJET"
-                                            checked={selectedValue === "PROJET"}
-                                            className="form-check-input"
-                                            onClick={handleRadioChange}
-                                            {...register("type", {required: true})}
-                                        />
-                                        Projet
-                                    </label>
-                                </div>
-                                {errors.type && (
-                                    <div className="error-message" style={{fontSize: '14px', color: 'red'}}>
-                                        Veuillez sélectionner un type de projet.</div>
-                                )}
-                            </RadioGroup>
+                            <div className="form-check form-check-inline">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="type"
+                                        value="SIMULATION"
+                                        checked={selectedValue === "SIMULATION"}
+                                        className="form-check-input"
+                                        onClick={handleRadioChange}
+                                        {...register("type", {required: true})}
+                                    />
+                                    Simulation
+                                </label>
+                            </div>
+                            <div className="form-check form-check-inline">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="type"
+                                        value="PROJET"
+                                        checked={selectedValue === "PROJET"}
+                                        className="form-check-input"
+                                        onClick={handleRadioChange}
+                                        {...register("type", {required: true})}
+                                    />
+                                    Projet
+                                </label>
+                            </div>
+                            {errors.type && (
+                                <div className="error-message" style={{fontSize: '14px', color: 'red'}}>
+                                    Veuillez sélectionner un type de projet.</div>
+                            )}
                         </Modal.Body>
 
                         <Modal.Footer>
@@ -359,7 +357,7 @@ function LigneTableauProjet(datas) {
         <>
             <tr className='table border-bottom border-2 border-secondary'>
                 <td align={"center"} valign={"middle"}>{datas.nomProjet}</td>
-                <td align={"center"} valign={"middle"}>{datas.etat}</td>
+                <td align={"center"} valign={"middle"}>{datas.etat === "INPROGRESS" ? "En cours" : "Terminer"}</td>
                 <td align={"center"} valign={"middle"}>{datas.type}</td>
                 <td align={"center"} valign={"middle"}>
                     <ButtonSet idProject={datas.id}
