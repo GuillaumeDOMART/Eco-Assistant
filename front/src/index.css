@@ -27,3 +27,11 @@ html, body {
     position:absolute;
     margin-left: 212px;
 }
+
+.bgQuestionnaire {
+    background-image: url("/src/Components/Pictures/passau.png");
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

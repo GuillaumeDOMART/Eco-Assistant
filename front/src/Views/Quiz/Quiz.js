@@ -107,10 +107,9 @@ function StepperComponent() {
 
     const handleQuit = useCallback(
         () => {
-            if(sessionStorage.getItem("guest")){
+            if (sessionStorage.getItem("guest")) {
                 navigate("/logout")
-            }
-            else {
+            } else {
                 navigate("/profil")
             }
         },
@@ -136,7 +135,6 @@ function StepperComponent() {
             return false;
         if (getResponses(questionMax).includes(question.dependance))
             return true
-        console.log(typeof(question.dependance))
         const nextQuestion = getQuestionByResponseId(question.dependance)
         if (nextQuestion !== undefined)
             return highestDepSelected(questionMax, nextQuestion)
@@ -148,7 +146,7 @@ function StepperComponent() {
         })
     }, [data])
 
-    const handleChange = useCallback((target, value) => {
+    const handleChange = useCallback(async (target, value) => {
         //value = question selectionnée
         const select = value.reponses.find(val => val.intitule === target.target.value) //réponse selectionnée
         const answer = {
@@ -162,7 +160,8 @@ function StepperComponent() {
                 selectedAnswerCopy.splice(selectedAnswerCopy.indexOf(val), 1)
             }
         })
-        setSelectedAnswers([...selectedAnswerCopy, answer])
+        await setSelectedAnswers([...selectedAnswerCopy, answer])
+        console.log(selectedAnswers)
     }, [selectedAnswers, getQuestion, highestDepSelected])
 
     const getDependancy = useCallback((questionId) => {
@@ -269,7 +268,11 @@ function StepperComponent() {
                     onSubmit={onSubmit}
                 />
                 <Col>
-                    <Button className="align-bottom" onClick={handleQuit}>Quitter</Button>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Button className="align-items-center mt-2" onClick={handleQuit}>Quitter</Button>
                 </Col>
             </Row>
         </Container>
