@@ -1,7 +1,8 @@
 # Eco-Assistant
 
 ## Requirement 
-You need to have .env file with the following environment variable :<br>
+You need to have .env file with the following environment variable :
+
 ```
 MAIL_TOKEN: the mail token
 MAIL_ADDRESS: the mail address
@@ -13,11 +14,11 @@ POSTGRES_PASSWORD: the password for the postgres server
 SSL_CERT_PATH= the path of the ssl certificat
 DOMAIN= the domain
 VERSION= the version number
-SECRET_KEY= The secret key can generate with the flowing command "openssl rand -base64 32"
+SECRET_KEY= The secret key can be generated with the flowing command "openssl rand -base64 32"
 ```
 
 
-## Installation 
+## Local Installation 
 To run this project you need docker-compose.
 Then you need to run this command. 
 
@@ -25,10 +26,10 @@ Then you need to run this command.
 docker-compose up --build
 ```
 
-## Deployment
+## Deployment on server
 
 To deploy the application to the server, deploy the source of the project
-into your server. You may use this shell script to deploy it:
+into your server (SCP, FTP...). You may use this shell script to deploy it:
 
 ```shell
 cd EcoAssistantDirectory
@@ -36,6 +37,7 @@ docker compose build
 screen -XS EcoAssistantDeamon kill
 screen -S EcoAssistantDeamon -d -m docker compose up 
 ```
+
 ### Front
 Note that to be allowed to run a reactJS build into a server, you'll have the need to have this 
 line into the Dockerfile of the front to be able to build
