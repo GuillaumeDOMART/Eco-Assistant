@@ -1,6 +1,6 @@
 package com.ecoassitant.back.calcul;
 /**
- * Object for represente multiplication of a calcul
+ * Object to represent multiplication of a operation
  */
 public class Mult implements Operateur{
     @Override

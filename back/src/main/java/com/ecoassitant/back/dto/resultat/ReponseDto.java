@@ -1,7 +1,7 @@
 package com.ecoassitant.back.dto.resultat;
 
 /**
- * A reponse of a question for a project
+ * A response of a question for a project
  */
 public class ReponseDto {
     private String questionId;
