@@ -208,11 +208,8 @@ public class ProjetController {
                 .type(projectIdDto.getProjectType())
                 .build();
 
-        System.out.println("projetEntity = " + projetEntity);
-
         var projetCopy = projetService.save(projetEntity).orElseThrow();
 
-        System.out.println("projetCopy = " + projetCopy);
 
         var answers = reponseDonneesService.findReponsesByProject(projet);
         answers.forEach(answer -> {
