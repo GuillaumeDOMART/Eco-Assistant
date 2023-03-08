@@ -226,13 +226,14 @@ public class ProjetController {
 
         var answers = reponseDonneesService.findReponsesByProject(projet);
         answers.forEach(answer -> {
-            var tmpRes = new ReponseDonneeEntity();
-            var tmp = new ReponseDonneeKey();
-            tmp.setProjet(projetCopy);
-            tmp.setQuestion(answer.getReponseDonneeKey().getQuestion());
-            tmpRes.setReponseDonneeKey(tmp);
-            tmpRes.setEntry(answer.getEntry());
-            tmpRes.setReponsePos(answer.getReponsePos());
+            var newReponseDonneeEntity = new ReponseDonneeEntity();
+            var newKey = new ReponseDonneeKey();
+            newKey.setProjet(projetCopy);
+            newKey.setQuestion(answer.getReponseDonneeKey().getQuestion());
+            newReponseDonneeEntity.setReponseDonneeKey(newKey);
+            newReponseDonneeEntity.setEntry(answer.getEntry());
+            newReponseDonneeEntity.setReponsePos(answer.getReponsePos());
+            reponseDonneesService.saveResponse(newReponseDonneeEntity);
         });
 
         return new ResponseEntity<>(new ProjetDto(projetCopy), HttpStatus.OK);
