@@ -9,7 +9,7 @@ import React, {useCallback} from "react";
  * @returns {JSX.Element|null}
  * @constructor
  */
-export default function Phase({value, register, onChange}) {
+export default function Phase({value, register, onChange, detail}) {
     /**
      * doc
      * @param target because
@@ -27,6 +27,7 @@ export default function Phase({value, register, onChange}) {
                      register={register}
                      {...register(value.questionId.toString())}
                      onVisibility={handleChange}
+                     detail={detail}
                 />
             )
         case 'NUMERIC' :
@@ -34,6 +35,7 @@ export default function Phase({value, register, onChange}) {
                 <NUMERIC key={value.intitule}
                          question={value}
                          register={register}
+                         detail={detail}
                 />
             )
         default :

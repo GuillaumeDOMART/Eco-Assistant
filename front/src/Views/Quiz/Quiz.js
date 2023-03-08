@@ -19,7 +19,9 @@ function StepperComponent() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
     const [selectedAnswers, setSelectedAnswers] = useState([])
+    const [detail, setDetail] = useState(false);
     const {register, handleSubmit, reset} = useForm();
+
     const navigate = useNavigate();
 
     const getMaxDependance = useCallback((dependance) => {
@@ -43,6 +45,9 @@ function StepperComponent() {
 
 
     const handlePhase = useCallback(async () => {
+        const detailParam = new URLSearchParams(window.location.search).get('detail');
+        setDetail(detailParam === "true")
+
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
         const myHeaders = new Headers();
@@ -53,6 +58,21 @@ function StepperComponent() {
             "phase": steps[activeStep].toUpperCase(),
             id
         });
+
+
+        if (!detail) {
+            const requestOptionsCheckFinish = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+            const finishResponse = await fetch(`/api/projet/${id}/isfinish`, requestOptionsCheckFinish)
+
+            if (!finishResponse.ok) {
+                navigate("/")
+                return;
+            }
+        }
 
         const requestOptions = {
             method: 'POST',
@@ -73,7 +93,6 @@ function StepperComponent() {
                         "question": question.questionId.toString(),
                         "reponseId": question.reponse.reponse.reponseId
                     })
-
                 }
             })
             await setSelectedAnswers(selected)
@@ -82,7 +101,7 @@ function StepperComponent() {
             setErrorApiGetQuestionnaire("Erreur lors de la récupération du questionnaire");
         }
 
-    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep, setSelectedAnswers])
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep, setSelectedAnswers, navigate])
 
     /**
      * Go to the next step
@@ -200,6 +219,10 @@ function StepperComponent() {
      */
     const onSubmit = useCallback(
         async (dataList) => {
+            if (detail) {
+                handleNext();
+                return;
+            }
             const projectId = sessionStorage.getItem("project")
             const sendToBack = {}
             const responses = []
@@ -255,11 +278,12 @@ function StepperComponent() {
             } else {
                 handleNext();
             }
-        }, [handleNext, activeStep, navigate, getDependancy]
+        }, [handleNext, activeStep, navigate, getDependancy, detail]
     )
 
     useEffect(() => {
         handlePhase().then(() => reset())
+
         if (!sessionStorage.getItem("project")) {
             navigate("/")
         }
@@ -274,6 +298,7 @@ function StepperComponent() {
             </>
         );
     }
+
     return (
         <Container fluid>
             <Row>
@@ -292,6 +317,7 @@ function StepperComponent() {
                     handleBack={handleBack}
                     register={register}
                     onSubmit={onSubmit}
+                    detail={detail}
                 />
                 <Col>
                 </Col>

@@ -5,6 +5,8 @@ import com.ecoassitant.back.dto.resultat.ReponseDto;
 import com.ecoassitant.back.entity.ProjetEntity;
 import com.ecoassitant.back.entity.ReponseDonneeEntity;
 import com.ecoassitant.back.entity.ReponseDonneeKey;
+import com.ecoassitant.back.entity.tools.Etat;
+import com.ecoassitant.back.entity.tools.TypeP;
 import com.ecoassitant.back.entity.tools.TypeQ;
 import com.ecoassitant.back.repository.ProjetRepository;
 import com.ecoassitant.back.repository.QuestionRepository;
@@ -44,11 +46,17 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
 
     @Override
     public boolean saveResponseDonnees(ReponseDonneesDto responses) {
-        var project = projetRepository.findById(responses.getProjetId());
-        if (project.isEmpty()) {
+        var OptionalProject = projetRepository.findById(responses.getProjetId());
+        if (OptionalProject.isEmpty()) {
             return false;
             //throw new IllegalArgumentException();
         }
+
+        var project = OptionalProject.get();
+        if (project.getEtat().equals(Etat.FINISH)) {
+            return false;
+        }
+
         var list = responses.getReponses();
         boolean result = true;
         Iterator<ReponseDto> reponseDtoIterator = list.iterator();
@@ -60,14 +68,15 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
                 result = false;
                 break;
             }
-            var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(question.get(), project.get());
+
+            var reponseDonnee = reponseDonneeRepository.findByReponseDonneeKeyQuestionAndReponseDonneeKeyProjet(question.get(), project);
             if (reponseDonnee.isPresent())
                 reponseDonneeRepository.delete(reponseDonnee.get());
-            if (!Objects.equals(reponseDto.getEntry(), "")){
+            if (!Objects.equals(reponseDto.getEntry(), "")) {
                 var reponseEntity = new ReponseDonneeEntity();
                 var responseKey = new ReponseDonneeKey();
 
-                responseKey.setProjet(project.get());
+                responseKey.setProjet(project);
                 responseKey.setQuestion(question.get());
                 var reponsePossibles = reponsePossibleRepository.findByQuestionAsso(question.get());
                 if (reponsePossibles.isEmpty()) {

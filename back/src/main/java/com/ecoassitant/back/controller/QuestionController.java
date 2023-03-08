@@ -2,6 +2,7 @@ package com.ecoassitant.back.controller;
 
 import com.ecoassitant.back.dto.quiz.PhaseDto;
 import com.ecoassitant.back.dto.quiz.QuestionUniqueDto;
+import com.ecoassitant.back.service.ProjetService;
 import com.ecoassitant.back.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,19 +22,24 @@ import java.util.Objects;
 @RestController
 public class QuestionController {
     private final QuestionService questionService;
+    private final ProjetService projetService;
 
     /**
      * Constructor for QuestionController
+     *
      * @param questionService QuestionService
      */
     @Autowired
-    public QuestionController(QuestionService questionService) {
+    public QuestionController(QuestionService questionService, ProjetService projetService) {
         Objects.requireNonNull(questionService);
+        Objects.requireNonNull(projetService);
         this.questionService = questionService;
+        this.projetService = projetService;
     }
 
     /**
      * Api for get a Quiz by phase
+     *
      * @param phaseDto phase of the project
      * @return list of question of the phase
      */

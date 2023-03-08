@@ -96,7 +96,6 @@ public class ProjetController {
     }
 
 
-
     /**
      * Endpoint to create a project
      *
@@ -116,7 +115,7 @@ public class ProjetController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         var profil = profilEntityOptional.get();
-        if(profil.getIsAdmin() == -3 || profil.getIsAdmin() == -2){
+        if (profil.getIsAdmin() == -3 || profil.getIsAdmin() == -2) {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
         var projetEntity = ProjetEntity.builder()
@@ -178,7 +177,21 @@ public class ProjetController {
             var projet = optionalProjet.get();
             return new ResponseEntity<>(new ProjectIdDto(projet.getId()), HttpStatus.OK);
         }
+    }
 
+    /**
+     * Method to ask whether a project is finish or not
+     *
+     * @param authorizationHeader the token of the user
+     * @return True is the project is finished, false otherwise or if the id is wrong
+     */
+    @GetMapping("projet/{id}/isfinish")
+    public ResponseEntity<Boolean> isFinish(@RequestHeader("Authorization") String authorizationHeader, @PathVariable("id") Integer id) {
+        var isProjectFinish = projetService.isFinish(id);
+        if (isProjectFinish)
+            return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     /**

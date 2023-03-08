@@ -7,7 +7,7 @@ import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
  * @returns {JSX.Element}
  * @constructor
  */
-export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, ref) => {
+export const QCM = React.forwardRef(({onChange, name, question, onVisibility, detail}, ref) => {
 
     const handleChange = useCallback((event) => {
         onChange(event);
@@ -26,8 +26,9 @@ export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, r
                                 key={data.intitule}
                                 label={data.intitule}
                                 control={
-                                    <Radio ref={ref} name={name} onChange={handleChange}/>
+                                    <Radio ref={ref} name={name} onChange={handleChange} disabled={detail}/>
                                 }
+                                disabled={detail}
                             />
                         )
                     })}<br/>
@@ -46,8 +47,9 @@ export const QCM = React.forwardRef(({onChange, name, question, onVisibility}, r
                             key={data.intitule}
                             label={data.intitule}
                             control={
-                                <Radio ref={ref} name={name} onChange={handleChange}/>
+                                <Radio ref={ref} name={name} onChange={handleChange} disabled={detail}/>
                             }
+                            disabled={detail}
                         />
                     )
                 })}<br/>
@@ -64,7 +66,7 @@ QCM.displayName = 'QCM';
  * @returns {JSX.Element}
  * @constructor
  */
-export const NUMERIC = ({question, register}) => {
+export const NUMERIC = ({question, register, detail}) => {
     if (question.reponse === null) {
         return (
             <div style={{marginTop: '20px'}} className="shadow-lg rounded">
@@ -75,6 +77,7 @@ export const NUMERIC = ({question, register}) => {
                     {...register(question.questionId.toString())}
                     min={0}
                     defaultValue={question.reponse}
+                    disabled={detail}
                 /><br/>
                 </div>
             </div>
@@ -89,6 +92,7 @@ export const NUMERIC = ({question, register}) => {
                 {...register(question.questionId.toString())}
                 min={0}
                 defaultValue={question.reponse.entry}
+                disabled={detail}
             /><br/>
             </div>
         </div>

@@ -27,6 +27,7 @@ function StepForm({
                       handleBack,
                       register,
                       onSubmit,
+                      detail,
                   }) {
     return (
         <form onSubmit={handleSubmit(onSubmit)}
@@ -43,6 +44,7 @@ function StepForm({
                                    register={register}
                                    value={question}
                                    onChange={handleChange}
+                                   detail={detail}
                             />)
                     }
                     return (
@@ -63,13 +65,17 @@ function StepForm({
                     </Button>
                     <Box sx={{flex: '1 1 auto'}}/>
 
-                    <Button type={"submit"}>
-                        {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
-                    </Button>
+                    {activeStep !== steps.length - 1 &&
+                        <Button type={"submit"}>Suivant</Button>}
+
+                    {activeStep === steps.length - 1 && !detail &&
+                        <Button type={"submit"}>Terminer</Button>}
+
                 </Box>
             </Box>
         </form>
-    );
+    )
+        ;
 }
 
 export default StepForm

@@ -40,6 +40,14 @@ public interface ProjetService {
     Optional<ProjectIdDto> finish(String mail, ProjectIdDto projetDto);
 
     /**
+     * Endpoint to check wether a project is finish or not
+     *
+     * @param id if of the project
+     * @return True if the project is finished, false otherwise
+     */
+    boolean isFinish(Integer id);
+
+    /**
      * Endpoint to save a projectEntity
      *
      * @param projet project that needs to be saved
