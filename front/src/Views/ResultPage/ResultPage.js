@@ -333,8 +333,9 @@ function ResultPage() {
     return (
         <div ref={pdfContainer}>
             <br/>
+
             <Button onClick={handleDownloadPDF} type="button">Download PDF</Button>
-            <Button onClick={handleDetail} type="button">Visionner les réponses</Button>
+            <Button className="me-2 ms-2" onClick={handleDetail} type="button">Visionner les réponses</Button>
             <Button onClick={handleQuit} type="button">Retourner au menu</Button>
             <br/>
 
