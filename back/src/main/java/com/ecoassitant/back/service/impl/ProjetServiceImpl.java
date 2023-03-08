@@ -69,11 +69,12 @@ public class ProjetServiceImpl implements ProjetService {
 
     @Override
     public boolean isFinish(Integer id) {
-        try {
-            return Etat.FINISH.equals(getProject(id).getEtat());
-        } catch (NullPointerException e) {
+        var projet = getProject(id);
+        if (projet == null) {
             return false;
         }
+
+        return Etat.FINISH.equals(projet.getEtat());
     }
 
     @Override

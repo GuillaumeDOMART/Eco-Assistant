@@ -45,8 +45,8 @@ function StepperComponent() {
 
 
     const handlePhase = useCallback(async () => {
-        const detail = new URLSearchParams(window.location.search).get('detail');
-        setDetail(Boolean(detail))
+        const detailParam = new URLSearchParams(window.location.search).get('detail');
+        setDetail(detailParam === "true")
 
         const token = sessionStorage.getItem("token")
         const id = sessionStorage.getItem("project")
@@ -87,7 +87,6 @@ function StepperComponent() {
             setIsLoaded(true);
             setData(json);
             const selected = []
-            console.log(json)
             json.forEach(question => {
                 if (question.type === 'QCM' && question.reponse !== null) {
                     selected.push({
