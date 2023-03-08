@@ -148,6 +148,15 @@ function ResultPage() {
 
     };
 
+    /** Function to view the answers of the project
+     *
+     */
+    const handleDetail = useCallback(() => {
+        const id = new URLSearchParams(window.location.search).get('id');
+        sessionStorage.setItem("project", id);
+        navigate("/questionnaire?detail=true")
+    }, [navigate]);
+
     /**
      * Function to create the pdf
      */
@@ -325,6 +334,7 @@ function ResultPage() {
         <div ref={pdfContainer}>
             <br/>
             <Button onClick={handleDownloadPDF} type="button">Download PDF</Button>
+            <Button onClick={handleDetail} type="button">Visionner les réponses</Button>
             <Button onClick={handleQuit} type="button">Retourner au menu</Button>
             <br/>
 

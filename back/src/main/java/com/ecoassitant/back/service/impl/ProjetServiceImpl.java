@@ -57,6 +57,7 @@ public class ProjetServiceImpl implements ProjetService {
             return Optional.empty();
         }
         var projet = projetRepository.findByIdProjet(projetDto.getId());
+
         var mailOwner = projet.getProfil().getMail();
         if (!mailOwner.equals(mail)) {
             return Optional.empty();
@@ -66,6 +67,14 @@ public class ProjetServiceImpl implements ProjetService {
         return Optional.of(new ProjectIdDto(saveProject.getIdProjet()));
     }
 
+    @Override
+    public boolean isFinish(Integer id) {
+        try {
+            return Etat.FINISH.equals(getProject(id).getEtat());
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
 
     @Override
     public Optional<ProjetEntity> save(ProjetEntity projet) {
