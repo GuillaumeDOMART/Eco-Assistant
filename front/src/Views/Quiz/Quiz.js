@@ -59,13 +59,13 @@ function StepperComponent() {
             id
         });
 
-
-        if (!detail) {
+        if (!detailParam) {
             const requestOptionsCheckFinish = {
                 method: 'GET',
                 headers: myHeaders,
                 redirect: 'follow'
             };
+
             const finishResponse = await fetch(`/api/projet/${id}/isfinish`, requestOptionsCheckFinish)
 
             if (!finishResponse.ok) {
@@ -101,7 +101,7 @@ function StepperComponent() {
             setErrorApiGetQuestionnaire("Erreur lors de la récupération du questionnaire");
         }
 
-    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep, setSelectedAnswers, navigate])
+    }, [setIsLoaded, setData, setErrorApiGetQuestionnaire, activeStep, setSelectedAnswers, navigate, detail])
 
     /**
      * Go to the next step
