@@ -71,10 +71,7 @@ public class ProjetServiceImpl implements ProjetService {
     @Override
     public boolean isFinish(Integer id) {
         var projet = getProject(id);
-        System.out.println(projet);
         if (Objects.nonNull(projet)) {
-            System.out.println("etat = " + Etat.FINISH.equals(projet.getEtat()));
-            System.out.println("projet.getEtat() = " + projet.getEtat());
             return Etat.FINISH.equals(projet.getEtat());
         }
 
