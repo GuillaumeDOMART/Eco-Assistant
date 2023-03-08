@@ -105,12 +105,12 @@ public class ReponseDonneesServiceImpl implements ReponseDonneesService {
 
     /**
      * save responseDonneeEntity in BDD
+     *
      * @param answer ResponseDonnee
      * @return the ResponseDonnee save
      */
     @Override
     public ReponseDonneeEntity saveResponse(ReponseDonneeEntity answer) {
-        System.out.println("toto");
         return reponseDonneeRepository.save(answer);
     }
 
